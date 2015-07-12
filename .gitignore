@@ -1,0 +1,5 @@
+.metadata
+.metadata/*
+*/target/*
+*.class
+*.log
