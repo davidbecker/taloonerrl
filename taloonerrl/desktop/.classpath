@@ -23,5 +23,6 @@
 			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="taloonerrl-desktop/target/natives"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="src" path="/taloonerrl-core"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
