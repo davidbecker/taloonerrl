@@ -18,6 +18,7 @@ import com.badlogic.gdx.math.Vector3;
 import de.brainstormsoftworks.taloonerrl.actors.ActorFactory;
 import de.brainstormsoftworks.taloonerrl.actors.EActorTypes;
 import de.brainstormsoftworks.taloonerrl.actors.IActor;
+import de.brainstormsoftworks.taloonerrl.dungeon.IMap;
 import de.brainstormsoftworks.taloonerrl.dungeon.ITile;
 import de.brainstormsoftworks.taloonerrl.dungeon.MapFactory;
 
@@ -50,8 +51,7 @@ public class TaloonerRl implements ApplicationListener {
 	private Rectangle viewport;
 	private Rectangle playerOld;
 
-	private ITile[][] map = MapFactory.createMap(TILES_HORIZONTAL,
-			TILES_VERTICAL);
+	private IMap map = MapFactory.createMap(TILES_HORIZONTAL, TILES_VERTICAL);
 
 	private IActor player = ActorFactory.createActor(EActorTypes.PLAYER);
 
@@ -144,7 +144,7 @@ public class TaloonerRl implements ApplicationListener {
 		// 100 + 25 * (float) Math.sin(elapsed));
 		for (int x = 0; x < TILES_HORIZONTAL; x++) {
 			for (int y = 0; y < TILES_VERTICAL; y++) {
-				TextureRegion tile = getTile(map[x][y]);
+				TextureRegion tile = getTile(map.getMap()[x][y]);
 				if (tile != null) {
 					batch.draw(tile, x * scale, y * scale);
 				}

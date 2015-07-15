@@ -2,6 +2,7 @@ package de.brainstormsoftworks.taloonerrl.dungeon;
 
 import java.util.Random;
 
+import de.brainstormsoftworks.taloonerrl.internal.dungeon.Map;
 import de.brainstormsoftworks.taloonerrl.internal.dungeon.Tile;
 
 public final class MapFactory {
@@ -11,12 +12,24 @@ public final class MapFactory {
 	private MapFactory() {
 	}
 
-	public static ITile[][] createMap(int tilesHorizontal, int tilesVertical) {
-		ITile[][] map = new ITile[tilesHorizontal][tilesVertical];
+	// public static ITile[][] createMap(int tilesHorizontal, int tilesVertical)
+	// {
+	// ITile[][] map = new ITile[tilesHorizontal][tilesVertical];
+	// for (int x = 0; x < tilesHorizontal; x++) {
+	// for (int y = 0; y < tilesVertical; y++) {
+	// ITile newTile = new Tile(getFloor(rnd.nextInt(9)));
+	// map[x][y] = newTile;
+	// }
+	// }
+	// return map;
+	// }
+
+	public static IMap createMap(int tilesHorizontal, int tilesVertical) {
+		IMap map = new Map(tilesHorizontal, tilesVertical);
 		for (int x = 0; x < tilesHorizontal; x++) {
 			for (int y = 0; y < tilesVertical; y++) {
 				ITile newTile = new Tile(getFloor(rnd.nextInt(9)));
-				map[x][y] = newTile;
+				map.getMap()[x][y] = newTile;
 			}
 		}
 		return map;
