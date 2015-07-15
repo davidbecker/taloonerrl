@@ -24,6 +24,11 @@ public class Tile implements ITile {
 	}
 
 	@Override
+	public boolean isVisited() {
+		return explored;
+	}
+
+	@Override
 	public EDungeonSprites getFloor() {
 		return floor;
 	}
