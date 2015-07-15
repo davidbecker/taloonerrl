@@ -175,7 +175,7 @@ public class TaloonerRl implements ApplicationListener {
 			playerOld.y = VIRTUAL_HEIGHT - tileSize;
 		batch.draw(at, playerOld.x, playerOld.y);
 
-		// TODO draw newPlayer at correct position
+		drawActor(batch, player);
 
 		Vector3 touchPos = new Vector3();
 		touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
@@ -185,6 +185,12 @@ public class TaloonerRl implements ApplicationListener {
 
 		batch.draw(at, mouseX, mouseY);
 		batch.end();
+	}
+
+	private void drawActor(SpriteBatch spriteBatch, IActor actor) {
+		spriteBatch.draw(getSprite(actor), actor.getMovementComponent()
+				.getXPosition() * scale, actor.getMovementComponent()
+				.getYPosition() * scale);
 	}
 
 	private TextureRegion getTile(ITile tile) {
