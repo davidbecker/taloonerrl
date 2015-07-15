@@ -3,5 +3,9 @@ package de.brainstormsoftworks.taloonerrl.dungeon;
 public interface ITile {
 	public void setVisited();
 
-	public EFloor getFloor();
+	public EDungeonSprites getFloor();
+
+	public EDungeonFeature getDungeonFeature();
+
+	public boolean isWalkable();
 }

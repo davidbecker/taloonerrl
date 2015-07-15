@@ -195,23 +195,23 @@ public class TaloonerRl implements ApplicationListener {
 
 	private TextureRegion getTile(ITile tile) {
 		switch (tile.getFloor()) {
-		case ROOM_BOTTOM:
+		case FLOOR_ROOM_BOTTOM:
 			return sBottom;
-		case ROOM_BOTTOMLEFT_CORNER:
+		case FLOOR_ROOM_BOTTOMLEFT_CORNER:
 			return sBottomLeft;
-		case ROOM_BOTTOMRIGHT_CORNER:
+		case FLOOR_ROOM_BOTTOMRIGHT_CORNER:
 			return sBottomRight;
-		case ROOM_CENTER:
+		case FLOOR_ROOM_CENTER:
 			return sCenter;
-		case ROOM_LEFT:
+		case FLOOR_ROOM_LEFT:
 			return sLeft;
-		case ROOM_RIGHT:
+		case FLOOR_ROOM_RIGHT:
 			return sRight;
-		case ROOM_TOP:
+		case FLOOR_ROOM_TOP:
 			return sTop;
-		case ROOM_TOPLEFT_CORNER:
+		case FLOOR_ROOM_TOPLEFT_CORNER:
 			return sTopLeft;
-		case ROOM_TOPRIGHT_CORNER:
+		case FLOOR_ROOM_TOPRIGHT_CORNER:
 			return sTopRight;
 		case NOTHING:
 			// same as default for now

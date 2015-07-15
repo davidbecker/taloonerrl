@@ -1,16 +1,20 @@
 package de.brainstormsoftworks.taloonerrl.internal.dungeon;
 
 import de.brainstormsoftworks.taloonerrl.dungeon.EDungeonFeature;
-import de.brainstormsoftworks.taloonerrl.dungeon.EFloor;
+import de.brainstormsoftworks.taloonerrl.dungeon.EDungeonSprites;
 import de.brainstormsoftworks.taloonerrl.dungeon.ITile;
 
 public class Tile implements ITile {
 
-	private EFloor floor = EFloor.NOTHING;
+	private EDungeonSprites floor = EDungeonSprites.NOTHING;
 	private EDungeonFeature dungeonFeature = EDungeonFeature.NOTHING;
 	boolean explored = false;
 
-	public Tile(EFloor _floor) {
+	public Tile() {
+		this(EDungeonSprites.NOTHING);
+	}
+
+	public Tile(EDungeonSprites _floor) {
 		floor = _floor;
 	}
 
@@ -20,8 +24,40 @@ public class Tile implements ITile {
 	}
 
 	@Override
-	public EFloor getFloor() {
+	public EDungeonSprites getFloor() {
 		return floor;
+	}
+
+	@Override
+	public EDungeonFeature getDungeonFeature() {
+		return dungeonFeature;
+	}
+
+	@Override
+	public boolean isWalkable() {
+		switch (floor) {
+		case FLOOR_ROOM_BOTTOM:
+			return true;
+		case FLOOR_ROOM_BOTTOMLEFT_CORNER:
+			return true;
+		case FLOOR_ROOM_BOTTOMRIGHT_CORNER:
+			return true;
+		case FLOOR_ROOM_CENTER:
+			return true;
+		case FLOOR_ROOM_LEFT:
+			return true;
+		case FLOOR_ROOM_RIGHT:
+			return true;
+		case FLOOR_ROOM_TOP:
+			return true;
+		case FLOOR_ROOM_TOPLEFT_CORNER:
+			return true;
+		case FLOOR_ROOM_TOPRIGHT_CORNER:
+			return true;
+		case NOTHING:
+		default:
+			return false;
+		}
 	}
 
 }
