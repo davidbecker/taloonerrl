@@ -1,16 +1,16 @@
 package de.brainstormsoftworks.taloonerrl.internal.dungeon;
 
-import de.brainstormsoftworks.taloonerrl.dungeon.IDungeonFeature;
-import de.brainstormsoftworks.taloonerrl.dungeon.IFloor;
+import de.brainstormsoftworks.taloonerrl.dungeon.EDungeonFeature;
+import de.brainstormsoftworks.taloonerrl.dungeon.EFloor;
 import de.brainstormsoftworks.taloonerrl.dungeon.ITile;
 
 public class Tile implements ITile {
 
-	private int floor = IFloor.NOTHING;
-	private int dungeonFeature = IDungeonFeature.NOTHING;
+	private EFloor floor = EFloor.NOTHING;
+	private EDungeonFeature dungeonFeature = EDungeonFeature.NOTHING;
 	boolean explored = false;
 
-	public Tile(int _floor) {
+	public Tile(EFloor _floor) {
 		floor = _floor;
 	}
 
@@ -20,7 +20,7 @@ public class Tile implements ITile {
 	}
 
 	@Override
-	public int getFloor() {
+	public EFloor getFloor() {
 		return floor;
 	}
 

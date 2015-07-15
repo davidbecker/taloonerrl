@@ -1,18 +1,18 @@
 package de.brainstormsoftworks.taloonerrl.internal.actors;
 
 import de.brainstormsoftworks.taloonerrl.actors.IActorSprite;
-import de.brainstormsoftworks.taloonerrl.dungeon.ISprite;
+import de.brainstormsoftworks.taloonerrl.dungeon.ESprite;
 
 public class ActorSpriteComponent implements IActorSprite {
 
-	private int sprite = ISprite.NOTHING;
+	private ESprite sprite = ESprite.NOTHING;
 
 	@Override
-	public int getSprite() {
+	public ESprite getSprite() {
 		return sprite;
 	}
 
-	public void setSprite(int newSprite) {
+	public void setSprite(ESprite newSprite) {
 		sprite = newSprite;
 	}
 }

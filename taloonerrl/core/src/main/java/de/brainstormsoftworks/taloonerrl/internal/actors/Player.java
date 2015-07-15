@@ -1,9 +1,10 @@
 package de.brainstormsoftworks.taloonerrl.internal.actors;
 
-import de.brainstormsoftworks.taloonerrl.dungeon.ISprite;
+import de.brainstormsoftworks.taloonerrl.dungeon.ESprite;
 
 public class Player extends Actor {
 	public Player() {
-		actorSpriteComponent.setSprite(ISprite.AT);
+		movementComponent = new ActorMovementComponent();
+		actorSpriteComponent.setSprite(ESprite.AT);
 	}
 }

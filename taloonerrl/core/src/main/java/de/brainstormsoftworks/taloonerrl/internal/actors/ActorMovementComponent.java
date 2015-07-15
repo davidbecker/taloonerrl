@@ -27,4 +27,14 @@ public class ActorMovementComponent implements IActorMovement {
 		xPosition += dX;
 		yPosition += dY;
 	}
+
+	@Override
+	public int getXPosition() {
+		return xPosition;
+	}
+
+	@Override
+	public int getYPosition() {
+		return yPosition;
+	}
 }

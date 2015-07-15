@@ -11,10 +11,10 @@ public final class ActorFactory {
 	private ActorFactory() {
 	}
 
-	public static IActor createActor(int type) {
+	public static IActor createActor(EActorTypes type) {
 		IActor newActor = null;
 		switch (type) {
-		case IActorTypes.PLAYER:
+		case PLAYER:
 			newActor = new Player();
 			break;
 		default:

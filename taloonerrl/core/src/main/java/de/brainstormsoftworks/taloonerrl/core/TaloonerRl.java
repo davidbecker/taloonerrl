@@ -1,26 +1,23 @@
 package de.brainstormsoftworks.taloonerrl.core;
 
-import java.util.Random;
-
+import com.badlogic.gdx.ApplicationListener;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.Texture.TextureWrap;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.ApplicationListener;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input.Keys;
 
-import de.brainstormsoftworks.taloonerrl.dungeon.IFloor;
+import de.brainstormsoftworks.taloonerrl.actors.ActorFactory;
+import de.brainstormsoftworks.taloonerrl.actors.EActorTypes;
+import de.brainstormsoftworks.taloonerrl.actors.IActor;
 import de.brainstormsoftworks.taloonerrl.dungeon.ITile;
 import de.brainstormsoftworks.taloonerrl.dungeon.MapFactory;
 
@@ -51,10 +48,12 @@ public class TaloonerRl implements ApplicationListener {
 			/ (float) VIRTUAL_HEIGHT;
 	private OrthographicCamera camera;
 	private Rectangle viewport;
-	private Rectangle player;
+	private Rectangle playerOld;
 
 	private ITile[][] map = MapFactory.createMap(TILES_HORIZONTAL,
 			TILES_VERTICAL);
+
+	private IActor player = ActorFactory.createActor(EActorTypes.PLAYER);
 
 	@Override
 	public void create() {
@@ -88,12 +87,12 @@ public class TaloonerRl implements ApplicationListener {
 		mouseY = Gdx.graphics.getHeight() / 2;
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
-		player = new Rectangle();
+		playerOld = new Rectangle();
 
-		player.x = 30 * tileSize / 2 - tileSize / 2;
-		player.y = 20 * tileSize / 2 - tileSize / 2;
-		player.width = tileSize;
-		player.height = tileSize;
+		playerOld.x = 30 * tileSize / 2 - tileSize / 2;
+		playerOld.y = 20 * tileSize / 2 - tileSize / 2;
+		playerOld.width = tileSize;
+		playerOld.height = tileSize;
 
 		// TiledMap t = new TiledMap();
 		// TiledMapTileLayer layer = (TiledMapTileLayer)t.getLayers().get(0);
@@ -115,8 +114,8 @@ public class TaloonerRl implements ApplicationListener {
 			scale = (float) width / (float) VIRTUAL_WIDTH;
 		}
 
-		float w = (float) VIRTUAL_WIDTH * scale;
-		float h = (float) VIRTUAL_HEIGHT * scale;
+		float w = VIRTUAL_WIDTH * scale;
+		float h = VIRTUAL_HEIGHT * scale;
 		viewport = new Rectangle(crop.x, crop.y, w, h);
 	}
 
@@ -159,22 +158,24 @@ public class TaloonerRl implements ApplicationListener {
 		// batch.setBlendFunction(GL30.GL_SRC_ALPHA, GL30.GL_SRC_ALPHA);
 
 		if (Gdx.input.isKeyPressed(Keys.LEFT))
-			player.x -= 200 * Gdx.graphics.getDeltaTime();
+			playerOld.x -= 200 * Gdx.graphics.getDeltaTime();
 		if (Gdx.input.isKeyPressed(Keys.RIGHT))
-			player.x += 200 * Gdx.graphics.getDeltaTime();
+			playerOld.x += 200 * Gdx.graphics.getDeltaTime();
 		if (Gdx.input.isKeyPressed(Keys.DOWN))
-			player.y -= 200 * Gdx.graphics.getDeltaTime();
+			playerOld.y -= 200 * Gdx.graphics.getDeltaTime();
 		if (Gdx.input.isKeyPressed(Keys.UP))
-			player.y += 200 * Gdx.graphics.getDeltaTime();
-		if (player.x < 0)
-			player.x = 0;
-		if (player.x > VIRTUAL_WIDTH - tileSize)
-			player.x = VIRTUAL_WIDTH - tileSize;
-		if (player.y < 0)
-			player.y = 0;
-		if (player.y > VIRTUAL_HEIGHT - tileSize)
-			player.y = VIRTUAL_HEIGHT - tileSize;
-		batch.draw(at, player.x, player.y);
+			playerOld.y += 200 * Gdx.graphics.getDeltaTime();
+		if (playerOld.x < 0)
+			playerOld.x = 0;
+		if (playerOld.x > VIRTUAL_WIDTH - tileSize)
+			playerOld.x = VIRTUAL_WIDTH - tileSize;
+		if (playerOld.y < 0)
+			playerOld.y = 0;
+		if (playerOld.y > VIRTUAL_HEIGHT - tileSize)
+			playerOld.y = VIRTUAL_HEIGHT - tileSize;
+		batch.draw(at, playerOld.x, playerOld.y);
+
+		// TODO draw newPlayer at correct position
 
 		Vector3 touchPos = new Vector3();
 		touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
@@ -188,31 +189,39 @@ public class TaloonerRl implements ApplicationListener {
 
 	private TextureRegion getTile(ITile tile) {
 		switch (tile.getFloor()) {
-		case IFloor.ROOM_BOTTOM:
+		case ROOM_BOTTOM:
 			return sBottom;
-		case IFloor.ROOM_BOTTOMLEFT_CORNER:
+		case ROOM_BOTTOMLEFT_CORNER:
 			return sBottomLeft;
-		case IFloor.ROOM_BOTTOMRIGHT_CORNER:
+		case ROOM_BOTTOMRIGHT_CORNER:
 			return sBottomRight;
-		case IFloor.ROOM_CENTER:
+		case ROOM_CENTER:
 			return sCenter;
-		case IFloor.ROOM_LEFT:
+		case ROOM_LEFT:
 			return sLeft;
-		case IFloor.ROOM_RIGHT:
+		case ROOM_RIGHT:
 			return sRight;
-		case IFloor.ROOM_TOP:
+		case ROOM_TOP:
 			return sTop;
-		case IFloor.ROOM_TOPLEFT_CORNER:
+		case ROOM_TOPLEFT_CORNER:
 			return sTopLeft;
-		case IFloor.ROOM_TOPRIGHT_CORNER:
+		case ROOM_TOPRIGHT_CORNER:
 			return sTopRight;
-		case IFloor.NOTHING:
+		case NOTHING:
 			// same as default for now
 		default:
 			// keep tile blank
 			return null;
 		}
+	}
 
+	private TextureRegion getSprite(IActor actor) {
+		switch (actor.getSpriteComponent().getSprite()) {
+		case AT:
+			return at;
+		default:
+			return null;
+		}
 	}
 
 	@Override
