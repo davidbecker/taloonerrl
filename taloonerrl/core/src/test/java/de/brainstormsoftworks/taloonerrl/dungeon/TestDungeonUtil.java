@@ -42,14 +42,14 @@ public class TestDungeonUtil {
 
 		// outer walls
 		for (int i = 1; i < 4; i++) {
-			assertEquals("horizontal wall piece",
-					EDungeonSprites.WALL_HORIZONTAL, sprites[0][i]);
-			assertEquals("horizontal wall piece",
-					EDungeonSprites.WALL_HORIZONTAL, sprites[4][i]);
-			assertEquals("vertical wall piece", EDungeonSprites.WALL_VERTICAL,
-					sprites[i][0]);
-			assertEquals("vertical wall piece", EDungeonSprites.WALL_VERTICAL,
-					sprites[i][4]);
+			assertEquals("horizontal wall piece [" + i + "][0]",
+					EDungeonSprites.WALL_HORIZONTAL, sprites[i][0]);
+			assertEquals("horizontal wall piece [" + i + "][4]",
+					EDungeonSprites.WALL_HORIZONTAL, sprites[i][4]);
+			assertEquals("vertical wall piece [0][" + i + "]",
+					EDungeonSprites.WALL_VERTICAL, sprites[0][i]);
+			assertEquals("vertical wall piece [4][" + i + "]",
+					EDungeonSprites.WALL_VERTICAL, sprites[4][i]);
 		}
 	}
 }
