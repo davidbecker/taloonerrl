@@ -37,23 +37,23 @@ public final class MapFactory {
 	private static EDungeonSprites getFloor(int index) {
 		switch (index) {
 		case 0:
-			return EDungeonSprites.FLOOR_ROOM_TOPLEFT_CORNER;
+			return EDungeonSprites.FLOOR_TOPLEFT_CORNER;
 		case 1:
-			return EDungeonSprites.FLOOR_ROOM_TOP;
+			return EDungeonSprites.FLOOR_TOP;
 		case 2:
-			return EDungeonSprites.FLOOR_ROOM_TOPRIGHT_CORNER;
+			return EDungeonSprites.FLOOR_TOPRIGHT_CORNER;
 		case 3:
-			return EDungeonSprites.FLOOR_ROOM_LEFT;
+			return EDungeonSprites.FLOOR_LEFT;
 		case 4:
-			return EDungeonSprites.FLOOR_ROOM_CENTER;
+			return EDungeonSprites.FLOOR_CENTER;
 		case 5:
-			return EDungeonSprites.FLOOR_ROOM_RIGHT;
+			return EDungeonSprites.FLOOR_RIGHT;
 		case 6:
-			return EDungeonSprites.FLOOR_ROOM_BOTTOMLEFT_CORNER;
+			return EDungeonSprites.FLOOR_BOTTOMLEFT_CORNER;
 		case 7:
-			return EDungeonSprites.FLOOR_ROOM_BOTTOM;
+			return EDungeonSprites.FLOOR_BOTTOM;
 		case 8:
-			return EDungeonSprites.FLOOR_ROOM_BOTTOMRIGHT_CORNER;
+			return EDungeonSprites.FLOOR_BOTTOMRIGHT_CORNER;
 		default:
 			return EDungeonSprites.NOTHING;
 		}

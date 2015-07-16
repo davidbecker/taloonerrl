@@ -45,33 +45,32 @@ public final class DungeonUtil {
 					// floor
 					if (northWalkable && southWalkable && westWalkable
 							&& eastWalkable) {
-						// center piece
-						sprites[x][y] = EDungeonSprites.FLOOR_ROOM_CENTER;
+						sprites[x][y] = EDungeonSprites.FLOOR_CENTER;
 					} else if (eastWalkable && westWalkable && northWalkable
 							&& !southWalkable) {
-						sprites[x][y] = EDungeonSprites.FLOOR_ROOM_BOTTOM;
+						sprites[x][y] = EDungeonSprites.FLOOR_BOTTOM;
 					} else if (eastWalkable && westWalkable && !northWalkable
 							&& southWalkable) {
-						sprites[x][y] = EDungeonSprites.FLOOR_ROOM_TOP;
+						sprites[x][y] = EDungeonSprites.FLOOR_TOP;
 					} else if (!eastWalkable) {
 						if (northWalkable) {
 							if (southWalkable) {
-								sprites[x][y] = EDungeonSprites.FLOOR_ROOM_RIGHT;
+								sprites[x][y] = EDungeonSprites.FLOOR_RIGHT;
 							} else {
-								sprites[x][y] = EDungeonSprites.FLOOR_ROOM_BOTTOMRIGHT_CORNER;
+								sprites[x][y] = EDungeonSprites.FLOOR_BOTTOMRIGHT_CORNER;
 							}
 						} else {
-							sprites[x][y] = EDungeonSprites.FLOOR_ROOM_TOPRIGHT_CORNER;
+							sprites[x][y] = EDungeonSprites.FLOOR_TOPRIGHT_CORNER;
 						}
 					} else if (eastWalkable) {
 						if (northWalkable) {
 							if (southWalkable) {
-								sprites[x][y] = EDungeonSprites.FLOOR_ROOM_LEFT;
+								sprites[x][y] = EDungeonSprites.FLOOR_LEFT;
 							} else {
-								sprites[x][y] = EDungeonSprites.FLOOR_ROOM_BOTTOMLEFT_CORNER;
+								sprites[x][y] = EDungeonSprites.FLOOR_BOTTOMLEFT_CORNER;
 							}
 						} else {
-							sprites[x][y] = EDungeonSprites.FLOOR_ROOM_TOPLEFT_CORNER;
+							sprites[x][y] = EDungeonSprites.FLOOR_TOPLEFT_CORNER;
 						}
 					}
 				} else {
