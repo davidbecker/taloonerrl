@@ -18,7 +18,6 @@ import com.badlogic.gdx.math.Vector3;
 import de.brainstormsoftworks.taloonerrl.actors.ActorFactory;
 import de.brainstormsoftworks.taloonerrl.actors.EActorTypes;
 import de.brainstormsoftworks.taloonerrl.actors.IActor;
-import de.brainstormsoftworks.taloonerrl.dungeon.IMap;
 import de.brainstormsoftworks.taloonerrl.dungeon.ITile;
 import de.brainstormsoftworks.taloonerrl.dungeon.MapFactory;
 
@@ -58,13 +57,12 @@ public class TaloonerRl implements ApplicationListener {
 	private Rectangle viewport;
 	private Rectangle playerOld;
 
-	private final IMap map = MapFactory.createMap(TILES_HORIZONTAL,
-			TILES_VERTICAL);
-
 	private final IActor player = ActorFactory.createActor(EActorTypes.PLAYER);
 
 	@Override
 	public void create() {
+		GameStateHolder.map = MapFactory.createMap(TILES_HORIZONTAL,
+				TILES_VERTICAL);
 		floorTexture = new Texture(Gdx.files.internal("Floor.png"), false);
 		floorTexture.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
 		floorTexture.setWrap(TextureWrap.ClampToEdge, TextureWrap.ClampToEdge);
@@ -171,7 +169,7 @@ public class TaloonerRl implements ApplicationListener {
 		// 100 + 25 * (float) Math.sin(elapsed));
 		for (int x = 0; x < TILES_HORIZONTAL; x++) {
 			for (int y = 0; y < TILES_VERTICAL; y++) {
-				final TextureRegion tile = getTile(map.getMap()[x][y]);
+				final TextureRegion tile = getTile(GameStateHolder.map.getMap()[x][y]);
 				if (tile != null) {
 					batch.draw(tile, x * scale, y * scale);
 				}
@@ -180,15 +178,19 @@ public class TaloonerRl implements ApplicationListener {
 
 		if (Gdx.input.isKeyPressed(Keys.LEFT)) {
 			playerOld.x -= 200 * Gdx.graphics.getDeltaTime();
+			player.getMovementComponent().move(-1, 0);
 		}
 		if (Gdx.input.isKeyPressed(Keys.RIGHT)) {
 			playerOld.x += 200 * Gdx.graphics.getDeltaTime();
+			player.getMovementComponent().move(1, 0);
 		}
 		if (Gdx.input.isKeyPressed(Keys.DOWN)) {
 			playerOld.y -= 200 * Gdx.graphics.getDeltaTime();
+			player.getMovementComponent().move(0, -1);
 		}
 		if (Gdx.input.isKeyPressed(Keys.UP)) {
 			playerOld.y += 200 * Gdx.graphics.getDeltaTime();
+			player.getMovementComponent().move(0, 1);
 		}
 		if (playerOld.x < 0) {
 			playerOld.x = 0;

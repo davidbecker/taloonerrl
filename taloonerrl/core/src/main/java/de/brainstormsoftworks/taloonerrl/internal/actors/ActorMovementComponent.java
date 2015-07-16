@@ -1,6 +1,7 @@
 package de.brainstormsoftworks.taloonerrl.internal.actors;
 
 import de.brainstormsoftworks.taloonerrl.actors.IActorMovement;
+import de.brainstormsoftworks.taloonerrl.core.GameStateHolder;
 
 /**
  * 
@@ -24,8 +25,12 @@ public class ActorMovementComponent implements IActorMovement {
 
 	@Override
 	public void move(int dX, int dY) {
-		xPosition += dX;
-		yPosition += dY;
+		final int newX = xPosition + dX;
+		final int newY = yPosition + dY;
+		if (GameStateHolder.map.getMap()[newX][newY].isWalkable()) {
+			xPosition += dX;
+			yPosition += dY;
+		}
 	}
 
 	@Override
