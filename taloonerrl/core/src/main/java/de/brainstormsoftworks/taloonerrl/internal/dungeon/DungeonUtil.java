@@ -47,6 +47,32 @@ public final class DungeonUtil {
 							&& eastWalkable) {
 						// center piece
 						sprites[x][y] = EDungeonSprites.FLOOR_ROOM_CENTER;
+					} else if (eastWalkable && westWalkable && northWalkable
+							&& !southWalkable) {
+						sprites[x][y] = EDungeonSprites.FLOOR_ROOM_BOTTOM;
+					} else if (eastWalkable && westWalkable && !northWalkable
+							&& southWalkable) {
+						sprites[x][y] = EDungeonSprites.FLOOR_ROOM_TOP;
+					} else if (!eastWalkable) {
+						if (northWalkable) {
+							if (southWalkable) {
+								sprites[x][y] = EDungeonSprites.FLOOR_ROOM_RIGHT;
+							} else {
+								sprites[x][y] = EDungeonSprites.FLOOR_ROOM_BOTTOMRIGHT_CORNER;
+							}
+						} else {
+							sprites[x][y] = EDungeonSprites.FLOOR_ROOM_TOPRIGHT_CORNER;
+						}
+					} else if (eastWalkable) {
+						if (northWalkable) {
+							if (southWalkable) {
+								sprites[x][y] = EDungeonSprites.FLOOR_ROOM_LEFT;
+							} else {
+								sprites[x][y] = EDungeonSprites.FLOOR_ROOM_BOTTOMLEFT_CORNER;
+							}
+						} else {
+							sprites[x][y] = EDungeonSprites.FLOOR_ROOM_TOPLEFT_CORNER;
+						}
 					}
 				} else {
 					// wall
