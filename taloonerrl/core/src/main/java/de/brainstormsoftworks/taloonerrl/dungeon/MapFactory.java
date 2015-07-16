@@ -12,12 +12,13 @@ public final class MapFactory {
 	private MapFactory() {
 	}
 
-	public static IMap createMap(int tilesHorizontal, int tilesVertical) {
-		IMap map = new Map(tilesHorizontal, tilesVertical);
-		for (int x = 0; x < tilesHorizontal; x++) {
-			for (int y = 0; y < tilesVertical; y++) {
-				ITile newTile = new Tile(getFloor(rnd.nextInt(9)));
-				map.getMap()[x][y] = newTile;
+	public static IMap createMap(int _tilesHorizontal, int _tilesVertical) {
+		IMap map = new Map(_tilesHorizontal, _tilesVertical);
+		for (int x = 0; x < _tilesHorizontal; x++) {
+			for (int y = 0; y < _tilesVertical; y++) {
+				// ITile newTile = new Tile(getFloor(rnd.nextInt(9)));
+				// map.getMap()[x][y] = newTile;
+				map.getMap()[x][y] = new Tile();
 			}
 		}
 		return map;

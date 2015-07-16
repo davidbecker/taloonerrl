@@ -9,13 +9,17 @@ public class Tile implements ITile {
 	private EDungeonSprites floor = EDungeonSprites.NOTHING;
 	private EDungeonFeature dungeonFeature = EDungeonFeature.NOTHING;
 	boolean explored = false;
+	boolean walkable = false;
 
+	/**
+	 * default contructor. creates a tile with no sprite that isn't walkable
+	 */
 	public Tile() {
-		this(EDungeonSprites.NOTHING);
+		this(false);
 	}
 
-	public Tile(EDungeonSprites _floor) {
-		floor = _floor;
+	public Tile(boolean _walkable) {
+		walkable = _walkable;
 	}
 
 	@Override
@@ -40,29 +44,12 @@ public class Tile implements ITile {
 
 	@Override
 	public boolean isWalkable() {
-		switch (floor) {
-		case FLOOR_ROOM_BOTTOM:
-			return true;
-		case FLOOR_ROOM_BOTTOMLEFT_CORNER:
-			return true;
-		case FLOOR_ROOM_BOTTOMRIGHT_CORNER:
-			return true;
-		case FLOOR_ROOM_CENTER:
-			return true;
-		case FLOOR_ROOM_LEFT:
-			return true;
-		case FLOOR_ROOM_RIGHT:
-			return true;
-		case FLOOR_ROOM_TOP:
-			return true;
-		case FLOOR_ROOM_TOPLEFT_CORNER:
-			return true;
-		case FLOOR_ROOM_TOPRIGHT_CORNER:
-			return true;
-		case NOTHING:
-		default:
-			return false;
-		}
+		return walkable;
+	}
+
+	@Override
+	public void setWalkable(boolean _walkable) {
+		walkable = _walkable;
 	}
 
 }

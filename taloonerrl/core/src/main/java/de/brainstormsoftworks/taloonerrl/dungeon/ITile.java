@@ -11,4 +11,6 @@ public interface ITile {
 	public EDungeonFeature getDungeonFeature();
 
 	public boolean isWalkable();
+
+	public void setWalkable(boolean _walkable);
 }
