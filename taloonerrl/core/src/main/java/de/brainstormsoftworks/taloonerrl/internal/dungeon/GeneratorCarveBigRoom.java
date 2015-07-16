@@ -1,6 +1,6 @@
 package de.brainstormsoftworks.taloonerrl.internal.dungeon;
 
-import de.brainstormsoftworks.taloonerrl.dungeon.IGenerator;
+import de.brainstormsoftworks.taloonerrl.dungeon.Generator;
 import de.brainstormsoftworks.taloonerrl.dungeon.ITile;
 
 /**
@@ -10,7 +10,16 @@ import de.brainstormsoftworks.taloonerrl.dungeon.ITile;
  * @author david
  *
  */
-public class GeneratorCarveBigRoom implements IGenerator {
+public final class GeneratorCarveBigRoom extends Generator {
+
+	private static final Generator instance = new GeneratorCarveBigRoom();
+
+	/**
+	 * constructor.<br/>
+	 * private on purpose, use {@link #getInstance()} instead
+	 */
+	private GeneratorCarveBigRoom() {
+	}
 
 	@Override
 	public void generate(ITile[][] map, int _tilesHorizontal, int _tilesVertical) {
@@ -19,7 +28,15 @@ public class GeneratorCarveBigRoom implements IGenerator {
 				map[x][y].setWalkable(true);
 			}
 		}
+	}
 
+	/**
+	 * gets an instance of this {@link Generator}
+	 * 
+	 * @return instance
+	 */
+	public static Generator getInstance() {
+		return instance;
 	}
 
 }

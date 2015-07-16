@@ -6,7 +6,9 @@ public interface ITile {
 
 	public void setVisited();
 
-	public EDungeonSprites getFloor();
+	public EDungeonSprites getDungeonSprite();
+
+	public void setDungeonSprite(EDungeonSprites _sprite);
 
 	public EDungeonFeature getDungeonFeature();
 

@@ -1,12 +1,12 @@
 package de.brainstormsoftworks.taloonerrl.dungeon;
 
 /**
- * generic interface for an dungeon generator
+ * generic superclass for an dungeon generator
  * 
  * @author david
  *
  */
-public interface IGenerator {
+public abstract class Generator {
 
 	/**
 	 * generates the level layout in the given map
@@ -18,5 +18,6 @@ public interface IGenerator {
 	 * @param _tilesVertical
 	 *            number of vertical tiles in the map
 	 */
-	void generate(ITile[][] map, int _tilesHorizontal, int _tilesVertical);
+	public abstract void generate(ITile[][] map, int _tilesHorizontal,
+			int _tilesVertical);
 }

@@ -23,19 +23,26 @@ import de.brainstormsoftworks.taloonerrl.dungeon.ITile;
 import de.brainstormsoftworks.taloonerrl.dungeon.MapFactory;
 
 public class TaloonerRl implements ApplicationListener {
-	Texture texture;
+	Texture floorTexture;
+	Texture wallTexture;
 	Texture font;
 	SpriteBatch batch;
 	float elapsed;
-	TextureRegion sTopLeft;
-	TextureRegion sTop;
-	TextureRegion sTopRight;
-	TextureRegion sLeft;
-	TextureRegion sCenter;
-	TextureRegion sRight;
-	TextureRegion sBottomLeft;
-	TextureRegion sBottom;
-	TextureRegion sBottomRight;
+	TextureRegion sFloorTopLeft;
+	TextureRegion sFloorTop;
+	TextureRegion sFloorTopRight;
+	TextureRegion sFloorLeft;
+	TextureRegion sFloorCenter;
+	TextureRegion sFloorRight;
+	TextureRegion sFloorBottomLeft;
+	TextureRegion sFloorBottom;
+	TextureRegion sFloorBottomRight;
+	TextureRegion sWallTopLeft;
+	TextureRegion sWallHorizontal;
+	TextureRegion sWallTopRight;
+	TextureRegion sWallVertical;
+	TextureRegion sWallBottomLeft;
+	TextureRegion sWallBottomRight;
 	TextureRegion at;
 	private static final int tileSize = 16;
 	float scale = 16f;
@@ -51,34 +58,52 @@ public class TaloonerRl implements ApplicationListener {
 	private Rectangle viewport;
 	private Rectangle playerOld;
 
-	private IMap map = MapFactory.createMap(TILES_HORIZONTAL, TILES_VERTICAL);
+	private final IMap map = MapFactory.createMap(TILES_HORIZONTAL,
+			TILES_VERTICAL);
 
-	private IActor player = ActorFactory.createActor(EActorTypes.PLAYER);
+	private final IActor player = ActorFactory.createActor(EActorTypes.PLAYER);
 
 	@Override
 	public void create() {
-		texture = new Texture(Gdx.files.internal("Floor.png"), false);
-		texture.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
-		texture.setWrap(TextureWrap.ClampToEdge, TextureWrap.ClampToEdge);
+		floorTexture = new Texture(Gdx.files.internal("Floor.png"), false);
+		floorTexture.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+		floorTexture.setWrap(TextureWrap.ClampToEdge, TextureWrap.ClampToEdge);
+		wallTexture = new Texture(Gdx.files.internal("Wall.png"), false);
+		wallTexture.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+		wallTexture.setWrap(TextureWrap.ClampToEdge, TextureWrap.ClampToEdge);
+
 		// 1 + yyy was added since there seems to be an offset in the tileset
-		sTopLeft = new TextureRegion(texture, 0 * tileSize, 1 + 3 * tileSize,
-				tileSize, tileSize);
-		sTop = new TextureRegion(texture, 1 * tileSize, 1 + 3 * tileSize,
-				tileSize, tileSize);
-		sTopRight = new TextureRegion(texture, 2 * tileSize, 1 + 3 * tileSize,
-				tileSize, tileSize);
-		sLeft = new TextureRegion(texture, 0 * tileSize, 1 + 4 * tileSize,
-				tileSize, tileSize);
-		sCenter = new TextureRegion(texture, 1 * tileSize, 1 + 4 * tileSize,
-				tileSize, tileSize);
-		sRight = new TextureRegion(texture, 2 * tileSize, 1 + 4 * tileSize,
-				tileSize, tileSize);
-		sBottomLeft = new TextureRegion(texture, 0 * tileSize,
+		// for the floor
+		sFloorTopLeft = new TextureRegion(floorTexture, 0 * tileSize,
+				1 + 3 * tileSize, tileSize, tileSize);
+		sWallTopLeft = new TextureRegion(wallTexture, 0 * tileSize,
+				3 * tileSize, tileSize, tileSize);
+		sFloorTop = new TextureRegion(floorTexture, 1 * tileSize,
+				1 + 3 * tileSize, tileSize, tileSize);
+		sWallHorizontal = new TextureRegion(wallTexture, 1 * tileSize,
+				3 * tileSize, tileSize, tileSize);
+		sFloorTopRight = new TextureRegion(floorTexture, 2 * tileSize,
+				1 + 3 * tileSize, tileSize, tileSize);
+		sWallTopRight = new TextureRegion(wallTexture, 2 * tileSize,
+				3 * tileSize, tileSize, tileSize);
+		sFloorLeft = new TextureRegion(floorTexture, 0 * tileSize,
+				1 + 4 * tileSize, tileSize, tileSize);
+		sWallVertical = new TextureRegion(wallTexture, 0 * tileSize,
+				4 * tileSize, tileSize, tileSize);
+		sFloorCenter = new TextureRegion(floorTexture, 1 * tileSize,
+				1 + 4 * tileSize, tileSize, tileSize);
+		sFloorRight = new TextureRegion(floorTexture, 2 * tileSize,
+				1 + 4 * tileSize, tileSize, tileSize);
+		sFloorBottomLeft = new TextureRegion(floorTexture, 0 * tileSize,
 				1 + 5 * tileSize, tileSize, tileSize);
-		sBottom = new TextureRegion(texture, 1 * tileSize, 1 + 5 * tileSize,
-				tileSize, tileSize);
-		sBottomRight = new TextureRegion(texture, 2 * tileSize,
+		sWallBottomLeft = new TextureRegion(wallTexture, 0 * tileSize,
+				5 * tileSize, tileSize, tileSize);
+		sFloorBottom = new TextureRegion(floorTexture, 1 * tileSize,
 				1 + 5 * tileSize, tileSize, tileSize);
+		sFloorBottomRight = new TextureRegion(floorTexture, 2 * tileSize,
+				1 + 5 * tileSize, tileSize, tileSize);
+		sWallBottomRight = new TextureRegion(wallTexture, 2 * tileSize,
+				5 * tileSize, tileSize, tileSize);
 		font = new Texture(Gdx.files.internal("dejavu16x16_gs_tc.png"));
 		at = new TextureRegion(font, 0 * tileSize, 1 * tileSize, tileSize,
 				tileSize);
@@ -94,6 +119,8 @@ public class TaloonerRl implements ApplicationListener {
 		playerOld.width = tileSize;
 		playerOld.height = tileSize;
 
+		player.getMovementComponent().move(4, 4);
+
 		// TiledMap t = new TiledMap();
 		// TiledMapTileLayer layer = (TiledMapTileLayer)t.getLayers().get(0);
 	}
@@ -101,9 +128,9 @@ public class TaloonerRl implements ApplicationListener {
 	@Override
 	public void resize(int width, int height) {
 		// calculate new viewport
-		float aspectRatio = (float) width / (float) height;
+		final float aspectRatio = (float) width / (float) height;
 		float scale = 1f;
-		Vector2 crop = new Vector2(0f, 0f);
+		final Vector2 crop = new Vector2(0f, 0f);
 		if (aspectRatio > ASPECT_RATIO) {
 			scale = (float) height / (float) VIRTUAL_HEIGHT;
 			crop.x = (width - VIRTUAL_WIDTH * scale) / 2f;
@@ -114,8 +141,8 @@ public class TaloonerRl implements ApplicationListener {
 			scale = (float) width / (float) VIRTUAL_WIDTH;
 		}
 
-		float w = VIRTUAL_WIDTH * scale;
-		float h = VIRTUAL_HEIGHT * scale;
+		final float w = VIRTUAL_WIDTH * scale;
+		final float h = VIRTUAL_HEIGHT * scale;
 		viewport = new Rectangle(crop.x, crop.y, w, h);
 	}
 
@@ -144,40 +171,42 @@ public class TaloonerRl implements ApplicationListener {
 		// 100 + 25 * (float) Math.sin(elapsed));
 		for (int x = 0; x < TILES_HORIZONTAL; x++) {
 			for (int y = 0; y < TILES_VERTICAL; y++) {
-				TextureRegion tile = getTile(map.getMap()[x][y]);
+				final TextureRegion tile = getTile(map.getMap()[x][y]);
 				if (tile != null) {
 					batch.draw(tile, x * scale, y * scale);
 				}
 			}
 		}
-		// for (int i = 0; i < 10; i++) {
-		// batch.draw(sTopLeft, i * scale, i * scale);
-		// batch.draw(sTop, i * scale + scale, i * scale);
-		// batch.draw(sTopRight, i * scale + 2 * scale, i * scale);
-		// }
-		// batch.setBlendFunction(GL30.GL_SRC_ALPHA, GL30.GL_SRC_ALPHA);
 
-		if (Gdx.input.isKeyPressed(Keys.LEFT))
+		if (Gdx.input.isKeyPressed(Keys.LEFT)) {
 			playerOld.x -= 200 * Gdx.graphics.getDeltaTime();
-		if (Gdx.input.isKeyPressed(Keys.RIGHT))
+		}
+		if (Gdx.input.isKeyPressed(Keys.RIGHT)) {
 			playerOld.x += 200 * Gdx.graphics.getDeltaTime();
-		if (Gdx.input.isKeyPressed(Keys.DOWN))
+		}
+		if (Gdx.input.isKeyPressed(Keys.DOWN)) {
 			playerOld.y -= 200 * Gdx.graphics.getDeltaTime();
-		if (Gdx.input.isKeyPressed(Keys.UP))
+		}
+		if (Gdx.input.isKeyPressed(Keys.UP)) {
 			playerOld.y += 200 * Gdx.graphics.getDeltaTime();
-		if (playerOld.x < 0)
+		}
+		if (playerOld.x < 0) {
 			playerOld.x = 0;
-		if (playerOld.x > VIRTUAL_WIDTH - tileSize)
+		}
+		if (playerOld.x > VIRTUAL_WIDTH - tileSize) {
 			playerOld.x = VIRTUAL_WIDTH - tileSize;
-		if (playerOld.y < 0)
+		}
+		if (playerOld.y < 0) {
 			playerOld.y = 0;
-		if (playerOld.y > VIRTUAL_HEIGHT - tileSize)
+		}
+		if (playerOld.y > VIRTUAL_HEIGHT - tileSize) {
 			playerOld.y = VIRTUAL_HEIGHT - tileSize;
+		}
 		batch.draw(at, playerOld.x, playerOld.y);
 
 		drawActor(batch, player);
 
-		Vector3 touchPos = new Vector3();
+		final Vector3 touchPos = new Vector3();
 		touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
 		camera.unproject(touchPos);
 		mouseX = touchPos.x - tileSize / 2;
@@ -194,25 +223,37 @@ public class TaloonerRl implements ApplicationListener {
 	}
 
 	private TextureRegion getTile(ITile tile) {
-		switch (tile.getFloor()) {
+		switch (tile.getDungeonSprite()) {
 		case FLOOR_ROOM_BOTTOM:
-			return sBottom;
+			return sFloorBottom;
 		case FLOOR_ROOM_BOTTOMLEFT_CORNER:
-			return sBottomLeft;
+			return sFloorBottomLeft;
 		case FLOOR_ROOM_BOTTOMRIGHT_CORNER:
-			return sBottomRight;
+			return sFloorBottomRight;
 		case FLOOR_ROOM_CENTER:
-			return sCenter;
+			return sFloorCenter;
 		case FLOOR_ROOM_LEFT:
-			return sLeft;
+			return sFloorLeft;
 		case FLOOR_ROOM_RIGHT:
-			return sRight;
+			return sFloorRight;
 		case FLOOR_ROOM_TOP:
-			return sTop;
+			return sFloorTop;
 		case FLOOR_ROOM_TOPLEFT_CORNER:
-			return sTopLeft;
+			return sFloorTopLeft;
 		case FLOOR_ROOM_TOPRIGHT_CORNER:
-			return sTopRight;
+			return sFloorTopRight;
+		case WALL_TOPLEFT_CORNER:
+			return sWallTopLeft;
+		case WALL_HORIZONTAL:
+			return sWallHorizontal;
+		case WALL_TOPRIGHT_CORNER:
+			return sWallTopRight;
+		case WALL_VERTICAL:
+			return sWallVertical;
+		case WALL_BOTTOMLEFT_CORNER:
+			return sWallBottomLeft;
+		case WALL_BOTTOMRIGHT_CORNER:
+			return sWallBottomRight;
 		case NOTHING:
 			// same as default for now
 		default:
@@ -242,6 +283,7 @@ public class TaloonerRl implements ApplicationListener {
 	public void dispose() {
 		batch.dispose();
 		font.dispose();
-		texture.dispose();
+		floorTexture.dispose();
+		wallTexture.dispose();
 	}
 }

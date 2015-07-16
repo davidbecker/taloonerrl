@@ -6,8 +6,8 @@ import de.brainstormsoftworks.taloonerrl.dungeon.ITile;
 
 public class Tile implements ITile {
 
-	private EDungeonSprites floor = EDungeonSprites.NOTHING;
-	private EDungeonFeature dungeonFeature = EDungeonFeature.NOTHING;
+	private EDungeonSprites dungeonSprite = EDungeonSprites.NOTHING;
+	private final EDungeonFeature dungeonFeature = EDungeonFeature.NOTHING;
 	boolean explored = false;
 	boolean walkable = false;
 
@@ -33,8 +33,13 @@ public class Tile implements ITile {
 	}
 
 	@Override
-	public EDungeonSprites getFloor() {
-		return floor;
+	public EDungeonSprites getDungeonSprite() {
+		return dungeonSprite;
+	}
+
+	@Override
+	public void setDungeonSprite(EDungeonSprites _sprite) {
+		dungeonSprite = _sprite;
 	}
 
 	@Override

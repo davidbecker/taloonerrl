@@ -19,27 +19,27 @@ public final class DungeonUtil {
 	 */
 	public static EDungeonSprites[][] calculateDungeonSprites(ITile[][] _map,
 			int _tilesHorizontal, int _tilesVertical) {
-		EDungeonSprites[][] sprites = new EDungeonSprites[_tilesHorizontal][_tilesVertical];
+		final EDungeonSprites[][] sprites = new EDungeonSprites[_tilesHorizontal][_tilesVertical];
 		for (int x = 0; x < _tilesHorizontal; x++) {
 			for (int y = 0; y < _tilesVertical; y++) {
-				boolean selfWalkable = isWalkable(x, y, _map, _tilesHorizontal,
-						_tilesVertical);
-				boolean northWalkable = isWalkable(x, y + 1, _map,
+				final boolean selfWalkable = isWalkable(x, y, _map,
 						_tilesHorizontal, _tilesVertical);
-				boolean southWalkable = isWalkable(x, y - 1, _map,
+				final boolean northWalkable = isWalkable(x, y + 1, _map,
 						_tilesHorizontal, _tilesVertical);
-				boolean westWalkable = isWalkable(x - 1, y, _map,
+				final boolean southWalkable = isWalkable(x, y - 1, _map,
 						_tilesHorizontal, _tilesVertical);
-				boolean eastWalkable = isWalkable(x + 1, y, _map,
+				final boolean westWalkable = isWalkable(x - 1, y, _map,
 						_tilesHorizontal, _tilesVertical);
-				boolean northWestWalkable = isWalkable(x - 1, y + 1, _map,
+				final boolean eastWalkable = isWalkable(x + 1, y, _map,
 						_tilesHorizontal, _tilesVertical);
-				boolean northEastWalkable = isWalkable(x + 1, y + 1, _map,
-						_tilesHorizontal, _tilesVertical);
-				boolean southWestWalkable = isWalkable(x - 1, y - 1, _map,
-						_tilesHorizontal, _tilesVertical);
-				boolean southEastWalkable = isWalkable(x + 1, y - 1, _map,
-						_tilesHorizontal, _tilesVertical);
+				final boolean northWestWalkable = isWalkable(x - 1, y + 1,
+						_map, _tilesHorizontal, _tilesVertical);
+				final boolean northEastWalkable = isWalkable(x + 1, y + 1,
+						_map, _tilesHorizontal, _tilesVertical);
+				final boolean southWestWalkable = isWalkable(x - 1, y - 1,
+						_map, _tilesHorizontal, _tilesVertical);
+				final boolean southEastWalkable = isWalkable(x + 1, y - 1,
+						_map, _tilesHorizontal, _tilesVertical);
 
 				if (selfWalkable) {
 					// floor
@@ -82,6 +82,9 @@ public final class DungeonUtil {
 					// this should never happen when finished
 					sprites[x][y] = EDungeonSprites.NOTHING;
 				}
+				// TODO is it better to set sprites information here or in
+				// MapFactory?
+				_map[x][y].setDungeonSprite(sprites[x][y]);
 			}
 		}
 		return sprites;

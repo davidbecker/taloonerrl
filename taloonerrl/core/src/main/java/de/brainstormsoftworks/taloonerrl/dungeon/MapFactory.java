@@ -2,6 +2,8 @@ package de.brainstormsoftworks.taloonerrl.dungeon;
 
 import java.util.Random;
 
+import de.brainstormsoftworks.taloonerrl.internal.dungeon.DungeonUtil;
+import de.brainstormsoftworks.taloonerrl.internal.dungeon.GeneratorCarveBigRoom;
 import de.brainstormsoftworks.taloonerrl.internal.dungeon.Map;
 import de.brainstormsoftworks.taloonerrl.internal.dungeon.Tile;
 
@@ -13,7 +15,7 @@ public final class MapFactory {
 	}
 
 	public static IMap createMap(int _tilesHorizontal, int _tilesVertical) {
-		IMap map = new Map(_tilesHorizontal, _tilesVertical);
+		final IMap map = new Map(_tilesHorizontal, _tilesVertical);
 		for (int x = 0; x < _tilesHorizontal; x++) {
 			for (int y = 0; y < _tilesVertical; y++) {
 				// ITile newTile = new Tile(getFloor(rnd.nextInt(9)));
@@ -21,6 +23,14 @@ public final class MapFactory {
 				map.getMap()[x][y] = new Tile();
 			}
 		}
+		// generate the dungeon
+		GeneratorCarveBigRoom.getInstance().generate(map.getMap(),
+				_tilesHorizontal, _tilesVertical);
+		// calculate which sprite to use on each tile
+		final EDungeonSprites[][] sprites = DungeonUtil
+				.calculateDungeonSprites(map.getMap(), _tilesHorizontal,
+						_tilesVertical);
+		//
 		return map;
 	}
 
