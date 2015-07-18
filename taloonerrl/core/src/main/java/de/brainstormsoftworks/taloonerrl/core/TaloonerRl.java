@@ -4,7 +4,6 @@ import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
@@ -18,6 +17,7 @@ import com.badlogic.gdx.math.Vector3;
 import de.brainstormsoftworks.taloonerrl.actors.ActorFactory;
 import de.brainstormsoftworks.taloonerrl.actors.EActorTypes;
 import de.brainstormsoftworks.taloonerrl.actors.IActor;
+import de.brainstormsoftworks.taloonerrl.dungeon.IMap;
 import de.brainstormsoftworks.taloonerrl.dungeon.ITile;
 import de.brainstormsoftworks.taloonerrl.dungeon.MapFactory;
 
@@ -58,11 +58,11 @@ public class TaloonerRl implements ApplicationListener {
 	private Rectangle playerOld;
 
 	private final IActor player = ActorFactory.createActor(EActorTypes.PLAYER);
+	public static IMap map = null;
 
 	@Override
 	public void create() {
-		GameStateHolder.map = MapFactory.createMap(TILES_HORIZONTAL,
-				TILES_VERTICAL);
+		map = MapFactory.createMap(TILES_HORIZONTAL, TILES_VERTICAL);
 		floorTexture = new Texture(Gdx.files.internal("Floor.png"), false);
 		floorTexture.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
 		floorTexture.setWrap(TextureWrap.ClampToEdge, TextureWrap.ClampToEdge);
@@ -160,7 +160,7 @@ public class TaloonerRl implements ApplicationListener {
 				+ Gdx.graphics.getFramesPerSecond());
 		elapsed += Gdx.graphics.getDeltaTime();
 		Gdx.gl.glClearColor(0, 0, 0, 0);
-		Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		// camera.update();
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
@@ -169,7 +169,7 @@ public class TaloonerRl implements ApplicationListener {
 		// 100 + 25 * (float) Math.sin(elapsed));
 		for (int x = 0; x < TILES_HORIZONTAL; x++) {
 			for (int y = 0; y < TILES_VERTICAL; y++) {
-				final TextureRegion tile = getTile(GameStateHolder.map.getMap()[x][y]);
+				final TextureRegion tile = getTile(map.getMap()[x][y]);
 				if (tile != null) {
 					batch.draw(tile, x * scale, y * scale);
 				}

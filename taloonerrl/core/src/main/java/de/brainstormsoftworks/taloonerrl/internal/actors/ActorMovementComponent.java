@@ -1,11 +1,11 @@
 package de.brainstormsoftworks.taloonerrl.internal.actors;
 
 import de.brainstormsoftworks.taloonerrl.actors.IActorMovement;
-import de.brainstormsoftworks.taloonerrl.core.GameStateHolder;
+import de.brainstormsoftworks.taloonerrl.core.TaloonerRl;
 
 /**
- * 
- * 
+ *
+ *
  * @author david
  *
  */
@@ -27,7 +27,7 @@ public class ActorMovementComponent implements IActorMovement, IComponent {
 	public void move(int dX, int dY) {
 		final int newX = xPosition + dX;
 		final int newY = yPosition + dY;
-		if (GameStateHolder.map.getMap()[newX][newY].isWalkable()) {
+		if (TaloonerRl.map.getMap()[newX][newY].isWalkable()) {
 			xPosition += dX;
 			yPosition += dY;
 		}
