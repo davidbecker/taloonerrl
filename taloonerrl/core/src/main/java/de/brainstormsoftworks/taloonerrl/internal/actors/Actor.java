@@ -17,4 +17,15 @@ public abstract class Actor implements IActor {
 	public IActorSprite getSpriteComponent() {
 		return actorSpriteComponent;
 	}
+
+	@Override
+	public void sendMessage(int msg) {
+		if (movementComponent != null) {
+			movementComponent.recieveMessage(msg);
+		}
+		if (actorSpriteComponent != null) {
+			actorSpriteComponent.recieveMessage(msg);
+		}
+
+	}
 }

@@ -9,7 +9,7 @@ import de.brainstormsoftworks.taloonerrl.core.GameStateHolder;
  * @author david
  *
  */
-public class ActorMovementComponent implements IActorMovement {
+public class ActorMovementComponent implements IActorMovement, IComponent {
 
 	private int xPosition;
 	private int yPosition;
@@ -41,5 +41,11 @@ public class ActorMovementComponent implements IActorMovement {
 	@Override
 	public int getYPosition() {
 		return yPosition;
+	}
+
+	@Override
+	public void recieveMessage(int msg) {
+		// TODO Auto-generated method stub
+
 	}
 }
