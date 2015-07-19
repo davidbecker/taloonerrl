@@ -57,6 +57,11 @@ public class TaloonerRl implements ApplicationListener {
 	private Rectangle viewport;
 	private Rectangle playerOld;
 
+	private boolean isPlayerTurn = false;
+	private float delayToNextTurn = 0f;
+	/** minimum delay between player turns */
+	private final float delayBetweenTurns = 0.02f;
+
 	private final IActor player = ActorFactory.createActor(EActorTypes.PLAYER);
 	public static IMap map = null;
 
@@ -146,6 +151,58 @@ public class TaloonerRl implements ApplicationListener {
 
 	@Override
 	public void render() {
+		// check if the player did something first
+		// TODO change to a more general system
+
+		delayToNextTurn -= Gdx.graphics.getDeltaTime();
+
+		boolean keyPressedLeft = false;
+		boolean keyPressedRight = false;
+		boolean keyPressedDown = false;
+		boolean keyPressedUp = false;
+		if (delayToNextTurn <= 0f) {
+			// possible for player to make his turn
+			keyPressedLeft = Gdx.input.isKeyPressed(Keys.LEFT);
+			keyPressedRight = Gdx.input.isKeyPressed(Keys.RIGHT);
+			keyPressedDown = Gdx.input.isKeyPressed(Keys.DOWN);
+			keyPressedUp = Gdx.input.isKeyPressed(Keys.UP);
+			if (keyPressedDown || keyPressedLeft || keyPressedRight
+					|| keyPressedUp) {
+				// player did a move
+				isPlayerTurn = true;
+
+				if (keyPressedLeft) {
+					playerOld.x -= 200 * Gdx.graphics.getDeltaTime();
+					player.getMovementComponent().move(-1, 0);
+				}
+				if (keyPressedRight) {
+					playerOld.x += 200 * Gdx.graphics.getDeltaTime();
+					player.getMovementComponent().move(1, 0);
+				}
+				if (keyPressedDown) {
+					playerOld.y -= 200 * Gdx.graphics.getDeltaTime();
+					player.getMovementComponent().move(0, -1);
+				}
+				if (keyPressedUp) {
+					playerOld.y += 200 * Gdx.graphics.getDeltaTime();
+					player.getMovementComponent().move(0, 1);
+				}
+				if (playerOld.x < 0) {
+					playerOld.x = 0;
+				}
+				if (playerOld.x > VIRTUAL_WIDTH - tileSize) {
+					playerOld.x = VIRTUAL_WIDTH - tileSize;
+				}
+				if (playerOld.y < 0) {
+					playerOld.y = 0;
+				}
+				if (playerOld.y > VIRTUAL_HEIGHT - tileSize) {
+					playerOld.y = VIRTUAL_HEIGHT - tileSize;
+				}
+				delayToNextTurn = delayBetweenTurns;
+			}
+		}
+
 		// update camera
 		camera.update();
 
@@ -165,6 +222,10 @@ public class TaloonerRl implements ApplicationListener {
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
 		batch.setBlendFunction(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+
+		// TODO render map into framebuffer and use buffer if player hasn't
+		// moved
+
 		// batch.draw(texture, 100 + 100 * (float) Math.cos(elapsed),
 		// 100 + 25 * (float) Math.sin(elapsed));
 		for (int x = 0; x < TILES_HORIZONTAL; x++) {
@@ -174,35 +235,6 @@ public class TaloonerRl implements ApplicationListener {
 					batch.draw(tile, x * scale, y * scale);
 				}
 			}
-		}
-
-		if (Gdx.input.isKeyPressed(Keys.LEFT)) {
-			playerOld.x -= 200 * Gdx.graphics.getDeltaTime();
-			player.getMovementComponent().move(-1, 0);
-		}
-		if (Gdx.input.isKeyPressed(Keys.RIGHT)) {
-			playerOld.x += 200 * Gdx.graphics.getDeltaTime();
-			player.getMovementComponent().move(1, 0);
-		}
-		if (Gdx.input.isKeyPressed(Keys.DOWN)) {
-			playerOld.y -= 200 * Gdx.graphics.getDeltaTime();
-			player.getMovementComponent().move(0, -1);
-		}
-		if (Gdx.input.isKeyPressed(Keys.UP)) {
-			playerOld.y += 200 * Gdx.graphics.getDeltaTime();
-			player.getMovementComponent().move(0, 1);
-		}
-		if (playerOld.x < 0) {
-			playerOld.x = 0;
-		}
-		if (playerOld.x > VIRTUAL_WIDTH - tileSize) {
-			playerOld.x = VIRTUAL_WIDTH - tileSize;
-		}
-		if (playerOld.y < 0) {
-			playerOld.y = 0;
-		}
-		if (playerOld.y > VIRTUAL_HEIGHT - tileSize) {
-			playerOld.y = VIRTUAL_HEIGHT - tileSize;
 		}
 		batch.draw(at, playerOld.x, playerOld.y);
 
@@ -216,6 +248,8 @@ public class TaloonerRl implements ApplicationListener {
 
 		batch.draw(at, mouseX, mouseY);
 		batch.end();
+
+		isPlayerTurn = false;
 	}
 
 	private void drawActor(SpriteBatch spriteBatch, IActor actor) {
