@@ -38,7 +38,6 @@ public class TaloonerRl implements ApplicationListener {
 			/ (float) VIRTUAL_HEIGHT;
 	private OrthographicCamera camera;
 	private Rectangle viewport;
-	private Rectangle playerOld;
 
 	private boolean isPlayerTurn = false;
 	private float delayToNextTurn = 0f;
@@ -64,12 +63,6 @@ public class TaloonerRl implements ApplicationListener {
 		mouseY = Gdx.graphics.getHeight() / 2;
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
-		playerOld = new Rectangle();
-
-		playerOld.x = 30 * tileSize / 2 - tileSize / 2;
-		playerOld.y = 20 * tileSize / 2 - tileSize / 2;
-		playerOld.width = tileSize;
-		playerOld.height = tileSize;
 
 		player.getMovementComponent().move(4, 4);
 
@@ -120,32 +113,16 @@ public class TaloonerRl implements ApplicationListener {
 				isPlayerTurn = true;
 
 				if (keyPressedLeft) {
-					playerOld.x -= 200 * Gdx.graphics.getDeltaTime();
 					player.getMovementComponent().move(-1, 0);
 				}
 				if (keyPressedRight) {
-					playerOld.x += 200 * Gdx.graphics.getDeltaTime();
 					player.getMovementComponent().move(1, 0);
 				}
 				if (keyPressedDown) {
-					playerOld.y -= 200 * Gdx.graphics.getDeltaTime();
 					player.getMovementComponent().move(0, -1);
 				}
 				if (keyPressedUp) {
-					playerOld.y += 200 * Gdx.graphics.getDeltaTime();
 					player.getMovementComponent().move(0, 1);
-				}
-				if (playerOld.x < 0) {
-					playerOld.x = 0;
-				}
-				if (playerOld.x > VIRTUAL_WIDTH - tileSize) {
-					playerOld.x = VIRTUAL_WIDTH - tileSize;
-				}
-				if (playerOld.y < 0) {
-					playerOld.y = 0;
-				}
-				if (playerOld.y > VIRTUAL_HEIGHT - tileSize) {
-					playerOld.y = VIRTUAL_HEIGHT - tileSize;
 				}
 				delayToNextTurn = delayBetweenTurns;
 			}
@@ -173,8 +150,6 @@ public class TaloonerRl implements ApplicationListener {
 
 		DungeonRenderer.getInstance().render(batch, map.getMap(),
 				TILES_HORIZONTAL, TILES_VERTICAL);
-
-		batch.draw(at, playerOld.x, playerOld.y);
 
 		drawActor(batch, player);
 
