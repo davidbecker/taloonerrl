@@ -2,10 +2,10 @@ package de.brainstormsoftworks.taloonerrl.actors;
 
 public interface IActorMovement {
 
-	public void move(int dX, int dY);
+	void move(int dX, int dY);
 
-	public int getXPosition();
+	int getXPosition();
 
-	public int getYPosition();
+	int getYPosition();
 
 }

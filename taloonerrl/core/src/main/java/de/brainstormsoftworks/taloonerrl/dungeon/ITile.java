@@ -2,17 +2,25 @@ package de.brainstormsoftworks.taloonerrl.dungeon;
 
 public interface ITile {
 
-	public boolean isVisited();
+	/**
+	 * was this tile in field of view before?
+	 *
+	 * @return
+	 */
+	boolean isVisited();
 
-	public void setVisited();
+	/**
+	 * set flag that the tile was in field of view before
+	 */
+	void setVisited();
 
-	public EDungeonSprites getDungeonSprite();
+	EDungeonSprites getDungeonSprite();
 
-	public void setDungeonSprite(EDungeonSprites _sprite);
+	void setDungeonSprite(EDungeonSprites _sprite);
 
-	public EDungeonFeature getDungeonFeature();
+	EDungeonFeature getDungeonFeature();
 
-	public boolean isWalkable();
+	boolean isWalkable();
 
-	public void setWalkable(boolean _walkable);
+	void setWalkable(boolean _walkable);
 }
