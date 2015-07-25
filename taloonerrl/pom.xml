@@ -15,6 +15,7 @@
 		<gwt.maven.version>2.6.0</gwt.maven.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<findbugs.version>3.0.1</findbugs.version>
 	</properties>
 	<dependencyManagement>
 		<dependencies>
@@ -92,6 +93,14 @@
 				<groupId>com.badlogic.gdx</groupId>
 				<artifactId>gdx-backend-ios</artifactId>
 				<version>1.2.0</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>findbugs-maven-plugin</artifactId>
+				<version>${findbugs.version}</version>
+				<type>maven-plugin</type>
+				<scope>runtime</scope>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
@@ -187,6 +196,11 @@
 				<configuration>
 					<configLocation>checkstyle-rules.xml</configLocation>
 				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>findbugs-maven-plugin</artifactId>
+				<version>${findbugs.version}</version>
 			</plugin>
 		</plugins>
 	</reporting>
