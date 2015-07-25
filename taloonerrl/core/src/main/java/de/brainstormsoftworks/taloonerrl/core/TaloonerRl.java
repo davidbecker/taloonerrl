@@ -18,6 +18,7 @@ import de.brainstormsoftworks.taloonerrl.actors.IActor;
 import de.brainstormsoftworks.taloonerrl.dungeon.IMap;
 import de.brainstormsoftworks.taloonerrl.dungeon.MapFactory;
 import de.brainstormsoftworks.taloonerrl.render.DungeonRenderer;
+import de.brainstormsoftworks.taloonerrl.render.GuiRenderer;
 import de.brainstormsoftworks.taloonerrl.render.TextureManager;
 
 public class TaloonerRl implements ApplicationListener {
@@ -32,20 +33,19 @@ public class TaloonerRl implements ApplicationListener {
 	float mouseY;
 	private static final int TILES_HORIZONTAL = 30;
 	private static final int TILES_VERTICAL = 20;
-	private static final int VIRTUAL_WIDTH = TILES_HORIZONTAL * tileSize;
+	private static final int VIRTUAL_WIDTH = TILES_HORIZONTAL * tileSize + 4 * tileSize;
 	private static final int VIRTUAL_HEIGHT = TILES_VERTICAL * tileSize;
-	private static final float ASPECT_RATIO = (float) VIRTUAL_WIDTH
-			/ (float) VIRTUAL_HEIGHT;
+	private static final float ASPECT_RATIO = (float) VIRTUAL_WIDTH / (float) VIRTUAL_HEIGHT;
 	private OrthographicCamera camera;
 	private Rectangle viewport;
 
 	private boolean isPlayerTurn = false;
 	private float delayToNextTurn = 0f;
 	/** minimum delay between player turns */
-	private final float delayBetweenTurns = 0.03f;
-	private final float delayToNextAnimation = 0f;
+	private static final float delayBetweenTurns = 0.03f;
+	private static final float delayToNextAnimation = 0f;
 	/** minimum delay between player turns */
-	private final float delayBetweenAnimation = 0.03f;
+	private static final float delayBetweenAnimation = 0.03f;
 
 	private final IActor player = ActorFactory.createActor(EActorTypes.PLAYER);
 	public static IMap map = null;
@@ -56,8 +56,7 @@ public class TaloonerRl implements ApplicationListener {
 		// TextureManager
 
 		font = new Texture(Gdx.files.internal("dejavu16x16_gs_tc.png"));
-		at = new TextureRegion(font, 0 * tileSize, 1 * tileSize, tileSize,
-				tileSize);
+		at = new TextureRegion(font, 0 * tileSize, 1 * tileSize, tileSize, tileSize);
 		batch = new SpriteBatch();
 		mouseX = Gdx.graphics.getWidth() / 2;
 		mouseY = Gdx.graphics.getHeight() / 2;
@@ -67,6 +66,7 @@ public class TaloonerRl implements ApplicationListener {
 		player.getMovementComponent().move(4, 4);
 
 		DungeonRenderer.initInstance();
+		GuiRenderer.initInstance();
 	}
 
 	@Override
@@ -107,8 +107,7 @@ public class TaloonerRl implements ApplicationListener {
 			keyPressedRight = Gdx.input.isKeyPressed(Keys.RIGHT);
 			keyPressedDown = Gdx.input.isKeyPressed(Keys.DOWN);
 			keyPressedUp = Gdx.input.isKeyPressed(Keys.UP);
-			if (keyPressedDown || keyPressedLeft || keyPressedRight
-					|| keyPressedUp) {
+			if (keyPressedDown || keyPressedLeft || keyPressedRight || keyPressedUp) {
 				// player did a move
 				isPlayerTurn = true;
 
@@ -127,6 +126,22 @@ public class TaloonerRl implements ApplicationListener {
 				delayToNextTurn = delayBetweenTurns;
 			}
 		}
+		if (Gdx.input.isKeyPressed(Keys.NUM_1)) {
+			GuiRenderer.playerHeath = 0.00f;
+		}
+		if (Gdx.input.isKeyPressed(Keys.NUM_2)) {
+			GuiRenderer.playerHeath = 0.25f;
+		}
+		if (Gdx.input.isKeyPressed(Keys.NUM_3)) {
+			GuiRenderer.playerHeath = 0.5f;
+		}
+		if (Gdx.input.isKeyPressed(Keys.NUM_4)) {
+			GuiRenderer.playerHeath = 0.75f;
+		}
+		if (Gdx.input.isKeyPressed(Keys.NUM_5)) {
+
+			GuiRenderer.playerHeath = 1.0f;
+		}
 
 		// update camera
 		camera.update();
@@ -134,22 +149,21 @@ public class TaloonerRl implements ApplicationListener {
 		// see http://codebin.co.uk/blog/pixelated-rendering-in-libgdx/
 
 		// set viewport
-		Gdx.gl.glViewport(Math.round(viewport.x * tileSize) / tileSize,
-				Math.round(viewport.y * tileSize) / tileSize,
-				Math.round(viewport.width * tileSize) / tileSize,
-				Math.round(viewport.height * tileSize) / tileSize);
-		Gdx.graphics.setTitle("current fps: "
-				+ Gdx.graphics.getFramesPerSecond());
+		Gdx.gl.glViewport(Math.round(viewport.x * tileSize) / tileSize, Math.round(viewport.y * tileSize) / tileSize,
+				Math.round(viewport.width * tileSize) / tileSize, Math.round(viewport.height * tileSize) / tileSize);
+		Gdx.graphics.setTitle("current fps: " + Gdx.graphics.getFramesPerSecond());
 		elapsed += Gdx.graphics.getDeltaTime();
 		Gdx.gl.glClearColor(0, 0, 0, 0);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		// camera.update();
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
-		batch.setBlendFunction(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+		batch.enableBlending();
+		// batch.setBlendFunction(GL20.GL_ONE,
+		// GL20.GL_ONE_MINUS_CONSTANT_ALPHA);
 
-		DungeonRenderer.getInstance().render(batch, map.getMap(),
-				TILES_HORIZONTAL, TILES_VERTICAL);
+		DungeonRenderer.getInstance().render(batch, map.getMap(), TILES_HORIZONTAL, TILES_VERTICAL);
+		GuiRenderer.getInstance().render(batch, TILES_HORIZONTAL, TILES_VERTICAL);
 
 		drawActor(batch, player);
 
@@ -166,9 +180,8 @@ public class TaloonerRl implements ApplicationListener {
 	}
 
 	private void drawActor(SpriteBatch spriteBatch, IActor actor) {
-		spriteBatch.draw(getSprite(actor), actor.getMovementComponent()
-				.getXPosition() * scale, actor.getMovementComponent()
-				.getYPosition() * scale);
+		spriteBatch.draw(getSprite(actor), actor.getMovementComponent().getXPosition() * scale,
+				actor.getMovementComponent().getYPosition() * scale);
 	}
 
 	private TextureRegion getSprite(IActor actor) {
@@ -194,5 +207,6 @@ public class TaloonerRl implements ApplicationListener {
 		font.dispose();
 		TextureManager.getInstance().disposeAll();
 		DungeonRenderer.getInstance().disposeInstance();
+		GuiRenderer.getInstance().disposeInstance();
 	}
 }

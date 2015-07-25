@@ -9,7 +9,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import de.brainstormsoftworks.taloonerrl.dungeon.ITile;
 
-public final class DungeonRenderer {
+public final class DungeonRenderer implements IDisposableInstance {
 
 	private static DungeonRenderer instance = null;
 	private static final float scale = 16f;
