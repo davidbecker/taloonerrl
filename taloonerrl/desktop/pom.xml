@@ -17,13 +17,12 @@
 	</properties>
 
 	<dependencies>
-	<!-- 
+	
 		<dependency>
 			<groupId>de.brainstormsoftworks.taloonerrl</groupId>
-			<artifactId>main-core</artifactId>
+			<artifactId>taloonerrl-core</artifactId>
 			<version>${project.version}</version>
 		</dependency>
-		 -->
 
 		<dependency>
 			<groupId>com.badlogicgames.gdx</groupId>
