@@ -4,4 +4,4 @@ jdk:
 before_install:
   - cd taloonerrl
 install:
-  - maven install -P desktop
+  - mvn install -P desktop
