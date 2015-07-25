@@ -19,6 +19,22 @@ public final class GuiRenderer implements IDisposableInstance {
 	private final TextureRegion sBarRed75;
 	private final TextureRegion sBarRed50;
 	private final TextureRegion sBarRed25;
+	private final TextureRegion sBarBlue100;
+	private final TextureRegion sBarBlue75;
+	private final TextureRegion sBarBlue50;
+	private final TextureRegion sBarBlue25;
+	private final TextureRegion sBarGreen100;
+	private final TextureRegion sBarGreen75;
+	private final TextureRegion sBarGreen50;
+	private final TextureRegion sBarGreen25;
+	private final TextureRegion sBarYellow100;
+	private final TextureRegion sBarYellow75;
+	private final TextureRegion sBarYellow50;
+	private final TextureRegion sBarYellow25;
+	private final TextureRegion sBarSilver100;
+	private final TextureRegion sBarSilver75;
+	private final TextureRegion sBarSilver50;
+	private final TextureRegion sBarSilver25;
 
 	// FIXME
 	public static float playerHeath = 1.0f;
@@ -31,10 +47,31 @@ public final class GuiRenderer implements IDisposableInstance {
 		sBarCenter = new TextureRegion(guiTexture, 7 * tileSize, 0 * tileSize, tileSize, tileSize);
 		sBarRight = new TextureRegion(guiTexture, 8 * tileSize, 0 * tileSize, tileSize, tileSize);
 		sBarSmall = new TextureRegion(guiTexture, 9 * tileSize, 0 * tileSize, tileSize, tileSize);
+
 		sBarRed100 = new TextureRegion(guiTexture, 6 * tileSize, 1 * tileSize, tileSize, tileSize);
 		sBarRed75 = new TextureRegion(guiTexture, 7 * tileSize, 1 * tileSize, tileSize, tileSize);
 		sBarRed50 = new TextureRegion(guiTexture, 8 * tileSize, 1 * tileSize, tileSize, tileSize);
 		sBarRed25 = new TextureRegion(guiTexture, 9 * tileSize, 1 * tileSize, tileSize, tileSize);
+
+		sBarBlue100 = new TextureRegion(guiTexture, 6 * tileSize, 2 * tileSize, tileSize, tileSize);
+		sBarBlue75 = new TextureRegion(guiTexture, 7 * tileSize, 2 * tileSize, tileSize, tileSize);
+		sBarBlue50 = new TextureRegion(guiTexture, 8 * tileSize, 2 * tileSize, tileSize, tileSize);
+		sBarBlue25 = new TextureRegion(guiTexture, 9 * tileSize, 2 * tileSize, tileSize, tileSize);
+
+		sBarGreen100 = new TextureRegion(guiTexture, 6 * tileSize, 3 * tileSize, tileSize, tileSize);
+		sBarGreen75 = new TextureRegion(guiTexture, 7 * tileSize, 3 * tileSize, tileSize, tileSize);
+		sBarGreen50 = new TextureRegion(guiTexture, 8 * tileSize, 3 * tileSize, tileSize, tileSize);
+		sBarGreen25 = new TextureRegion(guiTexture, 9 * tileSize, 3 * tileSize, tileSize, tileSize);
+
+		sBarYellow100 = new TextureRegion(guiTexture, 6 * tileSize, 4 * tileSize, tileSize, tileSize);
+		sBarYellow75 = new TextureRegion(guiTexture, 7 * tileSize, 4 * tileSize, tileSize, tileSize);
+		sBarYellow50 = new TextureRegion(guiTexture, 8 * tileSize, 4 * tileSize, tileSize, tileSize);
+		sBarYellow25 = new TextureRegion(guiTexture, 9 * tileSize, 4 * tileSize, tileSize, tileSize);
+
+		sBarSilver100 = new TextureRegion(guiTexture, 6 * tileSize, 5 * tileSize, tileSize, tileSize);
+		sBarSilver75 = new TextureRegion(guiTexture, 7 * tileSize, 5 * tileSize, tileSize, tileSize);
+		sBarSilver50 = new TextureRegion(guiTexture, 8 * tileSize, 5 * tileSize, tileSize, tileSize);
+		sBarSilver25 = new TextureRegion(guiTexture, 9 * tileSize, 5 * tileSize, tileSize, tileSize);
 	}
 
 	/**
@@ -54,20 +91,19 @@ public final class GuiRenderer implements IDisposableInstance {
 	}
 
 	public void render(final SpriteBatch batch, final int tilesHorizontal, final int tilesVertical) {
-		renderBar(batch, playerHeath, 1, tilesHorizontal + 1, tilesVertical - 1);
-		renderBar(batch, playerHeath, 2, tilesHorizontal + 1, tilesVertical - 2);
-		renderBar(batch, playerHeath, 3, tilesHorizontal + 1, tilesVertical - 3);
-
-		// // renderBar(batch, tilesHorizontal + 1, tilesVertical - 1);
-		// fillBarSmall(batch, playerHeath, tilesHorizontal + 1, tilesVertical -
-		// 2);
-		// renderBarSmall(batch, tilesHorizontal + 1, tilesVertical - 2);
+		renderBar(batch, playerHeath, 1, tilesHorizontal + 1, tilesVertical - 1, EBarElementColor.RED);
+		renderBar(batch, playerHeath, 2, tilesHorizontal + 1, tilesVertical - 2, EBarElementColor.RED);
+		renderBar(batch, playerHeath, 3, tilesHorizontal + 1, tilesVertical - 3, EBarElementColor.RED);
+		renderBar(batch, playerHeath, 3, tilesHorizontal + 1, tilesVertical - 4, EBarElementColor.BLUE);
+		renderBar(batch, playerHeath, 3, tilesHorizontal + 1, tilesVertical - 5, EBarElementColor.GREEN);
+		renderBar(batch, playerHeath, 3, tilesHorizontal + 1, tilesVertical - 6, EBarElementColor.YELLOW);
+		renderBar(batch, playerHeath, 3, tilesHorizontal + 1, tilesVertical - 7, EBarElementColor.SILVER);
 
 	}
 
 	private void renderBar(final SpriteBatch batch, final float percent, final int barWidth, final int startX,
-			final int startY) {
-		fillBar(batch, percent, barWidth, startX, startY);
+			final int startY, final EBarElementColor color) {
+		fillBar(batch, percent, barWidth, startX, startY, color);
 		renderBarOutline(batch, barWidth, startX, startY);
 
 	}
@@ -86,27 +122,90 @@ public final class GuiRenderer implements IDisposableInstance {
 
 	}
 
-	private void fillBar(final SpriteBatch batch, final float percent, final int barWidth, final int x, final int y) {
+	private void fillBar(final SpriteBatch batch, final float percent, final int barWidth, final int x, final int y,
+			final EBarElementColor color) {
 		final EBarElementFilled[] calculateBarFill = RenderUtil.calculateBarFill(barWidth, percent);
 		for (int i = 0; i < barWidth; i++) {
-			final TextureRegion texture = getTextureForFilledState(calculateBarFill[i]);
+			final TextureRegion texture = getTextureForFilledState(calculateBarFill[i], color);
 			if (texture != null) {
 				batch.draw(texture, (i + x) * scale, y * scale);
 			}
 		}
 	}
 
-	private TextureRegion getTextureForFilledState(final EBarElementFilled barElementFilled) {
-		switch (barElementFilled) {
-		case PERCENT_100:
-			return sBarRed100;
-		case PERCENT_75:
-			return sBarRed75;
-		case PERCENT_50:
-			return sBarRed50;
-		case PERCENT_25:
-			return sBarRed25;
-		case PERCENT_0:
+	private TextureRegion getTextureForFilledState(final EBarElementFilled barElementFilled,
+			final EBarElementColor color) {
+		switch (color) {
+		case RED:
+			switch (barElementFilled) {
+			case PERCENT_100:
+				return sBarRed100;
+			case PERCENT_75:
+				return sBarRed75;
+			case PERCENT_50:
+				return sBarRed50;
+			case PERCENT_25:
+				return sBarRed25;
+			case PERCENT_0:
+			default:
+				return null;
+			}
+		case BLUE:
+			switch (barElementFilled) {
+			case PERCENT_100:
+				return sBarBlue100;
+			case PERCENT_75:
+				return sBarBlue75;
+			case PERCENT_50:
+				return sBarBlue50;
+			case PERCENT_25:
+				return sBarBlue25;
+			case PERCENT_0:
+			default:
+				return null;
+			}
+		case GREEN:
+			switch (barElementFilled) {
+			case PERCENT_100:
+				return sBarGreen100;
+			case PERCENT_75:
+				return sBarGreen75;
+			case PERCENT_50:
+				return sBarGreen50;
+			case PERCENT_25:
+				return sBarGreen25;
+			case PERCENT_0:
+			default:
+				return null;
+			}
+		case YELLOW:
+			switch (barElementFilled) {
+			case PERCENT_100:
+				return sBarYellow100;
+			case PERCENT_75:
+				return sBarYellow75;
+			case PERCENT_50:
+				return sBarYellow50;
+			case PERCENT_25:
+				return sBarYellow25;
+			case PERCENT_0:
+			default:
+				return null;
+			}
+		case SILVER:
+			switch (barElementFilled) {
+			case PERCENT_100:
+				return sBarSilver100;
+			case PERCENT_75:
+				return sBarSilver75;
+			case PERCENT_50:
+				return sBarSilver50;
+			case PERCENT_25:
+				return sBarSilver25;
+			case PERCENT_0:
+			default:
+				return null;
+			}
 		default:
 			return null;
 		}
