@@ -28,24 +28,18 @@ public final class GuiRenderer implements IDisposableInstance {
 	// FIXME
 	public static float playerHeath = 1.0f;
 
+	private static final String TEXTURE_PATH = "textures/dawnlike/GUI/";
+
 	private GuiRenderer() {
-		guiTexture = new Texture(Gdx.files.internal("GUI0.png"), false);
-		sBarLeft = new TextureRegion(guiTexture, 6 * tileSize, 0 * tileSize,
-				tileSize, tileSize);
-		sBarCenter = new TextureRegion(guiTexture, 7 * tileSize, 0 * tileSize,
-				tileSize, tileSize);
-		sBarRight = new TextureRegion(guiTexture, 8 * tileSize, 0 * tileSize,
-				tileSize, tileSize);
-		sBarSmall = new TextureRegion(guiTexture, 9 * tileSize, 0 * tileSize,
-				tileSize, tileSize);
-		sBarRed100 = new TextureRegion(guiTexture, 6 * tileSize, 1 * tileSize,
-				tileSize, tileSize);
-		sBarRed75 = new TextureRegion(guiTexture, 7 * tileSize, 1 * tileSize,
-				tileSize, tileSize);
-		sBarRed50 = new TextureRegion(guiTexture, 8 * tileSize, 1 * tileSize,
-				tileSize, tileSize);
-		sBarRed25 = new TextureRegion(guiTexture, 9 * tileSize, 1 * tileSize,
-				tileSize, tileSize);
+		guiTexture = new Texture(Gdx.files.internal(TEXTURE_PATH + "GUI0.png"), false);
+		sBarLeft = new TextureRegion(guiTexture, 6 * tileSize, 0 * tileSize, tileSize, tileSize);
+		sBarCenter = new TextureRegion(guiTexture, 7 * tileSize, 0 * tileSize, tileSize, tileSize);
+		sBarRight = new TextureRegion(guiTexture, 8 * tileSize, 0 * tileSize, tileSize, tileSize);
+		sBarSmall = new TextureRegion(guiTexture, 9 * tileSize, 0 * tileSize, tileSize, tileSize);
+		sBarRed100 = new TextureRegion(guiTexture, 6 * tileSize, 1 * tileSize, tileSize, tileSize);
+		sBarRed75 = new TextureRegion(guiTexture, 7 * tileSize, 1 * tileSize, tileSize, tileSize);
+		sBarRed50 = new TextureRegion(guiTexture, 8 * tileSize, 1 * tileSize, tileSize, tileSize);
+		sBarRed25 = new TextureRegion(guiTexture, 9 * tileSize, 1 * tileSize, tileSize, tileSize);
 	}
 
 	/**
