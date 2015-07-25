@@ -15,11 +15,13 @@ import de.brainstormsoftworks.taloonerrl.dungeon.EDungeonSprites;
 
 /**
  * manages the loading & disposing of textures<br/>
- * TODO rewrite with array & EnumSet to improve performance FIXME this is just a
- * concept (and does perform poorly at its current state)
+ * TODO rewrite with array & EnumSet to improve performance<br/>
+ * FIXME this is just a concept (and does perform poorly at its current state)
  *
  * @author david
- *
+ * @deprecated for poor performance - use {@link DungeonRenderer} &
+ *             {@link GuiRenderer} instead - they manage there own textures to
+ *             use
  */
 @Deprecated
 public final class TextureManager {
@@ -29,7 +31,7 @@ public final class TextureManager {
 	private boolean dungeonSpritesLoadad = false;
 
 	private Texture floorTexture;
-	private Texture wallTexture;
+	// private Texture wallTexture;
 	private static final int tileSize = 16;
 
 	private static TextureManager instance = new TextureManager();
@@ -53,10 +55,8 @@ public final class TextureManager {
 		if (!dungeonSpritesLoadad) {
 			// first time this method is called -> load the texture
 			floorTexture = new Texture(Gdx.files.internal("Floor.png"), false);
-			floorTexture
-					.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
-			floorTexture.setWrap(TextureWrap.ClampToEdge,
-					TextureWrap.ClampToEdge);
+			floorTexture.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+			floorTexture.setWrap(TextureWrap.ClampToEdge, TextureWrap.ClampToEdge);
 			toDispose.add(floorTexture);
 			// wallTexture = new Texture(Gdx.files.internal("Wall.png"), false);
 			// wallTexture.setFilter(TextureFilter.Nearest,
@@ -67,32 +67,23 @@ public final class TextureManager {
 
 			// load tiles into cache
 			spritesCache.put(EDungeonSprites.FLOOR_TOPLEFT_CORNER,
-					new TextureRegion(floorTexture, 0 * tileSize,
-							1 + 3 * tileSize, tileSize, tileSize));
-			spritesCache.put(EDungeonSprites.FLOOR_TOP, new TextureRegion(
-					floorTexture, 1 * tileSize, 1 + 3 * tileSize, tileSize,
-					tileSize));
+					new TextureRegion(floorTexture, 0 * tileSize, 1 + 3 * tileSize, tileSize, tileSize));
+			spritesCache.put(EDungeonSprites.FLOOR_TOP,
+					new TextureRegion(floorTexture, 1 * tileSize, 1 + 3 * tileSize, tileSize, tileSize));
 			spritesCache.put(EDungeonSprites.FLOOR_TOPRIGHT_CORNER,
-					new TextureRegion(floorTexture, 2 * tileSize,
-							1 + 3 * tileSize, tileSize, tileSize));
-			spritesCache.put(EDungeonSprites.FLOOR_LEFT, new TextureRegion(
-					floorTexture, 0 * tileSize, 1 + 4 * tileSize, tileSize,
-					tileSize));
-			spritesCache.put(EDungeonSprites.FLOOR_CENTER, new TextureRegion(
-					floorTexture, 1 * tileSize, 1 + 4 * tileSize, tileSize,
-					tileSize));
-			spritesCache.put(EDungeonSprites.FLOOR_RIGHT, new TextureRegion(
-					floorTexture, 2 * tileSize, 1 + 4 * tileSize, tileSize,
-					tileSize));
+					new TextureRegion(floorTexture, 2 * tileSize, 1 + 3 * tileSize, tileSize, tileSize));
+			spritesCache.put(EDungeonSprites.FLOOR_LEFT,
+					new TextureRegion(floorTexture, 0 * tileSize, 1 + 4 * tileSize, tileSize, tileSize));
+			spritesCache.put(EDungeonSprites.FLOOR_CENTER,
+					new TextureRegion(floorTexture, 1 * tileSize, 1 + 4 * tileSize, tileSize, tileSize));
+			spritesCache.put(EDungeonSprites.FLOOR_RIGHT,
+					new TextureRegion(floorTexture, 2 * tileSize, 1 + 4 * tileSize, tileSize, tileSize));
 			spritesCache.put(EDungeonSprites.FLOOR_BOTTOMLEFT_CORNER,
-					new TextureRegion(floorTexture, 0 * tileSize,
-							1 + 5 * tileSize, tileSize, tileSize));
-			spritesCache.put(EDungeonSprites.FLOOR_BOTTOM, new TextureRegion(
-					floorTexture, 1 * tileSize, 1 + 5 * tileSize, tileSize,
-					tileSize));
+					new TextureRegion(floorTexture, 0 * tileSize, 1 + 5 * tileSize, tileSize, tileSize));
+			spritesCache.put(EDungeonSprites.FLOOR_BOTTOM,
+					new TextureRegion(floorTexture, 1 * tileSize, 1 + 5 * tileSize, tileSize, tileSize));
 			spritesCache.put(EDungeonSprites.FLOOR_BOTTOMRIGHT_CORNER,
-					new TextureRegion(floorTexture, 2 * tileSize,
-							1 + 5 * tileSize, tileSize, tileSize));
+					new TextureRegion(floorTexture, 2 * tileSize, 1 + 5 * tileSize, tileSize, tileSize));
 			dungeonSpritesLoadad = true;
 		}
 		return spritesCache.get(eDungeonSprites);
