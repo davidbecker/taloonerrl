@@ -11,11 +11,6 @@ public final class GuiRenderer implements IDisposableInstance {
 	private static final float scale = 16f;
 	private static final int tileSize = 16;
 
-	private static final float percent100 = 1.00f;
-	private static final float percent75 = .75f;
-	private static final float percent50 = .50f;
-	private static final float percent25 = .25f;
-
 	private final TextureRegion sBarLeft;
 	private final TextureRegion sBarCenter;
 	private final TextureRegion sBarRight;
@@ -58,69 +53,63 @@ public final class GuiRenderer implements IDisposableInstance {
 		guiTexture.dispose();
 	}
 
-	public void render(SpriteBatch batch, int tilesHorizontal, int tilesVertical) {
-		fillBar(batch, playerHeath, tilesHorizontal + 1, tilesVertical - 1);
-		renderBar(batch, tilesHorizontal + 1, tilesVertical - 1);
-		fillBarSmall(batch, playerHeath, tilesHorizontal + 1, tilesVertical - 2);
-		renderBarSmall(batch, tilesHorizontal + 1, tilesVertical - 2);
+	public void render(final SpriteBatch batch, final int tilesHorizontal, final int tilesVertical) {
+		renderBar(batch, playerHeath, 1, tilesHorizontal + 1, tilesVertical - 1);
+		renderBar(batch, playerHeath, 2, tilesHorizontal + 1, tilesVertical - 2);
+		renderBar(batch, playerHeath, 3, tilesHorizontal + 1, tilesVertical - 3);
+
+		// // renderBar(batch, tilesHorizontal + 1, tilesVertical - 1);
+		// fillBarSmall(batch, playerHeath, tilesHorizontal + 1, tilesVertical -
+		// 2);
+		// renderBarSmall(batch, tilesHorizontal + 1, tilesVertical - 2);
 
 	}
 
-	private void fillBar(SpriteBatch batch, float percent, int x, int y) {
-		final int barWidth = 3;
-		final float filledPerTile = 1.00f / barWidth;
-		for (int i = 1; i <= barWidth; i++) {
-			final float f = filledPerTile * i;
-			// System.err.println(i + " - " + percent + " ("
-			// + (percent - filledPerTile * i) + ") - " + f);
-			if (f > percent - filledPerTile * i) {
-				batch.draw(sBarRed100, (i - 1 + x) * scale, y * scale);
+	private void renderBar(final SpriteBatch batch, final float percent, final int barWidth, final int startX,
+			final int startY) {
+		fillBar(batch, percent, barWidth, startX, startY);
+		renderBarOutline(batch, barWidth, startX, startY);
+
+	}
+
+	private void renderBarOutline(final SpriteBatch batch, final int barWidth, final int startX, final int startY) {
+		if (barWidth <= 1) {
+			batch.draw(sBarSmall, startX * scale, startY * scale);
+		} else {
+			batch.draw(sBarLeft, startX * scale, startY * scale);
+			final int centerPieces = barWidth - 2;
+			for (int i = 0; i < centerPieces; i++) {
+				batch.draw(sBarCenter, (1 + i + startX) * scale, startY * scale);
 			}
-			System.err.println(i + " " + (percent - f));
-			if (f <= percent) {
-				batch.draw(sBarRed100, (i - 1 + x) * scale, y * scale);
-			} else if (f * percent75 <= percent) {
-				batch.draw(sBarRed75, (i - 1 + x) * scale, y * scale);
-			} else if (f * percent50 <= percent) {
-				batch.draw(sBarRed50, (i - 1 + x) * scale, y * scale);
-			} else if (f * percent25 <= percent) {
-				batch.draw(sBarRed25, (i - 1 + x) * scale, y * scale);
+			batch.draw(sBarRight, (1 + centerPieces + startX) * scale, startY * scale);
+		}
+
+	}
+
+	private void fillBar(final SpriteBatch batch, final float percent, final int barWidth, final int x, final int y) {
+		final EBarElementFilled[] calculateBarFill = RenderUtil.calculateBarFill(barWidth, percent);
+		for (int i = 0; i < barWidth; i++) {
+			final TextureRegion texture = getTextureForFilledState(calculateBarFill[i]);
+			if (texture != null) {
+				batch.draw(texture, (i + x) * scale, y * scale);
 			}
-			// if (f < percent25 * percent) {
-			// System.err.println(i + " 25%");
-			// batch.draw(sBarRed25, (i - 1 + x) * scale, y * scale);
-			// } else if (f < percent50 * percent) {
-			// System.err.println(i + " 50%");
-			// batch.draw(sBarRed50, (i - 1 + x) * scale, y * scale);
-			// } else if (f < percent75 * percent) {
-			// System.err.println(i + " 75%");
-			// batch.draw(sBarRed75, (i - 1 + x) * scale, y * scale);
-			// } else {
-			// System.err.println(i + " 100%");
-			// batch.draw(sBarRed100, (i - 1 + x) * scale, y * scale);
-			// }
 		}
 	}
 
-	private void fillBarSmall(SpriteBatch batch, float percent, int x, int y) {
-		if (percent >= percent100) {
-			batch.draw(sBarRed100, x * scale, y * scale);
-		} else if (percent >= percent75) {
-			batch.draw(sBarRed75, x * scale, y * scale);
-		} else if (percent >= percent50) {
-			batch.draw(sBarRed50, x * scale, y * scale);
-		} else if (percent >= percent25) {
-			batch.draw(sBarRed25, x * scale, y * scale);
+	private TextureRegion getTextureForFilledState(final EBarElementFilled barElementFilled) {
+		switch (barElementFilled) {
+		case PERCENT_100:
+			return sBarRed100;
+		case PERCENT_75:
+			return sBarRed75;
+		case PERCENT_50:
+			return sBarRed50;
+		case PERCENT_25:
+			return sBarRed25;
+		case PERCENT_0:
+		default:
+			return null;
 		}
-	}
 
-	private void renderBar(SpriteBatch batch, int x, int y) {
-		batch.draw(sBarLeft, x * scale, y * scale);
-		batch.draw(sBarCenter, (1 + x) * scale, y * scale);
-		batch.draw(sBarRight, (2 + x) * scale, y * scale);
-	}
-
-	private void renderBarSmall(SpriteBatch batch, int x, int y) {
-		batch.draw(sBarSmall, x * scale, y * scale);
 	}
 }
