@@ -43,7 +43,7 @@ public final class TextureManager {
 		return instance;
 	}
 
-	public TextureRegion getTile(EDungeonFeature dungeonFeature) {
+	public TextureRegion getTile(final EDungeonFeature dungeonFeature) {
 		if (!dungeonFeaturesLoadad) {
 			// first time this method is called -> load the texture
 			dungeonFeaturesLoadad = true;
@@ -51,7 +51,7 @@ public final class TextureManager {
 		return null;
 	}
 
-	public TextureRegion getTile(EDungeonSprites eDungeonSprites) {
+	public TextureRegion getTile(final EDungeonSprites eDungeonSprites) {
 		if (!dungeonSpritesLoadad) {
 			// first time this method is called -> load the texture
 			floorTexture = new Texture(Gdx.files.internal("Floor.png"), false);

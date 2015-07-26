@@ -80,7 +80,8 @@ public final class DungeonRenderer implements IDisposableInstance {
 		wallTexture.dispose();
 	}
 
-	public void render(SpriteBatch batch, ITile[][] tileArray, int tilesHorizontal, int tilesVertical) {
+	public void render(final SpriteBatch batch, final ITile[][] tileArray, final int tilesHorizontal,
+			final int tilesVertical) {
 		// TODO render map into framebuffer and use buffer if player hasn't
 		// moved
 		for (int x = 0; x < tilesHorizontal; x++) {
@@ -95,7 +96,7 @@ public final class DungeonRenderer implements IDisposableInstance {
 		}
 	}
 
-	private TextureRegion getTile(ITile tile) {
+	private TextureRegion getTile(final ITile tile) {
 		switch (tile.getDungeonSprite()) {
 		case FLOOR_BOTTOM:
 			return sFloorBottom;

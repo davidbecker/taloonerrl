@@ -6,17 +6,17 @@ import de.brainstormsoftworks.taloonerrl.dungeon.ITile;
 public class Map implements IMap {
 
 	private ITile[][] map;
-	private int tilesHorizontal;
-	private int tilesVertical;
+	private final int tilesHorizontal;
+	private final int tilesVertical;
 
-	public Map(int _tilesHorizontal, int _tilesVertical) {
+	public Map(final int _tilesHorizontal, final int _tilesVertical) {
 		tilesHorizontal = _tilesHorizontal;
 		tilesVertical = _tilesVertical;
 		map = new ITile[tilesHorizontal][tilesVertical];
 	}
 
 	@Override
-	public boolean isVisible(int x, int y) {
+	public boolean isVisible(final int x, final int y) {
 		if (!isInMapBounds(x, y)) {
 			return false;
 		}
@@ -25,7 +25,7 @@ public class Map implements IMap {
 	}
 
 	@Override
-	public boolean isWalkable(int x, int y) {
+	public boolean isWalkable(final int x, final int y) {
 		if (!isInMapBounds(x, y)) {
 			return false;
 		}
@@ -33,7 +33,7 @@ public class Map implements IMap {
 		return false;
 	}
 
-	private boolean isInMapBounds(int x, int y) {
+	private boolean isInMapBounds(final int x, final int y) {
 		if (x < 0 || x >= tilesHorizontal || y < 0 || y >= tilesVertical) {
 			return false;
 		}
@@ -45,7 +45,7 @@ public class Map implements IMap {
 		return map;
 	}
 
-	public void setMap(ITile[][] newMap) {
+	public void setMap(final ITile[][] newMap) {
 		map = newMap;
 	}
 

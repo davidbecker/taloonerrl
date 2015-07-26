@@ -70,7 +70,7 @@ public class TaloonerRl implements ApplicationListener {
 	}
 
 	@Override
-	public void resize(int width, int height) {
+	public void resize(final int width, final int height) {
 		// calculate new viewport
 		final float aspectRatio = (float) width / (float) height;
 		float scale = 1f;
@@ -179,12 +179,12 @@ public class TaloonerRl implements ApplicationListener {
 		isPlayerTurn = false;
 	}
 
-	private void drawActor(SpriteBatch spriteBatch, IActor actor) {
+	private void drawActor(final SpriteBatch spriteBatch, final IActor actor) {
 		spriteBatch.draw(getSprite(actor), actor.getMovementComponent().getXPosition() * scale,
 				actor.getMovementComponent().getYPosition() * scale);
 	}
 
-	private TextureRegion getSprite(IActor actor) {
+	private TextureRegion getSprite(final IActor actor) {
 		switch (actor.getSpriteComponent().getSprite()) {
 		case AT:
 			return at;

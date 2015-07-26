@@ -11,7 +11,7 @@ public final class ActorFactory {
 	private ActorFactory() {
 	}
 
-	public static IActor createActor(EActorTypes type) {
+	public static IActor createActor(final EActorTypes type) {
 		IActor newActor = null;
 		switch (type) {
 		case PLAYER:

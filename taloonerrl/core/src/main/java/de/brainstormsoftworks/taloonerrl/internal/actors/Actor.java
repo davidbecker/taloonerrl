@@ -19,7 +19,7 @@ public abstract class Actor implements IActor {
 	}
 
 	@Override
-	public void sendMessage(int msg) {
+	public void sendMessage(final int msg) {
 		if (movementComponent != null) {
 			movementComponent.recieveMessage(msg);
 		}

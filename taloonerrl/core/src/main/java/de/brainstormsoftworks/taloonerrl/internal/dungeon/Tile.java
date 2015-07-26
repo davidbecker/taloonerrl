@@ -18,7 +18,7 @@ public class Tile implements ITile {
 		this(false);
 	}
 
-	public Tile(boolean _walkable) {
+	public Tile(final boolean _walkable) {
 		walkable = _walkable;
 	}
 
@@ -38,7 +38,7 @@ public class Tile implements ITile {
 	}
 
 	@Override
-	public void setDungeonSprite(EDungeonSprites _sprite) {
+	public void setDungeonSprite(final EDungeonSprites _sprite) {
 		dungeonSprite = _sprite;
 	}
 
@@ -53,7 +53,7 @@ public class Tile implements ITile {
 	}
 
 	@Override
-	public void setWalkable(boolean _walkable) {
+	public void setWalkable(final boolean _walkable) {
 		walkable = _walkable;
 	}
 

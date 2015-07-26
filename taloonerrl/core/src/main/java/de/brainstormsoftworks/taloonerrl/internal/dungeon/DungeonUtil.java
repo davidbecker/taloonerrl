@@ -17,40 +17,28 @@ public final class DungeonUtil {
 	 * @return array of sprites to display for the given map. has the same
 	 *         dimension as _map
 	 */
-	public static EDungeonSprites[][] calculateDungeonSprites(ITile[][] _map,
-			int _tilesHorizontal, int _tilesVertical) {
+	public static EDungeonSprites[][] calculateDungeonSprites(ITile[][] _map, int _tilesHorizontal,
+			int _tilesVertical) {
 		final EDungeonSprites[][] sprites = new EDungeonSprites[_tilesHorizontal][_tilesVertical];
 		for (int x = 0; x < _tilesHorizontal; x++) {
 			for (int y = 0; y < _tilesVertical; y++) {
-				final boolean selfWalkable = isWalkable(x, y, _map,
-						_tilesHorizontal, _tilesVertical);
-				final boolean northWalkable = isWalkable(x, y + 1, _map,
-						_tilesHorizontal, _tilesVertical);
-				final boolean southWalkable = isWalkable(x, y - 1, _map,
-						_tilesHorizontal, _tilesVertical);
-				final boolean westWalkable = isWalkable(x - 1, y, _map,
-						_tilesHorizontal, _tilesVertical);
-				final boolean eastWalkable = isWalkable(x + 1, y, _map,
-						_tilesHorizontal, _tilesVertical);
-				final boolean northWestWalkable = isWalkable(x - 1, y + 1,
-						_map, _tilesHorizontal, _tilesVertical);
-				final boolean northEastWalkable = isWalkable(x + 1, y + 1,
-						_map, _tilesHorizontal, _tilesVertical);
-				final boolean southWestWalkable = isWalkable(x - 1, y - 1,
-						_map, _tilesHorizontal, _tilesVertical);
-				final boolean southEastWalkable = isWalkable(x + 1, y - 1,
-						_map, _tilesHorizontal, _tilesVertical);
+				final boolean selfWalkable = isWalkable(x, y, _map, _tilesHorizontal, _tilesVertical);
+				final boolean northWalkable = isWalkable(x, y + 1, _map, _tilesHorizontal, _tilesVertical);
+				final boolean southWalkable = isWalkable(x, y - 1, _map, _tilesHorizontal, _tilesVertical);
+				final boolean westWalkable = isWalkable(x - 1, y, _map, _tilesHorizontal, _tilesVertical);
+				final boolean eastWalkable = isWalkable(x + 1, y, _map, _tilesHorizontal, _tilesVertical);
+				final boolean northWestWalkable = isWalkable(x - 1, y + 1, _map, _tilesHorizontal, _tilesVertical);
+				final boolean northEastWalkable = isWalkable(x + 1, y + 1, _map, _tilesHorizontal, _tilesVertical);
+				final boolean southWestWalkable = isWalkable(x - 1, y - 1, _map, _tilesHorizontal, _tilesVertical);
+				final boolean southEastWalkable = isWalkable(x + 1, y - 1, _map, _tilesHorizontal, _tilesVertical);
 
 				if (selfWalkable) {
 					// floor
-					if (northWalkable && southWalkable && westWalkable
-							&& eastWalkable) {
+					if (northWalkable && southWalkable && westWalkable && eastWalkable) {
 						sprites[x][y] = EDungeonSprites.FLOOR_CENTER;
-					} else if (eastWalkable && westWalkable && northWalkable
-							&& !southWalkable) {
+					} else if (eastWalkable && westWalkable && northWalkable && !southWalkable) {
 						sprites[x][y] = EDungeonSprites.FLOOR_BOTTOM;
-					} else if (eastWalkable && westWalkable && !northWalkable
-							&& southWalkable) {
+					} else if (eastWalkable && westWalkable && !northWalkable && southWalkable) {
 						sprites[x][y] = EDungeonSprites.FLOOR_TOP;
 					} else if (!eastWalkable) {
 						if (northWalkable) {
@@ -79,23 +67,19 @@ public final class DungeonUtil {
 						// FIXME there are other possibilities
 						// bottom corner
 						sprites[x][y] = EDungeonSprites.WALL_BOTTOMLEFT_CORNER;
-					} else if (!northWalkable && !westWalkable
-							&& northWestWalkable) {
+					} else if (!northWalkable && !westWalkable && northWestWalkable) {
 						// FIXME there are other possibilities
 						// top corner
 						sprites[x][y] = EDungeonSprites.WALL_BOTTOMRIGHT_CORNER;
-					} else if (!southWalkable && !eastWalkable
-							&& southEastWalkable) {
+					} else if (!southWalkable && !eastWalkable && southEastWalkable) {
 						// FIXME there are other possibilities
 						// top corner
 						sprites[x][y] = EDungeonSprites.WALL_TOPLEFT_CORNER;
-					} else if (!southWalkable && !westWalkable
-							&& southWestWalkable) {
+					} else if (!southWalkable && !westWalkable && southWestWalkable) {
 						// FIXME there are other possibilities
 						// bottom corner
 						sprites[x][y] = EDungeonSprites.WALL_TOPRIGHT_CORNER;
-					} else if (!westWalkable && !eastWalkable
-							&& (northWalkable || southWalkable)) {
+					} else if (!westWalkable && !eastWalkable && (northWalkable || southWalkable)) {
 						// horizontal piece
 						sprites[x][y] = EDungeonSprites.WALL_HORIZONTAL;
 					} else if (!southWalkable || !northEastWalkable) {
@@ -115,14 +99,11 @@ public final class DungeonUtil {
 		return sprites;
 	}
 
-	private static boolean isWalkable(int x, int y, ITile[][] _map,
-			int _tilesHorizontal, int _tilesVertical) {
-		return isInBounds(x, y, _tilesHorizontal, _tilesVertical)
-				&& _map[x][y].isWalkable();
+	private static boolean isWalkable(int x, int y, ITile[][] _map, int _tilesHorizontal, int _tilesVertical) {
+		return isInBounds(x, y, _tilesHorizontal, _tilesVertical) && _map[x][y].isWalkable();
 	}
 
-	private static boolean isInBounds(int x, int y, int _tilesHorizontal,
-			int _tilesVertical) {
+	private static boolean isInBounds(int x, int y, int _tilesHorizontal, int _tilesVertical) {
 		return x >= 0 && x < _tilesHorizontal && y >= 0 && y < _tilesVertical;
 	}
 }

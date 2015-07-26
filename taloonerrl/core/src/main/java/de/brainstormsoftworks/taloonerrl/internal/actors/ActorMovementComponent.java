@@ -18,13 +18,13 @@ public class ActorMovementComponent implements IActorMovement, IComponent {
 		this(0, 0);
 	}
 
-	public ActorMovementComponent(int initialXPosition, int initialYPosition) {
+	public ActorMovementComponent(final int initialXPosition, final int initialYPosition) {
 		xPosition = initialXPosition;
 		yPosition = initialYPosition;
 	}
 
 	@Override
-	public void move(int dX, int dY) {
+	public void move(final int dX, final int dY) {
 		final int newX = xPosition + dX;
 		final int newY = yPosition + dY;
 		if (TaloonerRl.map.getMap()[newX][newY].isWalkable()) {
@@ -44,7 +44,7 @@ public class ActorMovementComponent implements IActorMovement, IComponent {
 	}
 
 	@Override
-	public void recieveMessage(int msg) {
+	public void recieveMessage(final int msg) {
 		// TODO Auto-generated method stub
 
 	}

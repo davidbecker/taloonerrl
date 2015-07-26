@@ -12,12 +12,12 @@ public class ActorSpriteComponent implements IActorSprite, IComponent {
 		return sprite;
 	}
 
-	public void setSprite(ESprite newSprite) {
+	public void setSprite(final ESprite newSprite) {
 		sprite = newSprite;
 	}
 
 	@Override
-	public void recieveMessage(int msg) {
+	public void recieveMessage(final int msg) {
 		// TODO Auto-generated method stub
 
 	}
