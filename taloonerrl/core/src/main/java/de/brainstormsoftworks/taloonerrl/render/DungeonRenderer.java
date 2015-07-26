@@ -34,46 +34,33 @@ public final class DungeonRenderer implements IDisposableInstance {
 	private final TextureRegion sWallBottomLeft;
 	private final TextureRegion sWallBottomRight;
 
+	private static final String TEXTURE_PATH = "textures/dawnlike/Objects/";
+
 	private DungeonRenderer() {
-		floorTexture = new Texture(Gdx.files.internal("Floor.png"), false);
+		floorTexture = new Texture(Gdx.files.internal(TEXTURE_PATH + "Floor.png"), false);
 		floorTexture.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
 		floorTexture.setWrap(TextureWrap.ClampToEdge, TextureWrap.ClampToEdge);
-		wallTexture = new Texture(Gdx.files.internal("Wall.png"), false);
+		wallTexture = new Texture(Gdx.files.internal(TEXTURE_PATH + "Wall.png"), false);
 		wallTexture.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
 		wallTexture.setWrap(TextureWrap.ClampToEdge, TextureWrap.ClampToEdge);
 
 		// 1 + yyy was added since there seems to be an offset in the tileset
 		// for the floor
-		sFloorTopLeft = new TextureRegion(floorTexture, 0 * tileSize,
-				1 + 3 * tileSize, tileSize, tileSize);
-		sWallTopLeft = new TextureRegion(wallTexture, 0 * tileSize,
-				3 * tileSize, tileSize, tileSize);
-		sFloorTop = new TextureRegion(floorTexture, 1 * tileSize,
-				1 + 3 * tileSize, tileSize, tileSize);
-		sWallHorizontal = new TextureRegion(wallTexture, 1 * tileSize,
-				3 * tileSize, tileSize, tileSize);
-		sFloorTopRight = new TextureRegion(floorTexture, 2 * tileSize,
-				1 + 3 * tileSize, tileSize, tileSize);
-		sWallTopRight = new TextureRegion(wallTexture, 2 * tileSize,
-				3 * tileSize, tileSize, tileSize);
-		sFloorLeft = new TextureRegion(floorTexture, 0 * tileSize,
-				1 + 4 * tileSize, tileSize, tileSize);
-		sWallVertical = new TextureRegion(wallTexture, 0 * tileSize,
-				4 * tileSize, tileSize, tileSize);
-		sFloorCenter = new TextureRegion(floorTexture, 1 * tileSize,
-				1 + 4 * tileSize, tileSize, tileSize);
-		sFloorRight = new TextureRegion(floorTexture, 2 * tileSize,
-				1 + 4 * tileSize, tileSize, tileSize);
-		sFloorBottomLeft = new TextureRegion(floorTexture, 0 * tileSize,
-				1 + 5 * tileSize, tileSize, tileSize);
-		sWallBottomLeft = new TextureRegion(wallTexture, 0 * tileSize,
-				5 * tileSize, tileSize, tileSize);
-		sFloorBottom = new TextureRegion(floorTexture, 1 * tileSize,
-				1 + 5 * tileSize, tileSize, tileSize);
-		sFloorBottomRight = new TextureRegion(floorTexture, 2 * tileSize,
-				1 + 5 * tileSize, tileSize, tileSize);
-		sWallBottomRight = new TextureRegion(wallTexture, 2 * tileSize,
-				5 * tileSize, tileSize, tileSize);
+		sFloorTopLeft = new TextureRegion(floorTexture, 0 * tileSize, 1 + 3 * tileSize, tileSize, tileSize);
+		sWallTopLeft = new TextureRegion(wallTexture, 0 * tileSize, 3 * tileSize, tileSize, tileSize);
+		sFloorTop = new TextureRegion(floorTexture, 1 * tileSize, 1 + 3 * tileSize, tileSize, tileSize);
+		sWallHorizontal = new TextureRegion(wallTexture, 1 * tileSize, 3 * tileSize, tileSize, tileSize);
+		sFloorTopRight = new TextureRegion(floorTexture, 2 * tileSize, 1 + 3 * tileSize, tileSize, tileSize);
+		sWallTopRight = new TextureRegion(wallTexture, 2 * tileSize, 3 * tileSize, tileSize, tileSize);
+		sFloorLeft = new TextureRegion(floorTexture, 0 * tileSize, 1 + 4 * tileSize, tileSize, tileSize);
+		sWallVertical = new TextureRegion(wallTexture, 0 * tileSize, 4 * tileSize, tileSize, tileSize);
+		sFloorCenter = new TextureRegion(floorTexture, 1 * tileSize, 1 + 4 * tileSize, tileSize, tileSize);
+		sFloorRight = new TextureRegion(floorTexture, 2 * tileSize, 1 + 4 * tileSize, tileSize, tileSize);
+		sFloorBottomLeft = new TextureRegion(floorTexture, 0 * tileSize, 1 + 5 * tileSize, tileSize, tileSize);
+		sWallBottomLeft = new TextureRegion(wallTexture, 0 * tileSize, 5 * tileSize, tileSize, tileSize);
+		sFloorBottom = new TextureRegion(floorTexture, 1 * tileSize, 1 + 5 * tileSize, tileSize, tileSize);
+		sFloorBottomRight = new TextureRegion(floorTexture, 2 * tileSize, 1 + 5 * tileSize, tileSize, tileSize);
+		sWallBottomRight = new TextureRegion(wallTexture, 2 * tileSize, 5 * tileSize, tileSize, tileSize);
 	}
 
 	/**
@@ -87,13 +74,14 @@ public final class DungeonRenderer implements IDisposableInstance {
 		return instance;
 	}
 
+	@Override
 	public void disposeInstance() {
 		floorTexture.dispose();
 		wallTexture.dispose();
 	}
 
-	public void render(SpriteBatch batch, ITile[][] tileArray,
-			int tilesHorizontal, int tilesVertical) {
+	public void render(final SpriteBatch batch, final ITile[][] tileArray, final int tilesHorizontal,
+			final int tilesVertical) {
 		// TODO render map into framebuffer and use buffer if player hasn't
 		// moved
 		for (int x = 0; x < tilesHorizontal; x++) {
@@ -108,7 +96,7 @@ public final class DungeonRenderer implements IDisposableInstance {
 		}
 	}
 
-	private TextureRegion getTile(ITile tile) {
+	private TextureRegion getTile(final ITile tile) {
 		switch (tile.getDungeonSprite()) {
 		case FLOOR_BOTTOM:
 			return sFloorBottom;
