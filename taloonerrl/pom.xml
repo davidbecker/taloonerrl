@@ -28,19 +28,12 @@
 			</dependency>
 
 			<!-- android-specific dependencies -->
-			<dependency>
-				<groupId>com.badlogicgames.gdx</groupId>
-				<artifactId>gdx-backend-android</artifactId>
-				<version>${gdx.version}</version>
-			</dependency>
-
-			<dependency>
-				<groupId>com.badlogicgames.gdx</groupId>
-				<artifactId>gdx-platform</artifactId>
-				<version>${gdx.version}</version>
-				<classifier>natives-armeabi</classifier>
-				<scope>provided</scope>
-			</dependency>
+			<!-- <dependency> <groupId>com.badlogicgames.gdx</groupId> <artifactId>gdx-backend-android</artifactId> 
+				<version>${gdx.version}</version> </dependency> <dependency> <groupId>com.badlogicgames.gdx</groupId> 
+				<artifactId>gdx-platform</artifactId> <version>${gdx.version}</version> <classifier>natives-armeabi</classifier> 
+				<scope>provided</scope> </dependency> <dependency> <groupId>com.badlogicgames.gdx</groupId> 
+				<artifactId>gdx-platform</artifactId> <version>${gdx.version}</version> <classifier>natives-armeabi-v7a</classifier> 
+				<scope>provided</scope> </dependency> -->
 
 
 			<!-- desktop-specific dependencies -->
@@ -57,44 +50,18 @@
 				<classifier>natives-desktop</classifier>
 			</dependency>
 
-			<dependency>
-				<groupId>com.badlogicgames.gdx</groupId>
-				<artifactId>gdx-platform</artifactId>
-				<version>${gdx.version}</version>
-				<classifier>natives-armeabi-v7a</classifier>
-				<scope>provided</scope>
-			</dependency>
-
 			<!-- gwt-specific dependencies -->
-			<dependency>
-				<groupId>com.badlogicgames.gdx</groupId>
-				<artifactId>gdx</artifactId>
-				<version>${gdx.version}</version>
-				<classifier>sources</classifier>
-				<scope>provided</scope>
-			</dependency>
-
-			<dependency>
-				<groupId>com.badlogicgames.gdx</groupId>
-				<artifactId>gdx-backend-gwt</artifactId>
-				<version>${gdx.version}</version>
-				<classifier>sources</classifier>
-				<scope>provided</scope>
-			</dependency>
-
-			<dependency>
-				<groupId>com.badlogicgames.gdx</groupId>
-				<artifactId>gdx-backend-gwt</artifactId>
-				<version>${gdx.version}</version>
-			</dependency>
+			<!-- <dependency> <groupId>com.badlogicgames.gdx</groupId> <artifactId>gdx</artifactId> 
+				<version>${gdx.version}</version> <classifier>sources</classifier> <scope>provided</scope> 
+				</dependency> <dependency> <groupId>com.badlogicgames.gdx</groupId> <artifactId>gdx-backend-gwt</artifactId> 
+				<version>${gdx.version}</version> <classifier>sources</classifier> <scope>provided</scope> 
+				</dependency> <dependency> <groupId>com.badlogicgames.gdx</groupId> <artifactId>gdx-backend-gwt</artifactId> 
+				<version>${gdx.version}</version> </dependency> -->
 
 			<!-- ios-specific dependencies -->
 			<!-- requires robovm upgrades -->
-			<dependency>
-				<groupId>com.badlogic.gdx</groupId>
-				<artifactId>gdx-backend-ios</artifactId>
-				<version>${gdx.version}</version>
-			</dependency>
+			<!-- <dependency> <groupId>com.badlogic.gdx</groupId> <artifactId>gdx-backend-ios</artifactId> 
+				<version>${gdx.version}</version> </dependency> -->
 
 			<dependency>
 				<groupId>org.codehaus.mojo</groupId>
