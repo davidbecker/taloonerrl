@@ -1,7 +1,5 @@
 language: java
 jdk:
   - openjdk7
-before_install:
-  - cd taloonerrl
 install:
-  - mvn install -P desktop
+  - mvn package -P desktop
