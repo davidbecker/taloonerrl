@@ -16,6 +16,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<findbugs.version>3.0.1</findbugs.version>
+		<gdx.version>1.6.4</gdx.version>
 	</properties>
 	<dependencyManagement>
 		<dependencies>
@@ -23,77 +24,44 @@
 			<dependency>
 				<groupId>com.badlogicgames.gdx</groupId>
 				<artifactId>gdx</artifactId>
-				<version>1.2.0</version>
+				<version>${gdx.version}</version>
 			</dependency>
 
 			<!-- android-specific dependencies -->
-			<dependency>
-				<groupId>com.badlogicgames.gdx</groupId>
-				<artifactId>gdx-backend-android</artifactId>
-				<version>1.2.0</version>
-			</dependency>
-
-			<dependency>
-				<groupId>com.badlogicgames.gdx</groupId>
-				<artifactId>gdx-platform</artifactId>
-				<version>1.2.0</version>
-				<classifier>natives-armeabi</classifier>
-				<scope>provided</scope>
-			</dependency>
+			<!-- <dependency> <groupId>com.badlogicgames.gdx</groupId> <artifactId>gdx-backend-android</artifactId> 
+				<version>${gdx.version}</version> </dependency> <dependency> <groupId>com.badlogicgames.gdx</groupId> 
+				<artifactId>gdx-platform</artifactId> <version>${gdx.version}</version> <classifier>natives-armeabi</classifier> 
+				<scope>provided</scope> </dependency> <dependency> <groupId>com.badlogicgames.gdx</groupId> 
+				<artifactId>gdx-platform</artifactId> <version>${gdx.version}</version> <classifier>natives-armeabi-v7a</classifier> 
+				<scope>provided</scope> </dependency> -->
 
 
 			<!-- desktop-specific dependencies -->
 			<dependency>
 				<groupId>com.badlogicgames.gdx</groupId>
 				<artifactId>gdx-backend-lwjgl</artifactId>
-				<version>1.2.0</version>
+				<version>${gdx.version}</version>
 			</dependency>
 
 			<dependency>
 				<groupId>com.badlogicgames.gdx</groupId>
 				<artifactId>gdx-platform</artifactId>
-				<version>1.2.0</version>
+				<version>${gdx.version}</version>
 				<classifier>natives-desktop</classifier>
 			</dependency>
 
-			<dependency>
-				<groupId>com.badlogicgames.gdx</groupId>
-				<artifactId>gdx-platform</artifactId>
-				<version>1.2.0</version>
-				<classifier>natives-armeabi-v7a</classifier>
-				<scope>provided</scope>
-			</dependency>
-
 			<!-- gwt-specific dependencies -->
-			<dependency>
-				<groupId>com.badlogicgames.gdx</groupId>
-				<artifactId>gdx</artifactId>
-				<version>1.2.0</version>
-				<classifier>sources</classifier>
-				<scope>provided</scope>
-			</dependency>
-
-			<dependency>
-				<groupId>com.badlogicgames.gdx</groupId>
-				<artifactId>gdx-backend-gwt</artifactId>
-				<version>1.2.0</version>
-				<classifier>sources</classifier>
-				<scope>provided</scope>
-			</dependency>
-
-			<dependency>
-				<groupId>com.badlogicgames.gdx</groupId>
-				<artifactId>gdx-backend-gwt</artifactId>
-				<version>1.2.0</version>
-			</dependency>
+			<!-- <dependency> <groupId>com.badlogicgames.gdx</groupId> <artifactId>gdx</artifactId> 
+				<version>${gdx.version}</version> <classifier>sources</classifier> <scope>provided</scope> 
+				</dependency> <dependency> <groupId>com.badlogicgames.gdx</groupId> <artifactId>gdx-backend-gwt</artifactId> 
+				<version>${gdx.version}</version> <classifier>sources</classifier> <scope>provided</scope> 
+				</dependency> <dependency> <groupId>com.badlogicgames.gdx</groupId> <artifactId>gdx-backend-gwt</artifactId> 
+				<version>${gdx.version}</version> </dependency> -->
 
 			<!-- ios-specific dependencies -->
 			<!-- requires robovm upgrades -->
-			<dependency>
-				<groupId>com.badlogic.gdx</groupId>
-				<artifactId>gdx-backend-ios</artifactId>
-				<version>1.2.0</version>
-			</dependency>
+			<!-- <dependency> <groupId>com.badlogic.gdx</groupId> <artifactId>gdx-backend-ios</artifactId> 
+				<version>${gdx.version}</version> </dependency> -->
 
 			<dependency>
 				<groupId>org.codehaus.mojo</groupId>
@@ -143,24 +111,10 @@
 				<module>desktop</module>
 			</modules>
 		</profile>
-		<profile>
-			<id>android</id>
-			<modules>
-				<module>android</module>
-			</modules>
-		</profile>
-		<profile>
-			<id>html</id>
-			<modules>
-				<module>html</module>
-			</modules>
-		</profile>
-		<profile>
-			<id>ios</id>
-			<modules>
-				<module>ios</module>
-			</modules>
-		</profile>
+		<!-- <profile> <id>android</id> <modules> <module>android</module> </modules> 
+			</profile> <profile> <id>html</id> <modules> <module>html</module> </modules> 
+			</profile> <profile> <id>ios</id> <modules> <module>ios</module> </modules> 
+			</profile> -->
 	</profiles>
 
 	<modules>
