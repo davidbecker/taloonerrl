@@ -1,5 +1,6 @@
 package de.brainstormsoftworks.taloonerrl.core;
 
+import com.artemis.Entity;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
@@ -15,6 +16,7 @@ import com.badlogic.gdx.math.Vector3;
 import de.brainstormsoftworks.taloonerrl.actors.ActorFactory;
 import de.brainstormsoftworks.taloonerrl.actors.EActorTypes;
 import de.brainstormsoftworks.taloonerrl.actors.IActor;
+import de.brainstormsoftworks.taloonerrl.core.engine.GameEngine;
 import de.brainstormsoftworks.taloonerrl.dungeon.IMap;
 import de.brainstormsoftworks.taloonerrl.dungeon.MapFactory;
 import de.brainstormsoftworks.taloonerrl.render.DungeonRenderer;
@@ -49,13 +51,14 @@ public class TaloonerRl implements ApplicationListener {
 
 	private final IActor player = ActorFactory.createActor(EActorTypes.PLAYER);
 	public static IMap map = null;
+	private static final String fontPath = "font/";
 
 	@Override
 	public void create() {
 		map = MapFactory.createMap(TILES_HORIZONTAL, TILES_VERTICAL);
 		// TextureManager
 
-		font = new Texture(Gdx.files.internal("dejavu16x16_gs_tc.png"));
+		font = new Texture(Gdx.files.internal(fontPath + "dejavu16x16_gs_tc.png"));
 		at = new TextureRegion(font, 0 * tileSize, 1 * tileSize, tileSize, tileSize);
 		batch = new SpriteBatch();
 		mouseX = Gdx.graphics.getWidth() / 2;
@@ -64,6 +67,9 @@ public class TaloonerRl implements ApplicationListener {
 		camera.setToOrtho(false, VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
 
 		player.getMovementComponent().move(4, 4);
+		// forces the engine to initialize
+		final GameEngine instance = GameEngine.instance;
+		final Entity createNewEntity = instance.createNewEntity(EActorTypes.PLAYER);
 
 		DungeonRenderer.initInstance();
 		GuiRenderer.initInstance();
