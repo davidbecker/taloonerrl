@@ -4,11 +4,13 @@ import com.artemis.Aspect;
 import com.artemis.ComponentMapper;
 import com.artemis.Entity;
 import com.artemis.systems.EntityProcessingSystem;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import de.brainstormsoftworks.taloonerrl.components.PositionComponent;
 import de.brainstormsoftworks.taloonerrl.components.SpriteComponent;
 import de.brainstormsoftworks.taloonerrl.core.engine.ComponentMappers;
+import de.brainstormsoftworks.taloonerrl.render.RenderUtil;
 
 public class RenderSystem extends EntityProcessingSystem {
 	private final SpriteBatch batch;
@@ -23,7 +25,13 @@ public class RenderSystem extends EntityProcessingSystem {
 	protected void process(final Entity e) {
 		final ComponentMapper<PositionComponent> posMapper = ComponentMappers.getInstance().position;
 		final ComponentMapper<SpriteComponent> spriteMapper = ComponentMappers.getInstance().sprite;
-		// TODO implement
-
+		final PositionComponent positionComponent = posMapper.get(e);
+		final SpriteComponent spriteComponent = spriteMapper.get(e);
+		final Animation animation = spriteComponent.getAnimation();
+		if (animation != null) {
+			batch.begin();
+			batch.draw(RenderUtil.getKeyFrame(animation), positionComponent.getX(), positionComponent.getY());
+			batch.end();
+		}
 	}
 }

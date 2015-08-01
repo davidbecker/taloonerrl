@@ -10,11 +10,12 @@ import de.brainstormsoftworks.taloonerrl.components.PositionComponent;
 import de.brainstormsoftworks.taloonerrl.components.SpriteComponent;
 
 public final class Archetypes {
-	public final Archetype playerArchetype;
+	/** archetype for monsters & player */
+	public final Archetype actor;
 	private static Archetypes instance;
 
 	private Archetypes(final World world) {
-		playerArchetype = new ArchetypeBuilder().add(ControllerComponent.class).add(HealthComponent.class)
+		actor = new ArchetypeBuilder().add(ControllerComponent.class).add(HealthComponent.class)
 				.add(PositionComponent.class).add(SpriteComponent.class).build(world);
 	}
 

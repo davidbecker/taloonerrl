@@ -4,11 +4,16 @@
  * are made available under the terms of the GNU Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
- * 
+ *
  * Contributors:
  *     David Becker - initial API and implementation
  ******************************************************************************/
 package de.brainstormsoftworks.taloonerrl.render;
+
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+
+import de.brainstormsoftworks.taloonerrl.core.engine.GameEngine;
 
 /**
  * collection of utilities methods useful for rendering
@@ -88,5 +93,16 @@ public final class RenderUtil {
 			return EBarElementFilled.PERCENT_75;
 		}
 		return EBarElementFilled.PERCENT_100;
+	}
+
+	/**
+	 * retrieves the key frame for the given animation
+	 *
+	 * @param animation
+	 *            to get the frame for
+	 * @return texture region
+	 */
+	public static TextureRegion getKeyFrame(final Animation animation) {
+		return animation.getKeyFrame(GameEngine.getInstance().getStateTime(), true);
 	}
 }
