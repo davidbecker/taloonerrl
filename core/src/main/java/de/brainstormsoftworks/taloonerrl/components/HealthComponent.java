@@ -4,7 +4,7 @@
  * are made available under the terms of the GNU Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
- * 
+ *
  * Contributors:
  *     David Becker - initial API and implementation
  ******************************************************************************/
@@ -20,12 +20,12 @@ import com.artemis.PooledComponent;
  */
 public class HealthComponent extends PooledComponent {
 
-	private float heathPercent = 1.0f;
+	private float healthPercent = 1.0f;
 	private boolean alive = true;
 
 	@Override
 	protected void reset() {
-		heathPercent = 1.0f;
+		healthPercent = 1.0f;
 		alive = true;
 	}
 
@@ -34,18 +34,24 @@ public class HealthComponent extends PooledComponent {
 	 *
 	 * @return the heathPercent
 	 */
-	public float getHeathPercent() {
-		return heathPercent;
+	public float getHealthPercent() {
+		return healthPercent;
 	}
 
 	/**
 	 * setter for heathPercent
 	 *
-	 * @param heathPercent
+	 * @param _healthPercent
 	 *            the heathPercent to set
 	 */
-	public void setHeathPercent(final float heathPercent) {
-		this.heathPercent = heathPercent;
+	public void setHealthPercent(final float _healthPercent) {
+		healthPercent = _healthPercent;
+		if (healthPercent < 0) {
+			healthPercent = 0;
+			alive = false;
+		} else if (healthPercent > 1) {
+			healthPercent = 1;
+		}
 	}
 
 	/**

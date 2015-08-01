@@ -123,7 +123,7 @@ public class TaloonerRl implements ApplicationListener {
 		final GameEngine gameEngine = GameEngine.getInstance();
 		gameEngine.createNewEntity(EEntity.PLAYER);
 		final Entity createNewEntity = gameEngine.createNewEntity(EEntity.SQUIRREL, 1, 1);
-		createNewEntity.getComponent(HealthComponent.class).setHeathPercent(0.75f);
+		createNewEntity.getComponent(HealthComponent.class).setHealthPercent(0.75f);
 
 		gameEngine.createNewEntity(EEntity.BLOB, 2, 2);
 		for (int i = 1; i < TILES_HORIZONTAL - 5; i++) {
