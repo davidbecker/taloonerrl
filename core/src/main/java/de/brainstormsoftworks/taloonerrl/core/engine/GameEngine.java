@@ -32,7 +32,11 @@ public final class GameEngine {
 	}
 
 	public Entity createNewEntity(final EActorTypes type) {
-		return EntityFactory.createEntity(type, world);
+		return createNewEntity(type, 0, 0);
+	}
+
+	public Entity createNewEntity(final EActorTypes type, final int xPosition, final int yPosition) {
+		return EntityFactory.createEntity(type, world, xPosition, yPosition);
 	}
 
 	/**

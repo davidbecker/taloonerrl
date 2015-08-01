@@ -119,8 +119,8 @@ public class TaloonerRl implements ApplicationListener {
 		// forces the engine to initialize
 		final GameEngine gameEngine = GameEngine.getInstance();
 		final Entity createNewEntity = gameEngine.createNewEntity(EActorTypes.PLAYER);
-		final Entity squirrel = gameEngine.createNewEntity(EActorTypes.SQUIRREL);
-		final Entity blob = gameEngine.createNewEntity(EActorTypes.BLOB);
+		final Entity squirrel = gameEngine.createNewEntity(EActorTypes.SQUIRREL, 1, 1);
+		final Entity blob = gameEngine.createNewEntity(EActorTypes.BLOB, 2, 2);
 
 		DungeonRenderer.initInstance();
 		GuiRenderer.initInstance();

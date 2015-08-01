@@ -14,6 +14,7 @@ import de.brainstormsoftworks.taloonerrl.render.RenderUtil;
 
 public class RenderSystem extends EntityProcessingSystem {
 	private final SpriteBatch batch;
+	private static final float scale = 16f;
 
 	@SuppressWarnings("unchecked")
 	public RenderSystem() {
@@ -30,7 +31,8 @@ public class RenderSystem extends EntityProcessingSystem {
 		final Animation animation = spriteComponent.getAnimation();
 		if (animation != null) {
 			batch.begin();
-			batch.draw(RenderUtil.getKeyFrame(animation), positionComponent.getX(), positionComponent.getY());
+			batch.draw(RenderUtil.getKeyFrame(animation), positionComponent.getX() * scale,
+					positionComponent.getY() * scale);
 			batch.end();
 		}
 	}
