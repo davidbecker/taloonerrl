@@ -4,12 +4,13 @@
  * are made available under the terms of the GNU Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
- * 
+ *
  * Contributors:
  *     David Becker - initial API and implementation
  ******************************************************************************/
 package de.brainstormsoftworks.taloonerrl.core;
 
+import com.artemis.Entity;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
@@ -26,6 +27,7 @@ import com.badlogic.gdx.math.Vector3;
 import de.brainstormsoftworks.taloonerrl.actors.ActorFactory;
 import de.brainstormsoftworks.taloonerrl.actors.EActorTypes;
 import de.brainstormsoftworks.taloonerrl.actors.IActor;
+import de.brainstormsoftworks.taloonerrl.components.HealthComponent;
 import de.brainstormsoftworks.taloonerrl.core.engine.EEntity;
 import de.brainstormsoftworks.taloonerrl.core.engine.GameEngine;
 import de.brainstormsoftworks.taloonerrl.core.engine.SpriteMapper;
@@ -33,6 +35,7 @@ import de.brainstormsoftworks.taloonerrl.dungeon.IMap;
 import de.brainstormsoftworks.taloonerrl.dungeon.MapFactory;
 import de.brainstormsoftworks.taloonerrl.render.DungeonRenderer;
 import de.brainstormsoftworks.taloonerrl.render.GuiRenderer;
+import de.brainstormsoftworks.taloonerrl.render.PaletteUtil;
 import de.brainstormsoftworks.taloonerrl.render.RenderUtil;
 
 public class TaloonerRl implements ApplicationListener {
@@ -119,7 +122,9 @@ public class TaloonerRl implements ApplicationListener {
 		// forces the engine to initialize
 		final GameEngine gameEngine = GameEngine.getInstance();
 		gameEngine.createNewEntity(EEntity.PLAYER);
-		gameEngine.createNewEntity(EEntity.SQUIRREL, 1, 1);
+		final Entity createNewEntity = gameEngine.createNewEntity(EEntity.SQUIRREL, 1, 1);
+		createNewEntity.getComponent(HealthComponent.class).setHeathPercent(0.75f);
+
 		gameEngine.createNewEntity(EEntity.BLOB, 2, 2);
 		for (int i = 1; i < TILES_HORIZONTAL - 5; i++) {
 			gameEngine.createNewEntity(EEntity.TORCH, i, TILES_VERTICAL - 1);
@@ -315,6 +320,7 @@ public class TaloonerRl implements ApplicationListener {
 		warrior.dispose();
 		cursor.dispose();
 		SpriteMapper.getInstance().disposeAll();
+		PaletteUtil.getInstance().disposeInstance();
 		DungeonRenderer.getInstance().disposeInstance();
 		GuiRenderer.getInstance().disposeInstance();
 	}

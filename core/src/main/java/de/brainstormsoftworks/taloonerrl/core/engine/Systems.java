@@ -4,7 +4,7 @@
  * are made available under the terms of the GNU Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
- * 
+ *
  * Contributors:
  *     David Becker - initial API and implementation
  ******************************************************************************/
@@ -12,8 +12,9 @@ package de.brainstormsoftworks.taloonerrl.core.engine;
 
 import com.artemis.WorldConfiguration;
 
-import de.brainstormsoftworks.taloonerrl.system.MovementSystem;
 import de.brainstormsoftworks.taloonerrl.system.AnimationRenderSystem;
+import de.brainstormsoftworks.taloonerrl.system.HealthBarRenderSystem;
+import de.brainstormsoftworks.taloonerrl.system.MovementSystem;
 
 /**
  * utility class to add all systems to a given {@link WorldConfiguration}
@@ -24,9 +25,11 @@ import de.brainstormsoftworks.taloonerrl.system.AnimationRenderSystem;
 public final class Systems {
 	private static final MovementSystem MOVEMENT_SYSTEM = new MovementSystem();
 	private static final AnimationRenderSystem ANIMATION_RENDER_SYSTEM = new AnimationRenderSystem();
+	private static final HealthBarRenderSystem RENDER_BAR_SYSTEM = new HealthBarRenderSystem();
 
 	public static void setSystems(final WorldConfiguration config) {
 		config.setSystem(MOVEMENT_SYSTEM);
 		config.setSystem(ANIMATION_RENDER_SYSTEM);
+		config.setSystem(RENDER_BAR_SYSTEM);
 	}
 }
