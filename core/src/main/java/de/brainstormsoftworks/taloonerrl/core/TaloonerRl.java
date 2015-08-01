@@ -10,7 +10,6 @@
  ******************************************************************************/
 package de.brainstormsoftworks.taloonerrl.core;
 
-import com.artemis.Entity;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
@@ -27,6 +26,7 @@ import com.badlogic.gdx.math.Vector3;
 import de.brainstormsoftworks.taloonerrl.actors.ActorFactory;
 import de.brainstormsoftworks.taloonerrl.actors.EActorTypes;
 import de.brainstormsoftworks.taloonerrl.actors.IActor;
+import de.brainstormsoftworks.taloonerrl.core.engine.EEntity;
 import de.brainstormsoftworks.taloonerrl.core.engine.GameEngine;
 import de.brainstormsoftworks.taloonerrl.core.engine.SpriteMapper;
 import de.brainstormsoftworks.taloonerrl.dungeon.IMap;
@@ -118,9 +118,9 @@ public class TaloonerRl implements ApplicationListener {
 		player.getMovementComponent().move(4, 4);
 		// forces the engine to initialize
 		final GameEngine gameEngine = GameEngine.getInstance();
-		final Entity createNewEntity = gameEngine.createNewEntity(EActorTypes.PLAYER);
-		final Entity squirrel = gameEngine.createNewEntity(EActorTypes.SQUIRREL, 1, 1);
-		final Entity blob = gameEngine.createNewEntity(EActorTypes.BLOB, 2, 2);
+		gameEngine.createNewEntity(EEntity.PLAYER);
+		gameEngine.createNewEntity(EEntity.SQUIRREL, 1, 1);
+		gameEngine.createNewEntity(EEntity.BLOB, 2, 2);
 
 		DungeonRenderer.initInstance();
 		GuiRenderer.initInstance();

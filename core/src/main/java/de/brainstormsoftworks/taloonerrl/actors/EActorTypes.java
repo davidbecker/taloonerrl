@@ -10,12 +10,15 @@
  ******************************************************************************/
 package de.brainstormsoftworks.taloonerrl.actors;
 
+import de.brainstormsoftworks.taloonerrl.core.engine.EEntity;
+
 /**
  * types of actors that {@link ActorFactory} can create
  *
  *
- *
+ * @deprecated use {@link EEntity} instead
  */
+@Deprecated
 public enum EActorTypes {
 	PLAYER, SQUIRREL, BLOB
 }

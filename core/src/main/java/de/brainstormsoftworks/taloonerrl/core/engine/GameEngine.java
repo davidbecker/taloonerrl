@@ -4,8 +4,6 @@ import com.artemis.Entity;
 import com.artemis.World;
 import com.artemis.WorldConfiguration;
 
-import de.brainstormsoftworks.taloonerrl.actors.EActorTypes;
-
 public final class GameEngine {
 	// maybe initialize on first call via getInstance?
 	private static final GameEngine instance = new GameEngine();
@@ -31,11 +29,11 @@ public final class GameEngine {
 		return stateTime;
 	}
 
-	public Entity createNewEntity(final EActorTypes type) {
+	public Entity createNewEntity(final EEntity type) {
 		return createNewEntity(type, 0, 0);
 	}
 
-	public Entity createNewEntity(final EActorTypes type, final int xPosition, final int yPosition) {
+	public Entity createNewEntity(final EEntity type, final int xPosition, final int yPosition) {
 		return EntityFactory.createEntity(type, world, xPosition, yPosition);
 	}
 

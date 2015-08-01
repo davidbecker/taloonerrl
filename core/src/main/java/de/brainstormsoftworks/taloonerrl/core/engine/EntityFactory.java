@@ -3,7 +3,6 @@ package de.brainstormsoftworks.taloonerrl.core.engine;
 import com.artemis.Entity;
 import com.artemis.World;
 
-import de.brainstormsoftworks.taloonerrl.actors.EActorTypes;
 import de.brainstormsoftworks.taloonerrl.components.PositionComponent;
 import de.brainstormsoftworks.taloonerrl.components.SpriteComponent;
 import de.brainstormsoftworks.taloonerrl.dungeon.ESprite;
@@ -15,8 +14,7 @@ import de.brainstormsoftworks.taloonerrl.dungeon.ESprite;
  *
  */
 public final class EntityFactory {
-	public static Entity createEntity(final EActorTypes type, final World world, final int xPosition,
-			final int yPosition) {
+	public static Entity createEntity(final EEntity type, final World world, final int xPosition, final int yPosition) {
 		switch (type) {
 		case PLAYER:
 			return createPlayer(world);
@@ -34,7 +32,7 @@ public final class EntityFactory {
 		return newEntity;
 	}
 
-	private static Entity createBlob(final World world, int xPosition, int yPosition) {
+	private static Entity createBlob(final World world, final int xPosition, final int yPosition) {
 		final Entity newEntity = world.createEntity(Archetypes.getInstance().actor);
 		newEntity.getComponent(SpriteComponent.class).setSprite(ESprite.BLOB);
 		final PositionComponent posComponent = newEntity.getComponent(PositionComponent.class);
@@ -43,7 +41,7 @@ public final class EntityFactory {
 		return newEntity;
 	}
 
-	private static Entity createSquirrel(final World world, int xPosition, int yPosition) {
+	private static Entity createSquirrel(final World world, final int xPosition, final int yPosition) {
 		final Entity newEntity = world.createEntity(Archetypes.getInstance().actor);
 		newEntity.getComponent(SpriteComponent.class).setSprite(ESprite.SQUIRREL);
 		final PositionComponent posComponent = newEntity.getComponent(PositionComponent.class);
