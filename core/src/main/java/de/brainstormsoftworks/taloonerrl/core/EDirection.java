@@ -8,13 +8,15 @@
  * Contributors:
  *     David Becker - initial API and implementation
  ******************************************************************************/
-package de.brainstormsoftworks.taloonerrl.internal.actors;
+package de.brainstormsoftworks.taloonerrl.core;
 
-import de.brainstormsoftworks.taloonerrl.dungeon.ESprite;
-
-public class Player extends Actor {
-	public Player() {
-		movementComponent = new ActorMovementComponent();
-		actorSpriteComponent.setSprite(ESprite.AT);
-	}
+/**
+ * a hack<br/>
+ * TODO remove
+ *
+ * @author David Becker
+ *
+ */
+public enum EDirection {
+	UP, DOWN, LEFT, RIGHT
 }

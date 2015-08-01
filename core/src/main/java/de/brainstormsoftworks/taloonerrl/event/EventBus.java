@@ -8,13 +8,32 @@
  * Contributors:
  *     David Becker - initial API and implementation
  ******************************************************************************/
-package de.brainstormsoftworks.taloonerrl.internal.actors;
+package de.brainstormsoftworks.taloonerrl.event;
 
-import de.brainstormsoftworks.taloonerrl.dungeon.ESprite;
+/**
+ * manager class for events
+ *
+ * @author David Becker
+ *
+ */
+public final class EventBus {
+	private static final EventBus instance = new EventBus();
+	// Set<Event> events = new SynchronizedSortedSet<Event>();
 
-public class Player extends Actor {
-	public Player() {
-		movementComponent = new ActorMovementComponent();
-		actorSpriteComponent.setSprite(ESprite.AT);
+	/**
+	 * constructor.<br/>
+	 * private on purpose
+	 */
+	private EventBus() {
 	}
+
+	/**
+	 * getter for an instance
+	 *
+	 * @return {@link #instance}
+	 */
+	public static EventBus getInstance() {
+		return instance;
+	}
+
 }
