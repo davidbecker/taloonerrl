@@ -6,6 +6,7 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
@@ -22,11 +23,19 @@ import de.brainstormsoftworks.taloonerrl.render.GuiRenderer;
 import de.brainstormsoftworks.taloonerrl.render.TextureManager;
 
 public class TaloonerRl implements ApplicationListener {
-	Texture font;
+	Texture warrior;
 	SpriteBatch batch;
 	float elapsed;
 
-	TextureRegion at;
+	TextureRegion[] walkFramesUp = new TextureRegion[4];
+	TextureRegion[] walkFramesDown = new TextureRegion[4];
+	TextureRegion[] walkFramesLeft = new TextureRegion[4];
+	TextureRegion[] walkFramesRight = new TextureRegion[4];
+	Animation walkUp;
+	Animation walkDown;
+	Animation walkLeft;
+	Animation walkRight;
+	EDirection walkingDirection = EDirection.RIGHT;
 	private static final int tileSize = 16;
 	float scale = 16f;
 	float mouseX;
@@ -47,6 +56,8 @@ public class TaloonerRl implements ApplicationListener {
 	/** minimum delay between player turns */
 	private static final float delayBetweenAnimation = 0.03f;
 
+	private static float stateTime;
+
 	private final IActor player = ActorFactory.createActor(EActorTypes.PLAYER);
 	public static IMap map = null;
 
@@ -55,8 +66,18 @@ public class TaloonerRl implements ApplicationListener {
 		map = MapFactory.createMap(TILES_HORIZONTAL, TILES_VERTICAL);
 		// TextureManager
 
-		font = new Texture(Gdx.files.internal("dejavu16x16_gs_tc.png"));
-		at = new TextureRegion(font, 0 * tileSize, 1 * tileSize, tileSize, tileSize);
+		warrior = new Texture(Gdx.files.internal("character/Warrior.png"));
+		for (int i = 0; i < 4; i++) {
+			walkFramesDown[i] = new TextureRegion(warrior, i * tileSize, 0 * tileSize, tileSize, tileSize);
+			walkFramesLeft[i] = new TextureRegion(warrior, i * tileSize, 1 * tileSize, tileSize, tileSize);
+			walkFramesRight[i] = new TextureRegion(warrior, i * tileSize, 2 * tileSize, tileSize, tileSize);
+			walkFramesUp[i] = new TextureRegion(warrior, i * tileSize, 3 * tileSize, tileSize, tileSize);
+		}
+		walkUp = new Animation(0.25f, walkFramesUp);
+		walkDown = new Animation(0.25f, walkFramesDown);
+		walkLeft = new Animation(0.25f, walkFramesLeft);
+		walkRight = new Animation(0.25f, walkFramesRight);
+
 		batch = new SpriteBatch();
 		mouseX = Gdx.graphics.getWidth() / 2;
 		mouseY = Gdx.graphics.getHeight() / 2;
@@ -96,6 +117,7 @@ public class TaloonerRl implements ApplicationListener {
 		// TODO change to a more general system
 
 		delayToNextTurn -= Gdx.graphics.getDeltaTime();
+		stateTime += Gdx.graphics.getDeltaTime();
 
 		boolean keyPressedLeft = false;
 		boolean keyPressedRight = false;
@@ -113,15 +135,19 @@ public class TaloonerRl implements ApplicationListener {
 
 				if (keyPressedLeft) {
 					player.getMovementComponent().move(-1, 0);
+					walkingDirection = EDirection.LEFT;
 				}
 				if (keyPressedRight) {
 					player.getMovementComponent().move(1, 0);
+					walkingDirection = EDirection.RIGHT;
 				}
 				if (keyPressedDown) {
 					player.getMovementComponent().move(0, -1);
+					walkingDirection = EDirection.DOWN;
 				}
 				if (keyPressedUp) {
 					player.getMovementComponent().move(0, 1);
+					walkingDirection = EDirection.UP;
 				}
 				delayToNextTurn = delayBetweenTurns;
 			}
@@ -165,7 +191,26 @@ public class TaloonerRl implements ApplicationListener {
 		DungeonRenderer.getInstance().render(batch, map.getMap(), TILES_HORIZONTAL, TILES_VERTICAL);
 		GuiRenderer.getInstance().render(batch, TILES_HORIZONTAL, TILES_VERTICAL);
 
-		drawActor(batch, player);
+		TextureRegion currentFrame = null;
+		switch (walkingDirection) {
+		case UP:
+			currentFrame = walkUp.getKeyFrame(stateTime, true);
+			break;
+		case DOWN:
+			currentFrame = walkDown.getKeyFrame(stateTime, true);
+			break;
+		case LEFT:
+			currentFrame = walkLeft.getKeyFrame(stateTime, true);
+			break;
+		case RIGHT:
+			currentFrame = walkRight.getKeyFrame(stateTime, true);
+			break;
+		default:
+			break;
+		}
+		batch.draw(currentFrame, player.getMovementComponent().getXPosition() * scale,
+				player.getMovementComponent().getYPosition() * scale);
+		// drawActor(batch, player);
 
 		final Vector3 touchPos = new Vector3();
 		touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
@@ -173,25 +218,27 @@ public class TaloonerRl implements ApplicationListener {
 		mouseX = touchPos.x - tileSize / 2;
 		mouseY = touchPos.y - tileSize / 2;
 
-		batch.draw(at, mouseX, mouseY);
+		// batch.draw(at, mouseX, mouseY);
 		batch.end();
 
 		isPlayerTurn = false;
 	}
-
-	private void drawActor(final SpriteBatch spriteBatch, final IActor actor) {
-		spriteBatch.draw(getSprite(actor), actor.getMovementComponent().getXPosition() * scale,
-				actor.getMovementComponent().getYPosition() * scale);
-	}
-
-	private TextureRegion getSprite(final IActor actor) {
-		switch (actor.getSpriteComponent().getSprite()) {
-		case AT:
-			return at;
-		default:
-			return null;
-		}
-	}
+	//
+	// private void drawActor(final SpriteBatch spriteBatch, final IActor actor)
+	// {
+	// spriteBatch.draw(getSprite(actor),
+	// actor.getMovementComponent().getXPosition() * scale,
+	// actor.getMovementComponent().getYPosition() * scale);
+	// }
+	//
+	// private TextureRegion getSprite(final IActor actor) {
+	// switch (actor.getSpriteComponent().getSprite()) {
+	// case AT:
+	// return at;
+	// default:
+	// return null;
+	// }
+	// }
 
 	@Override
 	public void pause() {
@@ -204,7 +251,7 @@ public class TaloonerRl implements ApplicationListener {
 	@Override
 	public void dispose() {
 		batch.dispose();
-		font.dispose();
+		warrior.dispose();
 		TextureManager.getInstance().disposeAll();
 		DungeonRenderer.getInstance().disposeInstance();
 		GuiRenderer.getInstance().disposeInstance();
