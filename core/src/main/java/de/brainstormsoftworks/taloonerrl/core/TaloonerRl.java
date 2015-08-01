@@ -218,6 +218,13 @@ public class TaloonerRl implements ApplicationListener {
 		mouseY = touchPos.y - tileSize / 2;
 
 		batch.draw(cursor, mouseX, mouseY);
+//FIXME WIP
+//		// translate mouse coordinates to selected tile
+//		final float tileX = touchPos.x / TILES_HORIZONTAL; // 0-18
+//		final float tileY = touchPos.y / TILES_VERTICAL;
+//		batch.draw(cursor, tileX, tileY);
+//		System.out.println(tileX + " " + tileY);
+
 		batch.end();
 
 		isPlayerTurn = false;
