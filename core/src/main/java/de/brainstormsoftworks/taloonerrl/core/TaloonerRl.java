@@ -20,7 +20,6 @@ import de.brainstormsoftworks.taloonerrl.dungeon.IMap;
 import de.brainstormsoftworks.taloonerrl.dungeon.MapFactory;
 import de.brainstormsoftworks.taloonerrl.render.DungeonRenderer;
 import de.brainstormsoftworks.taloonerrl.render.GuiRenderer;
-import de.brainstormsoftworks.taloonerrl.render.TextureManager;
 
 public class TaloonerRl implements ApplicationListener {
 	Texture warrior;
@@ -64,7 +63,6 @@ public class TaloonerRl implements ApplicationListener {
 	@Override
 	public void create() {
 		map = MapFactory.createMap(TILES_HORIZONTAL, TILES_VERTICAL);
-		// TextureManager
 
 		warrior = new Texture(Gdx.files.internal("character/Warrior.png"));
 		for (int i = 0; i < 4; i++) {
@@ -169,24 +167,19 @@ public class TaloonerRl implements ApplicationListener {
 			GuiRenderer.playerHeath = 1.0f;
 		}
 
-		// update camera
 		camera.update();
 
 		// see http://codebin.co.uk/blog/pixelated-rendering-in-libgdx/
 
-		// set viewport
 		Gdx.gl.glViewport(Math.round(viewport.x * tileSize) / tileSize, Math.round(viewport.y * tileSize) / tileSize,
 				Math.round(viewport.width * tileSize) / tileSize, Math.round(viewport.height * tileSize) / tileSize);
 		Gdx.graphics.setTitle("current fps: " + Gdx.graphics.getFramesPerSecond());
 		elapsed += Gdx.graphics.getDeltaTime();
 		Gdx.gl.glClearColor(0, 0, 0, 0);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		// camera.update();
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
 		batch.enableBlending();
-		// batch.setBlendFunction(GL20.GL_ONE,
-		// GL20.GL_ONE_MINUS_CONSTANT_ALPHA);
 
 		DungeonRenderer.getInstance().render(batch, map.getMap(), TILES_HORIZONTAL, TILES_VERTICAL);
 		GuiRenderer.getInstance().render(batch, TILES_HORIZONTAL, TILES_VERTICAL);
@@ -223,22 +216,6 @@ public class TaloonerRl implements ApplicationListener {
 
 		isPlayerTurn = false;
 	}
-	//
-	// private void drawActor(final SpriteBatch spriteBatch, final IActor actor)
-	// {
-	// spriteBatch.draw(getSprite(actor),
-	// actor.getMovementComponent().getXPosition() * scale,
-	// actor.getMovementComponent().getYPosition() * scale);
-	// }
-	//
-	// private TextureRegion getSprite(final IActor actor) {
-	// switch (actor.getSpriteComponent().getSprite()) {
-	// case AT:
-	// return at;
-	// default:
-	// return null;
-	// }
-	// }
 
 	@Override
 	public void pause() {
@@ -252,7 +229,6 @@ public class TaloonerRl implements ApplicationListener {
 	public void dispose() {
 		batch.dispose();
 		warrior.dispose();
-		TextureManager.getInstance().disposeAll();
 		DungeonRenderer.getInstance().disposeInstance();
 		GuiRenderer.getInstance().disposeInstance();
 	}
