@@ -23,6 +23,7 @@ import de.brainstormsoftworks.taloonerrl.render.GuiRenderer;
 
 public class TaloonerRl implements ApplicationListener {
 	Texture warrior;
+	Texture cursor;
 	SpriteBatch batch;
 	float elapsed;
 
@@ -75,6 +76,8 @@ public class TaloonerRl implements ApplicationListener {
 		walkDown = new Animation(0.25f, walkFramesDown);
 		walkLeft = new Animation(0.25f, walkFramesLeft);
 		walkRight = new Animation(0.25f, walkFramesRight);
+
+		cursor = new Texture(Gdx.files.internal("cursor.png"));
 
 		batch = new SpriteBatch();
 		mouseX = Gdx.graphics.getWidth() / 2;
@@ -171,8 +174,11 @@ public class TaloonerRl implements ApplicationListener {
 
 		// see http://codebin.co.uk/blog/pixelated-rendering-in-libgdx/
 
-		Gdx.gl.glViewport(Math.round(viewport.x * tileSize) / tileSize, Math.round(viewport.y * tileSize) / tileSize,
-				Math.round(viewport.width * tileSize) / tileSize, Math.round(viewport.height * tileSize) / tileSize);
+		final int viewPortX = Math.round(viewport.x * tileSize) / tileSize;
+		final int viewPortY = Math.round(viewport.y * tileSize) / tileSize;
+		final int viewPortWidth = Math.round(viewport.width * tileSize) / tileSize;
+		final int viewPortHeight = Math.round(viewport.height * tileSize) / tileSize;
+		Gdx.gl.glViewport(viewPortX, viewPortY, viewPortWidth, viewPortHeight);
 		Gdx.graphics.setTitle("current fps: " + Gdx.graphics.getFramesPerSecond());
 		elapsed += Gdx.graphics.getDeltaTime();
 		Gdx.gl.glClearColor(0, 0, 0, 0);
@@ -207,11 +213,11 @@ public class TaloonerRl implements ApplicationListener {
 
 		final Vector3 touchPos = new Vector3();
 		touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
-		camera.unproject(touchPos);
+		camera.unproject(touchPos, viewPortX, viewPortY, viewPortWidth, viewPortHeight);
 		mouseX = touchPos.x - tileSize / 2;
 		mouseY = touchPos.y - tileSize / 2;
 
-		// batch.draw(at, mouseX, mouseY);
+		batch.draw(cursor, mouseX, mouseY);
 		batch.end();
 
 		isPlayerTurn = false;
@@ -229,6 +235,7 @@ public class TaloonerRl implements ApplicationListener {
 	public void dispose() {
 		batch.dispose();
 		warrior.dispose();
+		cursor.dispose();
 		DungeonRenderer.getInstance().disposeInstance();
 		GuiRenderer.getInstance().disposeInstance();
 	}
