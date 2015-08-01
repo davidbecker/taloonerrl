@@ -25,7 +25,8 @@ public final class SpriteMapper {
 	private final Map<EEntity, Animation> mappedAnimations = new HashMap<EEntity, Animation>();
 	private final Set<Texture> toDispose = new HashSet<Texture>();
 
-	private static final String PATH = "character/";
+	private static final String PATH_DUNGEON = "textures/dungeon/";
+	private static final String PATH_MOBS = "textures/mobs/";
 	private static final int tileSize = 16;
 	private static final SpriteMapper instance = new SpriteMapper();
 
@@ -33,6 +34,8 @@ public final class SpriteMapper {
 	private Texture tPest1 = null;
 	private Texture tRodent0 = null;
 	private Texture tRodent1 = null;
+	private Texture tDecor0 = null;
+	private Texture tDecor1 = null;
 
 	public static SpriteMapper getInstance() {
 		return instance;
@@ -51,10 +54,10 @@ public final class SpriteMapper {
 		switch (sprite) {
 		case BLOB:
 			if (tPest0 == null) {
-				tPest0 = loadTexture("Pest0.png");
+				tPest0 = loadTexture(PATH_MOBS + "Pest0.png");
 			}
 			if (tPest1 == null) {
-				tPest1 = loadTexture("Pest1.png");
+				tPest1 = loadTexture(PATH_MOBS + "Pest1.png");
 			}
 			frames[0] = new TextureRegion(tPest0, 2 * tileSize, 3 * tileSize, tileSize, tileSize);
 			frames[1] = new TextureRegion(tPest1, 2 * tileSize, 3 * tileSize, tileSize, tileSize);
@@ -62,14 +65,25 @@ public final class SpriteMapper {
 			break;
 		case SQUIRREL:
 			if (tRodent0 == null) {
-				tRodent0 = loadTexture("Rodent0.png");
+				tRodent0 = loadTexture(PATH_MOBS + "Rodent0.png");
 			}
 			if (tRodent1 == null) {
-				tRodent1 = loadTexture("Rodent1.png");
+				tRodent1 = loadTexture(PATH_MOBS + "Rodent1.png");
 			}
 			frames[0] = new TextureRegion(tRodent0, 0 * tileSize, 0 * tileSize, tileSize, tileSize);
 			frames[1] = new TextureRegion(tRodent1, 0 * tileSize, 0 * tileSize, tileSize, tileSize);
 			mappedAnimations.put(sprite, new Animation(0.25f, frames));
+			break;
+		case TORCH:
+			if (tDecor0 == null) {
+				tDecor0 = loadTexture(PATH_DUNGEON + "Decor0.png");
+			}
+			if (tDecor1 == null) {
+				tDecor1 = loadTexture(PATH_DUNGEON + "Decor1.png");
+			}
+			frames[0] = new TextureRegion(tDecor0, 0 * tileSize, 8 * tileSize, tileSize, tileSize);
+			frames[1] = new TextureRegion(tDecor1, 0 * tileSize, 8 * tileSize, tileSize, tileSize);
+			mappedAnimations.put(sprite, new Animation(0.15f, frames));
 			break;
 		default:
 			break;
@@ -77,7 +91,7 @@ public final class SpriteMapper {
 	}
 
 	private Texture loadTexture(final String fileName) {
-		final Texture texture = new Texture(Gdx.files.internal(PATH + fileName), false);
+		final Texture texture = new Texture(Gdx.files.internal(fileName), false);
 		texture.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
 		texture.setWrap(TextureWrap.ClampToEdge, TextureWrap.ClampToEdge);
 		toDispose.add(texture);
