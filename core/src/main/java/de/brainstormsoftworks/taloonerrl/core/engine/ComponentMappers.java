@@ -7,7 +7,7 @@ import com.artemis.World;
 import de.brainstormsoftworks.taloonerrl.components.ControllerComponent;
 import de.brainstormsoftworks.taloonerrl.components.HealthComponent;
 import de.brainstormsoftworks.taloonerrl.components.PositionComponent;
-import de.brainstormsoftworks.taloonerrl.components.SpriteComponent;
+import de.brainstormsoftworks.taloonerrl.components.AnimationComponent;
 
 /**
  * singleton to get the {@link Component}s for our {@link World}
@@ -19,7 +19,7 @@ public final class ComponentMappers {
 	public final ComponentMapper<ControllerComponent> controller;
 	public final ComponentMapper<HealthComponent> health;
 	public final ComponentMapper<PositionComponent> position;
-	public final ComponentMapper<SpriteComponent> sprite;
+	public final ComponentMapper<AnimationComponent> sprite;
 
 	private static ComponentMappers instance = null;
 
@@ -27,7 +27,7 @@ public final class ComponentMappers {
 		controller = ComponentMapper.getFor(ControllerComponent.class, world);
 		health = ComponentMapper.getFor(HealthComponent.class, world);
 		position = ComponentMapper.getFor(PositionComponent.class, world);
-		sprite = ComponentMapper.getFor(SpriteComponent.class, world);
+		sprite = ComponentMapper.getFor(AnimationComponent.class, world);
 	}
 
 	/**

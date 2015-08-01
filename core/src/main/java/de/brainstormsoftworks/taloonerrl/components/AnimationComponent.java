@@ -3,16 +3,16 @@ package de.brainstormsoftworks.taloonerrl.components;
 import com.artemis.PooledComponent;
 import com.badlogic.gdx.graphics.g2d.Animation;
 
+import de.brainstormsoftworks.taloonerrl.core.engine.EEntity;
 import de.brainstormsoftworks.taloonerrl.core.engine.SpriteMapper;
-import de.brainstormsoftworks.taloonerrl.dungeon.ESprite;
 
-public class SpriteComponent extends PooledComponent {
-	private ESprite sprite = ESprite.NOTHING;
+public class AnimationComponent extends PooledComponent {
+	private EEntity entityType = EEntity.NOTHING;
 	private Animation animation = null;
 
 	@Override
 	protected void reset() {
-		sprite = ESprite.NOTHING;
+		entityType = EEntity.NOTHING;
 		animation = null;
 	}
 
@@ -21,8 +21,8 @@ public class SpriteComponent extends PooledComponent {
 	 *
 	 * @return the sprite
 	 */
-	public final ESprite getSprite() {
-		return sprite;
+	public final EEntity getSprite() {
+		return entityType;
 	}
 
 	/**
@@ -31,8 +31,8 @@ public class SpriteComponent extends PooledComponent {
 	 * @param sprite
 	 *            the sprite to set
 	 */
-	public final void setSprite(final ESprite sprite) {
-		this.sprite = sprite;
+	public final void setSprite(final EEntity sprite) {
+		entityType = sprite;
 		SpriteMapper.getInstance().mapSprite(this);
 	}
 

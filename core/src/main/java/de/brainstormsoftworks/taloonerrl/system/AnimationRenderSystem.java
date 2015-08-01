@@ -8,26 +8,26 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import de.brainstormsoftworks.taloonerrl.components.PositionComponent;
-import de.brainstormsoftworks.taloonerrl.components.SpriteComponent;
+import de.brainstormsoftworks.taloonerrl.components.AnimationComponent;
 import de.brainstormsoftworks.taloonerrl.core.engine.ComponentMappers;
 import de.brainstormsoftworks.taloonerrl.render.RenderUtil;
 
-public class RenderSystem extends EntityProcessingSystem {
+public class AnimationRenderSystem extends EntityProcessingSystem {
 	private final SpriteBatch batch;
 	private static final float scale = 16f;
 
 	@SuppressWarnings("unchecked")
-	public RenderSystem() {
-		super(Aspect.all(PositionComponent.class, SpriteComponent.class));
+	public AnimationRenderSystem() {
+		super(Aspect.all(PositionComponent.class, AnimationComponent.class));
 		batch = new SpriteBatch();
 	}
 
 	@Override
 	protected void process(final Entity e) {
 		final ComponentMapper<PositionComponent> posMapper = ComponentMappers.getInstance().position;
-		final ComponentMapper<SpriteComponent> spriteMapper = ComponentMappers.getInstance().sprite;
+		final ComponentMapper<AnimationComponent> spriteMapper = ComponentMappers.getInstance().sprite;
 		final PositionComponent positionComponent = posMapper.get(e);
-		final SpriteComponent spriteComponent = spriteMapper.get(e);
+		final AnimationComponent spriteComponent = spriteMapper.get(e);
 		final Animation animation = spriteComponent.getAnimation();
 		if (animation != null) {
 			batch.begin();

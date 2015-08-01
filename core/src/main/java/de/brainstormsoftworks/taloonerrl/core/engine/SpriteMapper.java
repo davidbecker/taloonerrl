@@ -12,8 +12,7 @@ import com.badlogic.gdx.graphics.Texture.TextureWrap;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
-import de.brainstormsoftworks.taloonerrl.components.SpriteComponent;
-import de.brainstormsoftworks.taloonerrl.dungeon.ESprite;
+import de.brainstormsoftworks.taloonerrl.components.AnimationComponent;
 
 /**
  * utility class that maps the animation for to a sprite
@@ -23,7 +22,7 @@ import de.brainstormsoftworks.taloonerrl.dungeon.ESprite;
  */
 public final class SpriteMapper {
 
-	private final Map<ESprite, Animation> mappedAnimations = new HashMap<ESprite, Animation>();
+	private final Map<EEntity, Animation> mappedAnimations = new HashMap<EEntity, Animation>();
 	private final Set<Texture> toDispose = new HashSet<Texture>();
 
 	private static final String PATH = "character/";
@@ -39,15 +38,15 @@ public final class SpriteMapper {
 		return instance;
 	}
 
-	public void mapSprite(final SpriteComponent component) {
-		final ESprite sprite = component.getSprite();
+	public void mapSprite(final AnimationComponent component) {
+		final EEntity sprite = component.getSprite();
 		if (!mappedAnimations.containsKey(sprite)) {
 			loadAnimation(sprite);
 		}
 		component.setAnimation(mappedAnimations.get(sprite));
 	}
 
-	private void loadAnimation(final ESprite sprite) {
+	private void loadAnimation(final EEntity sprite) {
 		final TextureRegion[] frames = new TextureRegion[2];
 		switch (sprite) {
 		case BLOB:
