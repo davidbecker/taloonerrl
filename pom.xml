@@ -13,6 +13,7 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<findbugs.version>3.0.1</findbugs.version>
 		<gdx.version>1.6.4</gdx.version>
+		<artemis.version>0.10.2</artemis.version>
 	</properties>
 	<dependencyManagement>
 		<dependencies>

@@ -4,7 +4,7 @@
  * are made available under the terms of the GNU Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
- * 
+ *
  * Contributors:
  *     David Becker - initial API and implementation
  ******************************************************************************/
@@ -15,6 +15,6 @@ import de.brainstormsoftworks.taloonerrl.dungeon.ESprite;
 public class Player extends Actor {
 	public Player() {
 		movementComponent = new ActorMovementComponent();
-		actorSpriteComponent.setSprite(ESprite.AT);
+		actorSpriteComponent.setSprite(ESprite.NOTHING);
 	}
 }

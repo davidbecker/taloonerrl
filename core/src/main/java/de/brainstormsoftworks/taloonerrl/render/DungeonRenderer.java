@@ -4,7 +4,7 @@
  * are made available under the terms of the GNU Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
- * 
+ *
  * Contributors:
  *     David Becker - initial API and implementation
  ******************************************************************************/
@@ -44,7 +44,7 @@ public final class DungeonRenderer implements IDisposableInstance {
 	private final TextureRegion sWallBottomLeft;
 	private final TextureRegion sWallBottomRight;
 
-	private static final String TEXTURE_PATH = "textures/dawnlike/Objects/";
+	private static final String TEXTURE_PATH = "textures/dungeon/";
 
 	private DungeonRenderer() {
 		floorTexture = new Texture(Gdx.files.internal(TEXTURE_PATH + "Floor.png"), false);

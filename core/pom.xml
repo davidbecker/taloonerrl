@@ -24,6 +24,11 @@
 			<version>4.11</version>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>net.onedaybeard.artemis</groupId>
+			<artifactId>artemis-odb</artifactId>
+			<version>${artemis.version}</version>
+		</dependency>
 		<!-- <dependency> <groupId>org.mockito</groupId> <artifactId>mockito-core</artifactId> 
 			<version>1.10.19</version> <scope>test</scope> </dependency> -->
 		<!-- <dependency> <groupId>com.squidpony</groupId> <artifactId>squidlib</artifactId> 
@@ -42,6 +47,23 @@
 						<goals>
 							<goal>jar-no-fork</goal>
 						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>net.onedaybeard.artemis</groupId>
+				<artifactId>artemis-odb-maven-plugin</artifactId>
+				<version>${artemis.version}</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>artemis</goal>
+						</goals>
+						<configuration>
+							<!-- configuration section can be omitted, -->
+							<!-- optimizeEntitySystems defaults to true -->
+							<optimizeEntitySystems>true</optimizeEntitySystems>
+						</configuration>
 					</execution>
 				</executions>
 			</plugin>

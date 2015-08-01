@@ -26,10 +26,14 @@ import com.badlogic.gdx.math.Vector3;
 import de.brainstormsoftworks.taloonerrl.actors.ActorFactory;
 import de.brainstormsoftworks.taloonerrl.actors.EActorTypes;
 import de.brainstormsoftworks.taloonerrl.actors.IActor;
+import de.brainstormsoftworks.taloonerrl.core.engine.EEntity;
+import de.brainstormsoftworks.taloonerrl.core.engine.GameEngine;
+import de.brainstormsoftworks.taloonerrl.core.engine.SpriteMapper;
 import de.brainstormsoftworks.taloonerrl.dungeon.IMap;
 import de.brainstormsoftworks.taloonerrl.dungeon.MapFactory;
 import de.brainstormsoftworks.taloonerrl.render.DungeonRenderer;
 import de.brainstormsoftworks.taloonerrl.render.GuiRenderer;
+import de.brainstormsoftworks.taloonerrl.render.RenderUtil;
 
 public class TaloonerRl implements ApplicationListener {
 	Texture warrior;
@@ -79,10 +83,9 @@ public class TaloonerRl implements ApplicationListener {
 	/** minimum delay between player turns */
 	private static final float delayBetweenAnimation = 0.03f;
 
-	private static float stateTime;
-
 	private final IActor player = ActorFactory.createActor(EActorTypes.PLAYER);
 	public static IMap map = null;
+	private static final String fontPath = "font/";
 
 	@Override
 	public void create() {
@@ -113,6 +116,14 @@ public class TaloonerRl implements ApplicationListener {
 		camera.setToOrtho(false, VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
 
 		player.getMovementComponent().move(4, 4);
+		// forces the engine to initialize
+		final GameEngine gameEngine = GameEngine.getInstance();
+		gameEngine.createNewEntity(EEntity.PLAYER);
+		gameEngine.createNewEntity(EEntity.SQUIRREL, 1, 1);
+		gameEngine.createNewEntity(EEntity.BLOB, 2, 2);
+		for (int i = 1; i < TILES_HORIZONTAL - 5; i++) {
+			gameEngine.createNewEntity(EEntity.TORCH, i, TILES_VERTICAL - 1);
+		}
 
 		DungeonRenderer.initInstance();
 		GuiRenderer.initInstance();
@@ -146,9 +157,8 @@ public class TaloonerRl implements ApplicationListener {
 
 		final float deltaTime = Gdx.graphics.getDeltaTime();
 		delayToNextTurn -= deltaTime;
-		stateTime += deltaTime;
 
-		switch (((int) stateTime) % 4) {
+		switch (((int) GameEngine.getInstance().getStateTime()) % 4) {
 		case 0:
 			cursorAnimationOffset = 0;
 			break;
@@ -238,16 +248,16 @@ public class TaloonerRl implements ApplicationListener {
 		TextureRegion currentFrame = null;
 		switch (walkingDirection) {
 		case UP:
-			currentFrame = walkUp.getKeyFrame(stateTime, true);
+			currentFrame = RenderUtil.getKeyFrame(walkUp);
 			break;
 		case DOWN:
-			currentFrame = walkDown.getKeyFrame(stateTime, true);
+			currentFrame = RenderUtil.getKeyFrame(walkDown);
 			break;
 		case LEFT:
-			currentFrame = walkLeft.getKeyFrame(stateTime, true);
+			currentFrame = RenderUtil.getKeyFrame(walkLeft);
 			break;
 		case RIGHT:
-			currentFrame = walkRight.getKeyFrame(stateTime, true);
+			currentFrame = RenderUtil.getKeyFrame(walkRight);
 			break;
 		default:
 			break;
@@ -272,6 +282,7 @@ public class TaloonerRl implements ApplicationListener {
 		highlightPlayerTile(batch, player);
 
 		batch.end();
+		GameEngine.getInstance().update(deltaTime);
 
 		isPlayerTurn = false;
 	}
@@ -303,6 +314,7 @@ public class TaloonerRl implements ApplicationListener {
 		batch.dispose();
 		warrior.dispose();
 		cursor.dispose();
+		SpriteMapper.getInstance().disposeAll();
 		DungeonRenderer.getInstance().disposeInstance();
 		GuiRenderer.getInstance().disposeInstance();
 	}
