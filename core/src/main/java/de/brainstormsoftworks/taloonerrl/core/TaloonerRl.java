@@ -89,6 +89,8 @@ public class TaloonerRl implements ApplicationListener {
 	private final IActor player = ActorFactory.createActor(EActorTypes.PLAYER);
 	public static IMap map = null;
 	private static final String fontPath = "font/";
+	private Entity playerEntity;
+	private HealthComponent playerHealthComponent;
 
 	@Override
 	public void create() {
@@ -121,7 +123,8 @@ public class TaloonerRl implements ApplicationListener {
 		player.getMovementComponent().move(4, 4);
 		// forces the engine to initialize
 		final GameEngine gameEngine = GameEngine.getInstance();
-		gameEngine.createNewEntity(EEntity.PLAYER);
+		playerEntity = gameEngine.createNewEntity(EEntity.PLAYER);
+		playerHealthComponent = playerEntity.getComponent(HealthComponent.class);
 		final Entity createNewEntity = gameEngine.createNewEntity(EEntity.SQUIRREL, 1, 1);
 		createNewEntity.getComponent(HealthComponent.class).setHealthPercent(0.75f);
 
@@ -213,21 +216,21 @@ public class TaloonerRl implements ApplicationListener {
 				delayToNextTurn = delayBetweenTurns;
 			}
 		}
+		playerHealthComponent = playerEntity.getComponent(HealthComponent.class);
 		if (Gdx.input.isKeyPressed(Keys.NUM_1)) {
-			GuiRenderer.playerHeath = 0.00f;
+			playerHealthComponent.setHealthPercent(0.00f);
 		}
 		if (Gdx.input.isKeyPressed(Keys.NUM_2)) {
-			GuiRenderer.playerHeath = 0.25f;
+			playerHealthComponent.setHealthPercent(0.25f);
 		}
 		if (Gdx.input.isKeyPressed(Keys.NUM_3)) {
-			GuiRenderer.playerHeath = 0.5f;
+			playerHealthComponent.setHealthPercent(0.5f);
 		}
 		if (Gdx.input.isKeyPressed(Keys.NUM_4)) {
-			GuiRenderer.playerHeath = 0.75f;
+			playerHealthComponent.setHealthPercent(0.75f);
 		}
 		if (Gdx.input.isKeyPressed(Keys.NUM_5)) {
-
-			GuiRenderer.playerHeath = 1.0f;
+			playerHealthComponent.setHealthPercent(1.0f);
 		}
 
 		camera.update();

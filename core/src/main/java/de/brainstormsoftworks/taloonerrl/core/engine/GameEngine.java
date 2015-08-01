@@ -39,6 +39,10 @@ public final class GameEngine {
 		return stateTime;
 	}
 
+	public Entity getEntity(final int entityId) {
+		return world.getEntity(entityId);
+	}
+
 	public Entity createNewEntity(final EEntity type) {
 		return createNewEntity(type, 0, 0);
 	}
