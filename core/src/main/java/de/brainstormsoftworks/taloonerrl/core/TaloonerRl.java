@@ -4,7 +4,7 @@
  * are made available under the terms of the GNU Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
- * 
+ *
  * Contributors:
  *     David Becker - initial API and implementation
  ******************************************************************************/
@@ -41,13 +41,25 @@ public class TaloonerRl implements ApplicationListener {
 	TextureRegion[] walkFramesDown = new TextureRegion[4];
 	TextureRegion[] walkFramesLeft = new TextureRegion[4];
 	TextureRegion[] walkFramesRight = new TextureRegion[4];
+	private static TextureRegion cursorTopLeft;
+	private static TextureRegion cursorTopRight;
+	private static TextureRegion cursorBottomLeft;
+	private static TextureRegion cursorBottomRight;
+	private static final int cursorTopLeftOffsetX = -2;
+	private static final int cursorTopLeftOffsetY = 11;
+	private static final int cursorTopRightOffsetX = 11;
+	private static final int cursorTopRightOffsetY = 11;
+	private static final int cursorBottomLeftOffsetX = -2;
+	private static final int cursorBottomLeftOffsetY = -2;
+	private static final int cursorBottomRightOffsetX = 11;
+	private static final int cursorBottomRightOffsetY = -2;
 	Animation walkUp;
 	Animation walkDown;
 	Animation walkLeft;
 	Animation walkRight;
 	EDirection walkingDirection = EDirection.RIGHT;
 	private static final int tileSize = 16;
-	float scale = 16f;
+	private static final float scale = 16f;
 	float mouseX;
 	float mouseY;
 	private static final int TILES_HORIZONTAL = 30;
@@ -88,6 +100,10 @@ public class TaloonerRl implements ApplicationListener {
 		walkRight = new Animation(0.25f, walkFramesRight);
 
 		cursor = new Texture(Gdx.files.internal("cursor.png"));
+		cursorTopLeft = new TextureRegion(cursor, 0, 0, 8, 8);
+		cursorTopRight = new TextureRegion(cursor, 8, 0, 8, 8);
+		cursorBottomLeft = new TextureRegion(cursor, 0, 8, 8, 8);
+		cursorBottomRight = new TextureRegion(cursor, 8, 8, 8, 8);
 
 		batch = new SpriteBatch();
 		mouseX = Gdx.graphics.getWidth() / 2;
@@ -228,16 +244,27 @@ public class TaloonerRl implements ApplicationListener {
 		mouseY = touchPos.y - tileSize / 2;
 
 		batch.draw(cursor, mouseX, mouseY);
-//FIXME WIP
-//		// translate mouse coordinates to selected tile
-//		final float tileX = touchPos.x / TILES_HORIZONTAL; // 0-18
-//		final float tileY = touchPos.y / TILES_VERTICAL;
-//		batch.draw(cursor, tileX, tileY);
-//		System.out.println(tileX + " " + tileY);
+		// FIXME WIP
+		// // translate mouse coordinates to selected tile
+		// final float tileX = touchPos.x / TILES_HORIZONTAL; // 0-18
+		// final float tileY = touchPos.y / TILES_VERTICAL;
+		// batch.draw(cursor, tileX, tileY);
+		// System.out.println(tileX + " " + tileY);
+		highlightPlayerTile(batch, player);
 
 		batch.end();
 
 		isPlayerTurn = false;
+	}
+
+	private static void highlightPlayerTile(final SpriteBatch batch, final IActor player) {
+		final int x = player.getMovementComponent().getXPosition();
+		final int y = player.getMovementComponent().getYPosition();
+		batch.draw(cursorTopLeft, x * scale + cursorTopLeftOffsetX, y * scale + cursorTopLeftOffsetY);
+		batch.draw(cursorTopRight, x * scale + cursorTopRightOffsetX, y * scale + cursorTopRightOffsetY);
+		batch.draw(cursorBottomLeft, x * scale + cursorBottomLeftOffsetX, y * scale + cursorBottomLeftOffsetY);
+		batch.draw(cursorBottomRight, x * scale + cursorBottomRightOffsetX, y * scale + cursorBottomRightOffsetY);
+
 	}
 
 	@Override
