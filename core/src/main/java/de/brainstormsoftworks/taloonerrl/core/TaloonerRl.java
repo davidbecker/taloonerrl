@@ -53,6 +53,7 @@ public class TaloonerRl implements ApplicationListener {
 	private static final int cursorBottomLeftOffsetY = -2;
 	private static final int cursorBottomRightOffsetX = 11;
 	private static final int cursorBottomRightOffsetY = -2;
+	static int cursorAnimationOffset = 0;
 	Animation walkUp;
 	Animation walkDown;
 	Animation walkLeft;
@@ -143,8 +144,26 @@ public class TaloonerRl implements ApplicationListener {
 		// check if the player did something first
 		// TODO change to a more general system
 
-		delayToNextTurn -= Gdx.graphics.getDeltaTime();
-		stateTime += Gdx.graphics.getDeltaTime();
+		final float deltaTime = Gdx.graphics.getDeltaTime();
+		delayToNextTurn -= deltaTime;
+		stateTime += deltaTime;
+
+		switch (((int) stateTime) % 4) {
+		case 0:
+			cursorAnimationOffset = 0;
+			break;
+		case 1:
+			cursorAnimationOffset = 1;
+			break;
+		case 2:
+			cursorAnimationOffset = 2;
+			break;
+		case 3:
+			cursorAnimationOffset = 1;
+			break;
+		default:
+			cursorAnimationOffset = 0;
+		}
 
 		boolean keyPressedLeft = false;
 		boolean keyPressedRight = false;
@@ -206,7 +225,7 @@ public class TaloonerRl implements ApplicationListener {
 		final int viewPortHeight = Math.round(viewport.height * tileSize) / tileSize;
 		Gdx.gl.glViewport(viewPortX, viewPortY, viewPortWidth, viewPortHeight);
 		Gdx.graphics.setTitle("current fps: " + Gdx.graphics.getFramesPerSecond());
-		elapsed += Gdx.graphics.getDeltaTime();
+		elapsed += deltaTime;
 		Gdx.gl.glClearColor(0, 0, 0, 0);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		batch.setProjectionMatrix(camera.combined);
@@ -260,10 +279,14 @@ public class TaloonerRl implements ApplicationListener {
 	private static void highlightPlayerTile(final SpriteBatch batch, final IActor player) {
 		final int x = player.getMovementComponent().getXPosition();
 		final int y = player.getMovementComponent().getYPosition();
-		batch.draw(cursorTopLeft, x * scale + cursorTopLeftOffsetX, y * scale + cursorTopLeftOffsetY);
-		batch.draw(cursorTopRight, x * scale + cursorTopRightOffsetX, y * scale + cursorTopRightOffsetY);
-		batch.draw(cursorBottomLeft, x * scale + cursorBottomLeftOffsetX, y * scale + cursorBottomLeftOffsetY);
-		batch.draw(cursorBottomRight, x * scale + cursorBottomRightOffsetX, y * scale + cursorBottomRightOffsetY);
+		batch.draw(cursorTopLeft, x * scale + cursorTopLeftOffsetX - cursorAnimationOffset,
+				y * scale + cursorTopLeftOffsetY + cursorAnimationOffset);
+		batch.draw(cursorTopRight, x * scale + cursorTopRightOffsetX + cursorAnimationOffset,
+				y * scale + cursorTopRightOffsetY + cursorAnimationOffset);
+		batch.draw(cursorBottomLeft, x * scale + cursorBottomLeftOffsetX - cursorAnimationOffset,
+				y * scale + cursorBottomLeftOffsetY - cursorAnimationOffset);
+		batch.draw(cursorBottomRight, x * scale + cursorBottomRightOffsetX + cursorAnimationOffset,
+				y * scale + cursorBottomRightOffsetY - cursorAnimationOffset);
 
 	}
 
