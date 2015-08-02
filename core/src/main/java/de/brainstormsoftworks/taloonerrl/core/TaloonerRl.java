@@ -216,10 +216,8 @@ public class TaloonerRl implements ApplicationListener {
 		elapsed += deltaTime;
 		Renderer.getInstance().beginRendering();
 
-		DungeonRenderer.getInstance().render(Renderer.getInstance().BATCH, map.getMap(), Renderer.TILES_HORIZONTAL,
-				Renderer.TILES_VERTICAL);
-		GuiRenderer.getInstance().render(Renderer.getInstance().BATCH, Renderer.TILES_HORIZONTAL,
-				Renderer.TILES_VERTICAL);
+		DungeonRenderer.getInstance().render(map.getMap(), Renderer.TILES_HORIZONTAL, Renderer.TILES_VERTICAL);
+		GuiRenderer.getInstance().render(Renderer.TILES_HORIZONTAL, Renderer.TILES_VERTICAL);
 
 		TextureRegion currentFrame = null;
 		switch (walkingDirection) {

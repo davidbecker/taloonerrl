@@ -14,7 +14,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.Texture.TextureWrap;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import de.brainstormsoftworks.taloonerrl.dungeon.ITile;
@@ -92,8 +91,7 @@ public final class DungeonRenderer implements IDisposableInstance {
 		wallTexture.dispose();
 	}
 
-	public void render(final SpriteBatch batch, final ITile[][] tileArray, final int tilesHorizontal,
-			final int tilesVertical) {
+	public void render(final ITile[][] tileArray, final int tilesHorizontal, final int tilesVertical) {
 		// TODO render map into framebuffer and use buffer if player hasn't
 		// moved
 		for (int x = 0; x < tilesHorizontal; x++) {
@@ -102,7 +100,7 @@ public final class DungeonRenderer implements IDisposableInstance {
 				// final TextureRegion tile = TextureManager.getInstance()
 				// .getTile(tileArray[x][y].getDungeonSprite());
 				if (tile != null) {
-					batch.draw(tile, x * scale, y * scale);
+					Renderer.getInstance().BATCH.draw(tile, x * scale, y * scale);
 				}
 			}
 		}
