@@ -1,3 +1,13 @@
+/*******************************************************************************
+ * Copyright (c) 2015 David Becker.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the GNU Public License v2.0
+ * which accompanies this distribution, and is available at
+ * http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+ *
+ * Contributors:
+ *     David Becker - initial API and implementation
+ ******************************************************************************/
 package de.brainstormsoftworks.taloonerrl.core.engine;
 
 import java.util.HashMap;
@@ -13,6 +23,8 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import de.brainstormsoftworks.taloonerrl.components.AnimationComponent;
+import de.brainstormsoftworks.taloonerrl.render.IDisposableInstance;
+import de.brainstormsoftworks.taloonerrl.render.RenderUtil;
 
 /**
  * utility class that maps the animation for to a sprite
@@ -20,7 +32,7 @@ import de.brainstormsoftworks.taloonerrl.components.AnimationComponent;
  * @author David Becker
  *
  */
-public final class SpriteMapper {
+public final class SpriteMapper implements IDisposableInstance {
 
 	private final Map<EEntity, Animation> mappedAnimations = new HashMap<EEntity, Animation>();
 	private final Set<Texture> toDispose = new HashSet<Texture>();
@@ -36,6 +48,10 @@ public final class SpriteMapper {
 	private Texture tRodent1 = null;
 	private Texture tDecor0 = null;
 	private Texture tDecor1 = null;
+
+	private SpriteMapper() {
+		RenderUtil.toDispose.add(this);
+	}
 
 	public static SpriteMapper getInstance() {
 		return instance;
@@ -98,10 +114,8 @@ public final class SpriteMapper {
 		return texture;
 	}
 
-	/**
-	 * disposes all managed ressources
-	 */
-	public void disposeAll() {
+	@Override
+	public void disposeInstance() {
 		for (final Texture texture : toDispose) {
 			texture.dispose();
 		}

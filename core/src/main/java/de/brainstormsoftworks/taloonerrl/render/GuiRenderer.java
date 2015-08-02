@@ -4,16 +4,19 @@
  * are made available under the terms of the GNU Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
- * 
+ *
  * Contributors:
  *     David Becker - initial API and implementation
  ******************************************************************************/
 package de.brainstormsoftworks.taloonerrl.render;
 
+import com.artemis.Entity;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+
+import de.brainstormsoftworks.taloonerrl.components.HealthComponent;
+import de.brainstormsoftworks.taloonerrl.core.engine.GameEngine;
 
 public final class GuiRenderer implements IDisposableInstance {
 	private static GuiRenderer instance = null;
@@ -45,9 +48,6 @@ public final class GuiRenderer implements IDisposableInstance {
 	private final TextureRegion sBarSilver75;
 	private final TextureRegion sBarSilver50;
 	private final TextureRegion sBarSilver25;
-
-	// FIXME
-	public static float playerHeath = 1.0f;
 
 	private static final String TEXTURE_PATH = "textures/dawnlike/GUI/";
 
@@ -82,6 +82,8 @@ public final class GuiRenderer implements IDisposableInstance {
 		sBarSilver75 = new TextureRegion(guiTexture, 7 * tileSize, 5 * tileSize, tileSize, tileSize);
 		sBarSilver50 = new TextureRegion(guiTexture, 8 * tileSize, 5 * tileSize, tileSize, tileSize);
 		sBarSilver25 = new TextureRegion(guiTexture, 9 * tileSize, 5 * tileSize, tileSize, tileSize);
+
+		RenderUtil.toDispose.add(this);
 	}
 
 	/**
@@ -100,45 +102,49 @@ public final class GuiRenderer implements IDisposableInstance {
 		guiTexture.dispose();
 	}
 
-	public void render(final SpriteBatch batch, final int tilesHorizontal, final int tilesVertical) {
-		renderBar(batch, playerHeath, 1, tilesHorizontal + 1, tilesVertical - 1, EBarElementColor.RED);
-		renderBar(batch, playerHeath, 2, tilesHorizontal + 1, tilesVertical - 2, EBarElementColor.RED);
-		renderBar(batch, playerHeath, 3, tilesHorizontal + 1, tilesVertical - 3, EBarElementColor.RED);
-		renderBar(batch, playerHeath, 3, tilesHorizontal + 1, tilesVertical - 4, EBarElementColor.BLUE);
-		renderBar(batch, playerHeath, 3, tilesHorizontal + 1, tilesVertical - 5, EBarElementColor.GREEN);
-		renderBar(batch, playerHeath, 3, tilesHorizontal + 1, tilesVertical - 6, EBarElementColor.YELLOW);
-		renderBar(batch, playerHeath, 3, tilesHorizontal + 1, tilesVertical - 7, EBarElementColor.SILVER);
+	public void render(final int tilesHorizontal, final int tilesVertical) {
+		// hack to avoid null pointer on first frame
+		final Entity player = GameEngine.getInstance().getEntity(0);
+		if (player != null) {
+			final float playerHeath = player.getComponent(HealthComponent.class).getHealthPercent();
+			renderBar(playerHeath, 1, tilesHorizontal + 1, tilesVertical - 1, EBarElementColor.RED);
+			renderBar(playerHeath, 2, tilesHorizontal + 1, tilesVertical - 2, EBarElementColor.RED);
+			renderBar(playerHeath, 3, tilesHorizontal + 1, tilesVertical - 3, EBarElementColor.RED);
+			renderBar(playerHeath, 3, tilesHorizontal + 1, tilesVertical - 4, EBarElementColor.BLUE);
+			renderBar(playerHeath, 3, tilesHorizontal + 1, tilesVertical - 5, EBarElementColor.GREEN);
+			renderBar(playerHeath, 3, tilesHorizontal + 1, tilesVertical - 6, EBarElementColor.YELLOW);
+			renderBar(playerHeath, 3, tilesHorizontal + 1, tilesVertical - 7, EBarElementColor.SILVER);
+		}
+	}
+
+	private void renderBar(final float percent, final int barWidth, final int startX, final int startY,
+			final EBarElementColor color) {
+		fillBar(percent, barWidth, startX, startY, color);
+		renderBarOutline(barWidth, startX, startY);
 
 	}
 
-	private void renderBar(final SpriteBatch batch, final float percent, final int barWidth, final int startX,
-			final int startY, final EBarElementColor color) {
-		fillBar(batch, percent, barWidth, startX, startY, color);
-		renderBarOutline(batch, barWidth, startX, startY);
-
-	}
-
-	private void renderBarOutline(final SpriteBatch batch, final int barWidth, final int startX, final int startY) {
+	private void renderBarOutline(final int barWidth, final int startX, final int startY) {
 		if (barWidth <= 1) {
-			batch.draw(sBarSmall, startX * scale, startY * scale);
+			Renderer.getInstance().BATCH.draw(sBarSmall, startX * scale, startY * scale);
 		} else {
-			batch.draw(sBarLeft, startX * scale, startY * scale);
+			Renderer.getInstance().BATCH.draw(sBarLeft, startX * scale, startY * scale);
 			final int centerPieces = barWidth - 2;
 			for (int i = 0; i < centerPieces; i++) {
-				batch.draw(sBarCenter, (1 + i + startX) * scale, startY * scale);
+				Renderer.getInstance().BATCH.draw(sBarCenter, (1 + i + startX) * scale, startY * scale);
 			}
-			batch.draw(sBarRight, (1 + centerPieces + startX) * scale, startY * scale);
+			Renderer.getInstance().BATCH.draw(sBarRight, (1 + centerPieces + startX) * scale, startY * scale);
 		}
 
 	}
 
-	private void fillBar(final SpriteBatch batch, final float percent, final int barWidth, final int x, final int y,
+	private void fillBar(final float percent, final int barWidth, final int x, final int y,
 			final EBarElementColor color) {
 		final EBarElementFilled[] calculateBarFill = RenderUtil.calculateBarFill(barWidth, percent);
 		for (int i = 0; i < barWidth; i++) {
 			final TextureRegion texture = getTextureForFilledState(calculateBarFill[i], color);
 			if (texture != null) {
-				batch.draw(texture, (i + x) * scale, y * scale);
+				Renderer.getInstance().BATCH.draw(texture, (i + x) * scale, y * scale);
 			}
 		}
 	}

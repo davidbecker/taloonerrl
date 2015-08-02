@@ -10,6 +10,9 @@
  ******************************************************************************/
 package de.brainstormsoftworks.taloonerrl.render;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
@@ -28,6 +31,15 @@ public final class RenderUtil {
 	public static final float PERCENT_50 = .50f;
 	public static final float PERCENT_25 = .25f;
 	public static final float PERCENT_0 = .00f;
+
+	/**
+	 * central place to keep track of resources that should be disposed at the
+	 * end of the application
+	 */
+	public static final Set<IDisposableInstance> toDispose = new HashSet<IDisposableInstance>();
+
+	private RenderUtil() {
+	}
 
 	/**
 	 * calculates how a GUI bar should be filled.<br/>
@@ -104,5 +116,15 @@ public final class RenderUtil {
 	 */
 	public static TextureRegion getKeyFrame(final Animation animation) {
 		return animation.getKeyFrame(GameEngine.getInstance().getStateTime(), true);
+	}
+
+	/**
+	 * dispose all the things!
+	 */
+	public static void disposeInstances() {
+		for (final IDisposableInstance iDisposableInstance : toDispose) {
+			iDisposableInstance.disposeInstance();
+		}
+
 	}
 }
