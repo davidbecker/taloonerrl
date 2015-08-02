@@ -4,7 +4,7 @@
  * are made available under the terms of the GNU Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
- * 
+ *
  * Contributors:
  *     David Becker - initial API and implementation
  ******************************************************************************/
@@ -14,10 +14,11 @@ import com.artemis.Component;
 import com.artemis.ComponentMapper;
 import com.artemis.World;
 
+import de.brainstormsoftworks.taloonerrl.components.AnimationComponent;
 import de.brainstormsoftworks.taloonerrl.components.ControllerComponent;
+import de.brainstormsoftworks.taloonerrl.components.FacingComponent;
 import de.brainstormsoftworks.taloonerrl.components.HealthComponent;
 import de.brainstormsoftworks.taloonerrl.components.PositionComponent;
-import de.brainstormsoftworks.taloonerrl.components.AnimationComponent;
 
 /**
  * singleton to get the {@link Component}s for our {@link World}
@@ -27,6 +28,7 @@ import de.brainstormsoftworks.taloonerrl.components.AnimationComponent;
  */
 public final class ComponentMappers {
 	public final ComponentMapper<ControllerComponent> controller;
+	public final ComponentMapper<FacingComponent> facing;
 	public final ComponentMapper<HealthComponent> health;
 	public final ComponentMapper<PositionComponent> position;
 	public final ComponentMapper<AnimationComponent> sprite;
@@ -35,6 +37,7 @@ public final class ComponentMappers {
 
 	private ComponentMappers(final World world) {
 		controller = ComponentMapper.getFor(ControllerComponent.class, world);
+		facing = ComponentMapper.getFor(FacingComponent.class, world);
 		health = ComponentMapper.getFor(HealthComponent.class, world);
 		position = ComponentMapper.getFor(PositionComponent.class, world);
 		sprite = ComponentMapper.getFor(AnimationComponent.class, world);
