@@ -22,6 +22,12 @@ import de.brainstormsoftworks.taloonerrl.core.engine.ComponentMappers;
 import de.brainstormsoftworks.taloonerrl.render.RenderUtil;
 import de.brainstormsoftworks.taloonerrl.render.Renderer;
 
+/**
+ * simple rendering system for animations that aren't dependent on a direction
+ *
+ * @author David Becker
+ *
+ */
 public class AnimationRenderSystem extends EntityProcessingSystem {
 	private static final float scale = 16f;
 
