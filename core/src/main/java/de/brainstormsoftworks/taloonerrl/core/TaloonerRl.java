@@ -18,7 +18,6 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
@@ -36,11 +35,12 @@ import de.brainstormsoftworks.taloonerrl.dungeon.MapFactory;
 import de.brainstormsoftworks.taloonerrl.render.DungeonRenderer;
 import de.brainstormsoftworks.taloonerrl.render.GuiRenderer;
 import de.brainstormsoftworks.taloonerrl.render.RenderUtil;
+import de.brainstormsoftworks.taloonerrl.render.Renderer;
 
 public class TaloonerRl implements ApplicationListener {
 	Texture warrior;
 	Texture cursor;
-	SpriteBatch batch;
+
 	float elapsed;
 
 	TextureRegion[] walkFramesUp = new TextureRegion[4];
@@ -114,7 +114,6 @@ public class TaloonerRl implements ApplicationListener {
 		cursorBottomLeft = new TextureRegion(cursor, 0, 8, 8, 8);
 		cursorBottomRight = new TextureRegion(cursor, 8, 8, 8, 8);
 
-		batch = new SpriteBatch();
 		mouseX = Gdx.graphics.getWidth() / 2;
 		mouseY = Gdx.graphics.getHeight() / 2;
 		camera = new OrthographicCamera();
@@ -126,11 +125,14 @@ public class TaloonerRl implements ApplicationListener {
 		playerEntity = gameEngine.createNewEntity(EEntity.PLAYER);
 		playerHealthComponent = playerEntity.getComponent(HealthComponent.class);
 		playerPositionComponent = playerEntity.getComponent(PositionComponent.class);
+		// TODO only use one player
+		playerPositionComponent.setX(player.getMovementComponent().getXPosition());
+		playerPositionComponent.setY(player.getMovementComponent().getYPosition());
 		final Entity createNewEntity = gameEngine.createNewEntity(EEntity.SQUIRREL, 1, 1);
 		createNewEntity.getComponent(HealthComponent.class).setHealthPercent(0.75f);
 
 		gameEngine.createNewEntity(EEntity.BLOB, 2, 2);
-		for (int i = 1; i < TILES_HORIZONTAL - 5; i++) {
+		for (int i = 1; i < TILES_HORIZONTAL - 1; i++) {
 			gameEngine.createNewEntity(EEntity.TORCH, i, TILES_VERTICAL - 1);
 		}
 
@@ -215,7 +217,6 @@ public class TaloonerRl implements ApplicationListener {
 					walkingDirection = EDirection.UP;
 				}
 				// TODO only use one player
-				// FIXME why is rendering still weird?
 				playerPositionComponent.setX(player.getMovementComponent().getXPosition());
 				playerPositionComponent.setY(player.getMovementComponent().getYPosition());
 				delayToNextTurn = delayBetweenTurns;
@@ -251,12 +252,13 @@ public class TaloonerRl implements ApplicationListener {
 		elapsed += deltaTime;
 		Gdx.gl.glClearColor(0, 0, 0, 0);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		batch.setProjectionMatrix(camera.combined);
-		batch.begin();
-		batch.enableBlending();
+		Renderer.getInstance().BATCH.setProjectionMatrix(camera.combined);
+		Renderer.getInstance().BATCH.begin();
+		Renderer.getInstance().BATCH.enableBlending();
 
-		DungeonRenderer.getInstance().render(batch, map.getMap(), TILES_HORIZONTAL, TILES_VERTICAL);
-		GuiRenderer.getInstance().render(batch, TILES_HORIZONTAL, TILES_VERTICAL);
+		DungeonRenderer.getInstance().render(Renderer.getInstance().BATCH, map.getMap(), TILES_HORIZONTAL,
+				TILES_VERTICAL);
+		GuiRenderer.getInstance().render(Renderer.getInstance().BATCH, TILES_HORIZONTAL, TILES_VERTICAL);
 
 		TextureRegion currentFrame = null;
 		switch (walkingDirection) {
@@ -275,9 +277,9 @@ public class TaloonerRl implements ApplicationListener {
 		default:
 			break;
 		}
-		batch.draw(currentFrame, player.getMovementComponent().getXPosition() * scale,
+		Renderer.getInstance().BATCH.draw(currentFrame, player.getMovementComponent().getXPosition() * scale,
 				player.getMovementComponent().getYPosition() * scale);
-		// drawActor(batch, player);
+		// drawActor(Renderer.getInstance().BATCH, player);
 
 		final Vector3 touchPos = new Vector3();
 		touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
@@ -285,31 +287,32 @@ public class TaloonerRl implements ApplicationListener {
 		mouseX = touchPos.x - tileSize / 2;
 		mouseY = touchPos.y - tileSize / 2;
 
-		batch.draw(cursor, mouseX, mouseY);
+		Renderer.getInstance().BATCH.draw(cursor, mouseX, mouseY);
 		// FIXME WIP
 		// // translate mouse coordinates to selected tile
 		// final float tileX = touchPos.x / TILES_HORIZONTAL; // 0-18
 		// final float tileY = touchPos.y / TILES_VERTICAL;
-		// batch.draw(cursor, tileX, tileY);
+		// Renderer.getInstance().BATCH.draw(cursor, tileX, tileY);
 		// System.out.println(tileX + " " + tileY);
-		highlightPlayerTile(batch, player);
+		highlightPlayerTile(player);
 
-		batch.end();
 		GameEngine.getInstance().update(deltaTime);
+		Renderer.getInstance().BATCH.end();
 
 		isPlayerTurn = false;
 	}
 
-	private static void highlightPlayerTile(final SpriteBatch batch, final IActor player) {
+	private static void highlightPlayerTile(final IActor player) {
 		final int x = player.getMovementComponent().getXPosition();
 		final int y = player.getMovementComponent().getYPosition();
-		batch.draw(cursorTopLeft, x * scale + cursorTopLeftOffsetX - cursorAnimationOffset,
+		Renderer.getInstance().BATCH.draw(cursorTopLeft, x * scale + cursorTopLeftOffsetX - cursorAnimationOffset,
 				y * scale + cursorTopLeftOffsetY + cursorAnimationOffset);
-		batch.draw(cursorTopRight, x * scale + cursorTopRightOffsetX + cursorAnimationOffset,
+		Renderer.getInstance().BATCH.draw(cursorTopRight, x * scale + cursorTopRightOffsetX + cursorAnimationOffset,
 				y * scale + cursorTopRightOffsetY + cursorAnimationOffset);
-		batch.draw(cursorBottomLeft, x * scale + cursorBottomLeftOffsetX - cursorAnimationOffset,
+		Renderer.getInstance().BATCH.draw(cursorBottomLeft, x * scale + cursorBottomLeftOffsetX - cursorAnimationOffset,
 				y * scale + cursorBottomLeftOffsetY - cursorAnimationOffset);
-		batch.draw(cursorBottomRight, x * scale + cursorBottomRightOffsetX + cursorAnimationOffset,
+		Renderer.getInstance().BATCH.draw(cursorBottomRight,
+				x * scale + cursorBottomRightOffsetX + cursorAnimationOffset,
 				y * scale + cursorBottomRightOffsetY - cursorAnimationOffset);
 
 	}
@@ -324,7 +327,7 @@ public class TaloonerRl implements ApplicationListener {
 
 	@Override
 	public void dispose() {
-		batch.dispose();
+		Renderer.getInstance().BATCH.dispose();
 		warrior.dispose();
 		cursor.dispose();
 		RenderUtil.disposeInstances();
