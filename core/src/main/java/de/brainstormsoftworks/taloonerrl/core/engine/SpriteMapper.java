@@ -58,7 +58,7 @@ public final class SpriteMapper implements IDisposableInstance {
 	}
 
 	public void mapSprite(final AnimationComponent component) {
-		final EEntity sprite = component.getSprite();
+		final EEntity sprite = component.getEntity();
 		if (!mappedAnimations.containsKey(sprite)) {
 			loadAnimation(sprite);
 		}

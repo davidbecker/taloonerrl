@@ -4,7 +4,7 @@
  * are made available under the terms of the GNU Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
- * 
+ *
  * Contributors:
  *     David Becker - initial API and implementation
  ******************************************************************************/
@@ -27,11 +27,11 @@ public class AnimationComponent extends PooledComponent {
 	}
 
 	/**
-	 * getter for sprite
+	 * getter for entityType
 	 *
-	 * @return the sprite
+	 * @return the entityType
 	 */
-	public final EEntity getSprite() {
+	public final EEntity getEntity() {
 		return entityType;
 	}
 
