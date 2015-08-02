@@ -61,7 +61,6 @@ public class TaloonerRl implements ApplicationListener {
 	Animation walkLeft;
 	Animation walkRight;
 	EDirection walkingDirection = EDirection.RIGHT;
-	private static final float scale = 16f;
 	float mouseX;
 	float mouseY;
 
@@ -236,8 +235,8 @@ public class TaloonerRl implements ApplicationListener {
 		default:
 			break;
 		}
-		Renderer.getInstance().BATCH.draw(currentFrame, player.getMovementComponent().getXPosition() * scale,
-				player.getMovementComponent().getYPosition() * scale);
+		Renderer.getInstance().BATCH.draw(currentFrame, player.getMovementComponent().getXPosition() * Renderer.scale,
+				player.getMovementComponent().getYPosition() * Renderer.scale);
 		// drawActor(Renderer.getInstance().BATCH, player);
 
 		final Vector3 touchPos = new Vector3();
@@ -264,15 +263,18 @@ public class TaloonerRl implements ApplicationListener {
 	private static void highlightPlayerTile(final IActor player) {
 		final int x = player.getMovementComponent().getXPosition();
 		final int y = player.getMovementComponent().getYPosition();
-		Renderer.getInstance().BATCH.draw(cursorTopLeft, x * scale + cursorTopLeftOffsetX - cursorAnimationOffset,
-				y * scale + cursorTopLeftOffsetY + cursorAnimationOffset);
-		Renderer.getInstance().BATCH.draw(cursorTopRight, x * scale + cursorTopRightOffsetX + cursorAnimationOffset,
-				y * scale + cursorTopRightOffsetY + cursorAnimationOffset);
-		Renderer.getInstance().BATCH.draw(cursorBottomLeft, x * scale + cursorBottomLeftOffsetX - cursorAnimationOffset,
-				y * scale + cursorBottomLeftOffsetY - cursorAnimationOffset);
+		Renderer.getInstance().BATCH.draw(cursorTopLeft,
+				x * Renderer.scale + cursorTopLeftOffsetX - cursorAnimationOffset,
+				y * Renderer.scale + cursorTopLeftOffsetY + cursorAnimationOffset);
+		Renderer.getInstance().BATCH.draw(cursorTopRight,
+				x * Renderer.scale + cursorTopRightOffsetX + cursorAnimationOffset,
+				y * Renderer.scale + cursorTopRightOffsetY + cursorAnimationOffset);
+		Renderer.getInstance().BATCH.draw(cursorBottomLeft,
+				x * Renderer.scale + cursorBottomLeftOffsetX - cursorAnimationOffset,
+				y * Renderer.scale + cursorBottomLeftOffsetY - cursorAnimationOffset);
 		Renderer.getInstance().BATCH.draw(cursorBottomRight,
-				x * scale + cursorBottomRightOffsetX + cursorAnimationOffset,
-				y * scale + cursorBottomRightOffsetY - cursorAnimationOffset);
+				x * Renderer.scale + cursorBottomRightOffsetX + cursorAnimationOffset,
+				y * Renderer.scale + cursorBottomRightOffsetY - cursorAnimationOffset);
 
 	}
 

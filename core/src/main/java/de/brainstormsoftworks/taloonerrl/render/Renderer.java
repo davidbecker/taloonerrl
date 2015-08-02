@@ -29,6 +29,7 @@ import com.badlogic.gdx.math.Vector3;
  */
 public final class Renderer {
 
+	public static final float scale = 16f;
 	public static final int tileSize = 16;
 	public static final int TILES_HORIZONTAL = 30;
 	public static final int TILES_VERTICAL = 20;

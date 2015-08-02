@@ -21,8 +21,6 @@ import de.brainstormsoftworks.taloonerrl.core.engine.GameEngine;
 public final class GuiRenderer implements IDisposableInstance {
 	private static GuiRenderer instance = null;
 	private Texture guiTexture = null;
-	private static final float scale = 16f;
-	private static final int tileSize = 16;
 
 	private final TextureRegion sBarLeft;
 	private final TextureRegion sBarCenter;
@@ -53,35 +51,59 @@ public final class GuiRenderer implements IDisposableInstance {
 
 	private GuiRenderer() {
 		guiTexture = new Texture(Gdx.files.internal(TEXTURE_PATH + "GUI0.png"), false);
-		sBarLeft = new TextureRegion(guiTexture, 6 * tileSize, 0 * tileSize, tileSize, tileSize);
-		sBarCenter = new TextureRegion(guiTexture, 7 * tileSize, 0 * tileSize, tileSize, tileSize);
-		sBarRight = new TextureRegion(guiTexture, 8 * tileSize, 0 * tileSize, tileSize, tileSize);
-		sBarSmall = new TextureRegion(guiTexture, 9 * tileSize, 0 * tileSize, tileSize, tileSize);
+		sBarLeft = new TextureRegion(guiTexture, 6 * Renderer.tileSize, 0 * Renderer.tileSize, Renderer.tileSize,
+				Renderer.tileSize);
+		sBarCenter = new TextureRegion(guiTexture, 7 * Renderer.tileSize, 0 * Renderer.tileSize, Renderer.tileSize,
+				Renderer.tileSize);
+		sBarRight = new TextureRegion(guiTexture, 8 * Renderer.tileSize, 0 * Renderer.tileSize, Renderer.tileSize,
+				Renderer.tileSize);
+		sBarSmall = new TextureRegion(guiTexture, 9 * Renderer.tileSize, 0 * Renderer.tileSize, Renderer.tileSize,
+				Renderer.tileSize);
 
-		sBarRed100 = new TextureRegion(guiTexture, 6 * tileSize, 1 * tileSize, tileSize, tileSize);
-		sBarRed75 = new TextureRegion(guiTexture, 7 * tileSize, 1 * tileSize, tileSize, tileSize);
-		sBarRed50 = new TextureRegion(guiTexture, 8 * tileSize, 1 * tileSize, tileSize, tileSize);
-		sBarRed25 = new TextureRegion(guiTexture, 9 * tileSize, 1 * tileSize, tileSize, tileSize);
+		sBarRed100 = new TextureRegion(guiTexture, 6 * Renderer.tileSize, 1 * Renderer.tileSize, Renderer.tileSize,
+				Renderer.tileSize);
+		sBarRed75 = new TextureRegion(guiTexture, 7 * Renderer.tileSize, 1 * Renderer.tileSize, Renderer.tileSize,
+				Renderer.tileSize);
+		sBarRed50 = new TextureRegion(guiTexture, 8 * Renderer.tileSize, 1 * Renderer.tileSize, Renderer.tileSize,
+				Renderer.tileSize);
+		sBarRed25 = new TextureRegion(guiTexture, 9 * Renderer.tileSize, 1 * Renderer.tileSize, Renderer.tileSize,
+				Renderer.tileSize);
 
-		sBarBlue100 = new TextureRegion(guiTexture, 6 * tileSize, 2 * tileSize, tileSize, tileSize);
-		sBarBlue75 = new TextureRegion(guiTexture, 7 * tileSize, 2 * tileSize, tileSize, tileSize);
-		sBarBlue50 = new TextureRegion(guiTexture, 8 * tileSize, 2 * tileSize, tileSize, tileSize);
-		sBarBlue25 = new TextureRegion(guiTexture, 9 * tileSize, 2 * tileSize, tileSize, tileSize);
+		sBarBlue100 = new TextureRegion(guiTexture, 6 * Renderer.tileSize, 2 * Renderer.tileSize, Renderer.tileSize,
+				Renderer.tileSize);
+		sBarBlue75 = new TextureRegion(guiTexture, 7 * Renderer.tileSize, 2 * Renderer.tileSize, Renderer.tileSize,
+				Renderer.tileSize);
+		sBarBlue50 = new TextureRegion(guiTexture, 8 * Renderer.tileSize, 2 * Renderer.tileSize, Renderer.tileSize,
+				Renderer.tileSize);
+		sBarBlue25 = new TextureRegion(guiTexture, 9 * Renderer.tileSize, 2 * Renderer.tileSize, Renderer.tileSize,
+				Renderer.tileSize);
 
-		sBarGreen100 = new TextureRegion(guiTexture, 6 * tileSize, 3 * tileSize, tileSize, tileSize);
-		sBarGreen75 = new TextureRegion(guiTexture, 7 * tileSize, 3 * tileSize, tileSize, tileSize);
-		sBarGreen50 = new TextureRegion(guiTexture, 8 * tileSize, 3 * tileSize, tileSize, tileSize);
-		sBarGreen25 = new TextureRegion(guiTexture, 9 * tileSize, 3 * tileSize, tileSize, tileSize);
+		sBarGreen100 = new TextureRegion(guiTexture, 6 * Renderer.tileSize, 3 * Renderer.tileSize, Renderer.tileSize,
+				Renderer.tileSize);
+		sBarGreen75 = new TextureRegion(guiTexture, 7 * Renderer.tileSize, 3 * Renderer.tileSize, Renderer.tileSize,
+				Renderer.tileSize);
+		sBarGreen50 = new TextureRegion(guiTexture, 8 * Renderer.tileSize, 3 * Renderer.tileSize, Renderer.tileSize,
+				Renderer.tileSize);
+		sBarGreen25 = new TextureRegion(guiTexture, 9 * Renderer.tileSize, 3 * Renderer.tileSize, Renderer.tileSize,
+				Renderer.tileSize);
 
-		sBarYellow100 = new TextureRegion(guiTexture, 6 * tileSize, 4 * tileSize, tileSize, tileSize);
-		sBarYellow75 = new TextureRegion(guiTexture, 7 * tileSize, 4 * tileSize, tileSize, tileSize);
-		sBarYellow50 = new TextureRegion(guiTexture, 8 * tileSize, 4 * tileSize, tileSize, tileSize);
-		sBarYellow25 = new TextureRegion(guiTexture, 9 * tileSize, 4 * tileSize, tileSize, tileSize);
+		sBarYellow100 = new TextureRegion(guiTexture, 6 * Renderer.tileSize, 4 * Renderer.tileSize, Renderer.tileSize,
+				Renderer.tileSize);
+		sBarYellow75 = new TextureRegion(guiTexture, 7 * Renderer.tileSize, 4 * Renderer.tileSize, Renderer.tileSize,
+				Renderer.tileSize);
+		sBarYellow50 = new TextureRegion(guiTexture, 8 * Renderer.tileSize, 4 * Renderer.tileSize, Renderer.tileSize,
+				Renderer.tileSize);
+		sBarYellow25 = new TextureRegion(guiTexture, 9 * Renderer.tileSize, 4 * Renderer.tileSize, Renderer.tileSize,
+				Renderer.tileSize);
 
-		sBarSilver100 = new TextureRegion(guiTexture, 6 * tileSize, 5 * tileSize, tileSize, tileSize);
-		sBarSilver75 = new TextureRegion(guiTexture, 7 * tileSize, 5 * tileSize, tileSize, tileSize);
-		sBarSilver50 = new TextureRegion(guiTexture, 8 * tileSize, 5 * tileSize, tileSize, tileSize);
-		sBarSilver25 = new TextureRegion(guiTexture, 9 * tileSize, 5 * tileSize, tileSize, tileSize);
+		sBarSilver100 = new TextureRegion(guiTexture, 6 * Renderer.tileSize, 5 * Renderer.tileSize, Renderer.tileSize,
+				Renderer.tileSize);
+		sBarSilver75 = new TextureRegion(guiTexture, 7 * Renderer.tileSize, 5 * Renderer.tileSize, Renderer.tileSize,
+				Renderer.tileSize);
+		sBarSilver50 = new TextureRegion(guiTexture, 8 * Renderer.tileSize, 5 * Renderer.tileSize, Renderer.tileSize,
+				Renderer.tileSize);
+		sBarSilver25 = new TextureRegion(guiTexture, 9 * Renderer.tileSize, 5 * Renderer.tileSize, Renderer.tileSize,
+				Renderer.tileSize);
 
 		RenderUtil.toDispose.add(this);
 	}
@@ -126,14 +148,16 @@ public final class GuiRenderer implements IDisposableInstance {
 
 	private void renderBarOutline(final int barWidth, final int startX, final int startY) {
 		if (barWidth <= 1) {
-			Renderer.getInstance().BATCH.draw(sBarSmall, startX * scale, startY * scale);
+			Renderer.getInstance().BATCH.draw(sBarSmall, startX * Renderer.scale, startY * Renderer.scale);
 		} else {
-			Renderer.getInstance().BATCH.draw(sBarLeft, startX * scale, startY * scale);
+			Renderer.getInstance().BATCH.draw(sBarLeft, startX * Renderer.scale, startY * Renderer.scale);
 			final int centerPieces = barWidth - 2;
 			for (int i = 0; i < centerPieces; i++) {
-				Renderer.getInstance().BATCH.draw(sBarCenter, (1 + i + startX) * scale, startY * scale);
+				Renderer.getInstance().BATCH.draw(sBarCenter, (1 + i + startX) * Renderer.scale,
+						startY * Renderer.scale);
 			}
-			Renderer.getInstance().BATCH.draw(sBarRight, (1 + centerPieces + startX) * scale, startY * scale);
+			Renderer.getInstance().BATCH.draw(sBarRight, (1 + centerPieces + startX) * Renderer.scale,
+					startY * Renderer.scale);
 		}
 
 	}
@@ -144,7 +168,7 @@ public final class GuiRenderer implements IDisposableInstance {
 		for (int i = 0; i < barWidth; i++) {
 			final TextureRegion texture = getTextureForFilledState(calculateBarFill[i], color);
 			if (texture != null) {
-				Renderer.getInstance().BATCH.draw(texture, (i + x) * scale, y * scale);
+				Renderer.getInstance().BATCH.draw(texture, (i + x) * Renderer.scale, y * Renderer.scale);
 			}
 		}
 	}
