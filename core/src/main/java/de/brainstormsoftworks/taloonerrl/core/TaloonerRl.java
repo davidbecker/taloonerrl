@@ -28,14 +28,13 @@ import de.brainstormsoftworks.taloonerrl.actors.ActorFactory;
 import de.brainstormsoftworks.taloonerrl.actors.EActorTypes;
 import de.brainstormsoftworks.taloonerrl.actors.IActor;
 import de.brainstormsoftworks.taloonerrl.components.HealthComponent;
+import de.brainstormsoftworks.taloonerrl.components.PositionComponent;
 import de.brainstormsoftworks.taloonerrl.core.engine.EEntity;
 import de.brainstormsoftworks.taloonerrl.core.engine.GameEngine;
-import de.brainstormsoftworks.taloonerrl.core.engine.SpriteMapper;
 import de.brainstormsoftworks.taloonerrl.dungeon.IMap;
 import de.brainstormsoftworks.taloonerrl.dungeon.MapFactory;
 import de.brainstormsoftworks.taloonerrl.render.DungeonRenderer;
 import de.brainstormsoftworks.taloonerrl.render.GuiRenderer;
-import de.brainstormsoftworks.taloonerrl.render.PaletteUtil;
 import de.brainstormsoftworks.taloonerrl.render.RenderUtil;
 
 public class TaloonerRl implements ApplicationListener {
@@ -91,6 +90,7 @@ public class TaloonerRl implements ApplicationListener {
 	private static final String fontPath = "font/";
 	private Entity playerEntity;
 	private HealthComponent playerHealthComponent;
+	private PositionComponent playerPositionComponent;
 
 	@Override
 	public void create() {
@@ -125,6 +125,7 @@ public class TaloonerRl implements ApplicationListener {
 		final GameEngine gameEngine = GameEngine.getInstance();
 		playerEntity = gameEngine.createNewEntity(EEntity.PLAYER);
 		playerHealthComponent = playerEntity.getComponent(HealthComponent.class);
+		playerPositionComponent = playerEntity.getComponent(PositionComponent.class);
 		final Entity createNewEntity = gameEngine.createNewEntity(EEntity.SQUIRREL, 1, 1);
 		createNewEntity.getComponent(HealthComponent.class).setHealthPercent(0.75f);
 
@@ -213,6 +214,10 @@ public class TaloonerRl implements ApplicationListener {
 					player.getMovementComponent().move(0, 1);
 					walkingDirection = EDirection.UP;
 				}
+				// TODO only use one player
+				// FIXME why is rendering still weird?
+				playerPositionComponent.setX(player.getMovementComponent().getXPosition());
+				playerPositionComponent.setY(player.getMovementComponent().getYPosition());
 				delayToNextTurn = delayBetweenTurns;
 			}
 		}
@@ -322,9 +327,6 @@ public class TaloonerRl implements ApplicationListener {
 		batch.dispose();
 		warrior.dispose();
 		cursor.dispose();
-		SpriteMapper.getInstance().disposeAll();
-		PaletteUtil.getInstance().disposeInstance();
-		DungeonRenderer.getInstance().disposeInstance();
-		GuiRenderer.getInstance().disposeInstance();
+		RenderUtil.disposeInstances();
 	}
 }

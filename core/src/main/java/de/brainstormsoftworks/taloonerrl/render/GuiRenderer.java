@@ -83,6 +83,8 @@ public final class GuiRenderer implements IDisposableInstance {
 		sBarSilver75 = new TextureRegion(guiTexture, 7 * tileSize, 5 * tileSize, tileSize, tileSize);
 		sBarSilver50 = new TextureRegion(guiTexture, 8 * tileSize, 5 * tileSize, tileSize, tileSize);
 		sBarSilver25 = new TextureRegion(guiTexture, 9 * tileSize, 5 * tileSize, tileSize, tileSize);
+
+		RenderUtil.toDispose.add(this);
 	}
 
 	/**

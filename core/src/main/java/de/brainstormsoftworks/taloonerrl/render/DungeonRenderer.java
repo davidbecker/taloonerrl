@@ -4,7 +4,7 @@
  * are made available under the terms of the GNU Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
- * 
+ *
  * Contributors:
  *     David Becker - initial API and implementation
  ******************************************************************************/
@@ -71,6 +71,8 @@ public final class DungeonRenderer implements IDisposableInstance {
 		sFloorBottom = new TextureRegion(floorTexture, 1 * tileSize, 1 + 5 * tileSize, tileSize, tileSize);
 		sFloorBottomRight = new TextureRegion(floorTexture, 2 * tileSize, 1 + 5 * tileSize, tileSize, tileSize);
 		sWallBottomRight = new TextureRegion(wallTexture, 2 * tileSize, 5 * tileSize, tileSize, tileSize);
+
+		RenderUtil.toDispose.add(this);
 	}
 
 	/**

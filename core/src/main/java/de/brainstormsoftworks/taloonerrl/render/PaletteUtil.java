@@ -20,7 +20,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
  * @author David Becker
  *
  */
-public final class PaletteUtil {
+public final class PaletteUtil implements IDisposableInstance {
 	private static final PaletteUtil instance = new PaletteUtil();
 	private final Texture paletteTexture;
 	public final TextureRegion BLACK;
@@ -60,12 +60,15 @@ public final class PaletteUtil {
 		CYAN = new TextureRegion(paletteTexture, 14, 0, 1, 1);
 		YELLOW = new TextureRegion(paletteTexture, 15, 0, 1, 1);
 		WHITE = new TextureRegion(paletteTexture, 16, 0, 1, 1);
+
+		RenderUtil.toDispose.add(this);
 	}
 
 	public static PaletteUtil getInstance() {
 		return instance;
 	}
 
+	@Override
 	public void disposeInstance() {
 		paletteTexture.dispose();
 	}
