@@ -24,9 +24,16 @@ import com.google.common.collect.TreeMultiset;
  */
 public final class EventBus {
 	private static final EventBus instance = new EventBus();
-	// PriorityQueue<Event> events = new PriorityQueue<Event>();
-	TreeMultiset<Event> events = TreeMultiset.create();
-	Set<IEventHandler> eventHandlers = new HashSet<IEventHandler>();
+
+	private final TreeMultiset<Event> events = TreeMultiset.create();
+	private final Set<IEventHandler> eventHandlers = new HashSet<IEventHandler>();
+
+	/* we don't want a new memory allocation each time, so we use this field */
+	private Iterator<Event> iterator = null;
+	/* we don't want a new memory allocation each time, so we use this field */
+	private Event event = null;
+	/* we don't want a new memory allocation each time, so we use this field */
+	private long currentTimeMillis;
 
 	/**
 	 * constructor.<br/>
@@ -87,15 +94,15 @@ public final class EventBus {
 	 * they are given to all registered event handlers
 	 */
 	public void processEvents() {
-		final long currentTimeMillis = System.currentTimeMillis();
 		if (events.isEmpty() || eventHandlers.isEmpty()) {
 			// no need to bother if we don't have events or handler to handle
 			// them
 			return;
 		}
-		final Iterator<Event> iterator = events.iterator();
+		currentTimeMillis = System.currentTimeMillis();
+		iterator = events.iterator();
 		while (iterator.hasNext()) {
-			final Event event = iterator.next();
+			event = iterator.next();
 			if (event.getEventStartTime() <= currentTimeMillis) {
 				// event has started
 				if (event.getExpireTime() < currentTimeMillis) {
