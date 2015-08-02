@@ -33,7 +33,7 @@ public class AnimationRenderSystem extends EntityProcessingSystem {
 	@Override
 	protected void process(final Entity e) {
 		final ComponentMapper<PositionComponent> posMapper = ComponentMappers.getInstance().position;
-		final ComponentMapper<AnimationComponent> spriteMapper = ComponentMappers.getInstance().sprite;
+		final ComponentMapper<AnimationComponent> spriteMapper = ComponentMappers.getInstance().animation;
 		final PositionComponent positionComponent = posMapper.get(e);
 		final AnimationComponent spriteComponent = spriteMapper.get(e);
 		final Animation animation = spriteComponent.getAnimation();

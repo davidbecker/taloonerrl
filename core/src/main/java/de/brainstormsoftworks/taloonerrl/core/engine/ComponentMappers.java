@@ -31,7 +31,7 @@ public final class ComponentMappers {
 	public final ComponentMapper<FacingComponent> facing;
 	public final ComponentMapper<HealthComponent> health;
 	public final ComponentMapper<PositionComponent> position;
-	public final ComponentMapper<AnimationComponent> sprite;
+	public final ComponentMapper<AnimationComponent> animation;
 
 	private static ComponentMappers instance = null;
 
@@ -40,7 +40,7 @@ public final class ComponentMappers {
 		facing = ComponentMapper.getFor(FacingComponent.class, world);
 		health = ComponentMapper.getFor(HealthComponent.class, world);
 		position = ComponentMapper.getFor(PositionComponent.class, world);
-		sprite = ComponentMapper.getFor(AnimationComponent.class, world);
+		animation = ComponentMapper.getFor(AnimationComponent.class, world);
 	}
 
 	/**
