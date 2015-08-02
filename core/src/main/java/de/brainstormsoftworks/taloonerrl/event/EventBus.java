@@ -45,6 +45,15 @@ public final class EventBus {
 	}
 
 	/**
+	 * adds an event to the event queue
+	 *
+	 * @param event
+	 */
+	public void addEvent(final Event event) {
+		events.add(event);
+	}
+
+	/**
 	 * registers an eventhandler to be informed about events
 	 *
 	 * @param eventHandler
