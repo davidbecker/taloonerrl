@@ -42,7 +42,7 @@ public class FacingAnimationComponent extends PooledComponent {
 	 *
 	 * @return the entityType
 	 */
-	public final EEntity getEntity() {
+	public final EEntity getEntityType() {
 		return entityType;
 	}
 
