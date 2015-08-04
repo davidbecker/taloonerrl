@@ -61,7 +61,7 @@ public final class PaletteUtil implements IDisposableInstance {
 		YELLOW = new TextureRegion(paletteTexture, 15, 0, 1, 1);
 		WHITE = new TextureRegion(paletteTexture, 16, 0, 1, 1);
 
-		RenderUtil.toDispose.add(this);
+		RenderUtil.addToDisposeList(this);
 	}
 
 	public static PaletteUtil getInstance() {

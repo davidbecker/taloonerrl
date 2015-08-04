@@ -84,7 +84,7 @@ public final class DungeonRenderer implements IDisposableInstance {
 		sWallBottomRight = new TextureRegion(wallTexture, 2 * Renderer.tileSize, 5 * Renderer.tileSize,
 				Renderer.tileSize, Renderer.tileSize);
 
-		RenderUtil.toDispose.add(this);
+		RenderUtil.addToDisposeList(this);
 	}
 
 	/**

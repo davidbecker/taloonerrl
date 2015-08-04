@@ -55,7 +55,7 @@ public final class SpriteMapper implements IDisposableInstance {
 	private Texture tWarrior = null;
 
 	private SpriteMapper() {
-		RenderUtil.toDispose.add(this);
+		RenderUtil.addToDisposeList(this);
 	}
 
 	public static SpriteMapper getInstance() {
