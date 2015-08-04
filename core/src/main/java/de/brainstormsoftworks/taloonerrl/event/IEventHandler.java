@@ -17,5 +17,14 @@ package de.brainstormsoftworks.taloonerrl.event;
  *
  */
 public interface IEventHandler {
+	/**
+	 * this method receives all events that are processed by the
+	 * {@link EventBus}, there is no filtering currently in place and all
+	 * {@link IEventHandler} should check for themselves if they should process
+	 * the event
+	 *
+	 * @param event
+	 *            to process by this handler
+	 */
 	void processEvent(Event event);
 }

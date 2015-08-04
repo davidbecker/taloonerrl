@@ -4,21 +4,26 @@
  * are made available under the terms of the GNU Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
- * 
+ *
  * Contributors:
  *     David Becker - initial API and implementation
  ******************************************************************************/
 package de.brainstormsoftworks.taloonerrl.internal.actors;
 
+import com.artemis.Component;
+
 import de.brainstormsoftworks.taloonerrl.actors.IActorMovement;
 import de.brainstormsoftworks.taloonerrl.core.TaloonerRl;
 
 /**
+ * prototype for an component
  *
+ * @deprecated use childs of {@link Component}
  *
- * @author david
+ * @author David Becker
  *
  */
+@Deprecated
 public class ActorMovementComponent implements IActorMovement, IComponent {
 
 	private int xPosition;

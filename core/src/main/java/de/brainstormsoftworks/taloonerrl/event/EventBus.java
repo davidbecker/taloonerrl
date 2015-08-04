@@ -54,16 +54,18 @@ public final class EventBus {
 	/**
 	 * adds an event to the event queue
 	 *
-	 * @param event
+	 * @param _event
+	 *            to add to the queue
 	 */
-	public void addEvent(final Event event) {
-		events.add(event);
+	public void addEvent(final Event _event) {
+		events.add(_event);
 	}
 
 	/**
 	 * registers an eventhandler to be informed about events
 	 *
 	 * @param eventHandler
+	 *            handler to add
 	 */
 	public void registerEventHandler(final IEventHandler eventHandler) {
 		eventHandlers.add(eventHandler);
@@ -73,6 +75,7 @@ public final class EventBus {
 	 * removes an eventhandler from the list of handlers to inform about events
 	 *
 	 * @param eventHandler
+	 *            handler to remove
 	 */
 	public void unregisterEventHandler(final IEventHandler eventHandler) {
 		eventHandlers.remove(eventHandler);
