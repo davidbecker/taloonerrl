@@ -43,6 +43,12 @@ public final class Archetypes {
 		decoration = new ArchetypeBuilder().add(PositionComponent.class).add(AnimationComponent.class).build(world);
 	}
 
+	/**
+	 * initializes the archetypes for the given world
+	 *
+	 * @param world
+	 *            to use for initialization
+	 */
 	public static void createArchetypes(final World world) {
 		instance = new Archetypes(world);
 	}

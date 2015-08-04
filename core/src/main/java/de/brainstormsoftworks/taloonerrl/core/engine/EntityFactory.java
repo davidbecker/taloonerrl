@@ -24,6 +24,23 @@ import de.brainstormsoftworks.taloonerrl.components.PositionComponent;
  *
  */
 public final class EntityFactory {
+
+	private EntityFactory() {
+	}
+
+	/**
+	 * creates a new entity
+	 *
+	 * @param type
+	 *            of entity
+	 * @param world
+	 *            world to create the entity in
+	 * @param xPosition
+	 *            horizontal position (tiles position)
+	 * @param yPosition
+	 *            vertical position (tiles position)
+	 * @return new entity
+	 */
 	public static Entity createEntity(final EEntity type, final World world, final int xPosition, final int yPosition) {
 		switch (type) {
 		case PLAYER:
