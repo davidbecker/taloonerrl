@@ -37,18 +37,18 @@ public class AnimationComponent extends PooledComponent {
 	 *
 	 * @return the entityType
 	 */
-	public final EEntity getEntity() {
+	public final EEntity getEntityType() {
 		return entityType;
 	}
 
 	/**
 	 * maps the corresponding animation for the given entity
 	 *
-	 * @param entity
+	 * @param _entity
 	 *            entity to map the animation for
 	 */
-	public final void mapAnimation(final EEntity entity) {
-		entityType = entity;
+	public final void mapAnimation(final EEntity _entity) {
+		entityType = _entity;
 		SpriteMapper.getInstance().mapAnimation(this);
 	}
 
@@ -64,10 +64,10 @@ public class AnimationComponent extends PooledComponent {
 	/**
 	 * setter for animation
 	 *
-	 * @param animation
+	 * @param _animation
 	 *            the animation to set
 	 */
-	public final void setAnimation(final Animation animation) {
-		this.animation = animation;
+	public final void setAnimation(final Animation _animation) {
+		animation = _animation;
 	}
 }

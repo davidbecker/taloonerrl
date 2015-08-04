@@ -4,7 +4,7 @@
  * are made available under the terms of the GNU Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
- * 
+ *
  * Contributors:
  *     David Becker - initial API and implementation
  ******************************************************************************/
@@ -41,11 +41,11 @@ public class PositionComponent extends PooledComponent {
 	/**
 	 * setter for x
 	 *
-	 * @param x
+	 * @param _x
 	 *            the x to set
 	 */
-	public void setX(final int x) {
-		this.x = x;
+	public void setX(final int _x) {
+		x = _x;
 	}
 
 	/**
@@ -60,11 +60,11 @@ public class PositionComponent extends PooledComponent {
 	/**
 	 * setter for y
 	 *
-	 * @param y
+	 * @param _y
 	 *            the y to set
 	 */
-	public void setY(final int y) {
-		this.y = y;
+	public void setY(final int _y) {
+		y = _y;
 	}
 
 }

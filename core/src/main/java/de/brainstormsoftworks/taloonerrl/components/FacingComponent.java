@@ -40,11 +40,11 @@ public class FacingComponent extends PooledComponent {
 	/**
 	 * setter for direction
 	 *
-	 * @param direction
+	 * @param _direction
 	 *            the direction to set
 	 */
-	public final void setDirection(final EDirection direction) {
-		this.direction = direction;
+	public final void setDirection(final EDirection _direction) {
+		direction = _direction;
 	}
 
 }

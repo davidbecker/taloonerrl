@@ -66,11 +66,11 @@ public class HealthComponent extends PooledComponent {
 	/**
 	 * setter for alive
 	 *
-	 * @param alive
+	 * @param _alive
 	 *            the alive to set
 	 */
-	public void setAlive(final boolean alive) {
-		this.alive = alive;
+	public void setAlive(final boolean _alive) {
+		alive = _alive;
 	}
 
 }
