@@ -29,6 +29,14 @@ public final class Systems {
 	private static final FacingAnimationRenderSystem FACING_ANIMATION_RENDER_SYSTEM = new FacingAnimationRenderSystem();
 	private static final HealthBarRenderSystem RENDER_BAR_SYSTEM = new HealthBarRenderSystem();
 
+	private Systems() {
+	}
+
+	/**
+	 * adds the systems to the given {@link WorldConfiguration}
+	 *
+	 * @param config
+	 */
 	public static void setSystems(final WorldConfiguration config) {
 		config.setSystem(MOVEMENT_SYSTEM);
 		config.setSystem(ANIMATION_RENDER_SYSTEM);
