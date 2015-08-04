@@ -36,7 +36,7 @@ public class Event implements Comparable<Event> {
 
 	@Override
 	public int compareTo(final Event other) {
-		return new Long(getEventStartTime()).compareTo(other.getEventStartTime());
+		return Long.valueOf(getEventStartTime()).compareTo(other.getEventStartTime());
 	}
 
 	/**
