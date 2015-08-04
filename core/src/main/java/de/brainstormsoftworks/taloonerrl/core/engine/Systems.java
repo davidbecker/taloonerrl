@@ -13,6 +13,7 @@ package de.brainstormsoftworks.taloonerrl.core.engine;
 import com.artemis.WorldConfiguration;
 
 import de.brainstormsoftworks.taloonerrl.system.AnimationRenderSystem;
+import de.brainstormsoftworks.taloonerrl.system.FacingAnimationRenderSystem;
 import de.brainstormsoftworks.taloonerrl.system.HealthBarRenderSystem;
 import de.brainstormsoftworks.taloonerrl.system.MovementSystem;
 
@@ -25,11 +26,13 @@ import de.brainstormsoftworks.taloonerrl.system.MovementSystem;
 public final class Systems {
 	private static final MovementSystem MOVEMENT_SYSTEM = new MovementSystem();
 	private static final AnimationRenderSystem ANIMATION_RENDER_SYSTEM = new AnimationRenderSystem();
+	private static final FacingAnimationRenderSystem FACING_ANIMATION_RENDER_SYSTEM = new FacingAnimationRenderSystem();
 	private static final HealthBarRenderSystem RENDER_BAR_SYSTEM = new HealthBarRenderSystem();
 
 	public static void setSystems(final WorldConfiguration config) {
 		config.setSystem(MOVEMENT_SYSTEM);
 		config.setSystem(ANIMATION_RENDER_SYSTEM);
+		config.setSystem(FACING_ANIMATION_RENDER_SYSTEM);
 		config.setSystem(RENDER_BAR_SYSTEM);
 	}
 }

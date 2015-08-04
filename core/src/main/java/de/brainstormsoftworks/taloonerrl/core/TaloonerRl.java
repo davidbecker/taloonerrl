@@ -15,13 +15,13 @@ import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector3;
 
 import de.brainstormsoftworks.taloonerrl.actors.ActorFactory;
 import de.brainstormsoftworks.taloonerrl.actors.EActorTypes;
 import de.brainstormsoftworks.taloonerrl.actors.IActor;
+import de.brainstormsoftworks.taloonerrl.components.FacingComponent;
 import de.brainstormsoftworks.taloonerrl.components.HealthComponent;
 import de.brainstormsoftworks.taloonerrl.components.PositionComponent;
 import de.brainstormsoftworks.taloonerrl.core.engine.EEntity;
@@ -34,15 +34,10 @@ import de.brainstormsoftworks.taloonerrl.render.RenderUtil;
 import de.brainstormsoftworks.taloonerrl.render.Renderer;
 
 public class TaloonerRl implements ApplicationListener {
-	Texture warrior;
 	Texture cursor;
 
 	float elapsed;
 
-	TextureRegion[] walkFramesUp = new TextureRegion[4];
-	TextureRegion[] walkFramesDown = new TextureRegion[4];
-	TextureRegion[] walkFramesLeft = new TextureRegion[4];
-	TextureRegion[] walkFramesRight = new TextureRegion[4];
 	private static TextureRegion cursorTopLeft;
 	private static TextureRegion cursorTopRight;
 	private static TextureRegion cursorBottomLeft;
@@ -56,10 +51,6 @@ public class TaloonerRl implements ApplicationListener {
 	private static final int cursorBottomRightOffsetX = 11;
 	private static final int cursorBottomRightOffsetY = -2;
 	static int cursorAnimationOffset = 0;
-	Animation walkUp;
-	Animation walkDown;
-	Animation walkLeft;
-	Animation walkRight;
 	EDirection walkingDirection = EDirection.RIGHT;
 	float mouseX;
 	float mouseY;
@@ -78,26 +69,11 @@ public class TaloonerRl implements ApplicationListener {
 	private Entity playerEntity;
 	private HealthComponent playerHealthComponent;
 	private PositionComponent playerPositionComponent;
+	private FacingComponent playerFacingComponent;
 
 	@Override
 	public void create() {
 		map = MapFactory.createMap(Renderer.TILES_HORIZONTAL, Renderer.TILES_VERTICAL);
-
-		warrior = new Texture(Gdx.files.internal("character/Warrior.png"));
-		for (int i = 0; i < 4; i++) {
-			walkFramesDown[i] = new TextureRegion(warrior, i * Renderer.tileSize, 0 * Renderer.tileSize,
-					Renderer.tileSize, Renderer.tileSize);
-			walkFramesLeft[i] = new TextureRegion(warrior, i * Renderer.tileSize, 1 * Renderer.tileSize,
-					Renderer.tileSize, Renderer.tileSize);
-			walkFramesRight[i] = new TextureRegion(warrior, i * Renderer.tileSize, 2 * Renderer.tileSize,
-					Renderer.tileSize, Renderer.tileSize);
-			walkFramesUp[i] = new TextureRegion(warrior, i * Renderer.tileSize, 3 * Renderer.tileSize,
-					Renderer.tileSize, Renderer.tileSize);
-		}
-		walkUp = new Animation(0.25f, walkFramesUp);
-		walkDown = new Animation(0.25f, walkFramesDown);
-		walkLeft = new Animation(0.25f, walkFramesLeft);
-		walkRight = new Animation(0.25f, walkFramesRight);
 
 		cursor = new Texture(Gdx.files.internal("cursor.png"));
 		cursorTopLeft = new TextureRegion(cursor, 0, 0, 8, 8);
@@ -114,6 +90,7 @@ public class TaloonerRl implements ApplicationListener {
 		playerEntity = gameEngine.createNewEntity(EEntity.PLAYER);
 		playerHealthComponent = playerEntity.getComponent(HealthComponent.class);
 		playerPositionComponent = playerEntity.getComponent(PositionComponent.class);
+		playerFacingComponent = playerEntity.getComponent(FacingComponent.class);
 		// TODO only use one player
 		playerPositionComponent.setX(player.getMovementComponent().getXPosition());
 		playerPositionComponent.setY(player.getMovementComponent().getYPosition());
@@ -192,6 +169,7 @@ public class TaloonerRl implements ApplicationListener {
 				// TODO only use one player
 				playerPositionComponent.setX(player.getMovementComponent().getXPosition());
 				playerPositionComponent.setY(player.getMovementComponent().getYPosition());
+				playerFacingComponent.setDirection(walkingDirection);
 				delayToNextTurn = delayBetweenTurns;
 			}
 		}
@@ -217,27 +195,6 @@ public class TaloonerRl implements ApplicationListener {
 
 		DungeonRenderer.getInstance().render(map.getMap(), Renderer.TILES_HORIZONTAL, Renderer.TILES_VERTICAL);
 		GuiRenderer.getInstance().render(Renderer.TILES_HORIZONTAL, Renderer.TILES_VERTICAL);
-
-		TextureRegion currentFrame = null;
-		switch (walkingDirection) {
-		case UP:
-			currentFrame = RenderUtil.getKeyFrame(walkUp);
-			break;
-		case DOWN:
-			currentFrame = RenderUtil.getKeyFrame(walkDown);
-			break;
-		case LEFT:
-			currentFrame = RenderUtil.getKeyFrame(walkLeft);
-			break;
-		case RIGHT:
-			currentFrame = RenderUtil.getKeyFrame(walkRight);
-			break;
-		default:
-			break;
-		}
-		Renderer.getInstance().BATCH.draw(currentFrame, player.getMovementComponent().getXPosition() * Renderer.scale,
-				player.getMovementComponent().getYPosition() * Renderer.scale);
-		// drawActor(Renderer.getInstance().BATCH, player);
 
 		final Vector3 touchPos = new Vector3();
 		touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
@@ -289,7 +246,6 @@ public class TaloonerRl implements ApplicationListener {
 	@Override
 	public void dispose() {
 		Renderer.getInstance().BATCH.dispose();
-		warrior.dispose();
 		cursor.dispose();
 		RenderUtil.disposeInstances();
 	}

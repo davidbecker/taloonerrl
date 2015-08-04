@@ -21,11 +21,30 @@ import de.brainstormsoftworks.taloonerrl.core.EDirection;
  *
  */
 public class FacingComponent extends PooledComponent {
-	public EDirection direction = EDirection.RIGHT;
+	private EDirection direction = EDirection.RIGHT;
 
 	@Override
 	protected void reset() {
 		direction = EDirection.RIGHT;
+	}
+
+	/**
+	 * getter for direction
+	 *
+	 * @return the direction
+	 */
+	public final EDirection getDirection() {
+		return direction;
+	}
+
+	/**
+	 * setter for direction
+	 *
+	 * @param direction
+	 *            the direction to set
+	 */
+	public final void setDirection(final EDirection direction) {
+		this.direction = direction;
 	}
 
 }

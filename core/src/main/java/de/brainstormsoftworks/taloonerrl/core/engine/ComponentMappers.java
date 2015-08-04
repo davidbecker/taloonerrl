@@ -16,6 +16,7 @@ import com.artemis.World;
 
 import de.brainstormsoftworks.taloonerrl.components.AnimationComponent;
 import de.brainstormsoftworks.taloonerrl.components.ControllerComponent;
+import de.brainstormsoftworks.taloonerrl.components.FacingAnimationComponent;
 import de.brainstormsoftworks.taloonerrl.components.FacingComponent;
 import de.brainstormsoftworks.taloonerrl.components.HealthComponent;
 import de.brainstormsoftworks.taloonerrl.components.PositionComponent;
@@ -32,6 +33,7 @@ public final class ComponentMappers {
 	public final ComponentMapper<HealthComponent> health;
 	public final ComponentMapper<PositionComponent> position;
 	public final ComponentMapper<AnimationComponent> animation;
+	public final ComponentMapper<FacingAnimationComponent> facingAnimation;
 
 	private static ComponentMappers instance = null;
 
@@ -41,6 +43,7 @@ public final class ComponentMappers {
 		health = ComponentMapper.getFor(HealthComponent.class, world);
 		position = ComponentMapper.getFor(PositionComponent.class, world);
 		animation = ComponentMapper.getFor(AnimationComponent.class, world);
+		facingAnimation = ComponentMapper.getFor(FacingAnimationComponent.class, world);
 	}
 
 	/**

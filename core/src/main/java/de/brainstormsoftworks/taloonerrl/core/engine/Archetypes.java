@@ -16,6 +16,7 @@ import com.artemis.World;
 
 import de.brainstormsoftworks.taloonerrl.components.AnimationComponent;
 import de.brainstormsoftworks.taloonerrl.components.ControllerComponent;
+import de.brainstormsoftworks.taloonerrl.components.FacingAnimationComponent;
 import de.brainstormsoftworks.taloonerrl.components.FacingComponent;
 import de.brainstormsoftworks.taloonerrl.components.HealthComponent;
 import de.brainstormsoftworks.taloonerrl.components.PositionComponent;
@@ -30,7 +31,8 @@ public final class Archetypes {
 	private Archetypes(final World world) {
 		actor = new ArchetypeBuilder().add(ControllerComponent.class).add(HealthComponent.class)
 				.add(PositionComponent.class).add(AnimationComponent.class).build(world);
-		player = new ArchetypeBuilder(actor).add(FacingComponent.class).build(world);
+		player = new ArchetypeBuilder(actor).add(FacingComponent.class).remove(AnimationComponent.class)
+				.add(FacingAnimationComponent.class).build(world);
 		decoration = new ArchetypeBuilder().add(PositionComponent.class).add(AnimationComponent.class).build(world);
 	}
 
