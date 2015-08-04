@@ -28,6 +28,14 @@ public class Event implements Comparable<Event> {
 	// TODO implement storing of event information (what to do, what listener
 	// types to inform)
 
+	/**
+	 * constructor
+	 *
+	 * @param _eventStartTime
+	 *            when the event should be started
+	 * @param _delay
+	 *            duration of the event
+	 */
 	public Event(final long _eventStartTime, final long _delay) {
 		eventStartTime = _eventStartTime;
 		delay = _delay;

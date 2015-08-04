@@ -4,7 +4,7 @@
  * are made available under the terms of the GNU Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
- * 
+ *
  * Contributors:
  *     David Becker - initial API and implementation
  ******************************************************************************/
@@ -13,11 +13,20 @@ package de.brainstormsoftworks.taloonerrl.internal.dungeon;
 import de.brainstormsoftworks.taloonerrl.dungeon.EDungeonSprites;
 import de.brainstormsoftworks.taloonerrl.dungeon.ITile;
 
+/**
+ * Utility class to collect methods that help with the dungeon
+ *
+ * @author David Becker
+ *
+ */
 public final class DungeonUtil {
+
+	private DungeonUtil() {
+	}
 
 	/**
 	 * calculates the {@link EDungeonSprites} to use on the given map
-	 * 
+	 *
 	 * @param _map
 	 *            the map to calculate the sprites for
 	 * @param _tilesHorizontal
@@ -27,8 +36,8 @@ public final class DungeonUtil {
 	 * @return array of sprites to display for the given map. has the same
 	 *         dimension as _map
 	 */
-	public static EDungeonSprites[][] calculateDungeonSprites(ITile[][] _map, int _tilesHorizontal,
-			int _tilesVertical) {
+	public static EDungeonSprites[][] calculateDungeonSprites(final ITile[][] _map, final int _tilesHorizontal,
+			final int _tilesVertical) {
 		final EDungeonSprites[][] sprites = new EDungeonSprites[_tilesHorizontal][_tilesVertical];
 		for (int x = 0; x < _tilesHorizontal; x++) {
 			for (int y = 0; y < _tilesVertical; y++) {
@@ -109,11 +118,12 @@ public final class DungeonUtil {
 		return sprites;
 	}
 
-	private static boolean isWalkable(int x, int y, ITile[][] _map, int _tilesHorizontal, int _tilesVertical) {
+	private static boolean isWalkable(final int x, final int y, final ITile[][] _map, final int _tilesHorizontal,
+			final int _tilesVertical) {
 		return isInBounds(x, y, _tilesHorizontal, _tilesVertical) && _map[x][y].isWalkable();
 	}
 
-	private static boolean isInBounds(int x, int y, int _tilesHorizontal, int _tilesVertical) {
+	private static boolean isInBounds(final int x, final int y, final int _tilesHorizontal, final int _tilesVertical) {
 		return x >= 0 && x < _tilesHorizontal && y >= 0 && y < _tilesVertical;
 	}
 }

@@ -28,11 +28,17 @@ public class ActorSpriteComponent implements IActorSprite, IComponent {
 
 	private ESprite sprite = ESprite.NOTHING;
 
+	/** {@inheritDoc} */
 	@Override
 	public ESprite getSprite() {
 		return sprite;
 	}
 
+	/**
+	 * setter for {@link #sprite}
+	 *
+	 * @param newSprite
+	 */
 	public void setSprite(final ESprite newSprite) {
 		sprite = newSprite;
 	}

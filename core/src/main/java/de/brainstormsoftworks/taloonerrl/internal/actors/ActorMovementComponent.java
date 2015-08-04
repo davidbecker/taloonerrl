@@ -38,6 +38,7 @@ public class ActorMovementComponent implements IActorMovement, IComponent {
 		yPosition = initialYPosition;
 	}
 
+	/** {@inheritDoc} */
 	@Override
 	public void move(final int dX, final int dY) {
 		final int newX = xPosition + dX;
@@ -48,16 +49,19 @@ public class ActorMovementComponent implements IActorMovement, IComponent {
 		}
 	}
 
+	/** {@inheritDoc} */
 	@Override
 	public int getXPosition() {
 		return xPosition;
 	}
 
+	/** {@inheritDoc} */
 	@Override
 	public int getYPosition() {
 		return yPosition;
 	}
 
+	/** {@inheritDoc} */
 	@Override
 	public void recieveMessage(final int msg) {
 		// TODO Auto-generated method stub
