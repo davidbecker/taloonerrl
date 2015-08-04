@@ -87,16 +87,6 @@
 					<linkXref>true</linkXref>
 					<minimumTokens>100</minimumTokens>
 					<targetJdk>${jdk.version}</targetJdk>
-					<excludes>
-						<exclude>**/*Bean.java</exclude>
-						<exclude>**/generated/*.java</exclude>
-					</excludes>
-					<excludeRoots>
-						<excludeRoot>target/generated-sources/stubs</excludeRoot>
-					</excludeRoots>
-					<rulesets>
-						<ruleset>/rulesets/java/braces.xml</ruleset>
-					</rulesets>
 				</configuration>
 			</plugin>
 			<plugin>

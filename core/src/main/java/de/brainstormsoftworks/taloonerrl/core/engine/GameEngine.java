@@ -57,7 +57,7 @@ public final class GameEngine {
 	 *
 	 * @return the stateTime
 	 */
-	public final float getStateTime() {
+	public float getStateTime() {
 		return stateTime;
 	}
 
@@ -104,7 +104,7 @@ public final class GameEngine {
 	 *
 	 * @return the instance
 	 */
-	public static final GameEngine getInstance() {
+	public static GameEngine getInstance() {
 		return instance;
 	}
 }

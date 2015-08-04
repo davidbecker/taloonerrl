@@ -55,17 +55,17 @@ public class TaloonerRl implements ApplicationListener {
 	float mouseX;
 	float mouseY;
 
-	private boolean isPlayerTurn = false;
+	// private boolean isPlayerTurn = false;
 	private float delayToNextTurn = 0f;
 	/** minimum delay between player turns */
 	private static final float delayBetweenTurns = 0.03f;
-	private static final float delayToNextAnimation = 0f;
+	// private static final float delayToNextAnimation = 0f;
 	/** minimum delay between player turns */
-	private static final float delayBetweenAnimation = 0.03f;
+	// private static final float delayBetweenAnimation = 0.03f;
 
 	private final IActor player = ActorFactory.createActor(EActorTypes.PLAYER);
 	public static IMap map = null;
-	private static final String fontPath = "font/";
+	// private static final String fontPath = "font/";
 	private Entity playerEntity;
 	private HealthComponent playerHealthComponent;
 	private PositionComponent playerPositionComponent;
@@ -119,7 +119,7 @@ public class TaloonerRl implements ApplicationListener {
 		final float deltaTime = Gdx.graphics.getDeltaTime();
 		delayToNextTurn -= deltaTime;
 
-		switch (((int) GameEngine.getInstance().getStateTime()) % 4) {
+		switch ((int) GameEngine.getInstance().getStateTime() % 4) {
 		case 0:
 			cursorAnimationOffset = 0;
 			break;
@@ -148,7 +148,7 @@ public class TaloonerRl implements ApplicationListener {
 			keyPressedUp = Gdx.input.isKeyPressed(Keys.UP);
 			if (keyPressedDown || keyPressedLeft || keyPressedRight || keyPressedUp) {
 				// player did a move
-				isPlayerTurn = true;
+				// isPlayerTurn = true;
 
 				if (keyPressedLeft) {
 					player.getMovementComponent().move(-1, 0);
@@ -214,7 +214,7 @@ public class TaloonerRl implements ApplicationListener {
 		GameEngine.getInstance().update(deltaTime);
 		Renderer.getInstance().endRendering();
 
-		isPlayerTurn = false;
+		// isPlayerTurn = false;
 	}
 
 	private static void highlightPlayerTile(final IActor player) {

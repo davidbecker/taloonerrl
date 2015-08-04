@@ -29,6 +29,6 @@ public interface IComponent {
 	 *
 	 * @param msg
 	 */
-	public void recieveMessage(int msg);
+	void recieveMessage(int msg);
 
 }
