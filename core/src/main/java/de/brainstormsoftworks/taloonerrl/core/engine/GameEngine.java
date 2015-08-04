@@ -14,6 +14,13 @@ import com.artemis.Entity;
 import com.artemis.World;
 import com.artemis.WorldConfiguration;
 
+/**
+ * central part of the game<br/>
+ * controls & sets up the game world
+ *
+ * @author David Becker
+ *
+ */
 public final class GameEngine {
 	// maybe initialize on first call via getInstance?
 	private static final GameEngine instance = new GameEngine();

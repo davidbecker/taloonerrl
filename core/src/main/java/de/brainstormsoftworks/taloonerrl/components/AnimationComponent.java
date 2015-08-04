@@ -16,6 +16,12 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import de.brainstormsoftworks.taloonerrl.core.engine.EEntity;
 import de.brainstormsoftworks.taloonerrl.core.engine.SpriteMapper;
 
+/**
+ * component for an entity that has an animation
+ *
+ * @author David Becker
+ *
+ */
 public class AnimationComponent extends PooledComponent {
 	private EEntity entityType = EEntity.NOTHING;
 	private Animation animation = null;

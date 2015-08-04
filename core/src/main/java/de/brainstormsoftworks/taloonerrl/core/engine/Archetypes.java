@@ -21,6 +21,13 @@ import de.brainstormsoftworks.taloonerrl.components.FacingComponent;
 import de.brainstormsoftworks.taloonerrl.components.HealthComponent;
 import de.brainstormsoftworks.taloonerrl.components.PositionComponent;
 
+/**
+ * utility class to load the archetypes used to create entities for the given
+ * world
+ *
+ * @author David Becker
+ *
+ */
 public final class Archetypes {
 	/** archetype for monsters & player */
 	public final Archetype actor;
