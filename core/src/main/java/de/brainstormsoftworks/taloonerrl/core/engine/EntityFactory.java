@@ -85,6 +85,20 @@ public final class EntityFactory {
 			return createCollectible(type, world, xPosition, yPosition);
 		case POTION_C:
 			return createCollectible(type, world, xPosition, yPosition);
+		case POTION_D:
+			return createCollectible(type, world, xPosition, yPosition);
+		case POTION_E:
+			return createCollectible(type, world, xPosition, yPosition);
+		case POTION_F:
+			return createCollectible(type, world, xPosition, yPosition);
+		case POTION_G:
+			return createCollectible(type, world, xPosition, yPosition);
+		case POTION_H:
+			return createCollectible(type, world, xPosition, yPosition);
+		case POTION_I:
+			return createCollectible(type, world, xPosition, yPosition);
+		case POTION_J:
+			return createCollectible(type, world, xPosition, yPosition);
 		case TORCH:
 			return createDecoration(type, world, xPosition, yPosition);
 		default:

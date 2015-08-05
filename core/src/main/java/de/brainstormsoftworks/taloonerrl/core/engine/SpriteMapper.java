@@ -56,6 +56,7 @@ public final class SpriteMapper implements IDisposableInstance {
 	private static final String FILE_PLANT1 = "Plant1.png";
 	private static final String FILE_PLAYER0 = "Player0.png";
 	private static final String FILE_PLAYER1 = "Player1.png";
+	private static final String FILE_POTION = "Potion.png";
 	private static final String FILE_REPTILE0 = "Reptile0.png";
 	private static final String FILE_REPTILE1 = "Reptile1.png";
 	private static final String FILE_RODENT0 = "Rodent0.png";
@@ -64,6 +65,7 @@ public final class SpriteMapper implements IDisposableInstance {
 	private static final String FILE_SLIME1 = "Slime1.png";
 	private static final String FILE_UNDEAD1 = "Undead1.png";
 	private static final String FILE_UNDEAD0 = "Undead0.png";
+	private static final String FILE_WARRIOR = "Warrior.png";
 
 	private static final SpriteMapper instance = new SpriteMapper();
 
@@ -367,7 +369,7 @@ public final class SpriteMapper implements IDisposableInstance {
 		switch (type) {
 		case PLAYER:
 			if (tWarrior == null) {
-				tWarrior = loadTexture(PATH_CHARACTER + "Warrior.png");
+				tWarrior = loadTexture(PATH_CHARACTER + FILE_WARRIOR);
 			}
 			for (int i = 0; i < 4; i++) {
 				framesDown[i] = loadFrame(tWarrior, i, 0);
@@ -392,23 +394,64 @@ public final class SpriteMapper implements IDisposableInstance {
 		switch (type) {
 		case POTION_A:
 			if (tPotions == null) {
-				tPotions = loadTexture(PATH_ITEMS + "Potion.png");
+				tPotions = loadTexture(PATH_ITEMS + FILE_POTION);
 			}
 			mappedSprites.put(type, loadFrame(tPotions, 0, 0));
 			break;
 		case POTION_B:
 			if (tPotions == null) {
-				tPotions = loadTexture(PATH_ITEMS + "Potion.png");
+				tPotions = loadTexture(PATH_ITEMS + FILE_POTION);
 			}
 			mappedSprites.put(type, loadFrame(tPotions, 0, 1));
 			break;
 		case POTION_C:
 			if (tPotions == null) {
-				tPotions = loadTexture(PATH_ITEMS + "Potion.png");
+				tPotions = loadTexture(PATH_ITEMS + FILE_POTION);
 			}
 			mappedSprites.put(type, loadFrame(tPotions, 0, 2));
 			break;
-
+		case POTION_D:
+			if (tPotions == null) {
+				tPotions = loadTexture(PATH_ITEMS + FILE_POTION);
+			}
+			mappedSprites.put(type, loadFrame(tPotions, 0, 3));
+			break;
+		case POTION_E:
+			if (tPotions == null) {
+				tPotions = loadTexture(PATH_ITEMS + FILE_POTION);
+			}
+			mappedSprites.put(type, loadFrame(tPotions, 0, 4));
+			break;
+		case POTION_F:
+			if (tPotions == null) {
+				tPotions = loadTexture(PATH_ITEMS + FILE_POTION);
+			}
+			mappedSprites.put(type, loadFrame(tPotions, 1, 0));
+			break;
+		case POTION_G:
+			if (tPotions == null) {
+				tPotions = loadTexture(PATH_ITEMS + FILE_POTION);
+			}
+			mappedSprites.put(type, loadFrame(tPotions, 1, 1));
+			break;
+		case POTION_H:
+			if (tPotions == null) {
+				tPotions = loadTexture(PATH_ITEMS + FILE_POTION);
+			}
+			mappedSprites.put(type, loadFrame(tPotions, 1, 2));
+			break;
+		case POTION_I:
+			if (tPotions == null) {
+				tPotions = loadTexture(PATH_ITEMS + FILE_POTION);
+			}
+			mappedSprites.put(type, loadFrame(tPotions, 1, 3));
+			break;
+		case POTION_J:
+			if (tPotions == null) {
+				tPotions = loadTexture(PATH_ITEMS + FILE_POTION);
+			}
+			mappedSprites.put(type, loadFrame(tPotions, 1, 4));
+			break;
 		default:
 			break;
 		}
