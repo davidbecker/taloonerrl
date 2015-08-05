@@ -70,6 +70,8 @@ public final class EntityFactory {
 			return createActor(type, world, xPosition, yPosition);
 		case WARPER:
 			return createActor(type, world, xPosition, yPosition);
+		case STEALER:
+			return createActor(type, world, xPosition, yPosition);
 		case TORCH:
 			return createDecoration(type, world, xPosition, yPosition);
 		default:
@@ -147,6 +149,9 @@ public final class EntityFactory {
 			break;
 		case WARPER:
 			component.setName("Warper");
+			break;
+		case STEALER:
+			component.setName("Stealer");
 			break;
 		default:
 			break;

@@ -208,6 +208,19 @@ public final class SpriteMapper implements IDisposableInstance {
 					Renderer.tileSize);
 			mappedAnimations.put(sprite, new Animation(0.25f, frames));
 			break;
+		case STEALER:
+			if (tUndead0 == null) {
+				tUndead0 = loadTexture(PATH_MOBS + "Undead0.png");
+			}
+			if (tUndead1 == null) {
+				tUndead1 = loadTexture(PATH_MOBS + "Undead1.png");
+			}
+			frames[0] = new TextureRegion(tUndead0, 0 * Renderer.tileSize, 0 * Renderer.tileSize, Renderer.tileSize,
+					Renderer.tileSize);
+			frames[1] = new TextureRegion(tUndead1, 0 * Renderer.tileSize, 0 * Renderer.tileSize, Renderer.tileSize,
+					Renderer.tileSize);
+			mappedAnimations.put(sprite, new Animation(0.25f, frames));
+			break;
 		case EYEBALL:
 			if (tElemental0 == null) {
 				tElemental0 = loadTexture(PATH_MOBS + "Elemental0.png");
