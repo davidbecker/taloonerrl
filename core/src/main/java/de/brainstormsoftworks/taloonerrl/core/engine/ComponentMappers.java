@@ -19,6 +19,7 @@ import de.brainstormsoftworks.taloonerrl.components.ControllerComponent;
 import de.brainstormsoftworks.taloonerrl.components.FacingAnimationComponent;
 import de.brainstormsoftworks.taloonerrl.components.FacingComponent;
 import de.brainstormsoftworks.taloonerrl.components.HealthComponent;
+import de.brainstormsoftworks.taloonerrl.components.HighlightComponent;
 import de.brainstormsoftworks.taloonerrl.components.NameComponent;
 import de.brainstormsoftworks.taloonerrl.components.PositionComponent;
 import de.brainstormsoftworks.taloonerrl.components.SpriteComponent;
@@ -38,6 +39,7 @@ public final class ComponentMappers {
 	public final ComponentMapper<FacingAnimationComponent> facingAnimation;
 	public final ComponentMapper<SpriteComponent> sprite;
 	public final ComponentMapper<NameComponent> name;
+	public final ComponentMapper<HighlightComponent> highlight;
 
 	private static ComponentMappers instance = null;
 
@@ -50,6 +52,7 @@ public final class ComponentMappers {
 		facingAnimation = ComponentMapper.getFor(FacingAnimationComponent.class, world);
 		sprite = ComponentMapper.getFor(SpriteComponent.class, world);
 		name = ComponentMapper.getFor(NameComponent.class, world);
+		highlight = ComponentMapper.getFor(HighlightComponent.class, world);
 	}
 
 	/**

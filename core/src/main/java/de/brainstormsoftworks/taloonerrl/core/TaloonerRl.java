@@ -14,9 +14,6 @@ import com.artemis.Entity;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Vector3;
 
 import de.brainstormsoftworks.taloonerrl.components.FacingComponent;
 import de.brainstormsoftworks.taloonerrl.components.HealthComponent;
@@ -31,23 +28,8 @@ import de.brainstormsoftworks.taloonerrl.render.RenderUtil;
 import de.brainstormsoftworks.taloonerrl.render.Renderer;
 
 public class TaloonerRl implements ApplicationListener {
-	Texture cursor;
-
 	float elapsed;
 
-	private static TextureRegion cursorTopLeft;
-	private static TextureRegion cursorTopRight;
-	private static TextureRegion cursorBottomLeft;
-	private static TextureRegion cursorBottomRight;
-	private static final int cursorTopLeftOffsetX = -2;
-	private static final int cursorTopLeftOffsetY = 11;
-	private static final int cursorTopRightOffsetX = 11;
-	private static final int cursorTopRightOffsetY = 11;
-	private static final int cursorBottomLeftOffsetX = -2;
-	private static final int cursorBottomLeftOffsetY = -2;
-	private static final int cursorBottomRightOffsetX = 11;
-	private static final int cursorBottomRightOffsetY = -2;
-	static int cursorAnimationOffset = 0;
 	EDirection walkingDirection = EDirection.RIGHT;
 	float mouseX;
 	float mouseY;
@@ -70,12 +52,6 @@ public class TaloonerRl implements ApplicationListener {
 	@Override
 	public void create() {
 		map = MapFactory.createMap(Renderer.TILES_HORIZONTAL, Renderer.TILES_VERTICAL);
-
-		cursor = new Texture(Gdx.files.internal("cursor.png"));
-		cursorTopLeft = new TextureRegion(cursor, 0, 0, 8, 8);
-		cursorTopRight = new TextureRegion(cursor, 8, 0, 8, 8);
-		cursorBottomLeft = new TextureRegion(cursor, 0, 8, 8, 8);
-		cursorBottomRight = new TextureRegion(cursor, 8, 8, 8, 8);
 
 		mouseX = Gdx.graphics.getWidth() / 2;
 		mouseY = Gdx.graphics.getHeight() / 2;
@@ -186,23 +162,6 @@ public class TaloonerRl implements ApplicationListener {
 		final float deltaTime = Gdx.graphics.getDeltaTime();
 		delayToNextTurn -= deltaTime;
 
-		switch ((int) GameEngine.getInstance().getStateTime() % 4) {
-		case 0:
-			cursorAnimationOffset = 0;
-			break;
-		case 1:
-			cursorAnimationOffset = 1;
-			break;
-		case 2:
-			cursorAnimationOffset = 2;
-			break;
-		case 3:
-			cursorAnimationOffset = 1;
-			break;
-		default:
-			cursorAnimationOffset = 0;
-		}
-
 		boolean keyPressedLeft = false;
 		boolean keyPressedRight = false;
 		boolean keyPressedDown = false;
@@ -266,13 +225,14 @@ public class TaloonerRl implements ApplicationListener {
 				Renderer.TILES_VERTICAL);
 		GuiRenderer.getInstance().render(Renderer.TILES_HORIZONTAL, Renderer.TILES_VERTICAL);
 
-		final Vector3 touchPos = new Vector3();
-		touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
-		Renderer.getInstance().unprojectFromCamera(touchPos);
-		mouseX = touchPos.x - Renderer.tileSize / 2;
-		mouseY = touchPos.y - Renderer.tileSize / 2;
+		// final Vector3 touchPos = new Vector3();
+		// touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
+		// Renderer.getInstance().unprojectFromCamera(touchPos);
+		// mouseX = touchPos.x - Renderer.tileSize / 2;
+		// mouseY = touchPos.y - Renderer.tileSize / 2;
+		//
+		// Renderer.getInstance().renderOnScreen(cursor, mouseX, mouseY);
 
-		Renderer.getInstance().renderOnScreen(cursor, mouseX, mouseY);
 		// FIXME WIP
 		// // translate mouse coordinates to selected tile
 		// final float tileX = touchPos.x /Renderer.TILES_HORIZONTAL; // 0-18
@@ -288,23 +248,6 @@ public class TaloonerRl implements ApplicationListener {
 		// isPlayerTurn = false;
 	}
 
-	// private static void highlightPlayerTile(final IActor player) {
-	// final int x = player.getMovementComponent().getXPosition();
-	// final int y = player.getMovementComponent().getYPosition();
-	// Renderer.getInstance().BATCH.draw(cursorTopLeft,
-	// x * Renderer.scale + cursorTopLeftOffsetX - cursorAnimationOffset,
-	// y * Renderer.scale + cursorTopLeftOffsetY + cursorAnimationOffset);
-	// Renderer.getInstance().BATCH.draw(cursorTopRight,
-	// x * Renderer.scale + cursorTopRightOffsetX + cursorAnimationOffset,
-	// y * Renderer.scale + cursorTopRightOffsetY + cursorAnimationOffset);
-	// Renderer.getInstance().BATCH.draw(cursorBottomLeft,
-	// x * Renderer.scale + cursorBottomLeftOffsetX - cursorAnimationOffset,
-	// y * Renderer.scale + cursorBottomLeftOffsetY - cursorAnimationOffset);
-	// Renderer.getInstance().BATCH.draw(cursorBottomRight,
-	// x * Renderer.scale + cursorBottomRightOffsetX + cursorAnimationOffset,
-	// y * Renderer.scale + cursorBottomRightOffsetY - cursorAnimationOffset);
-	// }
-
 	@Override
 	public void pause() {
 	}
@@ -315,7 +258,6 @@ public class TaloonerRl implements ApplicationListener {
 
 	@Override
 	public void dispose() {
-		cursor.dispose();
 		RenderUtil.disposeInstances();
 	}
 }

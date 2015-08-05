@@ -15,6 +15,7 @@ import com.artemis.WorldConfiguration;
 import de.brainstormsoftworks.taloonerrl.system.AnimationRenderSystem;
 import de.brainstormsoftworks.taloonerrl.system.FacingAnimationRenderSystem;
 import de.brainstormsoftworks.taloonerrl.system.HealthBarRenderSystem;
+import de.brainstormsoftworks.taloonerrl.system.HighlightRenderSystem;
 import de.brainstormsoftworks.taloonerrl.system.MovementSystem;
 import de.brainstormsoftworks.taloonerrl.system.SpriteRenderSystem;
 
@@ -30,6 +31,7 @@ public final class Systems {
 	private static final FacingAnimationRenderSystem FACING_ANIMATION_RENDER_SYSTEM = new FacingAnimationRenderSystem();
 	private static final SpriteRenderSystem SPRITE_RENDER_SYSTEM = new SpriteRenderSystem();
 	private static final HealthBarRenderSystem RENDER_BAR_SYSTEM = new HealthBarRenderSystem();
+	private static final HighlightRenderSystem HIGHLIGHT_SYSTEM = new HighlightRenderSystem();
 
 	private Systems() {
 	}
@@ -41,6 +43,7 @@ public final class Systems {
 	 */
 	public static void setSystems(final WorldConfiguration config) {
 		// order is important! systems are processed in given order
+		config.setSystem(HIGHLIGHT_SYSTEM);
 		config.setSystem(SPRITE_RENDER_SYSTEM);
 		config.setSystem(MOVEMENT_SYSTEM);
 		config.setSystem(ANIMATION_RENDER_SYSTEM);
