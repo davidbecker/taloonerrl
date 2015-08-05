@@ -179,6 +179,20 @@ public final class EntityFactory {
 			return createCollectible(type, world, xPosition, yPosition);
 		case WEAPON_J:
 			return createCollectible(type, world, xPosition, yPosition);
+		case SHIELD_A:
+			return createCollectible(type, world, xPosition, yPosition);
+		case SHIELD_B:
+			return createCollectible(type, world, xPosition, yPosition);
+		case SHIELD_C:
+			return createCollectible(type, world, xPosition, yPosition);
+		case SHIELD_D:
+			return createCollectible(type, world, xPosition, yPosition);
+		case SHIELD_E:
+			return createCollectible(type, world, xPosition, yPosition);
+		case SHIELD_F:
+			return createCollectible(type, world, xPosition, yPosition);
+		case SHIELD_G:
+			return createCollectible(type, world, xPosition, yPosition);
 		case TORCH:
 			return createDecoration(type, world, xPosition, yPosition);
 		default:

@@ -63,6 +63,7 @@ public final class SpriteMapper implements IDisposableInstance {
 	private static final String FILE_RODENT0 = "Rodent0.png";
 	private static final String FILE_RODENT1 = "Rodent1.png";
 	private static final String FILE_SCROLL = "Scroll.png";
+	private static final String FILE_SHIELD = "Shield.png";
 	private static final String FILE_SLIME0 = "Slime0.png";
 	private static final String FILE_SLIME1 = "Slime1.png";
 	private static final String FILE_UNDEAD1 = "Undead1.png";
@@ -99,6 +100,7 @@ public final class SpriteMapper implements IDisposableInstance {
 	private Texture tRodent0 = null;
 	private Texture tRodent1 = null;
 	private Texture tScroll = null;
+	private Texture tShield = null;
 	private Texture tSlime0 = null;
 	private Texture tSlime1 = null;
 	private Texture tUndead0 = null;
@@ -699,6 +701,48 @@ public final class SpriteMapper implements IDisposableInstance {
 				tWeapon = loadTexture(PATH_ITEMS + FILE_WEAPON);
 			}
 			mappedSprites.put(type, loadFrame(tWeapon, 2, 1));
+			break;
+		case SHIELD_A:
+			if (tShield == null) {
+				tShield = loadTexture(PATH_ITEMS + FILE_SHIELD);
+			}
+			mappedSprites.put(type, loadFrame(tShield, 0, 0));
+			break;
+		case SHIELD_B:
+			if (tShield == null) {
+				tShield = loadTexture(PATH_ITEMS + FILE_SHIELD);
+			}
+			mappedSprites.put(type, loadFrame(tShield, 1, 0));
+			break;
+		case SHIELD_C:
+			if (tShield == null) {
+				tShield = loadTexture(PATH_ITEMS + FILE_SHIELD);
+			}
+			mappedSprites.put(type, loadFrame(tShield, 2, 0));
+			break;
+		case SHIELD_D:
+			if (tShield == null) {
+				tShield = loadTexture(PATH_ITEMS + FILE_SHIELD);
+			}
+			mappedSprites.put(type, loadFrame(tShield, 3, 0));
+			break;
+		case SHIELD_E:
+			if (tShield == null) {
+				tShield = loadTexture(PATH_ITEMS + FILE_SHIELD);
+			}
+			mappedSprites.put(type, loadFrame(tShield, 4, 0));
+			break;
+		case SHIELD_F:
+			if (tShield == null) {
+				tShield = loadTexture(PATH_ITEMS + FILE_SHIELD);
+			}
+			mappedSprites.put(type, loadFrame(tShield, 5, 0));
+			break;
+		case SHIELD_G:
+			if (tShield == null) {
+				tShield = loadTexture(PATH_ITEMS + FILE_SHIELD);
+			}
+			mappedSprites.put(type, loadFrame(tShield, 6, 0));
 			break;
 		default:
 			break;

@@ -166,6 +166,13 @@ public class TaloonerRl implements ApplicationListener {
 		gameEngine.createNewEntity(EEntity.WEAPON_H, Renderer.TILES_HORIZONTAL - 6, 8);
 		gameEngine.createNewEntity(EEntity.WEAPON_I, Renderer.TILES_HORIZONTAL - 6, 9);
 		gameEngine.createNewEntity(EEntity.WEAPON_J, Renderer.TILES_HORIZONTAL - 6, 10);
+		gameEngine.createNewEntity(EEntity.SHIELD_A, Renderer.TILES_HORIZONTAL - 7, 1);
+		gameEngine.createNewEntity(EEntity.SHIELD_B, Renderer.TILES_HORIZONTAL - 7, 2);
+		gameEngine.createNewEntity(EEntity.SHIELD_C, Renderer.TILES_HORIZONTAL - 7, 3);
+		gameEngine.createNewEntity(EEntity.SHIELD_D, Renderer.TILES_HORIZONTAL - 7, 4);
+		gameEngine.createNewEntity(EEntity.SHIELD_E, Renderer.TILES_HORIZONTAL - 7, 5);
+		gameEngine.createNewEntity(EEntity.SHIELD_F, Renderer.TILES_HORIZONTAL - 7, 6);
+		gameEngine.createNewEntity(EEntity.SHIELD_G, Renderer.TILES_HORIZONTAL - 7, 7);
 
 		DungeonRenderer.initInstance();
 		GuiRenderer.initInstance();
