@@ -119,7 +119,7 @@ public final class DungeonRenderer implements IDisposableInstance {
 				// final TextureRegion tile = TextureManager.getInstance()
 				// .getTile(tileArray[x][y].getDungeonSprite());
 				if (tile != null) {
-					Renderer.getInstance().BATCH.draw(tile, x * Renderer.scale, y * Renderer.scale);
+					Renderer.getInstance().renderOnTile(tile, x, y);
 				}
 			}
 		}

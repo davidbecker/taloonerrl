@@ -39,7 +39,7 @@ public class SpriteRenderSystem extends EntityProcessingSystem {
 		final ComponentMapper<SpriteComponent> spriteMapper = ComponentMappers.getInstance().sprite;
 		final PositionComponent positionComponent = posMapper.get(e);
 		final SpriteComponent spriteComponent = spriteMapper.get(e);
-		Renderer.getInstance().BATCH.draw(spriteComponent.getSprite(),
-				positionComponent.getX() * Renderer.scale, positionComponent.getY() * Renderer.scale);
+		Renderer.getInstance().renderOnTile(spriteComponent.getSprite(), positionComponent.getX(),
+				positionComponent.getY());
 	}
 }

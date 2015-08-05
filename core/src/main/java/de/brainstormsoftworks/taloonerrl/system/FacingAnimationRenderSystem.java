@@ -47,8 +47,8 @@ public class FacingAnimationRenderSystem extends EntityProcessingSystem {
 		final FacingAnimationComponent spriteComponent = spriteMapper.get(e);
 		final Animation animation = spriteComponent.getAnimation(facingComponent.getDirection());
 		if (animation != null) {
-			Renderer.getInstance().BATCH.draw(RenderUtil.getKeyFrame(animation),
-					positionComponent.getX() * Renderer.scale, positionComponent.getY() * Renderer.scale);
+			Renderer.getInstance().renderOnTile(RenderUtil.getKeyFrame(animation), positionComponent.getX(),
+					positionComponent.getY());
 		}
 	}
 }

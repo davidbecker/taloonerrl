@@ -14,7 +14,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
@@ -22,12 +24,10 @@ import com.badlogic.gdx.math.Vector3;
 /**
  * singleton to keep track of on globally accessible {@link SpriteBatch}
  *
- * TODO move methods that access {@link #BATCH} here
- *
  * @author David Becker
  *
  */
-public final class Renderer {
+public final class Renderer implements IDisposableInstance {
 
 	public static final float scale = 16f;
 	public static final int tileSize = 16;
@@ -39,9 +39,9 @@ public final class Renderer {
 
 	private static final Renderer instance = new Renderer();
 
-	public final SpriteBatch BATCH;
 	public final OrthographicCamera camera;
 
+	private final SpriteBatch batch;
 	private Rectangle viewport;
 	private int viewPortX;
 	private int viewPortY;
@@ -49,9 +49,10 @@ public final class Renderer {
 	private int viewPortHeight;
 
 	private Renderer() {
-		BATCH = new SpriteBatch();
+		batch = new SpriteBatch();
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
+		RenderUtil.addToDisposeList(this);
 	}
 
 	public static Renderer getInstance() {
@@ -94,16 +95,101 @@ public final class Renderer {
 	public void beginRendering() {
 		Gdx.graphics.setTitle("current fps: " + Gdx.graphics.getFramesPerSecond());
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		BATCH.setProjectionMatrix(camera.combined);
-		BATCH.begin();
-		BATCH.enableBlending();
+		batch.setProjectionMatrix(camera.combined);
+		batch.begin();
+		batch.enableBlending();
+	}
+
+	/**
+	 * renders a sprite on the given tile coordinates
+	 *
+	 * @param region
+	 *            sprite to draw
+	 * @param x
+	 *            horizontal tile position
+	 * @param y
+	 *            vertical tile position
+	 */
+	public void renderOnTile(final TextureRegion region, final int x, final int y) {
+		// TODO implement offset for camera, check if tile should be rendered
+		renderOnScreen(region, x * tileSize, y * tileSize);
+	}
+
+	/**
+	 * renders a sprite on the given tile coordinates with an offset an the with
+	 * & high of the given {@link TextureRegion}
+	 *
+	 * @param region
+	 *            sprite to draw
+	 * @param x
+	 *            horizontal tile position
+	 * @param y
+	 *            vertical tile position
+	 * @param dX
+	 *            horizontal offset
+	 * @param dY
+	 *            vertical offset
+	 */
+	public void renderOnTileWithOffset(final TextureRegion region, final int x, final int y, final int dX,
+			final int dY) {
+		// TODO implement offset for camera, check if tile should be rendered
+		renderOnScreen(region, x * tileSize + dX, y * tileSize + dY);
+	}
+
+	/**
+	 * renders a sprite on the given tile coordinates with an offset.<br/>
+	 * stretching the region to cover the given width and height.
+	 *
+	 * @param region
+	 *            sprite to draw
+	 * @param x
+	 *            horizontal tile position
+	 * @param y
+	 *            vertical tile position
+	 * @param dX
+	 *            horizontal offset
+	 * @param dY
+	 *            vertical offset
+	 */
+	public void renderOnTileWithOffset(final TextureRegion region, final int x, final int y, final int dX,
+			final int dY, final int width, final int height) {
+		// TODO implement offset for camera, check if tile should be rendered
+		batch.draw(region, x * tileSize + dX, y * tileSize + dY, width, height);
+	}
+
+	/**
+	 * renders a sprite on the given screen coordinates
+	 *
+	 * @param region
+	 *            sprite to draw
+	 * @param x
+	 *            horizontal position
+	 * @param y
+	 *            vertical position
+	 */
+	public void renderOnScreen(final TextureRegion region, final int x, final int y) {
+		batch.draw(region, x, y);
+	}
+
+	/**
+	 * renders a sprite on the given screen coordinates
+	 *
+	 * @param texture
+	 *            sprite to draw
+	 * @param x
+	 *            horizontal position
+	 * @param y
+	 *            vertical position
+	 */
+	public void renderOnScreen(final Texture texture, final float x, final float y) {
+		batch.draw(texture, x, y);
 	}
 
 	/**
 	 * finishes rendering
 	 */
 	public void endRendering() {
-		BATCH.end();
+		batch.end();
 	}
 
 	/**
@@ -115,6 +201,11 @@ public final class Renderer {
 	 */
 	public void unprojectFromCamera(final Vector3 v) {
 		camera.unproject(v, viewPortX, viewPortY, viewPortWidth, viewPortHeight);
+	}
+
+	@Override
+	public void disposeInstance() {
+		batch.dispose();
 	}
 
 }

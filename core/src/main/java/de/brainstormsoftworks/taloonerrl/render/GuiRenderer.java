@@ -154,16 +154,18 @@ public final class GuiRenderer implements IDisposableInstance {
 
 	private void renderBarOutline(final int barWidth, final int startX, final int startY) {
 		if (barWidth <= 1) {
-			Renderer.getInstance().BATCH.draw(sBarSmall, startX * Renderer.scale, startY * Renderer.scale);
+			Renderer.getInstance().renderOnScreen(sBarSmall, startX * Renderer.tileSize,
+					startY * Renderer.tileSize);
 		} else {
-			Renderer.getInstance().BATCH.draw(sBarLeft, startX * Renderer.scale, startY * Renderer.scale);
+			Renderer.getInstance().renderOnScreen(sBarLeft, startX * Renderer.tileSize,
+					startY * Renderer.tileSize);
 			final int centerPieces = barWidth - 2;
 			for (int i = 0; i < centerPieces; i++) {
-				Renderer.getInstance().BATCH.draw(sBarCenter, (1 + i + startX) * Renderer.scale,
-						startY * Renderer.scale);
+				Renderer.getInstance().renderOnScreen(sBarCenter, (1 + i + startX) * Renderer.tileSize,
+						startY * Renderer.tileSize);
 			}
-			Renderer.getInstance().BATCH.draw(sBarRight, (1 + centerPieces + startX) * Renderer.scale,
-					startY * Renderer.scale);
+			Renderer.getInstance().renderOnScreen(sBarRight, (1 + centerPieces + startX) * Renderer.tileSize,
+					startY * Renderer.tileSize);
 		}
 
 	}
@@ -174,7 +176,8 @@ public final class GuiRenderer implements IDisposableInstance {
 		for (int i = 0; i < barWidth; i++) {
 			final TextureRegion texture = getTextureForFilledState(calculateBarFill[i], color);
 			if (texture != null) {
-				Renderer.getInstance().BATCH.draw(texture, (i + x) * Renderer.scale, y * Renderer.scale);
+				Renderer.getInstance().renderOnScreen(texture, (i + x) * Renderer.tileSize,
+						y * Renderer.tileSize);
 			}
 		}
 	}

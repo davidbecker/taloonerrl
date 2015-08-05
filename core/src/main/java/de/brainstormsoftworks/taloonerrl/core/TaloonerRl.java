@@ -272,7 +272,7 @@ public class TaloonerRl implements ApplicationListener {
 		mouseX = touchPos.x - Renderer.tileSize / 2;
 		mouseY = touchPos.y - Renderer.tileSize / 2;
 
-		Renderer.getInstance().BATCH.draw(cursor, mouseX, mouseY);
+		Renderer.getInstance().renderOnScreen(cursor, mouseX, mouseY);
 		// FIXME WIP
 		// // translate mouse coordinates to selected tile
 		// final float tileX = touchPos.x /Renderer.TILES_HORIZONTAL; // 0-18
@@ -315,7 +315,6 @@ public class TaloonerRl implements ApplicationListener {
 
 	@Override
 	public void dispose() {
-		Renderer.getInstance().BATCH.dispose();
 		cursor.dispose();
 		RenderUtil.disposeInstances();
 	}
