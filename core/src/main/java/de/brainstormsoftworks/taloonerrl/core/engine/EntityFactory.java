@@ -15,6 +15,7 @@ import com.artemis.World;
 
 import de.brainstormsoftworks.taloonerrl.components.AnimationComponent;
 import de.brainstormsoftworks.taloonerrl.components.FacingAnimationComponent;
+import de.brainstormsoftworks.taloonerrl.components.NameComponent;
 import de.brainstormsoftworks.taloonerrl.components.PositionComponent;
 
 /**
@@ -49,6 +50,10 @@ public final class EntityFactory {
 			return createActor(type, world, xPosition, yPosition);
 		case SQUIRREL:
 			return createActor(type, world, xPosition, yPosition);
+		case BAT:
+			return createActor(type, world, xPosition, yPosition);
+		case SLUG:
+			return createActor(type, world, xPosition, yPosition);
 		case TORCH:
 			return createDecoration(type, world, xPosition, yPosition);
 		default:
@@ -59,6 +64,7 @@ public final class EntityFactory {
 	private static Entity createPlayer(final World world) {
 		final Entity newEntity = world.createEntity(Archetypes.getInstance().player);
 		newEntity.getComponent(FacingAnimationComponent.class).mapAnimation(EEntity.PLAYER);
+		setName(newEntity, EEntity.PLAYER);
 		return newEntity;
 	}
 
@@ -68,6 +74,7 @@ public final class EntityFactory {
 		final PositionComponent posComponent = newEntity.getComponent(PositionComponent.class);
 		posComponent.setX(xPosition);
 		posComponent.setY(yPosition);
+		setName(newEntity, type);
 		return newEntity;
 	}
 
@@ -79,5 +86,29 @@ public final class EntityFactory {
 		posComponent.setX(xPosition);
 		posComponent.setY(yPosition);
 		return newEntity;
+	}
+
+	private static void setName(final Entity entity, final EEntity type) {
+		// TODO refactor
+		final NameComponent component = entity.getComponent(NameComponent.class);
+		switch (type) {
+		case BLOB:
+			component.setName("Blob");
+			component.setDescription("Your most generic opponent");
+			break;
+		case PLAYER:
+			component.setName("Adventurer");
+			component.setDescription("Who might this be?");
+			break;
+		case SQUIRREL:
+			component.setName("Squirrel");
+			component.setDescription("A rat-like creature with a tail");
+		case BAT:
+			component.setName("Bat");
+			component.setDescription("A flapping creature");
+		case SLUG:
+			component.setName("Slug");
+		}
+
 	}
 }

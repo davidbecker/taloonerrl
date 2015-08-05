@@ -46,6 +46,8 @@ public final class SpriteMapper implements IDisposableInstance {
 	private static final String PATH_CHARACTER = "character/";
 	private static final SpriteMapper instance = new SpriteMapper();
 
+	private Texture tAvian0 = null;
+	private Texture tAvian1 = null;
 	private Texture tPest0 = null;
 	private Texture tPest1 = null;
 	private Texture tRodent0 = null;
@@ -94,6 +96,19 @@ public final class SpriteMapper implements IDisposableInstance {
 					Renderer.tileSize);
 			mappedAnimations.put(sprite, new Animation(0.25f, frames));
 			break;
+		case SLUG:
+			if (tPest0 == null) {
+				tPest0 = loadTexture(PATH_MOBS + "Pest0.png");
+			}
+			if (tPest1 == null) {
+				tPest1 = loadTexture(PATH_MOBS + "Pest1.png");
+			}
+			frames[0] = new TextureRegion(tPest0, 1 * Renderer.tileSize, 7 * Renderer.tileSize, Renderer.tileSize,
+					Renderer.tileSize);
+			frames[1] = new TextureRegion(tPest1, 1 * Renderer.tileSize, 7 * Renderer.tileSize, Renderer.tileSize,
+					Renderer.tileSize);
+			mappedAnimations.put(sprite, new Animation(0.25f, frames));
+			break;
 		case SQUIRREL:
 			if (tRodent0 == null) {
 				tRodent0 = loadTexture(PATH_MOBS + "Rodent0.png");
@@ -104,6 +119,19 @@ public final class SpriteMapper implements IDisposableInstance {
 			frames[0] = new TextureRegion(tRodent0, 0 * Renderer.tileSize, 0 * Renderer.tileSize, Renderer.tileSize,
 					Renderer.tileSize);
 			frames[1] = new TextureRegion(tRodent1, 0 * Renderer.tileSize, 0 * Renderer.tileSize, Renderer.tileSize,
+					Renderer.tileSize);
+			mappedAnimations.put(sprite, new Animation(0.25f, frames));
+			break;
+		case BAT:
+			if (tAvian0 == null) {
+				tAvian0 = loadTexture(PATH_MOBS + "Avian0.png");
+			}
+			if (tAvian1 == null) {
+				tAvian1 = loadTexture(PATH_MOBS + "Avian1.png");
+			}
+			frames[0] = new TextureRegion(tAvian0, 0 * Renderer.tileSize, 11 * Renderer.tileSize, Renderer.tileSize,
+					Renderer.tileSize);
+			frames[1] = new TextureRegion(tAvian1, 0 * Renderer.tileSize, 11 * Renderer.tileSize, Renderer.tileSize,
 					Renderer.tileSize);
 			mappedAnimations.put(sprite, new Animation(0.25f, frames));
 			break;
