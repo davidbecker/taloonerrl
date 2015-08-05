@@ -54,6 +54,8 @@ public final class SpriteMapper implements IDisposableInstance {
 	private Texture tHumanoid1 = null;
 	private Texture tPest0 = null;
 	private Texture tPest1 = null;
+	private Texture tPlant0 = null;
+	private Texture tPlant1 = null;
 	private Texture tPlayer0 = null;
 	private Texture tPlayer1 = null;
 	private Texture tReptile0 = null;
@@ -287,6 +289,19 @@ public final class SpriteMapper implements IDisposableInstance {
 			frames[0] = new TextureRegion(tSlime0, 0 * Renderer.tileSize, 2 * Renderer.tileSize, Renderer.tileSize,
 					Renderer.tileSize);
 			frames[1] = new TextureRegion(tSlime1, 0 * Renderer.tileSize, 2 * Renderer.tileSize, Renderer.tileSize,
+					Renderer.tileSize);
+			mappedAnimations.put(sprite, new Animation(0.25f, frames));
+			break;
+		case MUSHROOM:
+			if (tPlant0 == null) {
+				tPlant0 = loadTexture(PATH_MOBS + "Plant0.png");
+			}
+			if (tPlant1 == null) {
+				tPlant1 = loadTexture(PATH_MOBS + "Plant1.png");
+			}
+			frames[0] = new TextureRegion(tPlant0, 0 * Renderer.tileSize, 7 * Renderer.tileSize, Renderer.tileSize,
+					Renderer.tileSize);
+			frames[1] = new TextureRegion(tPlant1, 0 * Renderer.tileSize, 7 * Renderer.tileSize, Renderer.tileSize,
 					Renderer.tileSize);
 			mappedAnimations.put(sprite, new Animation(0.25f, frames));
 			break;

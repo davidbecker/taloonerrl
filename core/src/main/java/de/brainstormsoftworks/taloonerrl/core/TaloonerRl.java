@@ -114,6 +114,7 @@ public class TaloonerRl implements ApplicationListener {
 		gameEngine.createNewEntity(EEntity.STEALER, 1, 12);
 		gameEngine.createNewEntity(EEntity.DRAGON, 1, 13);
 		gameEngine.createNewEntity(EEntity.ACID, 1, 14);
+		gameEngine.createNewEntity(EEntity.MUSHROOM, 1, 15);
 
 		DungeonRenderer.initInstance();
 		GuiRenderer.initInstance();
