@@ -54,6 +54,8 @@ public final class SpriteMapper implements IDisposableInstance {
 	private Texture tPest1 = null;
 	private Texture tRodent0 = null;
 	private Texture tRodent1 = null;
+	private Texture tUndead0 = null;
+	private Texture tUndead1 = null;
 	private Texture tDecor0 = null;
 	private Texture tDecor1 = null;
 	private Texture tWarrior = null;
@@ -147,6 +149,32 @@ public final class SpriteMapper implements IDisposableInstance {
 			frames[0] = new TextureRegion(tHumanoid0, 0 * Renderer.tileSize, 23 * Renderer.tileSize, Renderer.tileSize,
 					Renderer.tileSize);
 			frames[1] = new TextureRegion(tHumanoid1, 0 * Renderer.tileSize, 23 * Renderer.tileSize, Renderer.tileSize,
+					Renderer.tileSize);
+			mappedAnimations.put(sprite, new Animation(0.25f, frames));
+			break;
+		case GHOST:
+			if (tUndead0 == null) {
+				tUndead0 = loadTexture(PATH_MOBS + "Undead0.png");
+			}
+			if (tUndead1 == null) {
+				tUndead1 = loadTexture(PATH_MOBS + "Undead1.png");
+			}
+			frames[0] = new TextureRegion(tUndead0, 0 * Renderer.tileSize, 4 * Renderer.tileSize, Renderer.tileSize,
+					Renderer.tileSize);
+			frames[1] = new TextureRegion(tUndead1, 0 * Renderer.tileSize, 4 * Renderer.tileSize, Renderer.tileSize,
+					Renderer.tileSize);
+			mappedAnimations.put(sprite, new Animation(0.25f, frames));
+			break;
+		case SHADOW:
+			if (tUndead0 == null) {
+				tUndead0 = loadTexture(PATH_MOBS + "Undead0.png");
+			}
+			if (tUndead1 == null) {
+				tUndead1 = loadTexture(PATH_MOBS + "Undead1.png");
+			}
+			frames[0] = new TextureRegion(tUndead0, 3 * Renderer.tileSize, 4 * Renderer.tileSize, Renderer.tileSize,
+					Renderer.tileSize);
+			frames[1] = new TextureRegion(tUndead1, 3 * Renderer.tileSize, 4 * Renderer.tileSize, Renderer.tileSize,
 					Renderer.tileSize);
 			mappedAnimations.put(sprite, new Animation(0.25f, frames));
 			break;

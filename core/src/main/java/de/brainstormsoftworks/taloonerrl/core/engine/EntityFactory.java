@@ -56,6 +56,10 @@ public final class EntityFactory {
 			return createActor(type, world, xPosition, yPosition);
 		case SLUG:
 			return createActor(type, world, xPosition, yPosition);
+		case GHOST:
+			return createActor(type, world, xPosition, yPosition);
+		case SHADOW:
+			return createActor(type, world, xPosition, yPosition);
 		case TORCH:
 			return createDecoration(type, world, xPosition, yPosition);
 		default:
@@ -112,6 +116,10 @@ public final class EntityFactory {
 			component.setName("Slug");
 		case MAGICIAN:
 			component.setName("Magician");
+		case GHOST:
+			component.setName("Ghost");
+		case SHADOW:
+			component.setName("Shadow");
 		}
 
 	}

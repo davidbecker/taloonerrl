@@ -17,5 +17,5 @@ package de.brainstormsoftworks.taloonerrl.core.engine;
  *
  */
 public enum EEntity {
-	NOTHING, TORCH, PLAYER, BAT, BLOB, MAGICIAN, SLUG, SQUIRREL
+	NOTHING, TORCH, PLAYER, BAT, BLOB, GHOST, MAGICIAN, SHADOW, SLUG, SQUIRREL
 }
