@@ -61,6 +61,7 @@ public final class SpriteMapper implements IDisposableInstance {
 	private static final String FILE_REPTILE1 = "Reptile1.png";
 	private static final String FILE_RODENT0 = "Rodent0.png";
 	private static final String FILE_RODENT1 = "Rodent1.png";
+	private static final String FILE_SCROLL = "Scroll.png";
 	private static final String FILE_SLIME0 = "Slime0.png";
 	private static final String FILE_SLIME1 = "Slime1.png";
 	private static final String FILE_UNDEAD1 = "Undead1.png";
@@ -93,6 +94,7 @@ public final class SpriteMapper implements IDisposableInstance {
 	private Texture tReptile1 = null;
 	private Texture tRodent0 = null;
 	private Texture tRodent1 = null;
+	private Texture tScroll = null;
 	private Texture tSlime0 = null;
 	private Texture tSlime1 = null;
 	private Texture tUndead0 = null;
@@ -451,6 +453,66 @@ public final class SpriteMapper implements IDisposableInstance {
 				tPotions = loadTexture(PATH_ITEMS + FILE_POTION);
 			}
 			mappedSprites.put(type, loadFrame(tPotions, 1, 4));
+			break;
+		case SCROLL_A:
+			if (tScroll == null) {
+				tScroll = loadTexture(PATH_ITEMS + FILE_SCROLL);
+			}
+			mappedSprites.put(type, loadFrame(tScroll, 0, 0));
+			break;
+		case SCROLL_B:
+			if (tScroll == null) {
+				tScroll = loadTexture(PATH_ITEMS + FILE_SCROLL);
+			}
+			mappedSprites.put(type, loadFrame(tScroll, 0, 1));
+			break;
+		case SCROLL_C:
+			if (tScroll == null) {
+				tScroll = loadTexture(PATH_ITEMS + FILE_SCROLL);
+			}
+			mappedSprites.put(type, loadFrame(tScroll, 0, 2));
+			break;
+		case SCROLL_D:
+			if (tScroll == null) {
+				tScroll = loadTexture(PATH_ITEMS + FILE_SCROLL);
+			}
+			mappedSprites.put(type, loadFrame(tScroll, 0, 3));
+			break;
+		case SCROLL_E:
+			if (tScroll == null) {
+				tScroll = loadTexture(PATH_ITEMS + FILE_SCROLL);
+			}
+			mappedSprites.put(type, loadFrame(tScroll, 1, 0));
+			break;
+		case SCROLL_F:
+			if (tScroll == null) {
+				tScroll = loadTexture(PATH_ITEMS + FILE_SCROLL);
+			}
+			mappedSprites.put(type, loadFrame(tScroll, 1, 1));
+			break;
+		case SCROLL_G:
+			if (tScroll == null) {
+				tScroll = loadTexture(PATH_ITEMS + FILE_SCROLL);
+			}
+			mappedSprites.put(type, loadFrame(tScroll, 1, 2));
+			break;
+		case SCROLL_H:
+			if (tScroll == null) {
+				tScroll = loadTexture(PATH_ITEMS + FILE_SCROLL);
+			}
+			mappedSprites.put(type, loadFrame(tScroll, 1, 3));
+			break;
+		case SCROLL_I:
+			if (tScroll == null) {
+				tScroll = loadTexture(PATH_ITEMS + FILE_SCROLL);
+			}
+			mappedSprites.put(type, loadFrame(tScroll, 2, 0));
+			break;
+		case SCROLL_J:
+			if (tScroll == null) {
+				tScroll = loadTexture(PATH_ITEMS + FILE_SCROLL);
+			}
+			mappedSprites.put(type, loadFrame(tScroll, 2, 1));
 			break;
 		default:
 			break;
