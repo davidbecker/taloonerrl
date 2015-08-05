@@ -69,6 +69,7 @@ public final class SpriteMapper implements IDisposableInstance {
 	private static final String FILE_UNDEAD0 = "Undead0.png";
 	private static final String FILE_WAND = "Wand.png";
 	private static final String FILE_WARRIOR = "Warrior.png";
+	private static final String FILE_WEAPON = "ShortWep.png";
 
 	private static final SpriteMapper instance = new SpriteMapper();
 
@@ -104,6 +105,7 @@ public final class SpriteMapper implements IDisposableInstance {
 	private Texture tUndead1 = null;
 	private Texture tWand = null;
 	private Texture tWarrior = null;
+	private Texture tWeapon = null;
 
 	private SpriteMapper() {
 		RenderUtil.addToDisposeList(this);
@@ -637,6 +639,66 @@ public final class SpriteMapper implements IDisposableInstance {
 				tRing = loadTexture(PATH_ITEMS + FILE_RING);
 			}
 			mappedSprites.put(type, loadFrame(tRing, 2, 1));
+			break;
+		case WEAPON_A:
+			if (tWeapon == null) {
+				tWeapon = loadTexture(PATH_ITEMS + FILE_WEAPON);
+			}
+			mappedSprites.put(type, loadFrame(tWeapon, 0, 0));
+			break;
+		case WEAPON_B:
+			if (tWeapon == null) {
+				tWeapon = loadTexture(PATH_ITEMS + FILE_WEAPON);
+			}
+			mappedSprites.put(type, loadFrame(tWeapon, 0, 1));
+			break;
+		case WEAPON_C:
+			if (tWeapon == null) {
+				tWeapon = loadTexture(PATH_ITEMS + FILE_WEAPON);
+			}
+			mappedSprites.put(type, loadFrame(tWeapon, 0, 2));
+			break;
+		case WEAPON_D:
+			if (tWeapon == null) {
+				tWeapon = loadTexture(PATH_ITEMS + FILE_WEAPON);
+			}
+			mappedSprites.put(type, loadFrame(tWeapon, 0, 3));
+			break;
+		case WEAPON_E:
+			if (tWeapon == null) {
+				tWeapon = loadTexture(PATH_ITEMS + FILE_WEAPON);
+			}
+			mappedSprites.put(type, loadFrame(tWeapon, 1, 0));
+			break;
+		case WEAPON_F:
+			if (tWeapon == null) {
+				tWeapon = loadTexture(PATH_ITEMS + FILE_WEAPON);
+			}
+			mappedSprites.put(type, loadFrame(tWeapon, 1, 1));
+			break;
+		case WEAPON_G:
+			if (tWeapon == null) {
+				tWeapon = loadTexture(PATH_ITEMS + FILE_WEAPON);
+			}
+			mappedSprites.put(type, loadFrame(tWeapon, 1, 2));
+			break;
+		case WEAPON_H:
+			if (tWeapon == null) {
+				tWeapon = loadTexture(PATH_ITEMS + FILE_WEAPON);
+			}
+			mappedSprites.put(type, loadFrame(tWeapon, 1, 3));
+			break;
+		case WEAPON_I:
+			if (tWeapon == null) {
+				tWeapon = loadTexture(PATH_ITEMS + FILE_WEAPON);
+			}
+			mappedSprites.put(type, loadFrame(tWeapon, 2, 0));
+			break;
+		case WEAPON_J:
+			if (tWeapon == null) {
+				tWeapon = loadTexture(PATH_ITEMS + FILE_WEAPON);
+			}
+			mappedSprites.put(type, loadFrame(tWeapon, 2, 1));
 			break;
 		default:
 			break;
