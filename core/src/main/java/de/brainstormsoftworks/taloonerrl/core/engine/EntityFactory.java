@@ -139,6 +139,26 @@ public final class EntityFactory {
 			return createCollectible(type, world, xPosition, yPosition);
 		case WAND_J:
 			return createCollectible(type, world, xPosition, yPosition);
+		case RING_A:
+			return createCollectible(type, world, xPosition, yPosition);
+		case RING_B:
+			return createCollectible(type, world, xPosition, yPosition);
+		case RING_C:
+			return createCollectible(type, world, xPosition, yPosition);
+		case RING_D:
+			return createCollectible(type, world, xPosition, yPosition);
+		case RING_E:
+			return createCollectible(type, world, xPosition, yPosition);
+		case RING_F:
+			return createCollectible(type, world, xPosition, yPosition);
+		case RING_G:
+			return createCollectible(type, world, xPosition, yPosition);
+		case RING_H:
+			return createCollectible(type, world, xPosition, yPosition);
+		case RING_I:
+			return createCollectible(type, world, xPosition, yPosition);
+		case RING_J:
+			return createCollectible(type, world, xPosition, yPosition);
 		case TORCH:
 			return createDecoration(type, world, xPosition, yPosition);
 		default:

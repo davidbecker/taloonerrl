@@ -59,6 +59,7 @@ public final class SpriteMapper implements IDisposableInstance {
 	private static final String FILE_POTION = "Potion.png";
 	private static final String FILE_REPTILE0 = "Reptile0.png";
 	private static final String FILE_REPTILE1 = "Reptile1.png";
+	private static final String FILE_RING = "Ring.png";
 	private static final String FILE_RODENT0 = "Rodent0.png";
 	private static final String FILE_RODENT1 = "Rodent1.png";
 	private static final String FILE_SCROLL = "Scroll.png";
@@ -93,6 +94,7 @@ public final class SpriteMapper implements IDisposableInstance {
 	private Texture tPotions = null;
 	private Texture tReptile0 = null;
 	private Texture tReptile1 = null;
+	private Texture tRing = null;
 	private Texture tRodent0 = null;
 	private Texture tRodent1 = null;
 	private Texture tScroll = null;
@@ -575,6 +577,66 @@ public final class SpriteMapper implements IDisposableInstance {
 				tWand = loadTexture(PATH_ITEMS + FILE_WAND);
 			}
 			mappedSprites.put(type, loadFrame(tWand, 2, 1));
+			break;
+		case RING_A:
+			if (tRing == null) {
+				tRing = loadTexture(PATH_ITEMS + FILE_RING);
+			}
+			mappedSprites.put(type, loadFrame(tRing, 0, 0));
+			break;
+		case RING_B:
+			if (tRing == null) {
+				tRing = loadTexture(PATH_ITEMS + FILE_RING);
+			}
+			mappedSprites.put(type, loadFrame(tRing, 0, 1));
+			break;
+		case RING_C:
+			if (tRing == null) {
+				tRing = loadTexture(PATH_ITEMS + FILE_RING);
+			}
+			mappedSprites.put(type, loadFrame(tRing, 0, 2));
+			break;
+		case RING_D:
+			if (tRing == null) {
+				tRing = loadTexture(PATH_ITEMS + FILE_RING);
+			}
+			mappedSprites.put(type, loadFrame(tRing, 0, 3));
+			break;
+		case RING_E:
+			if (tRing == null) {
+				tRing = loadTexture(PATH_ITEMS + FILE_RING);
+			}
+			mappedSprites.put(type, loadFrame(tRing, 1, 0));
+			break;
+		case RING_F:
+			if (tRing == null) {
+				tRing = loadTexture(PATH_ITEMS + FILE_RING);
+			}
+			mappedSprites.put(type, loadFrame(tRing, 1, 1));
+			break;
+		case RING_G:
+			if (tRing == null) {
+				tRing = loadTexture(PATH_ITEMS + FILE_RING);
+			}
+			mappedSprites.put(type, loadFrame(tRing, 1, 2));
+			break;
+		case RING_H:
+			if (tRing == null) {
+				tRing = loadTexture(PATH_ITEMS + FILE_RING);
+			}
+			mappedSprites.put(type, loadFrame(tRing, 1, 3));
+			break;
+		case RING_I:
+			if (tRing == null) {
+				tRing = loadTexture(PATH_ITEMS + FILE_RING);
+			}
+			mappedSprites.put(type, loadFrame(tRing, 2, 0));
+			break;
+		case RING_J:
+			if (tRing == null) {
+				tRing = loadTexture(PATH_ITEMS + FILE_RING);
+			}
+			mappedSprites.put(type, loadFrame(tRing, 2, 1));
 			break;
 		default:
 			break;
