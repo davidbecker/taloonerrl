@@ -1,5 +1,6 @@
 .metadata
 .metadata/*
+/target/
 */target/*
 */bin/*
 *.class

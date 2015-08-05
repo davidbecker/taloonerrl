@@ -36,7 +36,7 @@ public final class RenderUtil {
 	 * central place to keep track of resources that should be disposed at the
 	 * end of the application
 	 */
-	public static final Set<IDisposableInstance> toDispose = new HashSet<IDisposableInstance>();
+	private static final Set<IDisposableInstance> toDispose = new HashSet<IDisposableInstance>();
 
 	private RenderUtil() {
 	}
@@ -116,6 +116,16 @@ public final class RenderUtil {
 	 */
 	public static TextureRegion getKeyFrame(final Animation animation) {
 		return animation.getKeyFrame(GameEngine.getInstance().getStateTime(), true);
+	}
+
+	/**
+	 * add the {@link IDisposableInstance} to the list that should be disposed
+	 * when the application is closed
+	 *
+	 * @param disposableInstance
+	 */
+	public static void addToDisposeList(final IDisposableInstance disposableInstance) {
+		toDispose.add(disposableInstance);
 	}
 
 	/**

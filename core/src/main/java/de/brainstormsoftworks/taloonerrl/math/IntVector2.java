@@ -4,7 +4,7 @@
  * are made available under the terms of the GNU Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
- * 
+ *
  * Contributors:
  *     David Becker - initial API and implementation
  ******************************************************************************/
@@ -29,9 +29,9 @@ public final class IntVector2 implements Serializable, Vector<IntVector2> {
 	private int x;
 	private int y;
 
-	public IntVector2(final int x, final int y) {
-		this.x = x;
-		this.y = y;
+	public IntVector2(final int _x, final int _y) {
+		x = _x;
+		y = _y;
 	}
 
 	@Override
@@ -71,7 +71,7 @@ public final class IntVector2 implements Serializable, Vector<IntVector2> {
 	@Override
 	public IntVector2 setLength2(final float len2) {
 		final float oldLen2 = len2();
-		return (oldLen2 == 0 || oldLen2 == len2) ? this : scl((float) Math.sqrt(len2 / oldLen2));
+		return oldLen2 == 0 || oldLen2 == len2 ? this : scl((float) Math.sqrt(len2 / oldLen2));
 	}
 
 	@Override
@@ -162,8 +162,8 @@ public final class IntVector2 implements Serializable, Vector<IntVector2> {
 	@Override
 	public IntVector2 lerp(final IntVector2 target, final float alpha) {
 		final float invAlpha = 1.0f - alpha;
-		x = (int) ((x * invAlpha) + (target.getX() * alpha));
-		y = (int) ((y * invAlpha) + (target.getY() * alpha));
+		x = (int) (x * invAlpha + target.getX() * alpha);
+		y = (int) (y * invAlpha + target.getY() * alpha);
 		return this;
 	}
 
@@ -282,18 +282,18 @@ public final class IntVector2 implements Serializable, Vector<IntVector2> {
 	 *
 	 * @return the x
 	 */
-	public final int getX() {
+	public int getX() {
 		return x;
 	}
 
 	/**
 	 * setter for x
 	 *
-	 * @param x
+	 * @param _x
 	 *            the x to set
 	 */
-	public final void setX(final int x) {
-		this.x = x;
+	public void setX(final int _x) {
+		x = _x;
 	}
 
 	/**
@@ -301,7 +301,7 @@ public final class IntVector2 implements Serializable, Vector<IntVector2> {
 	 *
 	 * @return the y
 	 */
-	public final int getY() {
+	public int getY() {
 		return y;
 	}
 
@@ -311,8 +311,8 @@ public final class IntVector2 implements Serializable, Vector<IntVector2> {
 	 * @param y
 	 *            the y to set
 	 */
-	public final void setY(final int y) {
-		this.y = y;
+	public void setY(final int _y) {
+		y = _y;
 	}
 
 }

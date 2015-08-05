@@ -22,8 +22,13 @@ import de.brainstormsoftworks.taloonerrl.core.engine.ComponentMappers;
 import de.brainstormsoftworks.taloonerrl.render.RenderUtil;
 import de.brainstormsoftworks.taloonerrl.render.Renderer;
 
+/**
+ * simple rendering system for animations that aren't dependent on a direction
+ *
+ * @author David Becker
+ *
+ */
 public class AnimationRenderSystem extends EntityProcessingSystem {
-	private static final float scale = 16f;
 
 	@SuppressWarnings("unchecked")
 	public AnimationRenderSystem() {
@@ -33,13 +38,13 @@ public class AnimationRenderSystem extends EntityProcessingSystem {
 	@Override
 	protected void process(final Entity e) {
 		final ComponentMapper<PositionComponent> posMapper = ComponentMappers.getInstance().position;
-		final ComponentMapper<AnimationComponent> spriteMapper = ComponentMappers.getInstance().sprite;
+		final ComponentMapper<AnimationComponent> spriteMapper = ComponentMappers.getInstance().animation;
 		final PositionComponent positionComponent = posMapper.get(e);
 		final AnimationComponent spriteComponent = spriteMapper.get(e);
 		final Animation animation = spriteComponent.getAnimation();
 		if (animation != null) {
-			Renderer.getInstance().BATCH.draw(RenderUtil.getKeyFrame(animation), positionComponent.getX() * scale,
-					positionComponent.getY() * scale);
+			Renderer.getInstance().BATCH.draw(RenderUtil.getKeyFrame(animation),
+					positionComponent.getX() * Renderer.scale, positionComponent.getY() * Renderer.scale);
 		}
 	}
 }

@@ -15,13 +15,13 @@ import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector3;
 
 import de.brainstormsoftworks.taloonerrl.actors.ActorFactory;
 import de.brainstormsoftworks.taloonerrl.actors.EActorTypes;
 import de.brainstormsoftworks.taloonerrl.actors.IActor;
+import de.brainstormsoftworks.taloonerrl.components.FacingComponent;
 import de.brainstormsoftworks.taloonerrl.components.HealthComponent;
 import de.brainstormsoftworks.taloonerrl.components.PositionComponent;
 import de.brainstormsoftworks.taloonerrl.core.engine.EEntity;
@@ -34,15 +34,10 @@ import de.brainstormsoftworks.taloonerrl.render.RenderUtil;
 import de.brainstormsoftworks.taloonerrl.render.Renderer;
 
 public class TaloonerRl implements ApplicationListener {
-	Texture warrior;
 	Texture cursor;
 
 	float elapsed;
 
-	TextureRegion[] walkFramesUp = new TextureRegion[4];
-	TextureRegion[] walkFramesDown = new TextureRegion[4];
-	TextureRegion[] walkFramesLeft = new TextureRegion[4];
-	TextureRegion[] walkFramesRight = new TextureRegion[4];
 	private static TextureRegion cursorTopLeft;
 	private static TextureRegion cursorTopRight;
 	private static TextureRegion cursorBottomLeft;
@@ -56,49 +51,29 @@ public class TaloonerRl implements ApplicationListener {
 	private static final int cursorBottomRightOffsetX = 11;
 	private static final int cursorBottomRightOffsetY = -2;
 	static int cursorAnimationOffset = 0;
-	Animation walkUp;
-	Animation walkDown;
-	Animation walkLeft;
-	Animation walkRight;
 	EDirection walkingDirection = EDirection.RIGHT;
-	private static final float scale = 16f;
 	float mouseX;
 	float mouseY;
 
-	private boolean isPlayerTurn = false;
+	// private boolean isPlayerTurn = false;
 	private float delayToNextTurn = 0f;
 	/** minimum delay between player turns */
 	private static final float delayBetweenTurns = 0.03f;
-	private static final float delayToNextAnimation = 0f;
+	// private static final float delayToNextAnimation = 0f;
 	/** minimum delay between player turns */
-	private static final float delayBetweenAnimation = 0.03f;
+	// private static final float delayBetweenAnimation = 0.03f;
 
 	private final IActor player = ActorFactory.createActor(EActorTypes.PLAYER);
 	public static IMap map = null;
-	private static final String fontPath = "font/";
+	// private static final String fontPath = "font/";
 	private Entity playerEntity;
 	private HealthComponent playerHealthComponent;
 	private PositionComponent playerPositionComponent;
+	private FacingComponent playerFacingComponent;
 
 	@Override
 	public void create() {
 		map = MapFactory.createMap(Renderer.TILES_HORIZONTAL, Renderer.TILES_VERTICAL);
-
-		warrior = new Texture(Gdx.files.internal("character/Warrior.png"));
-		for (int i = 0; i < 4; i++) {
-			walkFramesDown[i] = new TextureRegion(warrior, i * Renderer.tileSize, 0 * Renderer.tileSize,
-					Renderer.tileSize, Renderer.tileSize);
-			walkFramesLeft[i] = new TextureRegion(warrior, i * Renderer.tileSize, 1 * Renderer.tileSize,
-					Renderer.tileSize, Renderer.tileSize);
-			walkFramesRight[i] = new TextureRegion(warrior, i * Renderer.tileSize, 2 * Renderer.tileSize,
-					Renderer.tileSize, Renderer.tileSize);
-			walkFramesUp[i] = new TextureRegion(warrior, i * Renderer.tileSize, 3 * Renderer.tileSize,
-					Renderer.tileSize, Renderer.tileSize);
-		}
-		walkUp = new Animation(0.25f, walkFramesUp);
-		walkDown = new Animation(0.25f, walkFramesDown);
-		walkLeft = new Animation(0.25f, walkFramesLeft);
-		walkRight = new Animation(0.25f, walkFramesRight);
 
 		cursor = new Texture(Gdx.files.internal("cursor.png"));
 		cursorTopLeft = new TextureRegion(cursor, 0, 0, 8, 8);
@@ -115,6 +90,7 @@ public class TaloonerRl implements ApplicationListener {
 		playerEntity = gameEngine.createNewEntity(EEntity.PLAYER);
 		playerHealthComponent = playerEntity.getComponent(HealthComponent.class);
 		playerPositionComponent = playerEntity.getComponent(PositionComponent.class);
+		playerFacingComponent = playerEntity.getComponent(FacingComponent.class);
 		// TODO only use one player
 		playerPositionComponent.setX(player.getMovementComponent().getXPosition());
 		playerPositionComponent.setY(player.getMovementComponent().getYPosition());
@@ -125,6 +101,78 @@ public class TaloonerRl implements ApplicationListener {
 		for (int i = 1; i < Renderer.TILES_HORIZONTAL - 1; i++) {
 			gameEngine.createNewEntity(EEntity.TORCH, i, Renderer.TILES_VERTICAL - 1);
 		}
+		gameEngine.createNewEntity(EEntity.BAT, 1, 2);
+		gameEngine.createNewEntity(EEntity.SLUG, 1, 3);
+		gameEngine.createNewEntity(EEntity.MAGICIAN, 1, 4);
+		gameEngine.createNewEntity(EEntity.GHOST, 1, 5);
+		gameEngine.createNewEntity(EEntity.SHADOW, 1, 6);
+		gameEngine.createNewEntity(EEntity.EYEBALL, 1, 7);
+		gameEngine.createNewEntity(EEntity.GOLEM, 1, 8);
+		gameEngine.createNewEntity(EEntity.ARCHER, 1, 9);
+		gameEngine.createNewEntity(EEntity.BOMB, 1, 10);
+		gameEngine.createNewEntity(EEntity.WARPER, 1, 11);
+		gameEngine.createNewEntity(EEntity.STEALER, 1, 12);
+		gameEngine.createNewEntity(EEntity.DRAGON, 1, 13);
+		gameEngine.createNewEntity(EEntity.ACID, 1, 14);
+		gameEngine.createNewEntity(EEntity.MUSHROOM, 1, 15);
+
+		gameEngine.createNewEntity(EEntity.POTION_A, Renderer.TILES_HORIZONTAL - 2, 1);
+		gameEngine.createNewEntity(EEntity.POTION_B, Renderer.TILES_HORIZONTAL - 2, 2);
+		gameEngine.createNewEntity(EEntity.POTION_C, Renderer.TILES_HORIZONTAL - 2, 3);
+		gameEngine.createNewEntity(EEntity.POTION_D, Renderer.TILES_HORIZONTAL - 2, 4);
+		gameEngine.createNewEntity(EEntity.POTION_E, Renderer.TILES_HORIZONTAL - 2, 5);
+		gameEngine.createNewEntity(EEntity.POTION_F, Renderer.TILES_HORIZONTAL - 2, 6);
+		gameEngine.createNewEntity(EEntity.POTION_G, Renderer.TILES_HORIZONTAL - 2, 7);
+		gameEngine.createNewEntity(EEntity.POTION_H, Renderer.TILES_HORIZONTAL - 2, 8);
+		gameEngine.createNewEntity(EEntity.POTION_I, Renderer.TILES_HORIZONTAL - 2, 9);
+		gameEngine.createNewEntity(EEntity.POTION_J, Renderer.TILES_HORIZONTAL - 2, 10);
+		gameEngine.createNewEntity(EEntity.SCROLL_A, Renderer.TILES_HORIZONTAL - 3, 1);
+		gameEngine.createNewEntity(EEntity.SCROLL_B, Renderer.TILES_HORIZONTAL - 3, 2);
+		gameEngine.createNewEntity(EEntity.SCROLL_C, Renderer.TILES_HORIZONTAL - 3, 3);
+		gameEngine.createNewEntity(EEntity.SCROLL_D, Renderer.TILES_HORIZONTAL - 3, 4);
+		gameEngine.createNewEntity(EEntity.SCROLL_E, Renderer.TILES_HORIZONTAL - 3, 5);
+		gameEngine.createNewEntity(EEntity.SCROLL_F, Renderer.TILES_HORIZONTAL - 3, 6);
+		gameEngine.createNewEntity(EEntity.SCROLL_G, Renderer.TILES_HORIZONTAL - 3, 7);
+		gameEngine.createNewEntity(EEntity.SCROLL_H, Renderer.TILES_HORIZONTAL - 3, 8);
+		gameEngine.createNewEntity(EEntity.SCROLL_I, Renderer.TILES_HORIZONTAL - 3, 9);
+		gameEngine.createNewEntity(EEntity.SCROLL_J, Renderer.TILES_HORIZONTAL - 3, 10);
+		gameEngine.createNewEntity(EEntity.WAND_A, Renderer.TILES_HORIZONTAL - 4, 1);
+		gameEngine.createNewEntity(EEntity.WAND_B, Renderer.TILES_HORIZONTAL - 4, 2);
+		gameEngine.createNewEntity(EEntity.WAND_C, Renderer.TILES_HORIZONTAL - 4, 3);
+		gameEngine.createNewEntity(EEntity.WAND_D, Renderer.TILES_HORIZONTAL - 4, 4);
+		gameEngine.createNewEntity(EEntity.WAND_E, Renderer.TILES_HORIZONTAL - 4, 5);
+		gameEngine.createNewEntity(EEntity.WAND_F, Renderer.TILES_HORIZONTAL - 4, 6);
+		gameEngine.createNewEntity(EEntity.WAND_G, Renderer.TILES_HORIZONTAL - 4, 7);
+		gameEngine.createNewEntity(EEntity.WAND_H, Renderer.TILES_HORIZONTAL - 4, 8);
+		gameEngine.createNewEntity(EEntity.WAND_I, Renderer.TILES_HORIZONTAL - 4, 9);
+		gameEngine.createNewEntity(EEntity.WAND_J, Renderer.TILES_HORIZONTAL - 4, 10);
+		gameEngine.createNewEntity(EEntity.RING_A, Renderer.TILES_HORIZONTAL - 5, 1);
+		gameEngine.createNewEntity(EEntity.RING_B, Renderer.TILES_HORIZONTAL - 5, 2);
+		gameEngine.createNewEntity(EEntity.RING_C, Renderer.TILES_HORIZONTAL - 5, 3);
+		gameEngine.createNewEntity(EEntity.RING_D, Renderer.TILES_HORIZONTAL - 5, 4);
+		gameEngine.createNewEntity(EEntity.RING_E, Renderer.TILES_HORIZONTAL - 5, 5);
+		gameEngine.createNewEntity(EEntity.RING_F, Renderer.TILES_HORIZONTAL - 5, 6);
+		gameEngine.createNewEntity(EEntity.RING_G, Renderer.TILES_HORIZONTAL - 5, 7);
+		gameEngine.createNewEntity(EEntity.RING_H, Renderer.TILES_HORIZONTAL - 5, 8);
+		gameEngine.createNewEntity(EEntity.RING_I, Renderer.TILES_HORIZONTAL - 5, 9);
+		gameEngine.createNewEntity(EEntity.RING_J, Renderer.TILES_HORIZONTAL - 5, 10);
+		gameEngine.createNewEntity(EEntity.WEAPON_A, Renderer.TILES_HORIZONTAL - 6, 1);
+		gameEngine.createNewEntity(EEntity.WEAPON_B, Renderer.TILES_HORIZONTAL - 6, 2);
+		gameEngine.createNewEntity(EEntity.WEAPON_C, Renderer.TILES_HORIZONTAL - 6, 3);
+		gameEngine.createNewEntity(EEntity.WEAPON_D, Renderer.TILES_HORIZONTAL - 6, 4);
+		gameEngine.createNewEntity(EEntity.WEAPON_E, Renderer.TILES_HORIZONTAL - 6, 5);
+		gameEngine.createNewEntity(EEntity.WEAPON_F, Renderer.TILES_HORIZONTAL - 6, 6);
+		gameEngine.createNewEntity(EEntity.WEAPON_G, Renderer.TILES_HORIZONTAL - 6, 7);
+		gameEngine.createNewEntity(EEntity.WEAPON_H, Renderer.TILES_HORIZONTAL - 6, 8);
+		gameEngine.createNewEntity(EEntity.WEAPON_I, Renderer.TILES_HORIZONTAL - 6, 9);
+		gameEngine.createNewEntity(EEntity.WEAPON_J, Renderer.TILES_HORIZONTAL - 6, 10);
+		gameEngine.createNewEntity(EEntity.SHIELD_A, Renderer.TILES_HORIZONTAL - 7, 1);
+		gameEngine.createNewEntity(EEntity.SHIELD_B, Renderer.TILES_HORIZONTAL - 7, 2);
+		gameEngine.createNewEntity(EEntity.SHIELD_C, Renderer.TILES_HORIZONTAL - 7, 3);
+		gameEngine.createNewEntity(EEntity.SHIELD_D, Renderer.TILES_HORIZONTAL - 7, 4);
+		gameEngine.createNewEntity(EEntity.SHIELD_E, Renderer.TILES_HORIZONTAL - 7, 5);
+		gameEngine.createNewEntity(EEntity.SHIELD_F, Renderer.TILES_HORIZONTAL - 7, 6);
+		gameEngine.createNewEntity(EEntity.SHIELD_G, Renderer.TILES_HORIZONTAL - 7, 7);
 
 		DungeonRenderer.initInstance();
 		GuiRenderer.initInstance();
@@ -143,7 +191,7 @@ public class TaloonerRl implements ApplicationListener {
 		final float deltaTime = Gdx.graphics.getDeltaTime();
 		delayToNextTurn -= deltaTime;
 
-		switch (((int) GameEngine.getInstance().getStateTime()) % 4) {
+		switch ((int) GameEngine.getInstance().getStateTime() % 4) {
 		case 0:
 			cursorAnimationOffset = 0;
 			break;
@@ -172,7 +220,7 @@ public class TaloonerRl implements ApplicationListener {
 			keyPressedUp = Gdx.input.isKeyPressed(Keys.UP);
 			if (keyPressedDown || keyPressedLeft || keyPressedRight || keyPressedUp) {
 				// player did a move
-				isPlayerTurn = true;
+				// isPlayerTurn = true;
 
 				if (keyPressedLeft) {
 					player.getMovementComponent().move(-1, 0);
@@ -193,6 +241,7 @@ public class TaloonerRl implements ApplicationListener {
 				// TODO only use one player
 				playerPositionComponent.setX(player.getMovementComponent().getXPosition());
 				playerPositionComponent.setY(player.getMovementComponent().getYPosition());
+				playerFacingComponent.setDirection(walkingDirection);
 				delayToNextTurn = delayBetweenTurns;
 			}
 		}
@@ -219,27 +268,6 @@ public class TaloonerRl implements ApplicationListener {
 		DungeonRenderer.getInstance().render(map.getMap(), Renderer.TILES_HORIZONTAL, Renderer.TILES_VERTICAL);
 		GuiRenderer.getInstance().render(Renderer.TILES_HORIZONTAL, Renderer.TILES_VERTICAL);
 
-		TextureRegion currentFrame = null;
-		switch (walkingDirection) {
-		case UP:
-			currentFrame = RenderUtil.getKeyFrame(walkUp);
-			break;
-		case DOWN:
-			currentFrame = RenderUtil.getKeyFrame(walkDown);
-			break;
-		case LEFT:
-			currentFrame = RenderUtil.getKeyFrame(walkLeft);
-			break;
-		case RIGHT:
-			currentFrame = RenderUtil.getKeyFrame(walkRight);
-			break;
-		default:
-			break;
-		}
-		Renderer.getInstance().BATCH.draw(currentFrame, player.getMovementComponent().getXPosition() * scale,
-				player.getMovementComponent().getYPosition() * scale);
-		// drawActor(Renderer.getInstance().BATCH, player);
-
 		final Vector3 touchPos = new Vector3();
 		touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
 		Renderer.getInstance().unprojectFromCamera(touchPos);
@@ -258,21 +286,24 @@ public class TaloonerRl implements ApplicationListener {
 		GameEngine.getInstance().update(deltaTime);
 		Renderer.getInstance().endRendering();
 
-		isPlayerTurn = false;
+		// isPlayerTurn = false;
 	}
 
 	private static void highlightPlayerTile(final IActor player) {
 		final int x = player.getMovementComponent().getXPosition();
 		final int y = player.getMovementComponent().getYPosition();
-		Renderer.getInstance().BATCH.draw(cursorTopLeft, x * scale + cursorTopLeftOffsetX - cursorAnimationOffset,
-				y * scale + cursorTopLeftOffsetY + cursorAnimationOffset);
-		Renderer.getInstance().BATCH.draw(cursorTopRight, x * scale + cursorTopRightOffsetX + cursorAnimationOffset,
-				y * scale + cursorTopRightOffsetY + cursorAnimationOffset);
-		Renderer.getInstance().BATCH.draw(cursorBottomLeft, x * scale + cursorBottomLeftOffsetX - cursorAnimationOffset,
-				y * scale + cursorBottomLeftOffsetY - cursorAnimationOffset);
+		Renderer.getInstance().BATCH.draw(cursorTopLeft,
+				x * Renderer.scale + cursorTopLeftOffsetX - cursorAnimationOffset,
+				y * Renderer.scale + cursorTopLeftOffsetY + cursorAnimationOffset);
+		Renderer.getInstance().BATCH.draw(cursorTopRight,
+				x * Renderer.scale + cursorTopRightOffsetX + cursorAnimationOffset,
+				y * Renderer.scale + cursorTopRightOffsetY + cursorAnimationOffset);
+		Renderer.getInstance().BATCH.draw(cursorBottomLeft,
+				x * Renderer.scale + cursorBottomLeftOffsetX - cursorAnimationOffset,
+				y * Renderer.scale + cursorBottomLeftOffsetY - cursorAnimationOffset);
 		Renderer.getInstance().BATCH.draw(cursorBottomRight,
-				x * scale + cursorBottomRightOffsetX + cursorAnimationOffset,
-				y * scale + cursorBottomRightOffsetY - cursorAnimationOffset);
+				x * Renderer.scale + cursorBottomRightOffsetX + cursorAnimationOffset,
+				y * Renderer.scale + cursorBottomRightOffsetY - cursorAnimationOffset);
 
 	}
 
@@ -287,7 +318,6 @@ public class TaloonerRl implements ApplicationListener {
 	@Override
 	public void dispose() {
 		Renderer.getInstance().BATCH.dispose();
-		warrior.dispose();
 		cursor.dispose();
 		RenderUtil.disposeInstances();
 	}

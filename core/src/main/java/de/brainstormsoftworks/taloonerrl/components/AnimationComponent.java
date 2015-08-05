@@ -4,7 +4,7 @@
  * are made available under the terms of the GNU Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
- * 
+ *
  * Contributors:
  *     David Becker - initial API and implementation
  ******************************************************************************/
@@ -16,6 +16,12 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import de.brainstormsoftworks.taloonerrl.core.engine.EEntity;
 import de.brainstormsoftworks.taloonerrl.core.engine.SpriteMapper;
 
+/**
+ * component for an entity that has an animation
+ *
+ * @author David Becker
+ *
+ */
 public class AnimationComponent extends PooledComponent {
 	private EEntity entityType = EEntity.NOTHING;
 	private Animation animation = null;
@@ -27,23 +33,23 @@ public class AnimationComponent extends PooledComponent {
 	}
 
 	/**
-	 * getter for sprite
+	 * getter for entityType
 	 *
-	 * @return the sprite
+	 * @return the entityType
 	 */
-	public final EEntity getSprite() {
+	public final EEntity getEntityType() {
 		return entityType;
 	}
 
 	/**
-	 * setter for sprite
+	 * maps the corresponding animation for the given entity
 	 *
-	 * @param sprite
-	 *            the sprite to set
+	 * @param _entity
+	 *            entity to map the animation for
 	 */
-	public final void setSprite(final EEntity sprite) {
-		entityType = sprite;
-		SpriteMapper.getInstance().mapSprite(this);
+	public final void mapAnimation(final EEntity _entity) {
+		entityType = _entity;
+		SpriteMapper.getInstance().mapAnimation(this);
 	}
 
 	/**
@@ -58,10 +64,10 @@ public class AnimationComponent extends PooledComponent {
 	/**
 	 * setter for animation
 	 *
-	 * @param animation
+	 * @param _animation
 	 *            the animation to set
 	 */
-	public final void setAnimation(final Animation animation) {
-		this.animation = animation;
+	public final void setAnimation(final Animation _animation) {
+		animation = _animation;
 	}
 }

@@ -4,57 +4,74 @@
  * are made available under the terms of the GNU Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
- * 
+ *
  * Contributors:
  *     David Becker - initial API and implementation
  ******************************************************************************/
 package de.brainstormsoftworks.taloonerrl.event;
 
-import java.util.concurrent.Delayed;
-import java.util.concurrent.TimeUnit;
+/**
+ * simple information holder for events. stores the start & end times for an
+ * event
+ *
+ * @author David Becker
+ *
+ */
+public class Event implements Comparable<Event> {
 
-public class Event implements Delayed {
-
-	private final long queueInsertTime;
+	/** time that the event starts to be active */
+	private final long eventStartTime;
+	/** the duration that the event is active */
 	private final long delay;
+	/** the time when the event is considered to be over */
+	private final long expireTime;
 	// TODO implement storing of event information (what to do, what listener
 	// types to inform)
 
-	public Event(final long queueInsertTime, final long delay) {
-		this.queueInsertTime = queueInsertTime;
-		this.delay = delay;
-	}
-
-	@Override
-	public int compareTo(final Delayed arg0) {
-		if (!(arg0 instanceof Event)) {
-			return 0;
-		}
-		final Event other = (Event) arg0;
-		return new Long(getQueueInsertTime() + getDelay()).compareTo(other.getQueueInsertTime() + other.getDelay());
-	}
-
-	@Override
-	public long getDelay(final TimeUnit unit) {
-		return unit.convert((getQueueInsertTime() - System.currentTimeMillis()) + getDelay(), TimeUnit.MILLISECONDS);
-	}
-
 	/**
-	 * getter for queueInsertTime
+	 * constructor
 	 *
-	 * @return the queueInsertTime
+	 * @param _eventStartTime
+	 *            when the event should be started
+	 * @param _delay
+	 *            duration of the event
 	 */
-	public final long getQueueInsertTime() {
-		return queueInsertTime;
+	public Event(final long _eventStartTime, final long _delay) {
+		eventStartTime = _eventStartTime;
+		delay = _delay;
+		expireTime = _eventStartTime + _delay;
+	}
+
+	@Override
+	public int compareTo(final Event other) {
+		return Long.valueOf(getEventStartTime()).compareTo(other.getEventStartTime());
 	}
 
 	/**
-	 * getter for delay
+	 * getter for {@link #eventStartTime}
+	 *
+	 * @return the eventStartTime
+	 */
+	public final long getEventStartTime() {
+		return eventStartTime;
+	}
+
+	/**
+	 * getter for {@link #delay}
 	 *
 	 * @return the delay
 	 */
 	public final long getDelay() {
 		return delay;
+	}
+
+	/**
+	 * getter for {@link #expireTime}
+	 *
+	 * @return the expireTime
+	 */
+	public final long getExpireTime() {
+		return expireTime;
 	}
 
 }

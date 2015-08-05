@@ -13,38 +13,60 @@ package de.brainstormsoftworks.taloonerrl.components;
 import com.artemis.PooledComponent;
 
 /**
- * component that stores the percentage of health that the entity has
+ * component that stores the percentage of health and total max health that the
+ * entity has
  *
  * @author David Becker
  *
  */
 public class HealthComponent extends PooledComponent {
 
+	private int healthMax = 1;
 	private float healthPercent = 1.0f;
 	private boolean alive = true;
 
 	@Override
 	protected void reset() {
+		healthMax = 1;
 		healthPercent = 1.0f;
 		alive = true;
 	}
 
 	/**
-	 * getter for heathPercent
+	 * getter for {@link #healthMax}
 	 *
-	 * @return the heathPercent
+	 * @return the healthMax
 	 */
-	public float getHealthPercent() {
+	public final int getHealthMax() {
+		return healthMax;
+	}
+
+	/**
+	 * setter for healthMax
+	 *
+	 * @param _healthMax
+	 *            the healthMax to set
+	 */
+	public final void setHealthMax(final int _healthMax) {
+		healthMax = _healthMax;
+	}
+
+	/**
+	 * getter for {@link #healthPercent}
+	 *
+	 * @return the healthPercent
+	 */
+	public final float getHealthPercent() {
 		return healthPercent;
 	}
 
 	/**
-	 * setter for heathPercent
+	 * setter for healthPercent
 	 *
 	 * @param _healthPercent
-	 *            the heathPercent to set
+	 *            the healthPercent to set
 	 */
-	public void setHealthPercent(final float _healthPercent) {
+	public final void setHealthPercent(final float _healthPercent) {
 		healthPercent = _healthPercent;
 		if (healthPercent < 0) {
 			healthPercent = 0;
@@ -55,22 +77,22 @@ public class HealthComponent extends PooledComponent {
 	}
 
 	/**
-	 * getter for alive
+	 * getter for {@link #alive}
 	 *
 	 * @return the alive
 	 */
-	public boolean isAlive() {
+	public final boolean isAlive() {
 		return alive;
 	}
 
 	/**
 	 * setter for alive
 	 *
-	 * @param alive
+	 * @param _alive
 	 *            the alive to set
 	 */
-	public void setAlive(final boolean alive) {
-		this.alive = alive;
+	public final void setAlive(final boolean _alive) {
+		alive = _alive;
 	}
 
 }
