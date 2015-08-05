@@ -48,6 +48,8 @@ public final class SpriteMapper implements IDisposableInstance {
 
 	private Texture tAvian0 = null;
 	private Texture tAvian1 = null;
+	private Texture tElemental0 = null;
+	private Texture tElemental1 = null;
 	private Texture tHumanoid0 = null;
 	private Texture tHumanoid1 = null;
 	private Texture tPest0 = null;
@@ -175,6 +177,32 @@ public final class SpriteMapper implements IDisposableInstance {
 			frames[0] = new TextureRegion(tUndead0, 3 * Renderer.tileSize, 4 * Renderer.tileSize, Renderer.tileSize,
 					Renderer.tileSize);
 			frames[1] = new TextureRegion(tUndead1, 3 * Renderer.tileSize, 4 * Renderer.tileSize, Renderer.tileSize,
+					Renderer.tileSize);
+			mappedAnimations.put(sprite, new Animation(0.25f, frames));
+			break;
+		case EYEBALL:
+			if (tElemental0 == null) {
+				tElemental0 = loadTexture(PATH_MOBS + "Elemental0.png");
+			}
+			if (tElemental1 == null) {
+				tElemental1 = loadTexture(PATH_MOBS + "Elemental1.png");
+			}
+			frames[0] = new TextureRegion(tElemental0, 0 * Renderer.tileSize, 5 * Renderer.tileSize, Renderer.tileSize,
+					Renderer.tileSize);
+			frames[1] = new TextureRegion(tElemental1, 0 * Renderer.tileSize, 5 * Renderer.tileSize, Renderer.tileSize,
+					Renderer.tileSize);
+			mappedAnimations.put(sprite, new Animation(0.25f, frames));
+			break;
+		case GOLEM:
+			if (tElemental0 == null) {
+				tElemental0 = loadTexture(PATH_MOBS + "Elemental0.png");
+			}
+			if (tElemental1 == null) {
+				tElemental1 = loadTexture(PATH_MOBS + "Elemental1.png");
+			}
+			frames[0] = new TextureRegion(tElemental0, 4 * Renderer.tileSize, 0 * Renderer.tileSize, Renderer.tileSize,
+					Renderer.tileSize);
+			frames[1] = new TextureRegion(tElemental1, 4 * Renderer.tileSize, 0 * Renderer.tileSize, Renderer.tileSize,
 					Renderer.tileSize);
 			mappedAnimations.put(sprite, new Animation(0.25f, frames));
 			break;
