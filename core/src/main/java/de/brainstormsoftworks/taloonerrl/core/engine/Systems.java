@@ -40,6 +40,7 @@ public final class Systems {
 	 * @param config
 	 */
 	public static void setSystems(final WorldConfiguration config) {
+		// order is important! systems are processed in given order
 		config.setSystem(SPRITE_RENDER_SYSTEM);
 		config.setSystem(MOVEMENT_SYSTEM);
 		config.setSystem(ANIMATION_RENDER_SYSTEM);
