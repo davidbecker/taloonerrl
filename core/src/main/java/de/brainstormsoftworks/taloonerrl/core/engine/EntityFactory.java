@@ -52,6 +52,8 @@ public final class EntityFactory {
 			return createActor(type, world, xPosition, yPosition);
 		case BAT:
 			return createActor(type, world, xPosition, yPosition);
+		case MAGICIAN:
+			return createActor(type, world, xPosition, yPosition);
 		case SLUG:
 			return createActor(type, world, xPosition, yPosition);
 		case TORCH:
@@ -108,6 +110,8 @@ public final class EntityFactory {
 			component.setDescription("A flapping creature");
 		case SLUG:
 			component.setName("Slug");
+		case MAGICIAN:
+			component.setName("Magician");
 		}
 
 	}

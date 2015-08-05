@@ -48,6 +48,8 @@ public final class SpriteMapper implements IDisposableInstance {
 
 	private Texture tAvian0 = null;
 	private Texture tAvian1 = null;
+	private Texture tHumanoid0 = null;
+	private Texture tHumanoid1 = null;
 	private Texture tPest0 = null;
 	private Texture tPest1 = null;
 	private Texture tRodent0 = null;
@@ -132,6 +134,19 @@ public final class SpriteMapper implements IDisposableInstance {
 			frames[0] = new TextureRegion(tAvian0, 0 * Renderer.tileSize, 11 * Renderer.tileSize, Renderer.tileSize,
 					Renderer.tileSize);
 			frames[1] = new TextureRegion(tAvian1, 0 * Renderer.tileSize, 11 * Renderer.tileSize, Renderer.tileSize,
+					Renderer.tileSize);
+			mappedAnimations.put(sprite, new Animation(0.25f, frames));
+			break;
+		case MAGICIAN:
+			if (tHumanoid0 == null) {
+				tHumanoid0 = loadTexture(PATH_MOBS + "Humanoid0.png");
+			}
+			if (tHumanoid1 == null) {
+				tHumanoid1 = loadTexture(PATH_MOBS + "Humanoid1.png");
+			}
+			frames[0] = new TextureRegion(tHumanoid0, 0 * Renderer.tileSize, 23 * Renderer.tileSize, Renderer.tileSize,
+					Renderer.tileSize);
+			frames[1] = new TextureRegion(tHumanoid1, 0 * Renderer.tileSize, 23 * Renderer.tileSize, Renderer.tileSize,
 					Renderer.tileSize);
 			mappedAnimations.put(sprite, new Animation(0.25f, frames));
 			break;
