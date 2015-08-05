@@ -66,6 +66,7 @@ public final class SpriteMapper implements IDisposableInstance {
 	private static final String FILE_SLIME1 = "Slime1.png";
 	private static final String FILE_UNDEAD1 = "Undead1.png";
 	private static final String FILE_UNDEAD0 = "Undead0.png";
+	private static final String FILE_WAND = "Wand.png";
 	private static final String FILE_WARRIOR = "Warrior.png";
 
 	private static final SpriteMapper instance = new SpriteMapper();
@@ -99,6 +100,7 @@ public final class SpriteMapper implements IDisposableInstance {
 	private Texture tSlime1 = null;
 	private Texture tUndead0 = null;
 	private Texture tUndead1 = null;
+	private Texture tWand = null;
 	private Texture tWarrior = null;
 
 	private SpriteMapper() {
@@ -513,6 +515,66 @@ public final class SpriteMapper implements IDisposableInstance {
 				tScroll = loadTexture(PATH_ITEMS + FILE_SCROLL);
 			}
 			mappedSprites.put(type, loadFrame(tScroll, 2, 1));
+			break;
+		case WAND_A:
+			if (tWand == null) {
+				tWand = loadTexture(PATH_ITEMS + FILE_WAND);
+			}
+			mappedSprites.put(type, loadFrame(tWand, 0, 0));
+			break;
+		case WAND_B:
+			if (tWand == null) {
+				tWand = loadTexture(PATH_ITEMS + FILE_WAND);
+			}
+			mappedSprites.put(type, loadFrame(tWand, 0, 1));
+			break;
+		case WAND_C:
+			if (tWand == null) {
+				tWand = loadTexture(PATH_ITEMS + FILE_WAND);
+			}
+			mappedSprites.put(type, loadFrame(tWand, 0, 2));
+			break;
+		case WAND_D:
+			if (tWand == null) {
+				tWand = loadTexture(PATH_ITEMS + FILE_WAND);
+			}
+			mappedSprites.put(type, loadFrame(tWand, 0, 3));
+			break;
+		case WAND_E:
+			if (tWand == null) {
+				tWand = loadTexture(PATH_ITEMS + FILE_WAND);
+			}
+			mappedSprites.put(type, loadFrame(tWand, 1, 0));
+			break;
+		case WAND_F:
+			if (tWand == null) {
+				tWand = loadTexture(PATH_ITEMS + FILE_WAND);
+			}
+			mappedSprites.put(type, loadFrame(tWand, 1, 1));
+			break;
+		case WAND_G:
+			if (tWand == null) {
+				tWand = loadTexture(PATH_ITEMS + FILE_WAND);
+			}
+			mappedSprites.put(type, loadFrame(tWand, 1, 2));
+			break;
+		case WAND_H:
+			if (tWand == null) {
+				tWand = loadTexture(PATH_ITEMS + FILE_WAND);
+			}
+			mappedSprites.put(type, loadFrame(tWand, 1, 3));
+			break;
+		case WAND_I:
+			if (tWand == null) {
+				tWand = loadTexture(PATH_ITEMS + FILE_WAND);
+			}
+			mappedSprites.put(type, loadFrame(tWand, 2, 0));
+			break;
+		case WAND_J:
+			if (tWand == null) {
+				tWand = loadTexture(PATH_ITEMS + FILE_WAND);
+			}
+			mappedSprites.put(type, loadFrame(tWand, 2, 1));
 			break;
 		default:
 			break;
