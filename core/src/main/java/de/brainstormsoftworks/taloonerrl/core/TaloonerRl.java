@@ -18,8 +18,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector3;
 
-import de.brainstormsoftworks.taloonerrl.actors.ActorFactory;
-import de.brainstormsoftworks.taloonerrl.actors.EActorTypes;
 import de.brainstormsoftworks.taloonerrl.actors.IActor;
 import de.brainstormsoftworks.taloonerrl.components.FacingComponent;
 import de.brainstormsoftworks.taloonerrl.components.HealthComponent;
@@ -63,7 +61,6 @@ public class TaloonerRl implements ApplicationListener {
 	/** minimum delay between player turns */
 	// private static final float delayBetweenAnimation = 0.03f;
 
-	private final IActor player = ActorFactory.createActor(EActorTypes.PLAYER);
 	public static IMap map = null;
 	// private static final String fontPath = "font/";
 	private Entity playerEntity;
@@ -84,7 +81,6 @@ public class TaloonerRl implements ApplicationListener {
 		mouseX = Gdx.graphics.getWidth() / 2;
 		mouseY = Gdx.graphics.getHeight() / 2;
 
-		player.getMovementComponent().move(4, 4);
 		// forces the engine to initialize
 		final GameEngine gameEngine = GameEngine.getInstance();
 		playerEntity = gameEngine.createNewEntity(EEntity.PLAYER);
@@ -92,8 +88,8 @@ public class TaloonerRl implements ApplicationListener {
 		playerPositionComponent = playerEntity.getComponent(PositionComponent.class);
 		playerFacingComponent = playerEntity.getComponent(FacingComponent.class);
 		// TODO only use one player
-		playerPositionComponent.setX(player.getMovementComponent().getXPosition());
-		playerPositionComponent.setY(player.getMovementComponent().getYPosition());
+		playerPositionComponent.setX(4);
+		playerPositionComponent.setY(4);
 		final Entity createNewEntity = gameEngine.createNewEntity(EEntity.SQUIRREL, 1, 1);
 		createNewEntity.getComponent(HealthComponent.class).setHealthPercent(0.75f);
 
@@ -221,26 +217,28 @@ public class TaloonerRl implements ApplicationListener {
 			if (keyPressedDown || keyPressedLeft || keyPressedRight || keyPressedUp) {
 				// player did a move
 				// isPlayerTurn = true;
-
+				// TODO refactor into controller input system
+				int dX = 0;
+				int dY = 0;
 				if (keyPressedLeft) {
-					player.getMovementComponent().move(-1, 0);
+					dX = -1;
 					walkingDirection = EDirection.LEFT;
 				}
 				if (keyPressedRight) {
-					player.getMovementComponent().move(1, 0);
+					dX = 1;
 					walkingDirection = EDirection.RIGHT;
 				}
 				if (keyPressedDown) {
-					player.getMovementComponent().move(0, -1);
+					dY = -1;
 					walkingDirection = EDirection.DOWN;
 				}
 				if (keyPressedUp) {
-					player.getMovementComponent().move(0, 1);
+					dY = 1;
 					walkingDirection = EDirection.UP;
 				}
 				// TODO only use one player
-				playerPositionComponent.setX(player.getMovementComponent().getXPosition());
-				playerPositionComponent.setY(player.getMovementComponent().getYPosition());
+				playerPositionComponent.setX(playerPositionComponent.getX() + dX);
+				playerPositionComponent.setY(playerPositionComponent.getY() + dY);
 				playerFacingComponent.setDirection(walkingDirection);
 				delayToNextTurn = delayBetweenTurns;
 			}
@@ -281,7 +279,8 @@ public class TaloonerRl implements ApplicationListener {
 		// final float tileY = touchPos.y / Renderer.TILES_VERTICAL;
 		// Renderer.getInstance().BATCH.draw(cursor, tileX, tileY);
 		// System.out.println(tileX + " " + tileY);
-		highlightPlayerTile(player);
+
+		// highlightPlayerTile(player);
 
 		GameEngine.getInstance().update(deltaTime);
 		Renderer.getInstance().endRendering();
