@@ -262,7 +262,8 @@ public class TaloonerRl implements ApplicationListener {
 		elapsed += deltaTime;
 		Renderer.getInstance().beginRendering();
 
-		DungeonRenderer.getInstance().render(map.getMap(), Renderer.TILES_HORIZONTAL, Renderer.TILES_VERTICAL);
+		DungeonRenderer.getInstance().render(map.getMap(), Renderer.TILES_HORIZONTAL,
+				Renderer.TILES_VERTICAL);
 		GuiRenderer.getInstance().render(Renderer.TILES_HORIZONTAL, Renderer.TILES_VERTICAL);
 
 		final Vector3 touchPos = new Vector3();

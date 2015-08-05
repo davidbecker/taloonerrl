@@ -40,7 +40,8 @@ public class FacingAnimationRenderSystem extends EntityProcessingSystem {
 	protected void process(final Entity e) {
 		final ComponentMapper<PositionComponent> posMapper = ComponentMappers.getInstance().position;
 		final ComponentMapper<FacingComponent> facingMapper = ComponentMappers.getInstance().facing;
-		final ComponentMapper<FacingAnimationComponent> spriteMapper = ComponentMappers.getInstance().facingAnimation;
+		final ComponentMapper<FacingAnimationComponent> spriteMapper = ComponentMappers
+				.getInstance().facingAnimation;
 		final PositionComponent positionComponent = posMapper.get(e);
 		final FacingComponent facingComponent = facingMapper.get(e);
 		final FacingAnimationComponent spriteComponent = spriteMapper.get(e);

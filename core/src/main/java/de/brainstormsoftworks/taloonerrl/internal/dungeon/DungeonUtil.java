@@ -36,8 +36,8 @@ public final class DungeonUtil {
 	 * @return array of sprites to display for the given map. has the same
 	 *         dimension as _map
 	 */
-	public static EDungeonSprites[][] calculateDungeonSprites(final ITile[][] _map, final int _tilesHorizontal,
-			final int _tilesVertical) {
+	public static EDungeonSprites[][] calculateDungeonSprites(final ITile[][] _map,
+			final int _tilesHorizontal, final int _tilesVertical) {
 		final EDungeonSprites[][] sprites = new EDungeonSprites[_tilesHorizontal][_tilesVertical];
 		for (int x = 0; x < _tilesHorizontal; x++) {
 			for (int y = 0; y < _tilesVertical; y++) {
@@ -46,10 +46,14 @@ public final class DungeonUtil {
 				final boolean southWalkable = isWalkable(x, y - 1, _map, _tilesHorizontal, _tilesVertical);
 				final boolean westWalkable = isWalkable(x - 1, y, _map, _tilesHorizontal, _tilesVertical);
 				final boolean eastWalkable = isWalkable(x + 1, y, _map, _tilesHorizontal, _tilesVertical);
-				final boolean northWestWalkable = isWalkable(x - 1, y + 1, _map, _tilesHorizontal, _tilesVertical);
-				final boolean northEastWalkable = isWalkable(x + 1, y + 1, _map, _tilesHorizontal, _tilesVertical);
-				final boolean southWestWalkable = isWalkable(x - 1, y - 1, _map, _tilesHorizontal, _tilesVertical);
-				final boolean southEastWalkable = isWalkable(x + 1, y - 1, _map, _tilesHorizontal, _tilesVertical);
+				final boolean northWestWalkable = isWalkable(x - 1, y + 1, _map, _tilesHorizontal,
+						_tilesVertical);
+				final boolean northEastWalkable = isWalkable(x + 1, y + 1, _map, _tilesHorizontal,
+						_tilesVertical);
+				final boolean southWestWalkable = isWalkable(x - 1, y - 1, _map, _tilesHorizontal,
+						_tilesVertical);
+				final boolean southEastWalkable = isWalkable(x + 1, y - 1, _map, _tilesHorizontal,
+						_tilesVertical);
 
 				if (selfWalkable) {
 					// floor
@@ -118,12 +122,13 @@ public final class DungeonUtil {
 		return sprites;
 	}
 
-	private static boolean isWalkable(final int x, final int y, final ITile[][] _map, final int _tilesHorizontal,
-			final int _tilesVertical) {
+	private static boolean isWalkable(final int x, final int y, final ITile[][] _map,
+			final int _tilesHorizontal, final int _tilesVertical) {
 		return isInBounds(x, y, _tilesHorizontal, _tilesVertical) && _map[x][y].isWalkable();
 	}
 
-	private static boolean isInBounds(final int x, final int y, final int _tilesHorizontal, final int _tilesVertical) {
+	private static boolean isInBounds(final int x, final int y, final int _tilesHorizontal,
+			final int _tilesVertical) {
 		return x >= 0 && x < _tilesHorizontal && y >= 0 && y < _tilesVertical;
 	}
 }

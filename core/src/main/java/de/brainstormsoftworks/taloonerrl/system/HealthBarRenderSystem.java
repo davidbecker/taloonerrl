@@ -48,8 +48,8 @@ public class HealthBarRenderSystem extends EntityProcessingSystem {
 			sizeGreen = (int) (totalSize * healthComponent.getHealthPercent());
 			sizeRed = totalSize - sizeGreen;
 			// draw a black border around the bar
-			Renderer.getInstance().BATCH.draw(PaletteUtil.getInstance().BLACK, positionComponent.getX() * tileSize,
-					positionComponent.getY() * tileSize, tileSize, 3);
+			Renderer.getInstance().BATCH.draw(PaletteUtil.getInstance().BLACK,
+					positionComponent.getX() * tileSize, positionComponent.getY() * tileSize, tileSize, 3);
 			for (int i = 0; i < sizeGreen; i++) {
 				Renderer.getInstance().BATCH.draw(PaletteUtil.getInstance().LIGHT_GREEN,
 						positionComponent.getX() * tileSize + i + 1, positionComponent.getY() * tileSize + 1);

@@ -55,20 +55,20 @@ public final class DungeonRenderer implements IDisposableInstance {
 		// for the floor
 		sFloorTopLeft = new TextureRegion(floorTexture, 0 * Renderer.tileSize, 1 + 3 * Renderer.tileSize,
 				Renderer.tileSize, Renderer.tileSize);
-		sWallTopLeft = new TextureRegion(wallTexture, 0 * Renderer.tileSize, 3 * Renderer.tileSize, Renderer.tileSize,
-				Renderer.tileSize);
-		sFloorTop = new TextureRegion(floorTexture, 1 * Renderer.tileSize, 1 + 3 * Renderer.tileSize, Renderer.tileSize,
-				Renderer.tileSize);
+		sWallTopLeft = new TextureRegion(wallTexture, 0 * Renderer.tileSize, 3 * Renderer.tileSize,
+				Renderer.tileSize, Renderer.tileSize);
+		sFloorTop = new TextureRegion(floorTexture, 1 * Renderer.tileSize, 1 + 3 * Renderer.tileSize,
+				Renderer.tileSize, Renderer.tileSize);
 		sWallHorizontal = new TextureRegion(wallTexture, 1 * Renderer.tileSize, 3 * Renderer.tileSize,
 				Renderer.tileSize, Renderer.tileSize);
 		sFloorTopRight = new TextureRegion(floorTexture, 2 * Renderer.tileSize, 1 + 3 * Renderer.tileSize,
 				Renderer.tileSize, Renderer.tileSize);
-		sWallTopRight = new TextureRegion(wallTexture, 2 * Renderer.tileSize, 3 * Renderer.tileSize, Renderer.tileSize,
-				Renderer.tileSize);
+		sWallTopRight = new TextureRegion(wallTexture, 2 * Renderer.tileSize, 3 * Renderer.tileSize,
+				Renderer.tileSize, Renderer.tileSize);
 		sFloorLeft = new TextureRegion(floorTexture, 0 * Renderer.tileSize, 1 + 4 * Renderer.tileSize,
 				Renderer.tileSize, Renderer.tileSize);
-		sWallVertical = new TextureRegion(wallTexture, 0 * Renderer.tileSize, 4 * Renderer.tileSize, Renderer.tileSize,
-				Renderer.tileSize);
+		sWallVertical = new TextureRegion(wallTexture, 0 * Renderer.tileSize, 4 * Renderer.tileSize,
+				Renderer.tileSize, Renderer.tileSize);
 		sFloorCenter = new TextureRegion(floorTexture, 1 * Renderer.tileSize, 1 + 4 * Renderer.tileSize,
 				Renderer.tileSize, Renderer.tileSize);
 		sFloorRight = new TextureRegion(floorTexture, 2 * Renderer.tileSize, 1 + 4 * Renderer.tileSize,

@@ -168,7 +168,8 @@ public final class IntVector2 implements Serializable, Vector<IntVector2> {
 	}
 
 	@Override
-	public IntVector2 interpolate(final IntVector2 target, final float alpha, final Interpolation interpolator) {
+	public IntVector2 interpolate(final IntVector2 target, final float alpha,
+			final Interpolation interpolator) {
 		return lerp(target, interpolator.apply(alpha));
 	}
 

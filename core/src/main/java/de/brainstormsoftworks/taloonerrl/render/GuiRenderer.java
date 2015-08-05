@@ -51,59 +51,59 @@ public final class GuiRenderer implements IDisposableInstance {
 
 	private GuiRenderer() {
 		guiTexture = new Texture(Gdx.files.internal(TEXTURE_PATH + "GUI0.png"), false);
-		sBarLeft = new TextureRegion(guiTexture, 6 * Renderer.tileSize, 0 * Renderer.tileSize, Renderer.tileSize,
-				Renderer.tileSize);
-		sBarCenter = new TextureRegion(guiTexture, 7 * Renderer.tileSize, 0 * Renderer.tileSize, Renderer.tileSize,
-				Renderer.tileSize);
-		sBarRight = new TextureRegion(guiTexture, 8 * Renderer.tileSize, 0 * Renderer.tileSize, Renderer.tileSize,
-				Renderer.tileSize);
-		sBarSmall = new TextureRegion(guiTexture, 9 * Renderer.tileSize, 0 * Renderer.tileSize, Renderer.tileSize,
-				Renderer.tileSize);
+		sBarLeft = new TextureRegion(guiTexture, 6 * Renderer.tileSize, 0 * Renderer.tileSize,
+				Renderer.tileSize, Renderer.tileSize);
+		sBarCenter = new TextureRegion(guiTexture, 7 * Renderer.tileSize, 0 * Renderer.tileSize,
+				Renderer.tileSize, Renderer.tileSize);
+		sBarRight = new TextureRegion(guiTexture, 8 * Renderer.tileSize, 0 * Renderer.tileSize,
+				Renderer.tileSize, Renderer.tileSize);
+		sBarSmall = new TextureRegion(guiTexture, 9 * Renderer.tileSize, 0 * Renderer.tileSize,
+				Renderer.tileSize, Renderer.tileSize);
 
-		sBarRed100 = new TextureRegion(guiTexture, 6 * Renderer.tileSize, 1 * Renderer.tileSize, Renderer.tileSize,
-				Renderer.tileSize);
-		sBarRed75 = new TextureRegion(guiTexture, 7 * Renderer.tileSize, 1 * Renderer.tileSize, Renderer.tileSize,
-				Renderer.tileSize);
-		sBarRed50 = new TextureRegion(guiTexture, 8 * Renderer.tileSize, 1 * Renderer.tileSize, Renderer.tileSize,
-				Renderer.tileSize);
-		sBarRed25 = new TextureRegion(guiTexture, 9 * Renderer.tileSize, 1 * Renderer.tileSize, Renderer.tileSize,
-				Renderer.tileSize);
+		sBarRed100 = new TextureRegion(guiTexture, 6 * Renderer.tileSize, 1 * Renderer.tileSize,
+				Renderer.tileSize, Renderer.tileSize);
+		sBarRed75 = new TextureRegion(guiTexture, 7 * Renderer.tileSize, 1 * Renderer.tileSize,
+				Renderer.tileSize, Renderer.tileSize);
+		sBarRed50 = new TextureRegion(guiTexture, 8 * Renderer.tileSize, 1 * Renderer.tileSize,
+				Renderer.tileSize, Renderer.tileSize);
+		sBarRed25 = new TextureRegion(guiTexture, 9 * Renderer.tileSize, 1 * Renderer.tileSize,
+				Renderer.tileSize, Renderer.tileSize);
 
-		sBarBlue100 = new TextureRegion(guiTexture, 6 * Renderer.tileSize, 2 * Renderer.tileSize, Renderer.tileSize,
-				Renderer.tileSize);
-		sBarBlue75 = new TextureRegion(guiTexture, 7 * Renderer.tileSize, 2 * Renderer.tileSize, Renderer.tileSize,
-				Renderer.tileSize);
-		sBarBlue50 = new TextureRegion(guiTexture, 8 * Renderer.tileSize, 2 * Renderer.tileSize, Renderer.tileSize,
-				Renderer.tileSize);
-		sBarBlue25 = new TextureRegion(guiTexture, 9 * Renderer.tileSize, 2 * Renderer.tileSize, Renderer.tileSize,
-				Renderer.tileSize);
+		sBarBlue100 = new TextureRegion(guiTexture, 6 * Renderer.tileSize, 2 * Renderer.tileSize,
+				Renderer.tileSize, Renderer.tileSize);
+		sBarBlue75 = new TextureRegion(guiTexture, 7 * Renderer.tileSize, 2 * Renderer.tileSize,
+				Renderer.tileSize, Renderer.tileSize);
+		sBarBlue50 = new TextureRegion(guiTexture, 8 * Renderer.tileSize, 2 * Renderer.tileSize,
+				Renderer.tileSize, Renderer.tileSize);
+		sBarBlue25 = new TextureRegion(guiTexture, 9 * Renderer.tileSize, 2 * Renderer.tileSize,
+				Renderer.tileSize, Renderer.tileSize);
 
-		sBarGreen100 = new TextureRegion(guiTexture, 6 * Renderer.tileSize, 3 * Renderer.tileSize, Renderer.tileSize,
-				Renderer.tileSize);
-		sBarGreen75 = new TextureRegion(guiTexture, 7 * Renderer.tileSize, 3 * Renderer.tileSize, Renderer.tileSize,
-				Renderer.tileSize);
-		sBarGreen50 = new TextureRegion(guiTexture, 8 * Renderer.tileSize, 3 * Renderer.tileSize, Renderer.tileSize,
-				Renderer.tileSize);
-		sBarGreen25 = new TextureRegion(guiTexture, 9 * Renderer.tileSize, 3 * Renderer.tileSize, Renderer.tileSize,
-				Renderer.tileSize);
+		sBarGreen100 = new TextureRegion(guiTexture, 6 * Renderer.tileSize, 3 * Renderer.tileSize,
+				Renderer.tileSize, Renderer.tileSize);
+		sBarGreen75 = new TextureRegion(guiTexture, 7 * Renderer.tileSize, 3 * Renderer.tileSize,
+				Renderer.tileSize, Renderer.tileSize);
+		sBarGreen50 = new TextureRegion(guiTexture, 8 * Renderer.tileSize, 3 * Renderer.tileSize,
+				Renderer.tileSize, Renderer.tileSize);
+		sBarGreen25 = new TextureRegion(guiTexture, 9 * Renderer.tileSize, 3 * Renderer.tileSize,
+				Renderer.tileSize, Renderer.tileSize);
 
-		sBarYellow100 = new TextureRegion(guiTexture, 6 * Renderer.tileSize, 4 * Renderer.tileSize, Renderer.tileSize,
-				Renderer.tileSize);
-		sBarYellow75 = new TextureRegion(guiTexture, 7 * Renderer.tileSize, 4 * Renderer.tileSize, Renderer.tileSize,
-				Renderer.tileSize);
-		sBarYellow50 = new TextureRegion(guiTexture, 8 * Renderer.tileSize, 4 * Renderer.tileSize, Renderer.tileSize,
-				Renderer.tileSize);
-		sBarYellow25 = new TextureRegion(guiTexture, 9 * Renderer.tileSize, 4 * Renderer.tileSize, Renderer.tileSize,
-				Renderer.tileSize);
+		sBarYellow100 = new TextureRegion(guiTexture, 6 * Renderer.tileSize, 4 * Renderer.tileSize,
+				Renderer.tileSize, Renderer.tileSize);
+		sBarYellow75 = new TextureRegion(guiTexture, 7 * Renderer.tileSize, 4 * Renderer.tileSize,
+				Renderer.tileSize, Renderer.tileSize);
+		sBarYellow50 = new TextureRegion(guiTexture, 8 * Renderer.tileSize, 4 * Renderer.tileSize,
+				Renderer.tileSize, Renderer.tileSize);
+		sBarYellow25 = new TextureRegion(guiTexture, 9 * Renderer.tileSize, 4 * Renderer.tileSize,
+				Renderer.tileSize, Renderer.tileSize);
 
-		sBarSilver100 = new TextureRegion(guiTexture, 6 * Renderer.tileSize, 5 * Renderer.tileSize, Renderer.tileSize,
-				Renderer.tileSize);
-		sBarSilver75 = new TextureRegion(guiTexture, 7 * Renderer.tileSize, 5 * Renderer.tileSize, Renderer.tileSize,
-				Renderer.tileSize);
-		sBarSilver50 = new TextureRegion(guiTexture, 8 * Renderer.tileSize, 5 * Renderer.tileSize, Renderer.tileSize,
-				Renderer.tileSize);
-		sBarSilver25 = new TextureRegion(guiTexture, 9 * Renderer.tileSize, 5 * Renderer.tileSize, Renderer.tileSize,
-				Renderer.tileSize);
+		sBarSilver100 = new TextureRegion(guiTexture, 6 * Renderer.tileSize, 5 * Renderer.tileSize,
+				Renderer.tileSize, Renderer.tileSize);
+		sBarSilver75 = new TextureRegion(guiTexture, 7 * Renderer.tileSize, 5 * Renderer.tileSize,
+				Renderer.tileSize, Renderer.tileSize);
+		sBarSilver50 = new TextureRegion(guiTexture, 8 * Renderer.tileSize, 5 * Renderer.tileSize,
+				Renderer.tileSize, Renderer.tileSize);
+		sBarSilver25 = new TextureRegion(guiTexture, 9 * Renderer.tileSize, 5 * Renderer.tileSize,
+				Renderer.tileSize, Renderer.tileSize);
 
 		RenderUtil.addToDisposeList(this);
 	}

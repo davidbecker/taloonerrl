@@ -20,7 +20,8 @@ public class RenderUtilTest {
 	@Test
 	public void testSingleBar() {
 		final int length = 1;
-		final EBarElementFilled[] calculateBarFill0Percent = RenderUtil.calculateBarFill(length, RenderUtil.PERCENT_0);
+		final EBarElementFilled[] calculateBarFill0Percent = RenderUtil.calculateBarFill(length,
+				RenderUtil.PERCENT_0);
 		final EBarElementFilled[] calculateBarFill25Percent = RenderUtil.calculateBarFill(length,
 				RenderUtil.PERCENT_25);
 		final EBarElementFilled[] calculateBarFill50Percent = RenderUtil.calculateBarFill(length,
@@ -54,7 +55,8 @@ public class RenderUtilTest {
 	public void testDoubleBar() {
 		final int length = 2;
 
-		final EBarElementFilled[] calculateBarFill0Percent = RenderUtil.calculateBarFill(length, RenderUtil.PERCENT_0);
+		final EBarElementFilled[] calculateBarFill0Percent = RenderUtil.calculateBarFill(length,
+				RenderUtil.PERCENT_0);
 		assertNotNull("excpected to get an array of float", calculateBarFill0Percent);
 		assertEquals("double bar filled - checking size of array", length, calculateBarFill0Percent.length);
 		assertEquals("double bar filled - checking first value", EBarElementFilled.PERCENT_0,
