@@ -104,10 +104,8 @@ public final class SpriteMapper implements IDisposableInstance {
 			if (tPlayer1 == null) {
 				tPlayer1 = loadTexture(PATH_MOBS + "Player1.png");
 			}
-			frames[0] = new TextureRegion(tPlayer0, 2 * Renderer.tileSize, 3 * Renderer.tileSize, Renderer.tileSize,
-					Renderer.tileSize);
-			frames[1] = new TextureRegion(tPlayer1, 2 * Renderer.tileSize, 3 * Renderer.tileSize, Renderer.tileSize,
-					Renderer.tileSize);
+			frames[0] = loadFrame(tPlayer0, 2, 3);
+			frames[1] = loadFrame(tPlayer1, 2, 3);
 			mappedAnimations.put(sprite, new Animation(0.25f, frames));
 			break;
 		case WARPER:
@@ -117,10 +115,8 @@ public final class SpriteMapper implements IDisposableInstance {
 			if (tPlayer1 == null) {
 				tPlayer1 = loadTexture(PATH_MOBS + "Player1.png");
 			}
-			frames[0] = new TextureRegion(tPlayer0, 1 * Renderer.tileSize, 8 * Renderer.tileSize, Renderer.tileSize,
-					Renderer.tileSize);
-			frames[1] = new TextureRegion(tPlayer1, 1 * Renderer.tileSize, 8 * Renderer.tileSize, Renderer.tileSize,
-					Renderer.tileSize);
+			frames[0] = loadFrame(tPlayer0, 1, 8);
+			frames[1] = loadFrame(tPlayer1, 1, 8);
 			mappedAnimations.put(sprite, new Animation(0.25f, frames));
 			break;
 		case BLOB:
@@ -130,10 +126,8 @@ public final class SpriteMapper implements IDisposableInstance {
 			if (tPest1 == null) {
 				tPest1 = loadTexture(PATH_MOBS + "Pest1.png");
 			}
-			frames[0] = new TextureRegion(tPest0, 2 * Renderer.tileSize, 3 * Renderer.tileSize, Renderer.tileSize,
-					Renderer.tileSize);
-			frames[1] = new TextureRegion(tPest1, 2 * Renderer.tileSize, 3 * Renderer.tileSize, Renderer.tileSize,
-					Renderer.tileSize);
+			frames[0] = loadFrame(tPest0, 2, 3);
+			frames[1] = loadFrame(tPest1, 2, 3);
 			mappedAnimations.put(sprite, new Animation(0.25f, frames));
 			break;
 		case SLUG:
@@ -143,10 +137,8 @@ public final class SpriteMapper implements IDisposableInstance {
 			if (tPest1 == null) {
 				tPest1 = loadTexture(PATH_MOBS + "Pest1.png");
 			}
-			frames[0] = new TextureRegion(tPest0, 1 * Renderer.tileSize, 7 * Renderer.tileSize, Renderer.tileSize,
-					Renderer.tileSize);
-			frames[1] = new TextureRegion(tPest1, 1 * Renderer.tileSize, 7 * Renderer.tileSize, Renderer.tileSize,
-					Renderer.tileSize);
+			frames[0] = loadFrame(tPest0, 1, 7);
+			frames[1] = loadFrame(tPest1, 1, 7);
 			mappedAnimations.put(sprite, new Animation(0.25f, frames));
 			break;
 		case SQUIRREL:
@@ -156,10 +148,8 @@ public final class SpriteMapper implements IDisposableInstance {
 			if (tRodent1 == null) {
 				tRodent1 = loadTexture(PATH_MOBS + "Rodent1.png");
 			}
-			frames[0] = new TextureRegion(tRodent0, 0 * Renderer.tileSize, 0 * Renderer.tileSize, Renderer.tileSize,
-					Renderer.tileSize);
-			frames[1] = new TextureRegion(tRodent1, 0 * Renderer.tileSize, 0 * Renderer.tileSize, Renderer.tileSize,
-					Renderer.tileSize);
+			frames[0] = loadFrame(tRodent0, 0, 0);
+			frames[1] = loadFrame(tRodent1, 0, 0);
 			mappedAnimations.put(sprite, new Animation(0.25f, frames));
 			break;
 		case BAT:
@@ -169,10 +159,8 @@ public final class SpriteMapper implements IDisposableInstance {
 			if (tAvian1 == null) {
 				tAvian1 = loadTexture(PATH_MOBS + "Avian1.png");
 			}
-			frames[0] = new TextureRegion(tAvian0, 0 * Renderer.tileSize, 11 * Renderer.tileSize, Renderer.tileSize,
-					Renderer.tileSize);
-			frames[1] = new TextureRegion(tAvian1, 0 * Renderer.tileSize, 11 * Renderer.tileSize, Renderer.tileSize,
-					Renderer.tileSize);
+			frames[0] = loadFrame(tAvian0, 0, 11);
+			frames[1] = loadFrame(tAvian1, 0, 11);
 			mappedAnimations.put(sprite, new Animation(0.25f, frames));
 			break;
 		case MAGICIAN:
@@ -182,10 +170,8 @@ public final class SpriteMapper implements IDisposableInstance {
 			if (tHumanoid1 == null) {
 				tHumanoid1 = loadTexture(PATH_MOBS + "Humanoid1.png");
 			}
-			frames[0] = new TextureRegion(tHumanoid0, 0 * Renderer.tileSize, 23 * Renderer.tileSize, Renderer.tileSize,
-					Renderer.tileSize);
-			frames[1] = new TextureRegion(tHumanoid1, 0 * Renderer.tileSize, 23 * Renderer.tileSize, Renderer.tileSize,
-					Renderer.tileSize);
+			frames[0] = loadFrame(tHumanoid0, 0, 23);
+			frames[1] = loadFrame(tHumanoid1, 0, 23);
 			mappedAnimations.put(sprite, new Animation(0.25f, frames));
 			break;
 		case GHOST:
@@ -195,10 +181,8 @@ public final class SpriteMapper implements IDisposableInstance {
 			if (tUndead1 == null) {
 				tUndead1 = loadTexture(PATH_MOBS + "Undead1.png");
 			}
-			frames[0] = new TextureRegion(tUndead0, 0 * Renderer.tileSize, 4 * Renderer.tileSize, Renderer.tileSize,
-					Renderer.tileSize);
-			frames[1] = new TextureRegion(tUndead1, 0 * Renderer.tileSize, 4 * Renderer.tileSize, Renderer.tileSize,
-					Renderer.tileSize);
+			frames[0] = loadFrame(tUndead0, 0, 4);
+			frames[1] = loadFrame(tUndead1, 0, 4);
 			mappedAnimations.put(sprite, new Animation(0.25f, frames));
 			break;
 		case SHADOW:
@@ -208,10 +192,8 @@ public final class SpriteMapper implements IDisposableInstance {
 			if (tUndead1 == null) {
 				tUndead1 = loadTexture(PATH_MOBS + "Undead1.png");
 			}
-			frames[0] = new TextureRegion(tUndead0, 3 * Renderer.tileSize, 4 * Renderer.tileSize, Renderer.tileSize,
-					Renderer.tileSize);
-			frames[1] = new TextureRegion(tUndead1, 3 * Renderer.tileSize, 4 * Renderer.tileSize, Renderer.tileSize,
-					Renderer.tileSize);
+			frames[0] = loadFrame(tUndead0, 3, 4);
+			frames[1] = loadFrame(tUndead1, 3, 4);
 			mappedAnimations.put(sprite, new Animation(0.25f, frames));
 			break;
 		case STEALER:
@@ -221,10 +203,8 @@ public final class SpriteMapper implements IDisposableInstance {
 			if (tUndead1 == null) {
 				tUndead1 = loadTexture(PATH_MOBS + "Undead1.png");
 			}
-			frames[0] = new TextureRegion(tUndead0, 0 * Renderer.tileSize, 0 * Renderer.tileSize, Renderer.tileSize,
-					Renderer.tileSize);
-			frames[1] = new TextureRegion(tUndead1, 0 * Renderer.tileSize, 0 * Renderer.tileSize, Renderer.tileSize,
-					Renderer.tileSize);
+			frames[0] = loadFrame(tUndead0, 0, 0);
+			frames[1] = loadFrame(tUndead1, 0, 0);
 			mappedAnimations.put(sprite, new Animation(0.25f, frames));
 			break;
 		case EYEBALL:
@@ -234,10 +214,8 @@ public final class SpriteMapper implements IDisposableInstance {
 			if (tElemental1 == null) {
 				tElemental1 = loadTexture(PATH_MOBS + "Elemental1.png");
 			}
-			frames[0] = new TextureRegion(tElemental0, 0 * Renderer.tileSize, 5 * Renderer.tileSize, Renderer.tileSize,
-					Renderer.tileSize);
-			frames[1] = new TextureRegion(tElemental1, 0 * Renderer.tileSize, 5 * Renderer.tileSize, Renderer.tileSize,
-					Renderer.tileSize);
+			frames[0] = loadFrame(tElemental0, 0, 5);
+			frames[1] = loadFrame(tElemental1, 0, 5);
 			mappedAnimations.put(sprite, new Animation(0.25f, frames));
 			break;
 		case GOLEM:
@@ -247,10 +225,8 @@ public final class SpriteMapper implements IDisposableInstance {
 			if (tElemental1 == null) {
 				tElemental1 = loadTexture(PATH_MOBS + "Elemental1.png");
 			}
-			frames[0] = new TextureRegion(tElemental0, 4 * Renderer.tileSize, 0 * Renderer.tileSize, Renderer.tileSize,
-					Renderer.tileSize);
-			frames[1] = new TextureRegion(tElemental1, 4 * Renderer.tileSize, 0 * Renderer.tileSize, Renderer.tileSize,
-					Renderer.tileSize);
+			frames[0] = loadFrame(tElemental0, 4, 0);
+			frames[1] = loadFrame(tElemental1, 4, 0);
 			mappedAnimations.put(sprite, new Animation(0.25f, frames));
 			break;
 		case BOMB:
@@ -260,10 +236,8 @@ public final class SpriteMapper implements IDisposableInstance {
 			if (tElemental1 == null) {
 				tElemental1 = loadTexture(PATH_MOBS + "Elemental1.png");
 			}
-			frames[0] = new TextureRegion(tElemental0, 2 * Renderer.tileSize, 5 * Renderer.tileSize, Renderer.tileSize,
-					Renderer.tileSize);
-			frames[1] = new TextureRegion(tElemental1, 2 * Renderer.tileSize, 5 * Renderer.tileSize, Renderer.tileSize,
-					Renderer.tileSize);
+			frames[0] = loadFrame(tElemental0, 2, 5);
+			frames[1] = loadFrame(tElemental1, 2, 5);
 			mappedAnimations.put(sprite, new Animation(0.25f, frames));
 			break;
 		case DRAGON:
@@ -273,10 +247,8 @@ public final class SpriteMapper implements IDisposableInstance {
 			if (tReptile1 == null) {
 				tReptile1 = loadTexture(PATH_MOBS + "Reptile1.png");
 			}
-			frames[0] = new TextureRegion(tReptile0, 5 * Renderer.tileSize, 2 * Renderer.tileSize, Renderer.tileSize,
-					Renderer.tileSize);
-			frames[1] = new TextureRegion(tReptile1, 5 * Renderer.tileSize, 2 * Renderer.tileSize, Renderer.tileSize,
-					Renderer.tileSize);
+			frames[0] = loadFrame(tReptile0, 5, 2);
+			frames[1] = loadFrame(tReptile1, 5, 2);
 			mappedAnimations.put(sprite, new Animation(0.25f, frames));
 			break;
 		case ACID:
@@ -286,10 +258,8 @@ public final class SpriteMapper implements IDisposableInstance {
 			if (tSlime1 == null) {
 				tSlime1 = loadTexture(PATH_MOBS + "Slime1.png");
 			}
-			frames[0] = new TextureRegion(tSlime0, 0 * Renderer.tileSize, 2 * Renderer.tileSize, Renderer.tileSize,
-					Renderer.tileSize);
-			frames[1] = new TextureRegion(tSlime1, 0 * Renderer.tileSize, 2 * Renderer.tileSize, Renderer.tileSize,
-					Renderer.tileSize);
+			frames[0] = loadFrame(tSlime0, 0, 2);
+			frames[1] = loadFrame(tSlime1, 0, 2);
 			mappedAnimations.put(sprite, new Animation(0.25f, frames));
 			break;
 		case MUSHROOM:
@@ -299,10 +269,8 @@ public final class SpriteMapper implements IDisposableInstance {
 			if (tPlant1 == null) {
 				tPlant1 = loadTexture(PATH_MOBS + "Plant1.png");
 			}
-			frames[0] = new TextureRegion(tPlant0, 0 * Renderer.tileSize, 7 * Renderer.tileSize, Renderer.tileSize,
-					Renderer.tileSize);
-			frames[1] = new TextureRegion(tPlant1, 0 * Renderer.tileSize, 7 * Renderer.tileSize, Renderer.tileSize,
-					Renderer.tileSize);
+			frames[0] = loadFrame(tPlant0, 0, 7);
+			frames[1] = loadFrame(tPlant1, 0, 7);
 			mappedAnimations.put(sprite, new Animation(0.25f, frames));
 			break;
 		case TORCH:
@@ -312,10 +280,8 @@ public final class SpriteMapper implements IDisposableInstance {
 			if (tDecor1 == null) {
 				tDecor1 = loadTexture(PATH_DUNGEON + "Decor1.png");
 			}
-			frames[0] = new TextureRegion(tDecor0, 0 * Renderer.tileSize, 8 * Renderer.tileSize, Renderer.tileSize,
-					Renderer.tileSize);
-			frames[1] = new TextureRegion(tDecor1, 0 * Renderer.tileSize, 8 * Renderer.tileSize, Renderer.tileSize,
-					Renderer.tileSize);
+			frames[0] = loadFrame(tDecor0, 0, 8);
+			frames[1] = loadFrame(tDecor1, 0, 8);
 			mappedAnimations.put(sprite, new Animation(0.15f, frames));
 			break;
 		default:
@@ -334,14 +300,10 @@ public final class SpriteMapper implements IDisposableInstance {
 				tWarrior = loadTexture(PATH_CHARACTER + "Warrior.png");
 			}
 			for (int i = 0; i < 4; i++) {
-				framesDown[i] = new TextureRegion(tWarrior, i * Renderer.tileSize, 0 * Renderer.tileSize,
-						Renderer.tileSize, Renderer.tileSize);
-				framesLeft[i] = new TextureRegion(tWarrior, i * Renderer.tileSize, 1 * Renderer.tileSize,
-						Renderer.tileSize, Renderer.tileSize);
-				framesRight[i] = new TextureRegion(tWarrior, i * Renderer.tileSize, 2 * Renderer.tileSize,
-						Renderer.tileSize, Renderer.tileSize);
-				framesUp[i] = new TextureRegion(tWarrior, i * Renderer.tileSize, 3 * Renderer.tileSize,
-						Renderer.tileSize, Renderer.tileSize);
+				framesDown[i] = loadFrame(tWarrior, i, 0);
+				framesLeft[i] = loadFrame(tWarrior, i, 1);
+				framesRight[i] = loadFrame(tWarrior, i, 2);
+				framesUp[i] = loadFrame(tWarrior, i, 3);
 			}
 			final Map<EDirection, Animation> animations = new HashMap<EDirection, Animation>();
 			animations.put(EDirection.UP, new Animation(0.25f, framesUp));
@@ -362,6 +324,11 @@ public final class SpriteMapper implements IDisposableInstance {
 		texture.setWrap(TextureWrap.ClampToEdge, TextureWrap.ClampToEdge);
 		toDispose.add(texture);
 		return texture;
+	}
+
+	private TextureRegion loadFrame(final Texture texture, final int x, final int y) {
+		return new TextureRegion(texture, x * Renderer.tileSize, y * Renderer.tileSize, Renderer.tileSize,
+				Renderer.tileSize);
 	}
 
 	@Override
