@@ -104,6 +104,19 @@ public final class SpriteMapper implements IDisposableInstance {
 					Renderer.tileSize);
 			mappedAnimations.put(sprite, new Animation(0.25f, frames));
 			break;
+		case WARPER:
+			if (tPlayer0 == null) {
+				tPlayer0 = loadTexture(PATH_MOBS + "Player0.png");
+			}
+			if (tPlayer1 == null) {
+				tPlayer1 = loadTexture(PATH_MOBS + "Player1.png");
+			}
+			frames[0] = new TextureRegion(tPlayer0, 1 * Renderer.tileSize, 8 * Renderer.tileSize, Renderer.tileSize,
+					Renderer.tileSize);
+			frames[1] = new TextureRegion(tPlayer1, 1 * Renderer.tileSize, 8 * Renderer.tileSize, Renderer.tileSize,
+					Renderer.tileSize);
+			mappedAnimations.put(sprite, new Animation(0.25f, frames));
+			break;
 		case BLOB:
 			if (tPest0 == null) {
 				tPest0 = loadTexture(PATH_MOBS + "Pest0.png");

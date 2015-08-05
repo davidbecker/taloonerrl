@@ -68,6 +68,8 @@ public final class EntityFactory {
 			return createActor(type, world, xPosition, yPosition);
 		case BOMB:
 			return createActor(type, world, xPosition, yPosition);
+		case WARPER:
+			return createActor(type, world, xPosition, yPosition);
 		case TORCH:
 			return createDecoration(type, world, xPosition, yPosition);
 		default:
@@ -143,8 +145,8 @@ public final class EntityFactory {
 		case ARCHER:
 			component.setName("Archer");
 			break;
-		case BOMB:
-			component.setName("Bomb");
+		case WARPER:
+			component.setName("Warper");
 			break;
 		default:
 			break;
