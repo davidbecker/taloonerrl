@@ -66,6 +66,8 @@ public final class EntityFactory {
 			return createActor(type, world, xPosition, yPosition);
 		case ARCHER:
 			return createActor(type, world, xPosition, yPosition);
+		case BOMB:
+			return createActor(type, world, xPosition, yPosition);
 		case TORCH:
 			return createDecoration(type, world, xPosition, yPosition);
 		default:
@@ -115,23 +117,37 @@ public final class EntityFactory {
 		case SQUIRREL:
 			component.setName("Squirrel");
 			component.setDescription("A rat-like creature with a tail");
+			break;
 		case BAT:
 			component.setName("Bat");
 			component.setDescription("A flapping creature");
+			break;
 		case SLUG:
 			component.setName("Slug");
+			break;
 		case MAGICIAN:
 			component.setName("Magician");
+			break;
 		case GHOST:
 			component.setName("Ghost");
+			break;
 		case SHADOW:
 			component.setName("Shadow");
+			break;
 		case EYEBALL:
 			component.setName("Giant Eyeball");
+			break;
 		case GOLEM:
 			component.setName("Golem");
+			break;
 		case ARCHER:
 			component.setName("Archer");
+			break;
+		case BOMB:
+			component.setName("Bomb");
+			break;
+		default:
+			break;
 		}
 
 	}
