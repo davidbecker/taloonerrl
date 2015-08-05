@@ -64,6 +64,8 @@ public final class EntityFactory {
 			return createActor(type, world, xPosition, yPosition);
 		case GOLEM:
 			return createActor(type, world, xPosition, yPosition);
+		case ARCHER:
+			return createActor(type, world, xPosition, yPosition);
 		case TORCH:
 			return createDecoration(type, world, xPosition, yPosition);
 		default:
@@ -128,6 +130,8 @@ public final class EntityFactory {
 			component.setName("Giant Eyeball");
 		case GOLEM:
 			component.setName("Golem");
+		case ARCHER:
+			component.setName("Archer");
 		}
 
 	}

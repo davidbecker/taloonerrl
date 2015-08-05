@@ -54,6 +54,8 @@ public final class SpriteMapper implements IDisposableInstance {
 	private Texture tHumanoid1 = null;
 	private Texture tPest0 = null;
 	private Texture tPest1 = null;
+	private Texture tPlayer0 = null;
+	private Texture tPlayer1 = null;
 	private Texture tRodent0 = null;
 	private Texture tRodent1 = null;
 	private Texture tUndead0 = null;
@@ -89,6 +91,19 @@ public final class SpriteMapper implements IDisposableInstance {
 	private void loadAnimation(final EEntity sprite) {
 		final TextureRegion[] frames = new TextureRegion[2];
 		switch (sprite) {
+		case ARCHER:
+			if (tPlayer0 == null) {
+				tPlayer0 = loadTexture(PATH_MOBS + "Player0.png");
+			}
+			if (tPlayer1 == null) {
+				tPlayer1 = loadTexture(PATH_MOBS + "Player1.png");
+			}
+			frames[0] = new TextureRegion(tPlayer0, 2 * Renderer.tileSize, 3 * Renderer.tileSize, Renderer.tileSize,
+					Renderer.tileSize);
+			frames[1] = new TextureRegion(tPlayer1, 2 * Renderer.tileSize, 3 * Renderer.tileSize, Renderer.tileSize,
+					Renderer.tileSize);
+			mappedAnimations.put(sprite, new Animation(0.25f, frames));
+			break;
 		case BLOB:
 			if (tPest0 == null) {
 				tPest0 = loadTexture(PATH_MOBS + "Pest0.png");
