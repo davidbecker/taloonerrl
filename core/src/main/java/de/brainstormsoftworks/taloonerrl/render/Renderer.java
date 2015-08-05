@@ -39,8 +39,7 @@ public final class Renderer implements IDisposableInstance {
 
 	private static final Renderer instance = new Renderer();
 
-	public final OrthographicCamera camera;
-
+	private final OrthographicCamera camera;
 	private final SpriteBatch batch;
 	private Rectangle viewport;
 	private int viewPortX;
