@@ -21,6 +21,7 @@ import de.brainstormsoftworks.taloonerrl.components.FacingComponent;
 import de.brainstormsoftworks.taloonerrl.components.HealthComponent;
 import de.brainstormsoftworks.taloonerrl.components.NameComponent;
 import de.brainstormsoftworks.taloonerrl.components.PositionComponent;
+import de.brainstormsoftworks.taloonerrl.components.SpriteComponent;
 
 /**
  * singleton to get the {@link Component}s for our {@link World}
@@ -35,6 +36,7 @@ public final class ComponentMappers {
 	public final ComponentMapper<PositionComponent> position;
 	public final ComponentMapper<AnimationComponent> animation;
 	public final ComponentMapper<FacingAnimationComponent> facingAnimation;
+	public final ComponentMapper<SpriteComponent> sprite;
 	public final ComponentMapper<NameComponent> name;
 
 	private static ComponentMappers instance = null;
@@ -46,6 +48,7 @@ public final class ComponentMappers {
 		position = ComponentMapper.getFor(PositionComponent.class, world);
 		animation = ComponentMapper.getFor(AnimationComponent.class, world);
 		facingAnimation = ComponentMapper.getFor(FacingAnimationComponent.class, world);
+		sprite = ComponentMapper.getFor(SpriteComponent.class, world);
 		name = ComponentMapper.getFor(NameComponent.class, world);
 	}
 

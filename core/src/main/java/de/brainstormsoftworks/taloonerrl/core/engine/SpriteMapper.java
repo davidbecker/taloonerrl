@@ -24,6 +24,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import de.brainstormsoftworks.taloonerrl.components.AnimationComponent;
 import de.brainstormsoftworks.taloonerrl.components.FacingAnimationComponent;
+import de.brainstormsoftworks.taloonerrl.components.SpriteComponent;
 import de.brainstormsoftworks.taloonerrl.core.EDirection;
 import de.brainstormsoftworks.taloonerrl.render.IDisposableInstance;
 import de.brainstormsoftworks.taloonerrl.render.RenderUtil;
@@ -39,15 +40,19 @@ public final class SpriteMapper implements IDisposableInstance {
 
 	private final Map<EEntity, Animation> mappedAnimations = new HashMap<EEntity, Animation>();
 	private final Map<EEntity, Map<EDirection, Animation>> mappedDirectionalAnimations = new HashMap<EEntity, Map<EDirection, Animation>>();
+	private final Map<EEntity, TextureRegion> mappedSprites = new HashMap<EEntity, TextureRegion>();
 	private final Set<Texture> toDispose = new HashSet<Texture>();
 
 	private static final String PATH_DUNGEON = "textures/dungeon/";
 	private static final String PATH_MOBS = "textures/mobs/";
+	private static final String PATH_ITEMS = "textures/items/";
 	private static final String PATH_CHARACTER = "character/";
 	private static final SpriteMapper instance = new SpriteMapper();
 
 	private Texture tAvian0 = null;
 	private Texture tAvian1 = null;
+	private Texture tDecor0 = null;
+	private Texture tDecor1 = null;
 	private Texture tElemental0 = null;
 	private Texture tElemental1 = null;
 	private Texture tHumanoid0 = null;
@@ -58,6 +63,7 @@ public final class SpriteMapper implements IDisposableInstance {
 	private Texture tPlant1 = null;
 	private Texture tPlayer0 = null;
 	private Texture tPlayer1 = null;
+	private Texture tPotions = null;
 	private Texture tReptile0 = null;
 	private Texture tReptile1 = null;
 	private Texture tRodent0 = null;
@@ -66,8 +72,6 @@ public final class SpriteMapper implements IDisposableInstance {
 	private Texture tSlime1 = null;
 	private Texture tUndead0 = null;
 	private Texture tUndead1 = null;
-	private Texture tDecor0 = null;
-	private Texture tDecor1 = null;
 	private Texture tWarrior = null;
 
 	private SpriteMapper() {
@@ -90,11 +94,11 @@ public final class SpriteMapper implements IDisposableInstance {
 	 *            to set the animation into
 	 */
 	public void mapAnimation(final AnimationComponent component) {
-		final EEntity sprite = component.getEntityType();
-		if (!mappedAnimations.containsKey(sprite)) {
-			loadAnimation(sprite);
+		final EEntity type = component.getEntityType();
+		if (!mappedAnimations.containsKey(type)) {
+			loadAnimation(type);
 		}
-		component.setAnimation(mappedAnimations.get(sprite));
+		component.setAnimation(mappedAnimations.get(type));
 	}
 
 	/**
@@ -104,16 +108,36 @@ public final class SpriteMapper implements IDisposableInstance {
 	 *            to set the animation into
 	 */
 	public void mapAnimation(final FacingAnimationComponent component) {
-		final EEntity sprite = component.getEntityType();
-		if (!mappedDirectionalAnimations.containsKey(sprite)) {
-			loadAnimations(sprite);
+		final EEntity type = component.getEntityType();
+		if (!mappedDirectionalAnimations.containsKey(type)) {
+			loadAnimations(type);
 		}
-		component.setAnimations(mappedDirectionalAnimations.get(sprite));
+		component.setAnimations(mappedDirectionalAnimations.get(type));
 	}
 
-	private void loadAnimation(final EEntity sprite) {
+	/**
+	 * maps the correct sprite for the entity into the component
+	 *
+	 * @param component
+	 *            to set the sprite into
+	 */
+	public void mapSprite(final SpriteComponent component) {
+		final EEntity type = component.getEntityType();
+		if (!mappedSprites.containsKey(type)) {
+			loadSprite(type);
+		}
+		component.setSprite(mappedSprites.get(type));
+	}
+
+	/**
+	 * loads a single animation for the given entity type
+	 *
+	 * @param type
+	 *            to load the animation for
+	 */
+	private void loadAnimation(final EEntity type) {
 		final TextureRegion[] frames = new TextureRegion[2];
-		switch (sprite) {
+		switch (type) {
 		case ARCHER:
 			if (tPlayer0 == null) {
 				tPlayer0 = loadTexture(PATH_MOBS + "Player0.png");
@@ -123,7 +147,7 @@ public final class SpriteMapper implements IDisposableInstance {
 			}
 			frames[0] = loadFrame(tPlayer0, 2, 3);
 			frames[1] = loadFrame(tPlayer1, 2, 3);
-			mappedAnimations.put(sprite, new Animation(0.25f, frames));
+			mappedAnimations.put(type, new Animation(0.25f, frames));
 			break;
 		case WARPER:
 			if (tPlayer0 == null) {
@@ -134,7 +158,7 @@ public final class SpriteMapper implements IDisposableInstance {
 			}
 			frames[0] = loadFrame(tPlayer0, 1, 8);
 			frames[1] = loadFrame(tPlayer1, 1, 8);
-			mappedAnimations.put(sprite, new Animation(0.25f, frames));
+			mappedAnimations.put(type, new Animation(0.25f, frames));
 			break;
 		case BLOB:
 			if (tPest0 == null) {
@@ -145,7 +169,7 @@ public final class SpriteMapper implements IDisposableInstance {
 			}
 			frames[0] = loadFrame(tPest0, 2, 3);
 			frames[1] = loadFrame(tPest1, 2, 3);
-			mappedAnimations.put(sprite, new Animation(0.25f, frames));
+			mappedAnimations.put(type, new Animation(0.25f, frames));
 			break;
 		case SLUG:
 			if (tPest0 == null) {
@@ -156,7 +180,7 @@ public final class SpriteMapper implements IDisposableInstance {
 			}
 			frames[0] = loadFrame(tPest0, 1, 7);
 			frames[1] = loadFrame(tPest1, 1, 7);
-			mappedAnimations.put(sprite, new Animation(0.25f, frames));
+			mappedAnimations.put(type, new Animation(0.25f, frames));
 			break;
 		case SQUIRREL:
 			if (tRodent0 == null) {
@@ -167,7 +191,7 @@ public final class SpriteMapper implements IDisposableInstance {
 			}
 			frames[0] = loadFrame(tRodent0, 0, 0);
 			frames[1] = loadFrame(tRodent1, 0, 0);
-			mappedAnimations.put(sprite, new Animation(0.25f, frames));
+			mappedAnimations.put(type, new Animation(0.25f, frames));
 			break;
 		case BAT:
 			if (tAvian0 == null) {
@@ -178,7 +202,7 @@ public final class SpriteMapper implements IDisposableInstance {
 			}
 			frames[0] = loadFrame(tAvian0, 0, 11);
 			frames[1] = loadFrame(tAvian1, 0, 11);
-			mappedAnimations.put(sprite, new Animation(0.25f, frames));
+			mappedAnimations.put(type, new Animation(0.25f, frames));
 			break;
 		case MAGICIAN:
 			if (tHumanoid0 == null) {
@@ -189,7 +213,7 @@ public final class SpriteMapper implements IDisposableInstance {
 			}
 			frames[0] = loadFrame(tHumanoid0, 0, 23);
 			frames[1] = loadFrame(tHumanoid1, 0, 23);
-			mappedAnimations.put(sprite, new Animation(0.25f, frames));
+			mappedAnimations.put(type, new Animation(0.25f, frames));
 			break;
 		case GHOST:
 			if (tUndead0 == null) {
@@ -200,7 +224,7 @@ public final class SpriteMapper implements IDisposableInstance {
 			}
 			frames[0] = loadFrame(tUndead0, 0, 4);
 			frames[1] = loadFrame(tUndead1, 0, 4);
-			mappedAnimations.put(sprite, new Animation(0.25f, frames));
+			mappedAnimations.put(type, new Animation(0.25f, frames));
 			break;
 		case SHADOW:
 			if (tUndead0 == null) {
@@ -211,7 +235,7 @@ public final class SpriteMapper implements IDisposableInstance {
 			}
 			frames[0] = loadFrame(tUndead0, 3, 4);
 			frames[1] = loadFrame(tUndead1, 3, 4);
-			mappedAnimations.put(sprite, new Animation(0.25f, frames));
+			mappedAnimations.put(type, new Animation(0.25f, frames));
 			break;
 		case STEALER:
 			if (tUndead0 == null) {
@@ -222,7 +246,7 @@ public final class SpriteMapper implements IDisposableInstance {
 			}
 			frames[0] = loadFrame(tUndead0, 0, 0);
 			frames[1] = loadFrame(tUndead1, 0, 0);
-			mappedAnimations.put(sprite, new Animation(0.25f, frames));
+			mappedAnimations.put(type, new Animation(0.25f, frames));
 			break;
 		case EYEBALL:
 			if (tElemental0 == null) {
@@ -233,7 +257,7 @@ public final class SpriteMapper implements IDisposableInstance {
 			}
 			frames[0] = loadFrame(tElemental0, 0, 5);
 			frames[1] = loadFrame(tElemental1, 0, 5);
-			mappedAnimations.put(sprite, new Animation(0.25f, frames));
+			mappedAnimations.put(type, new Animation(0.25f, frames));
 			break;
 		case GOLEM:
 			if (tElemental0 == null) {
@@ -244,7 +268,7 @@ public final class SpriteMapper implements IDisposableInstance {
 			}
 			frames[0] = loadFrame(tElemental0, 4, 0);
 			frames[1] = loadFrame(tElemental1, 4, 0);
-			mappedAnimations.put(sprite, new Animation(0.25f, frames));
+			mappedAnimations.put(type, new Animation(0.25f, frames));
 			break;
 		case BOMB:
 			if (tElemental0 == null) {
@@ -255,7 +279,7 @@ public final class SpriteMapper implements IDisposableInstance {
 			}
 			frames[0] = loadFrame(tElemental0, 2, 5);
 			frames[1] = loadFrame(tElemental1, 2, 5);
-			mappedAnimations.put(sprite, new Animation(0.25f, frames));
+			mappedAnimations.put(type, new Animation(0.25f, frames));
 			break;
 		case DRAGON:
 			if (tReptile0 == null) {
@@ -266,7 +290,7 @@ public final class SpriteMapper implements IDisposableInstance {
 			}
 			frames[0] = loadFrame(tReptile0, 5, 2);
 			frames[1] = loadFrame(tReptile1, 5, 2);
-			mappedAnimations.put(sprite, new Animation(0.25f, frames));
+			mappedAnimations.put(type, new Animation(0.25f, frames));
 			break;
 		case ACID:
 			if (tSlime0 == null) {
@@ -277,7 +301,7 @@ public final class SpriteMapper implements IDisposableInstance {
 			}
 			frames[0] = loadFrame(tSlime0, 0, 2);
 			frames[1] = loadFrame(tSlime1, 0, 2);
-			mappedAnimations.put(sprite, new Animation(0.25f, frames));
+			mappedAnimations.put(type, new Animation(0.25f, frames));
 			break;
 		case MUSHROOM:
 			if (tPlant0 == null) {
@@ -288,7 +312,7 @@ public final class SpriteMapper implements IDisposableInstance {
 			}
 			frames[0] = loadFrame(tPlant0, 0, 7);
 			frames[1] = loadFrame(tPlant1, 0, 7);
-			mappedAnimations.put(sprite, new Animation(0.25f, frames));
+			mappedAnimations.put(type, new Animation(0.25f, frames));
 			break;
 		case TORCH:
 			if (tDecor0 == null) {
@@ -299,19 +323,25 @@ public final class SpriteMapper implements IDisposableInstance {
 			}
 			frames[0] = loadFrame(tDecor0, 0, 8);
 			frames[1] = loadFrame(tDecor1, 0, 8);
-			mappedAnimations.put(sprite, new Animation(0.15f, frames));
+			mappedAnimations.put(type, new Animation(0.15f, frames));
 			break;
 		default:
 			break;
 		}
 	}
 
-	private void loadAnimations(final EEntity sprite) {
+	/**
+	 * loads multiple animations for the given entity type
+	 *
+	 * @param type
+	 *            to load the animation for
+	 */
+	private void loadAnimations(final EEntity type) {
 		final TextureRegion[] framesUp = new TextureRegion[4];
 		final TextureRegion[] framesDown = new TextureRegion[4];
 		final TextureRegion[] framesLeft = new TextureRegion[4];
 		final TextureRegion[] framesRight = new TextureRegion[4];
-		switch (sprite) {
+		switch (type) {
 		case PLAYER:
 			if (tWarrior == null) {
 				tWarrior = loadTexture(PATH_CHARACTER + "Warrior.png");
@@ -327,8 +357,35 @@ public final class SpriteMapper implements IDisposableInstance {
 			animations.put(EDirection.DOWN, new Animation(0.25f, framesDown));
 			animations.put(EDirection.LEFT, new Animation(0.25f, framesLeft));
 			animations.put(EDirection.RIGHT, new Animation(0.25f, framesRight));
-			mappedDirectionalAnimations.put(sprite, animations);
+			mappedDirectionalAnimations.put(type, animations);
 			break;
+		default:
+			break;
+		}
+	}
+
+	private void loadSprite(final EEntity type) {
+		// TODO refactor (random potions, scrolls, wands)
+		switch (type) {
+		case POTION_A:
+			if (tPotions == null) {
+				tPotions = loadTexture(PATH_ITEMS + "Potion.png");
+			}
+			mappedSprites.put(type, loadFrame(tPotions, 0, 0));
+			break;
+		case POTION_B:
+			if (tPotions == null) {
+				tPotions = loadTexture(PATH_ITEMS + "Potion.png");
+			}
+			mappedSprites.put(type, loadFrame(tPotions, 0, 1));
+			break;
+		case POTION_C:
+			if (tPotions == null) {
+				tPotions = loadTexture(PATH_ITEMS + "Potion.png");
+			}
+			mappedSprites.put(type, loadFrame(tPotions, 0, 2));
+			break;
+
 		default:
 			break;
 		}

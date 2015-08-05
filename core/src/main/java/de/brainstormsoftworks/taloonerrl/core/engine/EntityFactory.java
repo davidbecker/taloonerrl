@@ -17,6 +17,7 @@ import de.brainstormsoftworks.taloonerrl.components.AnimationComponent;
 import de.brainstormsoftworks.taloonerrl.components.FacingAnimationComponent;
 import de.brainstormsoftworks.taloonerrl.components.NameComponent;
 import de.brainstormsoftworks.taloonerrl.components.PositionComponent;
+import de.brainstormsoftworks.taloonerrl.components.SpriteComponent;
 
 /**
  * factory to create entities in to the game world
@@ -78,6 +79,12 @@ public final class EntityFactory {
 			return createActor(type, world, xPosition, yPosition);
 		case MUSHROOM:
 			return createActor(type, world, xPosition, yPosition);
+		case POTION_A:
+			return createCollectible(type, world, xPosition, yPosition);
+		case POTION_B:
+			return createCollectible(type, world, xPosition, yPosition);
+		case POTION_C:
+			return createCollectible(type, world, xPosition, yPosition);
 		case TORCH:
 			return createDecoration(type, world, xPosition, yPosition);
 		default:
@@ -99,6 +106,16 @@ public final class EntityFactory {
 		posComponent.setX(xPosition);
 		posComponent.setY(yPosition);
 		setName(newEntity, type);
+		return newEntity;
+	}
+
+	private static Entity createCollectible(final EEntity type, final World world, final int xPosition,
+			final int yPosition) {
+		final Entity newEntity = world.createEntity(Archetypes.getInstance().collectible);
+		newEntity.getComponent(SpriteComponent.class).mapSprite(type);
+		final PositionComponent posComponent = newEntity.getComponent(PositionComponent.class);
+		posComponent.setX(xPosition);
+		posComponent.setY(yPosition);
 		return newEntity;
 	}
 

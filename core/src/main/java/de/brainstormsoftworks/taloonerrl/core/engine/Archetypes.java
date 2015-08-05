@@ -21,6 +21,7 @@ import de.brainstormsoftworks.taloonerrl.components.FacingComponent;
 import de.brainstormsoftworks.taloonerrl.components.HealthComponent;
 import de.brainstormsoftworks.taloonerrl.components.NameComponent;
 import de.brainstormsoftworks.taloonerrl.components.PositionComponent;
+import de.brainstormsoftworks.taloonerrl.components.SpriteComponent;
 
 /**
  * utility class to load the archetypes used to create entities for the given
@@ -33,6 +34,7 @@ public final class Archetypes {
 	/** archetype for monsters & player */
 	public final Archetype actor;
 	public final Archetype player;
+	public final Archetype collectible;
 	public final Archetype decoration;
 	private static Archetypes instance;
 
@@ -41,6 +43,7 @@ public final class Archetypes {
 				.add(PositionComponent.class).add(AnimationComponent.class).add(NameComponent.class).build(world);
 		player = new ArchetypeBuilder(actor).add(FacingComponent.class).remove(AnimationComponent.class)
 				.add(FacingAnimationComponent.class).build(world);
+		collectible = new ArchetypeBuilder().add(PositionComponent.class).add(SpriteComponent.class).build(world);
 		decoration = new ArchetypeBuilder().add(PositionComponent.class).add(AnimationComponent.class).build(world);
 	}
 

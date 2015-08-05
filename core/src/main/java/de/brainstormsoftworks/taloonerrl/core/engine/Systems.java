@@ -16,6 +16,7 @@ import de.brainstormsoftworks.taloonerrl.system.AnimationRenderSystem;
 import de.brainstormsoftworks.taloonerrl.system.FacingAnimationRenderSystem;
 import de.brainstormsoftworks.taloonerrl.system.HealthBarRenderSystem;
 import de.brainstormsoftworks.taloonerrl.system.MovementSystem;
+import de.brainstormsoftworks.taloonerrl.system.SpriteRenderSystem;
 
 /**
  * utility class to add all systems to a given {@link WorldConfiguration}
@@ -27,6 +28,7 @@ public final class Systems {
 	private static final MovementSystem MOVEMENT_SYSTEM = new MovementSystem();
 	private static final AnimationRenderSystem ANIMATION_RENDER_SYSTEM = new AnimationRenderSystem();
 	private static final FacingAnimationRenderSystem FACING_ANIMATION_RENDER_SYSTEM = new FacingAnimationRenderSystem();
+	private static final SpriteRenderSystem SPRITE_RENDER_SYSTEM = new SpriteRenderSystem();
 	private static final HealthBarRenderSystem RENDER_BAR_SYSTEM = new HealthBarRenderSystem();
 
 	private Systems() {
@@ -38,6 +40,7 @@ public final class Systems {
 	 * @param config
 	 */
 	public static void setSystems(final WorldConfiguration config) {
+		config.setSystem(SPRITE_RENDER_SYSTEM);
 		config.setSystem(MOVEMENT_SYSTEM);
 		config.setSystem(ANIMATION_RENDER_SYSTEM);
 		config.setSystem(FACING_ANIMATION_RENDER_SYSTEM);
