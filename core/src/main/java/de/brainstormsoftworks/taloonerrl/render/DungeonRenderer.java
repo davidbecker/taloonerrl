@@ -94,10 +94,16 @@ public final class DungeonRenderer implements IDisposableInstance {
 		instance = new DungeonRenderer();
 	}
 
+	/**
+	 * get an instance of this singleton
+	 *
+	 * @return {@link #instance}
+	 */
 	public static DungeonRenderer getInstance() {
 		return instance;
 	}
 
+	/** {@inheritDoc} */
 	@Override
 	public void disposeInstance() {
 		floorTexture.dispose();

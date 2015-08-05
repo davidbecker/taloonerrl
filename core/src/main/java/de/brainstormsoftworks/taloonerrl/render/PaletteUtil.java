@@ -64,10 +64,16 @@ public final class PaletteUtil implements IDisposableInstance {
 		RenderUtil.addToDisposeList(this);
 	}
 
+	/**
+	 * get an instance of this singleton
+	 *
+	 * @return {@link #instance}
+	 */
 	public static PaletteUtil getInstance() {
 		return instance;
 	}
 
+	/** {@inheritDoc} */
 	@Override
 	public void disposeInstance() {
 		paletteTexture.dispose();

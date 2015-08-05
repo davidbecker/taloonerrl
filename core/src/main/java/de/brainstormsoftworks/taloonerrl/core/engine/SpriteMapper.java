@@ -30,7 +30,7 @@ import de.brainstormsoftworks.taloonerrl.render.RenderUtil;
 import de.brainstormsoftworks.taloonerrl.render.Renderer;
 
 /**
- * utility class that maps the animation for to a sprite
+ * utility class that maps the animation for a sprite into components
  *
  * @author David Becker
  *
@@ -74,10 +74,21 @@ public final class SpriteMapper implements IDisposableInstance {
 		RenderUtil.addToDisposeList(this);
 	}
 
+	/**
+	 * get an instance of this singleton
+	 *
+	 * @return {@link #instance}
+	 */
 	public static SpriteMapper getInstance() {
 		return instance;
 	}
 
+	/**
+	 * maps the correct animation for the entity into the component
+	 *
+	 * @param component
+	 *            to set the animation into
+	 */
 	public void mapAnimation(final AnimationComponent component) {
 		final EEntity sprite = component.getEntityType();
 		if (!mappedAnimations.containsKey(sprite)) {
@@ -86,6 +97,12 @@ public final class SpriteMapper implements IDisposableInstance {
 		component.setAnimation(mappedAnimations.get(sprite));
 	}
 
+	/**
+	 * maps the correct animation for the entity into the component
+	 *
+	 * @param component
+	 *            to set the animation into
+	 */
 	public void mapAnimation(final FacingAnimationComponent component) {
 		final EEntity sprite = component.getEntityType();
 		if (!mappedDirectionalAnimations.containsKey(sprite)) {
@@ -331,6 +348,7 @@ public final class SpriteMapper implements IDisposableInstance {
 				Renderer.tileSize);
 	}
 
+	/** {@inheritDoc} */
 	@Override
 	public void disposeInstance() {
 		for (final Texture texture : toDispose) {

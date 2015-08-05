@@ -115,10 +115,16 @@ public final class GuiRenderer implements IDisposableInstance {
 		instance = new GuiRenderer();
 	}
 
+	/**
+	 * get an instance of this singleton
+	 *
+	 * @return {@link #instance}
+	 */
 	public static GuiRenderer getInstance() {
 		return instance;
 	}
 
+	/** {@inheritDoc} */
 	@Override
 	public void disposeInstance() {
 		guiTexture.dispose();
