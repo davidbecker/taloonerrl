@@ -37,17 +37,40 @@ import de.brainstormsoftworks.taloonerrl.render.Renderer;
  *
  */
 public final class SpriteMapper implements IDisposableInstance {
+	private static final String PATH_DUNGEON = "textures/dungeon/";
+	private static final String PATH_MOBS = "textures/mobs/";
+	private static final String PATH_ITEMS = "textures/items/";
+	private static final String PATH_CHARACTER = "character/";
+
+	private static final String FILE_AVIAN0 = "Avian0.png";
+	private static final String FILE_AVIAN1 = "Avian1.png";
+	private static final String FILE_DECOR0 = "Decor0.png";
+	private static final String FILE_DECOR1 = "Decor1.png";
+	private static final String FILE_ELEMENTAL0 = "Elemental0.png";
+	private static final String FILE_ELEMENTAL1 = "Elemental1.png";
+	private static final String FILE_HUMANOID0 = "Humanoid0.png";
+	private static final String FILE_HUMANOID1 = "Humanoid1.png";
+	private static final String FILE_PEST0 = "Pest0.png";
+	private static final String FILE_PEST1 = "Pest1.png";
+	private static final String FILE_PLANT0 = "Plant0.png";
+	private static final String FILE_PLANT1 = "Plant1.png";
+	private static final String FILE_PLAYER0 = "Player0.png";
+	private static final String FILE_PLAYER1 = "Player1.png";
+	private static final String FILE_REPTILE0 = "Reptile0.png";
+	private static final String FILE_REPTILE1 = "Reptile1.png";
+	private static final String FILE_RODENT0 = "Rodent0.png";
+	private static final String FILE_RODENT1 = "Rodent1.png";
+	private static final String FILE_SLIME0 = "Slime0.png";
+	private static final String FILE_SLIME1 = "Slime1.png";
+	private static final String FILE_UNDEAD1 = "Undead1.png";
+	private static final String FILE_UNDEAD0 = "Undead0.png";
+
+	private static final SpriteMapper instance = new SpriteMapper();
 
 	private final Map<EEntity, Animation> mappedAnimations = new HashMap<EEntity, Animation>();
 	private final Map<EEntity, Map<EDirection, Animation>> mappedDirectionalAnimations = new HashMap<EEntity, Map<EDirection, Animation>>();
 	private final Map<EEntity, TextureRegion> mappedSprites = new HashMap<EEntity, TextureRegion>();
 	private final Set<Texture> toDispose = new HashSet<Texture>();
-
-	private static final String PATH_DUNGEON = "textures/dungeon/";
-	private static final String PATH_MOBS = "textures/mobs/";
-	private static final String PATH_ITEMS = "textures/items/";
-	private static final String PATH_CHARACTER = "character/";
-	private static final SpriteMapper instance = new SpriteMapper();
 
 	private Texture tAvian0 = null;
 	private Texture tAvian1 = null;
@@ -140,10 +163,10 @@ public final class SpriteMapper implements IDisposableInstance {
 		switch (type) {
 		case ARCHER:
 			if (tPlayer0 == null) {
-				tPlayer0 = loadTexture(PATH_MOBS + "Player0.png");
+				tPlayer0 = loadTexture(PATH_MOBS + FILE_PLAYER0);
 			}
 			if (tPlayer1 == null) {
-				tPlayer1 = loadTexture(PATH_MOBS + "Player1.png");
+				tPlayer1 = loadTexture(PATH_MOBS + FILE_PLAYER1);
 			}
 			frames[0] = loadFrame(tPlayer0, 2, 3);
 			frames[1] = loadFrame(tPlayer1, 2, 3);
@@ -151,10 +174,10 @@ public final class SpriteMapper implements IDisposableInstance {
 			break;
 		case WARPER:
 			if (tPlayer0 == null) {
-				tPlayer0 = loadTexture(PATH_MOBS + "Player0.png");
+				tPlayer0 = loadTexture(PATH_MOBS + FILE_PLAYER0);
 			}
 			if (tPlayer1 == null) {
-				tPlayer1 = loadTexture(PATH_MOBS + "Player1.png");
+				tPlayer1 = loadTexture(PATH_MOBS + FILE_PLAYER1);
 			}
 			frames[0] = loadFrame(tPlayer0, 1, 8);
 			frames[1] = loadFrame(tPlayer1, 1, 8);
@@ -162,10 +185,10 @@ public final class SpriteMapper implements IDisposableInstance {
 			break;
 		case BLOB:
 			if (tPest0 == null) {
-				tPest0 = loadTexture(PATH_MOBS + "Pest0.png");
+				tPest0 = loadTexture(PATH_MOBS + FILE_PEST0);
 			}
 			if (tPest1 == null) {
-				tPest1 = loadTexture(PATH_MOBS + "Pest1.png");
+				tPest1 = loadTexture(PATH_MOBS + FILE_PEST1);
 			}
 			frames[0] = loadFrame(tPest0, 2, 3);
 			frames[1] = loadFrame(tPest1, 2, 3);
@@ -173,10 +196,10 @@ public final class SpriteMapper implements IDisposableInstance {
 			break;
 		case SLUG:
 			if (tPest0 == null) {
-				tPest0 = loadTexture(PATH_MOBS + "Pest0.png");
+				tPest0 = loadTexture(PATH_MOBS + FILE_PEST0);
 			}
 			if (tPest1 == null) {
-				tPest1 = loadTexture(PATH_MOBS + "Pest1.png");
+				tPest1 = loadTexture(PATH_MOBS + FILE_PEST1);
 			}
 			frames[0] = loadFrame(tPest0, 1, 7);
 			frames[1] = loadFrame(tPest1, 1, 7);
@@ -184,10 +207,10 @@ public final class SpriteMapper implements IDisposableInstance {
 			break;
 		case SQUIRREL:
 			if (tRodent0 == null) {
-				tRodent0 = loadTexture(PATH_MOBS + "Rodent0.png");
+				tRodent0 = loadTexture(PATH_MOBS + FILE_RODENT0);
 			}
 			if (tRodent1 == null) {
-				tRodent1 = loadTexture(PATH_MOBS + "Rodent1.png");
+				tRodent1 = loadTexture(PATH_MOBS + FILE_RODENT1);
 			}
 			frames[0] = loadFrame(tRodent0, 0, 0);
 			frames[1] = loadFrame(tRodent1, 0, 0);
@@ -195,10 +218,10 @@ public final class SpriteMapper implements IDisposableInstance {
 			break;
 		case BAT:
 			if (tAvian0 == null) {
-				tAvian0 = loadTexture(PATH_MOBS + "Avian0.png");
+				tAvian0 = loadTexture(PATH_MOBS + FILE_AVIAN0);
 			}
 			if (tAvian1 == null) {
-				tAvian1 = loadTexture(PATH_MOBS + "Avian1.png");
+				tAvian1 = loadTexture(PATH_MOBS + FILE_AVIAN1);
 			}
 			frames[0] = loadFrame(tAvian0, 0, 11);
 			frames[1] = loadFrame(tAvian1, 0, 11);
@@ -206,10 +229,10 @@ public final class SpriteMapper implements IDisposableInstance {
 			break;
 		case MAGICIAN:
 			if (tHumanoid0 == null) {
-				tHumanoid0 = loadTexture(PATH_MOBS + "Humanoid0.png");
+				tHumanoid0 = loadTexture(PATH_MOBS + FILE_HUMANOID0);
 			}
 			if (tHumanoid1 == null) {
-				tHumanoid1 = loadTexture(PATH_MOBS + "Humanoid1.png");
+				tHumanoid1 = loadTexture(PATH_MOBS + FILE_HUMANOID1);
 			}
 			frames[0] = loadFrame(tHumanoid0, 0, 23);
 			frames[1] = loadFrame(tHumanoid1, 0, 23);
@@ -217,10 +240,10 @@ public final class SpriteMapper implements IDisposableInstance {
 			break;
 		case GHOST:
 			if (tUndead0 == null) {
-				tUndead0 = loadTexture(PATH_MOBS + "Undead0.png");
+				tUndead0 = loadTexture(PATH_MOBS + FILE_UNDEAD0);
 			}
 			if (tUndead1 == null) {
-				tUndead1 = loadTexture(PATH_MOBS + "Undead1.png");
+				tUndead1 = loadTexture(PATH_MOBS + FILE_UNDEAD1);
 			}
 			frames[0] = loadFrame(tUndead0, 0, 4);
 			frames[1] = loadFrame(tUndead1, 0, 4);
@@ -228,10 +251,10 @@ public final class SpriteMapper implements IDisposableInstance {
 			break;
 		case SHADOW:
 			if (tUndead0 == null) {
-				tUndead0 = loadTexture(PATH_MOBS + "Undead0.png");
+				tUndead0 = loadTexture(PATH_MOBS + FILE_UNDEAD0);
 			}
 			if (tUndead1 == null) {
-				tUndead1 = loadTexture(PATH_MOBS + "Undead1.png");
+				tUndead1 = loadTexture(PATH_MOBS + FILE_UNDEAD1);
 			}
 			frames[0] = loadFrame(tUndead0, 3, 4);
 			frames[1] = loadFrame(tUndead1, 3, 4);
@@ -239,10 +262,10 @@ public final class SpriteMapper implements IDisposableInstance {
 			break;
 		case STEALER:
 			if (tUndead0 == null) {
-				tUndead0 = loadTexture(PATH_MOBS + "Undead0.png");
+				tUndead0 = loadTexture(PATH_MOBS + FILE_UNDEAD0);
 			}
 			if (tUndead1 == null) {
-				tUndead1 = loadTexture(PATH_MOBS + "Undead1.png");
+				tUndead1 = loadTexture(PATH_MOBS + FILE_UNDEAD1);
 			}
 			frames[0] = loadFrame(tUndead0, 0, 0);
 			frames[1] = loadFrame(tUndead1, 0, 0);
@@ -250,10 +273,10 @@ public final class SpriteMapper implements IDisposableInstance {
 			break;
 		case EYEBALL:
 			if (tElemental0 == null) {
-				tElemental0 = loadTexture(PATH_MOBS + "Elemental0.png");
+				tElemental0 = loadTexture(PATH_MOBS + FILE_ELEMENTAL0);
 			}
 			if (tElemental1 == null) {
-				tElemental1 = loadTexture(PATH_MOBS + "Elemental1.png");
+				tElemental1 = loadTexture(PATH_MOBS + FILE_ELEMENTAL1);
 			}
 			frames[0] = loadFrame(tElemental0, 0, 5);
 			frames[1] = loadFrame(tElemental1, 0, 5);
@@ -261,10 +284,10 @@ public final class SpriteMapper implements IDisposableInstance {
 			break;
 		case GOLEM:
 			if (tElemental0 == null) {
-				tElemental0 = loadTexture(PATH_MOBS + "Elemental0.png");
+				tElemental0 = loadTexture(PATH_MOBS + FILE_ELEMENTAL0);
 			}
 			if (tElemental1 == null) {
-				tElemental1 = loadTexture(PATH_MOBS + "Elemental1.png");
+				tElemental1 = loadTexture(PATH_MOBS + FILE_ELEMENTAL1);
 			}
 			frames[0] = loadFrame(tElemental0, 4, 0);
 			frames[1] = loadFrame(tElemental1, 4, 0);
@@ -272,10 +295,10 @@ public final class SpriteMapper implements IDisposableInstance {
 			break;
 		case BOMB:
 			if (tElemental0 == null) {
-				tElemental0 = loadTexture(PATH_MOBS + "Elemental0.png");
+				tElemental0 = loadTexture(PATH_MOBS + FILE_ELEMENTAL0);
 			}
 			if (tElemental1 == null) {
-				tElemental1 = loadTexture(PATH_MOBS + "Elemental1.png");
+				tElemental1 = loadTexture(PATH_MOBS + FILE_ELEMENTAL1);
 			}
 			frames[0] = loadFrame(tElemental0, 2, 5);
 			frames[1] = loadFrame(tElemental1, 2, 5);
@@ -283,10 +306,10 @@ public final class SpriteMapper implements IDisposableInstance {
 			break;
 		case DRAGON:
 			if (tReptile0 == null) {
-				tReptile0 = loadTexture(PATH_MOBS + "Reptile0.png");
+				tReptile0 = loadTexture(PATH_MOBS + FILE_REPTILE0);
 			}
 			if (tReptile1 == null) {
-				tReptile1 = loadTexture(PATH_MOBS + "Reptile1.png");
+				tReptile1 = loadTexture(PATH_MOBS + FILE_REPTILE1);
 			}
 			frames[0] = loadFrame(tReptile0, 5, 2);
 			frames[1] = loadFrame(tReptile1, 5, 2);
@@ -294,10 +317,10 @@ public final class SpriteMapper implements IDisposableInstance {
 			break;
 		case ACID:
 			if (tSlime0 == null) {
-				tSlime0 = loadTexture(PATH_MOBS + "Slime0.png");
+				tSlime0 = loadTexture(PATH_MOBS + FILE_SLIME0);
 			}
 			if (tSlime1 == null) {
-				tSlime1 = loadTexture(PATH_MOBS + "Slime1.png");
+				tSlime1 = loadTexture(PATH_MOBS + FILE_SLIME1);
 			}
 			frames[0] = loadFrame(tSlime0, 0, 2);
 			frames[1] = loadFrame(tSlime1, 0, 2);
@@ -305,10 +328,10 @@ public final class SpriteMapper implements IDisposableInstance {
 			break;
 		case MUSHROOM:
 			if (tPlant0 == null) {
-				tPlant0 = loadTexture(PATH_MOBS + "Plant0.png");
+				tPlant0 = loadTexture(PATH_MOBS + FILE_PLANT0);
 			}
 			if (tPlant1 == null) {
-				tPlant1 = loadTexture(PATH_MOBS + "Plant1.png");
+				tPlant1 = loadTexture(PATH_MOBS + FILE_PLANT1);
 			}
 			frames[0] = loadFrame(tPlant0, 0, 7);
 			frames[1] = loadFrame(tPlant1, 0, 7);
@@ -316,10 +339,10 @@ public final class SpriteMapper implements IDisposableInstance {
 			break;
 		case TORCH:
 			if (tDecor0 == null) {
-				tDecor0 = loadTexture(PATH_DUNGEON + "Decor0.png");
+				tDecor0 = loadTexture(PATH_DUNGEON + FILE_DECOR0);
 			}
 			if (tDecor1 == null) {
-				tDecor1 = loadTexture(PATH_DUNGEON + "Decor1.png");
+				tDecor1 = loadTexture(PATH_DUNGEON + FILE_DECOR1);
 			}
 			frames[0] = loadFrame(tDecor0, 0, 8);
 			frames[1] = loadFrame(tDecor1, 0, 8);
