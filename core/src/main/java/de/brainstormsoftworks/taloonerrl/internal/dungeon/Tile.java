@@ -4,20 +4,18 @@
  * are made available under the terms of the GNU Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
- * 
+ *
  * Contributors:
  *     David Becker - initial API and implementation
  ******************************************************************************/
 package de.brainstormsoftworks.taloonerrl.internal.dungeon;
 
-import de.brainstormsoftworks.taloonerrl.dungeon.EDungeonFeature;
 import de.brainstormsoftworks.taloonerrl.dungeon.EDungeonSprites;
 import de.brainstormsoftworks.taloonerrl.dungeon.ITile;
 
 public class Tile implements ITile {
 
 	private EDungeonSprites dungeonSprite = EDungeonSprites.NOTHING;
-	private final EDungeonFeature dungeonFeature = EDungeonFeature.NOTHING;
 	boolean explored = false;
 	boolean walkable = false;
 
@@ -50,11 +48,6 @@ public class Tile implements ITile {
 	@Override
 	public void setDungeonSprite(final EDungeonSprites _sprite) {
 		dungeonSprite = _sprite;
-	}
-
-	@Override
-	public EDungeonFeature getDungeonFeature() {
-		return dungeonFeature;
 	}
 
 	@Override

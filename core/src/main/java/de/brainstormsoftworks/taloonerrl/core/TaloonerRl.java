@@ -18,7 +18,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector3;
 
-import de.brainstormsoftworks.taloonerrl.actors.IActor;
 import de.brainstormsoftworks.taloonerrl.components.FacingComponent;
 import de.brainstormsoftworks.taloonerrl.components.HealthComponent;
 import de.brainstormsoftworks.taloonerrl.components.PositionComponent;
@@ -288,23 +287,22 @@ public class TaloonerRl implements ApplicationListener {
 		// isPlayerTurn = false;
 	}
 
-	private static void highlightPlayerTile(final IActor player) {
-		final int x = player.getMovementComponent().getXPosition();
-		final int y = player.getMovementComponent().getYPosition();
-		Renderer.getInstance().BATCH.draw(cursorTopLeft,
-				x * Renderer.scale + cursorTopLeftOffsetX - cursorAnimationOffset,
-				y * Renderer.scale + cursorTopLeftOffsetY + cursorAnimationOffset);
-		Renderer.getInstance().BATCH.draw(cursorTopRight,
-				x * Renderer.scale + cursorTopRightOffsetX + cursorAnimationOffset,
-				y * Renderer.scale + cursorTopRightOffsetY + cursorAnimationOffset);
-		Renderer.getInstance().BATCH.draw(cursorBottomLeft,
-				x * Renderer.scale + cursorBottomLeftOffsetX - cursorAnimationOffset,
-				y * Renderer.scale + cursorBottomLeftOffsetY - cursorAnimationOffset);
-		Renderer.getInstance().BATCH.draw(cursorBottomRight,
-				x * Renderer.scale + cursorBottomRightOffsetX + cursorAnimationOffset,
-				y * Renderer.scale + cursorBottomRightOffsetY - cursorAnimationOffset);
-
-	}
+	// private static void highlightPlayerTile(final IActor player) {
+	// final int x = player.getMovementComponent().getXPosition();
+	// final int y = player.getMovementComponent().getYPosition();
+	// Renderer.getInstance().BATCH.draw(cursorTopLeft,
+	// x * Renderer.scale + cursorTopLeftOffsetX - cursorAnimationOffset,
+	// y * Renderer.scale + cursorTopLeftOffsetY + cursorAnimationOffset);
+	// Renderer.getInstance().BATCH.draw(cursorTopRight,
+	// x * Renderer.scale + cursorTopRightOffsetX + cursorAnimationOffset,
+	// y * Renderer.scale + cursorTopRightOffsetY + cursorAnimationOffset);
+	// Renderer.getInstance().BATCH.draw(cursorBottomLeft,
+	// x * Renderer.scale + cursorBottomLeftOffsetX - cursorAnimationOffset,
+	// y * Renderer.scale + cursorBottomLeftOffsetY - cursorAnimationOffset);
+	// Renderer.getInstance().BATCH.draw(cursorBottomRight,
+	// x * Renderer.scale + cursorBottomRightOffsetX + cursorAnimationOffset,
+	// y * Renderer.scale + cursorBottomRightOffsetY - cursorAnimationOffset);
+	// }
 
 	@Override
 	public void pause() {
