@@ -74,6 +74,8 @@ public final class EntityFactory {
 			return createActor(type, world, xPosition, yPosition);
 		case DRAGON:
 			return createActor(type, world, xPosition, yPosition);
+		case ACID:
+			return createActor(type, world, xPosition, yPosition);
 		case TORCH:
 			return createDecoration(type, world, xPosition, yPosition);
 		default:
@@ -157,6 +159,9 @@ public final class EntityFactory {
 			break;
 		case DRAGON:
 			component.setName("Dragon");
+			break;
+		case ACID:
+			component.setName("Acid Slime");
 			break;
 		default:
 			break;

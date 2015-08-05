@@ -60,6 +60,8 @@ public final class SpriteMapper implements IDisposableInstance {
 	private Texture tReptile1 = null;
 	private Texture tRodent0 = null;
 	private Texture tRodent1 = null;
+	private Texture tSlime0 = null;
+	private Texture tSlime1 = null;
 	private Texture tUndead0 = null;
 	private Texture tUndead1 = null;
 	private Texture tDecor0 = null;
@@ -272,6 +274,19 @@ public final class SpriteMapper implements IDisposableInstance {
 			frames[0] = new TextureRegion(tReptile0, 5 * Renderer.tileSize, 2 * Renderer.tileSize, Renderer.tileSize,
 					Renderer.tileSize);
 			frames[1] = new TextureRegion(tReptile1, 5 * Renderer.tileSize, 2 * Renderer.tileSize, Renderer.tileSize,
+					Renderer.tileSize);
+			mappedAnimations.put(sprite, new Animation(0.25f, frames));
+			break;
+		case ACID:
+			if (tSlime0 == null) {
+				tSlime0 = loadTexture(PATH_MOBS + "Slime0.png");
+			}
+			if (tSlime1 == null) {
+				tSlime1 = loadTexture(PATH_MOBS + "Slime1.png");
+			}
+			frames[0] = new TextureRegion(tSlime0, 0 * Renderer.tileSize, 2 * Renderer.tileSize, Renderer.tileSize,
+					Renderer.tileSize);
+			frames[1] = new TextureRegion(tSlime1, 0 * Renderer.tileSize, 2 * Renderer.tileSize, Renderer.tileSize,
 					Renderer.tileSize);
 			mappedAnimations.put(sprite, new Animation(0.25f, frames));
 			break;
