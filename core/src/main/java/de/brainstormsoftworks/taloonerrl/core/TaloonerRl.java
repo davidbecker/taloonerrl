@@ -16,7 +16,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 
 import de.brainstormsoftworks.taloonerrl.components.FacingComponent;
-import de.brainstormsoftworks.taloonerrl.components.HealthComponent;
 import de.brainstormsoftworks.taloonerrl.components.PositionComponent;
 import de.brainstormsoftworks.taloonerrl.core.engine.EEntity;
 import de.brainstormsoftworks.taloonerrl.core.engine.GameEngine;
@@ -27,25 +26,24 @@ import de.brainstormsoftworks.taloonerrl.render.GuiRenderer;
 import de.brainstormsoftworks.taloonerrl.render.RenderUtil;
 import de.brainstormsoftworks.taloonerrl.render.Renderer;
 
+/**
+ * main entry point to the game
+ *
+ * @author David Becker
+ *
+ */
 public class TaloonerRl implements ApplicationListener {
-	float elapsed;
 
 	EDirection walkingDirection = EDirection.RIGHT;
 	float mouseX;
 	float mouseY;
 
-	// private boolean isPlayerTurn = false;
 	private float delayToNextTurn = 0f;
 	/** minimum delay between player turns */
 	private static final float delayBetweenTurns = 0.03f;
-	// private static final float delayToNextAnimation = 0f;
-	/** minimum delay between player turns */
-	// private static final float delayBetweenAnimation = 0.03f;
 
 	public static IMap map = null;
-	// private static final String fontPath = "font/";
 	private Entity playerEntity;
-	private HealthComponent playerHealthComponent;
 	private PositionComponent playerPositionComponent;
 	private FacingComponent playerFacingComponent;
 
@@ -59,91 +57,11 @@ public class TaloonerRl implements ApplicationListener {
 		// forces the engine to initialize
 		final GameEngine gameEngine = GameEngine.getInstance();
 		playerEntity = gameEngine.createNewEntity(EEntity.PLAYER);
-		playerHealthComponent = playerEntity.getComponent(HealthComponent.class);
 		playerPositionComponent = playerEntity.getComponent(PositionComponent.class);
 		playerFacingComponent = playerEntity.getComponent(FacingComponent.class);
 		// TODO only use one player
 		playerPositionComponent.setX(4);
 		playerPositionComponent.setY(4);
-		final Entity createNewEntity = gameEngine.createNewEntity(EEntity.SQUIRREL, 1, 1);
-		createNewEntity.getComponent(HealthComponent.class).setHealthPercent(0.75f);
-
-		gameEngine.createNewEntity(EEntity.BLOB, 2, 2);
-		for (int i = 1; i < Renderer.TILES_HORIZONTAL - 1; i++) {
-			gameEngine.createNewEntity(EEntity.TORCH, i, Renderer.TILES_VERTICAL - 1);
-		}
-		gameEngine.createNewEntity(EEntity.BAT, 1, 2);
-		gameEngine.createNewEntity(EEntity.SLUG, 1, 3);
-		gameEngine.createNewEntity(EEntity.MAGICIAN, 1, 4);
-		gameEngine.createNewEntity(EEntity.GHOST, 1, 5);
-		gameEngine.createNewEntity(EEntity.SHADOW, 1, 6);
-		gameEngine.createNewEntity(EEntity.EYEBALL, 1, 7);
-		gameEngine.createNewEntity(EEntity.GOLEM, 1, 8);
-		gameEngine.createNewEntity(EEntity.ARCHER, 1, 9);
-		gameEngine.createNewEntity(EEntity.BOMB, 1, 10);
-		gameEngine.createNewEntity(EEntity.WARPER, 1, 11);
-		gameEngine.createNewEntity(EEntity.STEALER, 1, 12);
-		gameEngine.createNewEntity(EEntity.DRAGON, 1, 13);
-		gameEngine.createNewEntity(EEntity.ACID, 1, 14);
-		gameEngine.createNewEntity(EEntity.MUSHROOM, 1, 15);
-
-		gameEngine.createNewEntity(EEntity.POTION_A, Renderer.TILES_HORIZONTAL - 2, 1);
-		gameEngine.createNewEntity(EEntity.POTION_B, Renderer.TILES_HORIZONTAL - 2, 2);
-		gameEngine.createNewEntity(EEntity.POTION_C, Renderer.TILES_HORIZONTAL - 2, 3);
-		gameEngine.createNewEntity(EEntity.POTION_D, Renderer.TILES_HORIZONTAL - 2, 4);
-		gameEngine.createNewEntity(EEntity.POTION_E, Renderer.TILES_HORIZONTAL - 2, 5);
-		gameEngine.createNewEntity(EEntity.POTION_F, Renderer.TILES_HORIZONTAL - 2, 6);
-		gameEngine.createNewEntity(EEntity.POTION_G, Renderer.TILES_HORIZONTAL - 2, 7);
-		gameEngine.createNewEntity(EEntity.POTION_H, Renderer.TILES_HORIZONTAL - 2, 8);
-		gameEngine.createNewEntity(EEntity.POTION_I, Renderer.TILES_HORIZONTAL - 2, 9);
-		gameEngine.createNewEntity(EEntity.POTION_J, Renderer.TILES_HORIZONTAL - 2, 10);
-		gameEngine.createNewEntity(EEntity.SCROLL_A, Renderer.TILES_HORIZONTAL - 3, 1);
-		gameEngine.createNewEntity(EEntity.SCROLL_B, Renderer.TILES_HORIZONTAL - 3, 2);
-		gameEngine.createNewEntity(EEntity.SCROLL_C, Renderer.TILES_HORIZONTAL - 3, 3);
-		gameEngine.createNewEntity(EEntity.SCROLL_D, Renderer.TILES_HORIZONTAL - 3, 4);
-		gameEngine.createNewEntity(EEntity.SCROLL_E, Renderer.TILES_HORIZONTAL - 3, 5);
-		gameEngine.createNewEntity(EEntity.SCROLL_F, Renderer.TILES_HORIZONTAL - 3, 6);
-		gameEngine.createNewEntity(EEntity.SCROLL_G, Renderer.TILES_HORIZONTAL - 3, 7);
-		gameEngine.createNewEntity(EEntity.SCROLL_H, Renderer.TILES_HORIZONTAL - 3, 8);
-		gameEngine.createNewEntity(EEntity.SCROLL_I, Renderer.TILES_HORIZONTAL - 3, 9);
-		gameEngine.createNewEntity(EEntity.SCROLL_J, Renderer.TILES_HORIZONTAL - 3, 10);
-		gameEngine.createNewEntity(EEntity.WAND_A, Renderer.TILES_HORIZONTAL - 4, 1);
-		gameEngine.createNewEntity(EEntity.WAND_B, Renderer.TILES_HORIZONTAL - 4, 2);
-		gameEngine.createNewEntity(EEntity.WAND_C, Renderer.TILES_HORIZONTAL - 4, 3);
-		gameEngine.createNewEntity(EEntity.WAND_D, Renderer.TILES_HORIZONTAL - 4, 4);
-		gameEngine.createNewEntity(EEntity.WAND_E, Renderer.TILES_HORIZONTAL - 4, 5);
-		gameEngine.createNewEntity(EEntity.WAND_F, Renderer.TILES_HORIZONTAL - 4, 6);
-		gameEngine.createNewEntity(EEntity.WAND_G, Renderer.TILES_HORIZONTAL - 4, 7);
-		gameEngine.createNewEntity(EEntity.WAND_H, Renderer.TILES_HORIZONTAL - 4, 8);
-		gameEngine.createNewEntity(EEntity.WAND_I, Renderer.TILES_HORIZONTAL - 4, 9);
-		gameEngine.createNewEntity(EEntity.WAND_J, Renderer.TILES_HORIZONTAL - 4, 10);
-		gameEngine.createNewEntity(EEntity.RING_A, Renderer.TILES_HORIZONTAL - 5, 1);
-		gameEngine.createNewEntity(EEntity.RING_B, Renderer.TILES_HORIZONTAL - 5, 2);
-		gameEngine.createNewEntity(EEntity.RING_C, Renderer.TILES_HORIZONTAL - 5, 3);
-		gameEngine.createNewEntity(EEntity.RING_D, Renderer.TILES_HORIZONTAL - 5, 4);
-		gameEngine.createNewEntity(EEntity.RING_E, Renderer.TILES_HORIZONTAL - 5, 5);
-		gameEngine.createNewEntity(EEntity.RING_F, Renderer.TILES_HORIZONTAL - 5, 6);
-		gameEngine.createNewEntity(EEntity.RING_G, Renderer.TILES_HORIZONTAL - 5, 7);
-		gameEngine.createNewEntity(EEntity.RING_H, Renderer.TILES_HORIZONTAL - 5, 8);
-		gameEngine.createNewEntity(EEntity.RING_I, Renderer.TILES_HORIZONTAL - 5, 9);
-		gameEngine.createNewEntity(EEntity.RING_J, Renderer.TILES_HORIZONTAL - 5, 10);
-		gameEngine.createNewEntity(EEntity.WEAPON_A, Renderer.TILES_HORIZONTAL - 6, 1);
-		gameEngine.createNewEntity(EEntity.WEAPON_B, Renderer.TILES_HORIZONTAL - 6, 2);
-		gameEngine.createNewEntity(EEntity.WEAPON_C, Renderer.TILES_HORIZONTAL - 6, 3);
-		gameEngine.createNewEntity(EEntity.WEAPON_D, Renderer.TILES_HORIZONTAL - 6, 4);
-		gameEngine.createNewEntity(EEntity.WEAPON_E, Renderer.TILES_HORIZONTAL - 6, 5);
-		gameEngine.createNewEntity(EEntity.WEAPON_F, Renderer.TILES_HORIZONTAL - 6, 6);
-		gameEngine.createNewEntity(EEntity.WEAPON_G, Renderer.TILES_HORIZONTAL - 6, 7);
-		gameEngine.createNewEntity(EEntity.WEAPON_H, Renderer.TILES_HORIZONTAL - 6, 8);
-		gameEngine.createNewEntity(EEntity.WEAPON_I, Renderer.TILES_HORIZONTAL - 6, 9);
-		gameEngine.createNewEntity(EEntity.WEAPON_J, Renderer.TILES_HORIZONTAL - 6, 10);
-		gameEngine.createNewEntity(EEntity.SHIELD_A, Renderer.TILES_HORIZONTAL - 7, 1);
-		gameEngine.createNewEntity(EEntity.SHIELD_B, Renderer.TILES_HORIZONTAL - 7, 2);
-		gameEngine.createNewEntity(EEntity.SHIELD_C, Renderer.TILES_HORIZONTAL - 7, 3);
-		gameEngine.createNewEntity(EEntity.SHIELD_D, Renderer.TILES_HORIZONTAL - 7, 4);
-		gameEngine.createNewEntity(EEntity.SHIELD_E, Renderer.TILES_HORIZONTAL - 7, 5);
-		gameEngine.createNewEntity(EEntity.SHIELD_F, Renderer.TILES_HORIZONTAL - 7, 6);
-		gameEngine.createNewEntity(EEntity.SHIELD_G, Renderer.TILES_HORIZONTAL - 7, 7);
 
 		DungeonRenderer.initInstance();
 		GuiRenderer.initInstance();
@@ -202,26 +120,8 @@ public class TaloonerRl implements ApplicationListener {
 				delayToNextTurn = delayBetweenTurns;
 			}
 		}
-		playerHealthComponent = playerEntity.getComponent(HealthComponent.class);
-		if (Gdx.input.isKeyPressed(Keys.NUM_1)) {
-			playerHealthComponent.setHealthPercent(0.00f);
-		}
-		if (Gdx.input.isKeyPressed(Keys.NUM_2)) {
-			playerHealthComponent.setHealthPercent(0.25f);
-		}
-		if (Gdx.input.isKeyPressed(Keys.NUM_3)) {
-			playerHealthComponent.setHealthPercent(0.5f);
-		}
-		if (Gdx.input.isKeyPressed(Keys.NUM_4)) {
-			playerHealthComponent.setHealthPercent(0.75f);
-		}
-		if (Gdx.input.isKeyPressed(Keys.NUM_5)) {
-			playerHealthComponent.setHealthPercent(1.0f);
-		}
 
-		elapsed += deltaTime;
 		Renderer.getInstance().beginRenderingWorld();
-
 		DungeonRenderer.getInstance().render(map);
 
 		// final Vector3 touchPos = new Vector3();
@@ -238,8 +138,6 @@ public class TaloonerRl implements ApplicationListener {
 		// final float tileY = touchPos.y / Renderer.TILES_VERTICAL;
 		// Renderer.getInstance().BATCH.draw(cursor, tileX, tileY);
 		// System.out.println(tileX + " " + tileY);
-
-		// highlightPlayerTile(player);
 
 		GameEngine.getInstance().update(deltaTime);
 		Renderer.getInstance().endWorldRendering();
