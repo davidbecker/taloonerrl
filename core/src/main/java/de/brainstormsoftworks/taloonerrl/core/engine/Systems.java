@@ -17,6 +17,7 @@ import de.brainstormsoftworks.taloonerrl.system.CameraSystem;
 import de.brainstormsoftworks.taloonerrl.system.FacingAnimationRenderSystem;
 import de.brainstormsoftworks.taloonerrl.system.HealthBarRenderSystem;
 import de.brainstormsoftworks.taloonerrl.system.HighlightRenderSystem;
+import de.brainstormsoftworks.taloonerrl.system.InputSystem;
 import de.brainstormsoftworks.taloonerrl.system.MovementSystem;
 import de.brainstormsoftworks.taloonerrl.system.SpriteRenderSystem;
 
@@ -34,6 +35,7 @@ public final class Systems {
 	private static final HealthBarRenderSystem RENDER_BAR_SYSTEM = new HealthBarRenderSystem();
 	private static final HighlightRenderSystem HIGHLIGHT_SYSTEM = new HighlightRenderSystem();
 	private static final CameraSystem CAMERA_SYSTEM = new CameraSystem();
+	private static final InputSystem INPUT_SYSTEM = new InputSystem();
 
 	private Systems() {
 	}
@@ -45,6 +47,7 @@ public final class Systems {
 	 */
 	public static void setSystems(final WorldConfiguration config) {
 		// order is important! systems are processed in given order
+		config.setSystem(INPUT_SYSTEM);
 		config.setSystem(CAMERA_SYSTEM);
 		config.setSystem(HIGHLIGHT_SYSTEM);
 		config.setSystem(SPRITE_RENDER_SYSTEM);
