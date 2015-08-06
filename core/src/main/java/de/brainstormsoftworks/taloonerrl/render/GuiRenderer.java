@@ -13,6 +13,7 @@ package de.brainstormsoftworks.taloonerrl.render;
 import com.artemis.Entity;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import de.brainstormsoftworks.taloonerrl.components.HealthComponent;
@@ -20,7 +21,8 @@ import de.brainstormsoftworks.taloonerrl.core.engine.GameEngine;
 
 public final class GuiRenderer implements IDisposableInstance {
 	private static GuiRenderer instance = null;
-	private Texture guiTexture = null;
+	private Texture guiTexture0 = null;
+	private Texture guiTexture1 = null;
 
 	private final TextureRegion sBarLeft;
 	private final TextureRegion sBarCenter;
@@ -47,63 +49,80 @@ public final class GuiRenderer implements IDisposableInstance {
 	private final TextureRegion sBarSilver50;
 	private final TextureRegion sBarSilver25;
 
-	private static final String TEXTURE_PATH = "textures/dawnlike/GUI/";
+	private final Animation heartAnimation;
+	private final Animation levelUpAnimation;
+
+	private static final String TEXTURE_PATH = "textures/gui/";
 
 	private GuiRenderer() {
-		guiTexture = new Texture(Gdx.files.internal(TEXTURE_PATH + "GUI0.png"), false);
-		sBarLeft = new TextureRegion(guiTexture, 6 * Renderer.tileSize, 0 * Renderer.tileSize,
+		guiTexture0 = new Texture(Gdx.files.internal(TEXTURE_PATH + "GUI0.png"), false);
+		guiTexture1 = new Texture(Gdx.files.internal(TEXTURE_PATH + "GUI1.png"), false);
+		sBarLeft = new TextureRegion(guiTexture0, 6 * Renderer.tileSize, 0 * Renderer.tileSize,
 				Renderer.tileSize, Renderer.tileSize);
-		sBarCenter = new TextureRegion(guiTexture, 7 * Renderer.tileSize, 0 * Renderer.tileSize,
+		sBarCenter = new TextureRegion(guiTexture0, 7 * Renderer.tileSize, 0 * Renderer.tileSize,
 				Renderer.tileSize, Renderer.tileSize);
-		sBarRight = new TextureRegion(guiTexture, 8 * Renderer.tileSize, 0 * Renderer.tileSize,
+		sBarRight = new TextureRegion(guiTexture0, 8 * Renderer.tileSize, 0 * Renderer.tileSize,
 				Renderer.tileSize, Renderer.tileSize);
-		sBarSmall = new TextureRegion(guiTexture, 9 * Renderer.tileSize, 0 * Renderer.tileSize,
-				Renderer.tileSize, Renderer.tileSize);
-
-		sBarRed100 = new TextureRegion(guiTexture, 6 * Renderer.tileSize, 1 * Renderer.tileSize,
-				Renderer.tileSize, Renderer.tileSize);
-		sBarRed75 = new TextureRegion(guiTexture, 7 * Renderer.tileSize, 1 * Renderer.tileSize,
-				Renderer.tileSize, Renderer.tileSize);
-		sBarRed50 = new TextureRegion(guiTexture, 8 * Renderer.tileSize, 1 * Renderer.tileSize,
-				Renderer.tileSize, Renderer.tileSize);
-		sBarRed25 = new TextureRegion(guiTexture, 9 * Renderer.tileSize, 1 * Renderer.tileSize,
+		sBarSmall = new TextureRegion(guiTexture0, 9 * Renderer.tileSize, 0 * Renderer.tileSize,
 				Renderer.tileSize, Renderer.tileSize);
 
-		sBarBlue100 = new TextureRegion(guiTexture, 6 * Renderer.tileSize, 2 * Renderer.tileSize,
+		sBarRed100 = new TextureRegion(guiTexture0, 6 * Renderer.tileSize, 1 * Renderer.tileSize,
 				Renderer.tileSize, Renderer.tileSize);
-		sBarBlue75 = new TextureRegion(guiTexture, 7 * Renderer.tileSize, 2 * Renderer.tileSize,
+		sBarRed75 = new TextureRegion(guiTexture0, 7 * Renderer.tileSize, 1 * Renderer.tileSize,
 				Renderer.tileSize, Renderer.tileSize);
-		sBarBlue50 = new TextureRegion(guiTexture, 8 * Renderer.tileSize, 2 * Renderer.tileSize,
+		sBarRed50 = new TextureRegion(guiTexture0, 8 * Renderer.tileSize, 1 * Renderer.tileSize,
 				Renderer.tileSize, Renderer.tileSize);
-		sBarBlue25 = new TextureRegion(guiTexture, 9 * Renderer.tileSize, 2 * Renderer.tileSize,
-				Renderer.tileSize, Renderer.tileSize);
-
-		sBarGreen100 = new TextureRegion(guiTexture, 6 * Renderer.tileSize, 3 * Renderer.tileSize,
-				Renderer.tileSize, Renderer.tileSize);
-		sBarGreen75 = new TextureRegion(guiTexture, 7 * Renderer.tileSize, 3 * Renderer.tileSize,
-				Renderer.tileSize, Renderer.tileSize);
-		sBarGreen50 = new TextureRegion(guiTexture, 8 * Renderer.tileSize, 3 * Renderer.tileSize,
-				Renderer.tileSize, Renderer.tileSize);
-		sBarGreen25 = new TextureRegion(guiTexture, 9 * Renderer.tileSize, 3 * Renderer.tileSize,
+		sBarRed25 = new TextureRegion(guiTexture0, 9 * Renderer.tileSize, 1 * Renderer.tileSize,
 				Renderer.tileSize, Renderer.tileSize);
 
-		sBarYellow100 = new TextureRegion(guiTexture, 6 * Renderer.tileSize, 4 * Renderer.tileSize,
+		sBarBlue100 = new TextureRegion(guiTexture0, 6 * Renderer.tileSize, 2 * Renderer.tileSize,
 				Renderer.tileSize, Renderer.tileSize);
-		sBarYellow75 = new TextureRegion(guiTexture, 7 * Renderer.tileSize, 4 * Renderer.tileSize,
+		sBarBlue75 = new TextureRegion(guiTexture0, 7 * Renderer.tileSize, 2 * Renderer.tileSize,
 				Renderer.tileSize, Renderer.tileSize);
-		sBarYellow50 = new TextureRegion(guiTexture, 8 * Renderer.tileSize, 4 * Renderer.tileSize,
+		sBarBlue50 = new TextureRegion(guiTexture0, 8 * Renderer.tileSize, 2 * Renderer.tileSize,
 				Renderer.tileSize, Renderer.tileSize);
-		sBarYellow25 = new TextureRegion(guiTexture, 9 * Renderer.tileSize, 4 * Renderer.tileSize,
+		sBarBlue25 = new TextureRegion(guiTexture0, 9 * Renderer.tileSize, 2 * Renderer.tileSize,
 				Renderer.tileSize, Renderer.tileSize);
 
-		sBarSilver100 = new TextureRegion(guiTexture, 6 * Renderer.tileSize, 5 * Renderer.tileSize,
+		sBarGreen100 = new TextureRegion(guiTexture0, 6 * Renderer.tileSize, 3 * Renderer.tileSize,
 				Renderer.tileSize, Renderer.tileSize);
-		sBarSilver75 = new TextureRegion(guiTexture, 7 * Renderer.tileSize, 5 * Renderer.tileSize,
+		sBarGreen75 = new TextureRegion(guiTexture0, 7 * Renderer.tileSize, 3 * Renderer.tileSize,
 				Renderer.tileSize, Renderer.tileSize);
-		sBarSilver50 = new TextureRegion(guiTexture, 8 * Renderer.tileSize, 5 * Renderer.tileSize,
+		sBarGreen50 = new TextureRegion(guiTexture0, 8 * Renderer.tileSize, 3 * Renderer.tileSize,
 				Renderer.tileSize, Renderer.tileSize);
-		sBarSilver25 = new TextureRegion(guiTexture, 9 * Renderer.tileSize, 5 * Renderer.tileSize,
+		sBarGreen25 = new TextureRegion(guiTexture0, 9 * Renderer.tileSize, 3 * Renderer.tileSize,
 				Renderer.tileSize, Renderer.tileSize);
+
+		sBarYellow100 = new TextureRegion(guiTexture0, 6 * Renderer.tileSize, 4 * Renderer.tileSize,
+				Renderer.tileSize, Renderer.tileSize);
+		sBarYellow75 = new TextureRegion(guiTexture0, 7 * Renderer.tileSize, 4 * Renderer.tileSize,
+				Renderer.tileSize, Renderer.tileSize);
+		sBarYellow50 = new TextureRegion(guiTexture0, 8 * Renderer.tileSize, 4 * Renderer.tileSize,
+				Renderer.tileSize, Renderer.tileSize);
+		sBarYellow25 = new TextureRegion(guiTexture0, 9 * Renderer.tileSize, 4 * Renderer.tileSize,
+				Renderer.tileSize, Renderer.tileSize);
+
+		sBarSilver100 = new TextureRegion(guiTexture0, 6 * Renderer.tileSize, 5 * Renderer.tileSize,
+				Renderer.tileSize, Renderer.tileSize);
+		sBarSilver75 = new TextureRegion(guiTexture0, 7 * Renderer.tileSize, 5 * Renderer.tileSize,
+				Renderer.tileSize, Renderer.tileSize);
+		sBarSilver50 = new TextureRegion(guiTexture0, 8 * Renderer.tileSize, 5 * Renderer.tileSize,
+				Renderer.tileSize, Renderer.tileSize);
+		sBarSilver25 = new TextureRegion(guiTexture0, 9 * Renderer.tileSize, 5 * Renderer.tileSize,
+				Renderer.tileSize, Renderer.tileSize);
+
+		final TextureRegion[] heartFrames = new TextureRegion[2];
+		heartFrames[0] = new TextureRegion(guiTexture0, 0 * Renderer.tileSize, 5 * Renderer.tileSize,
+				Renderer.tileSize, Renderer.tileSize);
+		heartFrames[1] = new TextureRegion(guiTexture1, 0 * Renderer.tileSize, 5 * Renderer.tileSize,
+				Renderer.tileSize, Renderer.tileSize);
+		heartAnimation = new Animation(1f, heartFrames);
+		final TextureRegion[] levelUpFrames = new TextureRegion[2];
+		levelUpFrames[0] = new TextureRegion(guiTexture0, 1 * Renderer.tileSize, 6 * Renderer.tileSize,
+				Renderer.tileSize, Renderer.tileSize);
+		levelUpFrames[1] = new TextureRegion(guiTexture1, 1 * Renderer.tileSize, 6 * Renderer.tileSize,
+				Renderer.tileSize, Renderer.tileSize);
+		levelUpAnimation = new Animation(1f, levelUpFrames);
 
 		RenderUtil.addToDisposeList(this);
 	}
@@ -127,7 +146,7 @@ public final class GuiRenderer implements IDisposableInstance {
 	/** {@inheritDoc} */
 	@Override
 	public void disposeInstance() {
-		guiTexture.dispose();
+		guiTexture0.dispose();
 	}
 
 	/**
@@ -144,7 +163,12 @@ public final class GuiRenderer implements IDisposableInstance {
 		if (player != null) {
 			final float playerHeath = player.getComponent(HealthComponent.class).getHealthPercent();
 			renderBar(playerHeath, 3, 1, 2, EBarElementColor.RED);
+			Renderer.getInstance().renderOnScreen(RenderUtil.getKeyFrame(heartAnimation),
+					-Renderer.tileSize / 4, 2 * Renderer.tileSize + Renderer.tileSize / 4);
 			renderBar(0, 3, 1, 1, EBarElementColor.SILVER);
+			Renderer.getInstance().renderOnScreen(RenderUtil.getKeyFrame(levelUpAnimation),
+					-Renderer.tileSize / 4, 1 * Renderer.tileSize + Renderer.tileSize / 4);
+
 		}
 	}
 
