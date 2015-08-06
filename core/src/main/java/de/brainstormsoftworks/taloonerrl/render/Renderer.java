@@ -82,7 +82,7 @@ public final class Renderer implements IDisposableInstance {
 	/**
 	 * starts rendering on the {@link SpriteBatch} of the world.
 	 */
-	public void beginRenderingWorld() {
+	public void beginWorldRendering() {
 		Gdx.graphics.setTitle("current fps: " + Gdx.graphics.getFramesPerSecond());
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		spriteBatchWorld.begin();
@@ -91,7 +91,7 @@ public final class Renderer implements IDisposableInstance {
 	/**
 	 * starts rendering on the {@link SpriteBatch} of the screen.
 	 */
-	public void beginRenderingScreen() {
+	public void beginScreenRendering() {
 		spriteBatchScreen.begin();
 	}
 
