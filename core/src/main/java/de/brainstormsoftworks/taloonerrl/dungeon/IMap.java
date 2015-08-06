@@ -4,7 +4,7 @@
  * are made available under the terms of the GNU Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
- * 
+ *
  * Contributors:
  *     David Becker - initial API and implementation
  ******************************************************************************/
@@ -40,5 +40,19 @@ public interface IMap {
 	 * @return array of tiles
 	 */
 	ITile[][] getMap();
+
+	/**
+	 * get the number of tiles in the map
+	 *
+	 * @return horizontal dimension of map
+	 */
+	int getTilesHorizontal();
+
+	/**
+	 * get the number of tiles in the map
+	 *
+	 * @return vertical dimension of map
+	 */
+	int getTilesVertical();
 
 }

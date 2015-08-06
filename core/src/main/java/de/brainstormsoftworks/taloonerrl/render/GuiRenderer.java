@@ -130,18 +130,21 @@ public final class GuiRenderer implements IDisposableInstance {
 		guiTexture.dispose();
 	}
 
-	public void render(final int tilesHorizontal, final int tilesVertical) {
+	/**
+	 * renderes the gui
+	 *
+	 * @param width
+	 *            width of the screen
+	 * @param height
+	 *            height of the screen
+	 */
+	public void render(final int width, final int height) {
 		// hack to avoid null pointer on first frame
 		final Entity player = GameEngine.getInstance().getEntity(0);
 		if (player != null) {
 			final float playerHeath = player.getComponent(HealthComponent.class).getHealthPercent();
-			renderBar(playerHeath, 1, tilesHorizontal + 1, tilesVertical - 1, EBarElementColor.RED);
-			renderBar(playerHeath, 2, tilesHorizontal + 1, tilesVertical - 2, EBarElementColor.RED);
-			renderBar(playerHeath, 3, tilesHorizontal + 1, tilesVertical - 3, EBarElementColor.RED);
-			renderBar(playerHeath, 3, tilesHorizontal + 1, tilesVertical - 4, EBarElementColor.BLUE);
-			renderBar(playerHeath, 3, tilesHorizontal + 1, tilesVertical - 5, EBarElementColor.GREEN);
-			renderBar(playerHeath, 3, tilesHorizontal + 1, tilesVertical - 6, EBarElementColor.YELLOW);
-			renderBar(playerHeath, 3, tilesHorizontal + 1, tilesVertical - 7, EBarElementColor.SILVER);
+			renderBar(playerHeath, 3, 1, 2, EBarElementColor.RED);
+			renderBar(0, 3, 1, 1, EBarElementColor.SILVER);
 		}
 	}
 

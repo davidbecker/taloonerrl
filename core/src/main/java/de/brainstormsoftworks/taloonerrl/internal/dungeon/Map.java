@@ -4,7 +4,7 @@
  * are made available under the terms of the GNU Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
- * 
+ *
  * Contributors:
  *     David Becker - initial API and implementation
  ******************************************************************************/
@@ -15,7 +15,7 @@ import de.brainstormsoftworks.taloonerrl.dungeon.ITile;
 
 public class Map implements IMap {
 
-	private ITile[][] map;
+	private final ITile[][] map;
 	private final int tilesHorizontal;
 	private final int tilesVertical;
 
@@ -55,8 +55,14 @@ public class Map implements IMap {
 		return map;
 	}
 
-	public void setMap(final ITile[][] newMap) {
-		map = newMap;
+	@Override
+	public int getTilesHorizontal() {
+		return tilesHorizontal;
+	}
+
+	@Override
+	public int getTilesVertical() {
+		return tilesVertical;
 	}
 
 }

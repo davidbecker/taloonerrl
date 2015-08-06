@@ -51,7 +51,7 @@ public class TaloonerRl implements ApplicationListener {
 
 	@Override
 	public void create() {
-		map = MapFactory.createMap(Renderer.TILES_HORIZONTAL, Renderer.TILES_VERTICAL);
+		map = MapFactory.createMap(Renderer.TILES_HORIZONTAL * 2, Renderer.TILES_VERTICAL * 2);
 
 		mouseX = Gdx.graphics.getWidth() / 2;
 		mouseY = Gdx.graphics.getHeight() / 2;
@@ -147,6 +147,7 @@ public class TaloonerRl implements ApplicationListener {
 
 		DungeonRenderer.initInstance();
 		GuiRenderer.initInstance();
+
 	}
 
 	@Override
@@ -219,11 +220,9 @@ public class TaloonerRl implements ApplicationListener {
 		}
 
 		elapsed += deltaTime;
-		Renderer.getInstance().beginRendering();
+		Renderer.getInstance().beginRenderingWorld();
 
-		DungeonRenderer.getInstance().render(map.getMap(), Renderer.TILES_HORIZONTAL,
-				Renderer.TILES_VERTICAL);
-		GuiRenderer.getInstance().render(Renderer.TILES_HORIZONTAL, Renderer.TILES_VERTICAL);
+		DungeonRenderer.getInstance().render(map);
 
 		// final Vector3 touchPos = new Vector3();
 		// touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
@@ -243,9 +242,11 @@ public class TaloonerRl implements ApplicationListener {
 		// highlightPlayerTile(player);
 
 		GameEngine.getInstance().update(deltaTime);
-		Renderer.getInstance().endRendering();
-
-		// isPlayerTurn = false;
+		Renderer.getInstance().endWorldRendering();
+		Renderer.getInstance().beginRenderingScreen();
+		GuiRenderer.getInstance().render(Gdx.graphics.getWidth() / Renderer.screenScale,
+				Gdx.graphics.getHeight() / Renderer.screenScale);
+		Renderer.getInstance().endScreenRendering();
 	}
 
 	@Override

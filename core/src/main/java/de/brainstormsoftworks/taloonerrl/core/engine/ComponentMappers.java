@@ -15,6 +15,7 @@ import com.artemis.ComponentMapper;
 import com.artemis.World;
 
 import de.brainstormsoftworks.taloonerrl.components.AnimationComponent;
+import de.brainstormsoftworks.taloonerrl.components.CameraFollowComponent;
 import de.brainstormsoftworks.taloonerrl.components.ControllerComponent;
 import de.brainstormsoftworks.taloonerrl.components.FacingAnimationComponent;
 import de.brainstormsoftworks.taloonerrl.components.FacingComponent;
@@ -40,6 +41,7 @@ public final class ComponentMappers {
 	public final ComponentMapper<SpriteComponent> sprite;
 	public final ComponentMapper<NameComponent> name;
 	public final ComponentMapper<HighlightComponent> highlight;
+	public final ComponentMapper<CameraFollowComponent> camera;
 
 	private static ComponentMappers instance = null;
 
@@ -53,6 +55,7 @@ public final class ComponentMappers {
 		sprite = ComponentMapper.getFor(SpriteComponent.class, world);
 		name = ComponentMapper.getFor(NameComponent.class, world);
 		highlight = ComponentMapper.getFor(HighlightComponent.class, world);
+		camera = ComponentMapper.getFor(CameraFollowComponent.class, world);
 	}
 
 	/**
