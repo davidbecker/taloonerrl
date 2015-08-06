@@ -147,7 +147,6 @@ public final class Renderer implements IDisposableInstance {
 	 */
 	public void renderOnTileWithOffset(final TextureRegion region, final int x, final int y, final int dX,
 			final int dY, final int width, final int height) {
-		// TODO implement offset for camera, check if tile should be rendered
 		spriteBatchWorld.draw(region, x * tileSize + dX, y * tileSize + dY, width, height);
 	}
 
@@ -162,10 +161,6 @@ public final class Renderer implements IDisposableInstance {
 	 *            vertical position
 	 */
 	public void renderOnScreen(final TextureRegion region, final int x, final int y) {
-		// final Vector3 project = cameraWorld.project(new Vector3(x, y, 0));
-		// spriteBatchWorld.draw(region, project.x, project.y);
-		// final Vector3 project2 = worldViewport.project(new Vector3(x, y, 0));
-		// spriteBatchWorld.draw(region, project2.x, project2.y);
 		spriteBatchScreen.draw(region, x, y);
 	}
 
