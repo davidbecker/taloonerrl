@@ -316,4 +316,9 @@ public final class IntVector2 implements Serializable, Vector<IntVector2> {
 		y = _y;
 	}
 
+	@Override
+	public String toString() {
+		return "{ " + x + ", " + y + "}";
+	}
+
 }

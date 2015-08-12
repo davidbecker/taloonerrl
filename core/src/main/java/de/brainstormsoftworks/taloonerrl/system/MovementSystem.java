@@ -4,18 +4,20 @@
  * are made available under the terms of the GNU Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
- * 
+ *
  * Contributors:
  *     David Becker - initial API and implementation
  ******************************************************************************/
 package de.brainstormsoftworks.taloonerrl.system;
 
 import com.artemis.Aspect;
+import com.artemis.ComponentMapper;
 import com.artemis.Entity;
 import com.artemis.systems.EntityProcessingSystem;
 
 import de.brainstormsoftworks.taloonerrl.components.ControllerComponent;
 import de.brainstormsoftworks.taloonerrl.components.PositionComponent;
+import de.brainstormsoftworks.taloonerrl.core.engine.ComponentMappers;
 
 public class MovementSystem extends EntityProcessingSystem {
 
@@ -32,20 +34,16 @@ public class MovementSystem extends EntityProcessingSystem {
 		 * particles (if needed)
 		 */
 		// // TODO implement collision
-		// final ComponentMapper<PositionComponent> posMapper =
-		// ComponentMappers.getInstance().position;
-		// final ComponentMapper<ControllerComponent> controllerMapper =
-		// ComponentMappers.getInstance().controller;
-		// final PositionComponent position = posMapper.get(entity);
-		// final ControllerComponent controllerComponent =
-		// controllerMapper.get(entity);
-		// // adds the vector to the position
-		// position.setX(position.getX() +
-		// controllerComponent.getMoveVector().getX());
-		// position.setY(position.getY() +
-		// controllerComponent.getMoveVector().getY());
-		// // resets controller vector
-		// controllerComponent.getMoveVector().setZero();
+		final ComponentMapper<PositionComponent> posMapper = ComponentMappers.getInstance().position;
+		final ComponentMapper<ControllerComponent> controllerMapper = ComponentMappers
+				.getInstance().controller;
+		final PositionComponent position = posMapper.get(entity);
+		final ControllerComponent controllerComponent = controllerMapper.get(entity);
+		// adds the vector to the position
+		position.setX(position.getX() + controllerComponent.getdX());
+		position.setY(position.getY() + controllerComponent.getdY());
+		// resets controller vector
+		controllerComponent.reset();
 	}
 
 }

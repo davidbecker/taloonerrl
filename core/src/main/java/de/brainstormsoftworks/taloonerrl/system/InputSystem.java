@@ -10,9 +10,9 @@
  ******************************************************************************/
 package de.brainstormsoftworks.taloonerrl.system;
 
-import com.artemis.BaseSystem;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
-import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.InputAdapter;
 
 /**
  * system that processes the input of the player
@@ -20,12 +20,16 @@ import com.badlogic.gdx.InputProcessor;
  * @author David Becker
  *
  */
-public class InputSystem extends BaseSystem implements InputProcessor {
+public final class InputSystem extends InputAdapter {
 
 	private static boolean keyPressedUp = false;
 	private static boolean keyPressedDown = false;
 	private static boolean keyPressedLeft = false;
 	private static boolean keyPressedRight = false;
+
+	private float delayToNextTurn = 0f;
+	/** minimum delay between player turns */
+	private static final float delayBetweenTurns = 0.03f;
 
 	@Override
 	public boolean keyDown(final int keycode) {
@@ -35,73 +39,23 @@ public class InputSystem extends BaseSystem implements InputProcessor {
 		keyPressedLeft = false;
 		keyPressedRight = false;
 
-		// set new input
-		if (Keys.UP == keycode) {
-			keyPressedUp = true;
+		final float deltaTime = Gdx.graphics.getDeltaTime();
+		delayToNextTurn -= deltaTime;
+		if (delayToNextTurn <= 0f) {
+			// set new input
+			if (Keys.UP == keycode) {
+				keyPressedUp = true;
+			} else if (Keys.DOWN == keycode) {
+				keyPressedDown = true;
+			} else if (Keys.LEFT == keycode) {
+				keyPressedLeft = true;
+			} else if (Keys.RIGHT == keycode) {
+				keyPressedRight = true;
+			}
+			delayToNextTurn = delayBetweenTurns;
 			return true;
 		}
-		if (Keys.DOWN == keycode) {
-			keyPressedDown = true;
-			return true;
-		}
-		if (Keys.LEFT == keycode) {
-			keyPressedLeft = true;
-			return true;
-		}
-		if (Keys.RIGHT == keycode) {
-			keyPressedRight = true;
-			return true;
-		}
-		// TODO Auto-generated method stub
 		return false;
-	}
-
-	@Override
-	public boolean keyUp(final int keycode) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean keyTyped(final char character) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean touchDown(final int screenX, final int screenY, final int pointer, final int button) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean touchUp(final int screenX, final int screenY, final int pointer, final int button) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean touchDragged(final int screenX, final int screenY, final int pointer) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean mouseMoved(final int screenX, final int screenY) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean scrolled(final int amount) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	protected void processSystem() {
-		// TODO Auto-generated method stub
-
 	}
 
 	/**
@@ -109,7 +63,7 @@ public class InputSystem extends BaseSystem implements InputProcessor {
 	 *
 	 * @return the keyPressedUp
 	 */
-	public static final boolean isKeyPressedUp() {
+	public static boolean isKeyPressedUp() {
 		return keyPressedUp;
 	}
 
@@ -118,7 +72,7 @@ public class InputSystem extends BaseSystem implements InputProcessor {
 	 *
 	 * @return the keyPressedDown
 	 */
-	public static final boolean isKeyPressedDown() {
+	public static boolean isKeyPressedDown() {
 		return keyPressedDown;
 	}
 
@@ -127,7 +81,7 @@ public class InputSystem extends BaseSystem implements InputProcessor {
 	 *
 	 * @return the keyPressedLeft
 	 */
-	public static final boolean isKeyPressedLeft() {
+	public static boolean isKeyPressedLeft() {
 		return keyPressedLeft;
 	}
 
@@ -136,7 +90,7 @@ public class InputSystem extends BaseSystem implements InputProcessor {
 	 *
 	 * @return the keyPressedRight
 	 */
-	public static final boolean isKeyPressedRight() {
+	public static boolean isKeyPressedRight() {
 		return keyPressedRight;
 	}
 

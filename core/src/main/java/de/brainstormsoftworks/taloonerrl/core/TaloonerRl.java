@@ -140,6 +140,7 @@ public class TaloonerRl implements ApplicationListener {
 		// System.out.println(tileX + " " + tileY);
 
 		GameEngine.getInstance().update(deltaTime);
+		System.err.println("turn");
 		Renderer.getInstance().endWorldRendering();
 		Renderer.getInstance().beginScreenRendering();
 		GuiRenderer.getInstance().render(Gdx.graphics.getWidth() / Renderer.screenScale,
