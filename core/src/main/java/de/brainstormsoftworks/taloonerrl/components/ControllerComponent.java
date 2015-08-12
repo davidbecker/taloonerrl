@@ -12,8 +12,6 @@ package de.brainstormsoftworks.taloonerrl.components;
 
 import com.artemis.PooledComponent;
 
-import de.brainstormsoftworks.taloonerrl.math.IntVector2;
-
 /**
  * component for an entity that can get input<br/>
  * TODO implement use
@@ -22,20 +20,51 @@ import de.brainstormsoftworks.taloonerrl.math.IntVector2;
  *
  */
 public class ControllerComponent extends PooledComponent {
-	private final IntVector2 moveVector = new IntVector2(0, 0);
+	private int dX = 0;
+	private int dY = 0;
 
 	@Override
-	protected void reset() {
-		moveVector.setZero();
+	public void reset() {
+		dX = 0;
+		dY = 0;
 	}
 
 	/**
-	 * getter for moveVector
+	 * getter for {@link #dX}
 	 *
-	 * @return the moveVector
+	 * @return the dX
 	 */
-	public final IntVector2 getMoveVector() {
-		return moveVector;
+	public final int getdX() {
+		return dX;
+	}
+
+	/**
+	 * setter for dX
+	 *
+	 * @param _dX
+	 *            the dX to set
+	 */
+	public final void setdX(final int _dX) {
+		dX = _dX;
+	}
+
+	/**
+	 * getter for {@link #dY}
+	 *
+	 * @return the dY
+	 */
+	public final int getdY() {
+		return dY;
+	}
+
+	/**
+	 * setter for dY
+	 *
+	 * @param _dY
+	 *            the dY to set
+	 */
+	public final void setdY(final int _dY) {
+		dY = _dY;
 	}
 
 }

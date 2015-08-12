@@ -8,20 +8,16 @@
  * Contributors:
  *     David Becker - initial API and implementation
  ******************************************************************************/
-package de.brainstormsoftworks.taloonerrl.actors;
+package de.brainstormsoftworks.taloonerrl.components;
 
 import com.artemis.Component;
 
-import de.brainstormsoftworks.taloonerrl.dungeon.ESprite;
-
 /**
- * interface for an component
+ * empty component to mark an entity as a player entity
  *
- * @deprecated use {@link Component} instead
  * @author David Becker
  *
  */
-@Deprecated
-public interface IActorSprite {
-	ESprite getSprite();
+public class PlayerComponent extends Component {
+
 }

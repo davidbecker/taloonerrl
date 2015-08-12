@@ -28,8 +28,7 @@ import de.brainstormsoftworks.taloonerrl.render.Renderer;
  *
  */
 public class HealthBarRenderSystem extends EntityProcessingSystem {
-	private static final int tileSize = 16;
-	private static final int totalSize = tileSize - 2;
+	private static final int totalSize = Renderer.tileSize - 2;
 	private int sizeGreen = 0;
 	private int sizeRed = 0;
 
@@ -48,16 +47,15 @@ public class HealthBarRenderSystem extends EntityProcessingSystem {
 			sizeGreen = (int) (totalSize * healthComponent.getHealthPercent());
 			sizeRed = totalSize - sizeGreen;
 			// draw a black border around the bar
-			Renderer.getInstance().BATCH.draw(PaletteUtil.getInstance().BLACK, positionComponent.getX() * tileSize,
-					positionComponent.getY() * tileSize, tileSize, 3);
+			Renderer.getInstance().renderOnTileWithOffset(PaletteUtil.getInstance().BLACK,
+					positionComponent.getX(), positionComponent.getY(), 0, 0, Renderer.tileSize, 3);
 			for (int i = 0; i < sizeGreen; i++) {
-				Renderer.getInstance().BATCH.draw(PaletteUtil.getInstance().LIGHT_GREEN,
-						positionComponent.getX() * tileSize + i + 1, positionComponent.getY() * tileSize + 1);
+				Renderer.getInstance().renderOnTileWithOffset(PaletteUtil.getInstance().LIGHT_GREEN,
+						positionComponent.getX(), positionComponent.getY(), i + 1, 1);
 			}
 			for (int i = 0; i < sizeRed; i++) {
-				Renderer.getInstance().BATCH.draw(PaletteUtil.getInstance().RED,
-						positionComponent.getX() * tileSize + i + 1 + sizeGreen,
-						positionComponent.getY() * tileSize + 1);
+				Renderer.getInstance().renderOnTileWithOffset(PaletteUtil.getInstance().RED,
+						positionComponent.getX(), positionComponent.getY(), i + 1 + sizeGreen, 1);
 			}
 		}
 

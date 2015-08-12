@@ -11,24 +11,21 @@
 package de.brainstormsoftworks.taloonerrl.render;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 /**
  * singleton to keep track of on globally accessible {@link SpriteBatch}
  *
- * TODO move methods that access {@link #BATCH} here
- *
  * @author David Becker
  *
  */
-public final class Renderer {
+public final class Renderer implements IDisposableInstance {
 
+	public static final int screenScale = 2;
 	public static final float scale = 16f;
 	public static final int tileSize = 16;
 	public static final int TILES_HORIZONTAL = 30;
@@ -39,19 +36,21 @@ public final class Renderer {
 
 	private static final Renderer instance = new Renderer();
 
-	public final SpriteBatch BATCH;
-	public final OrthographicCamera camera;
-
-	private Rectangle viewport;
-	private int viewPortX;
-	private int viewPortY;
-	private int viewPortWidth;
-	private int viewPortHeight;
+	private final OrthographicCamera cameraWorld;
+	private final SpriteBatch spriteBatchWorld;
+	private final SpriteBatch spriteBatchScreen;
+	private final ScreenViewport worldViewport;
+	ScreenViewport screenViewport;
 
 	private Renderer() {
-		BATCH = new SpriteBatch();
-		camera = new OrthographicCamera();
-		camera.setToOrtho(false, VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
+		spriteBatchWorld = new SpriteBatch();
+		spriteBatchWorld.enableBlending();
+		spriteBatchScreen = new SpriteBatch();
+		cameraWorld = new OrthographicCamera();
+		// cameraWorld.setToOrtho(false, VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
+		worldViewport = new ScreenViewport(cameraWorld);
+		screenViewport = new ScreenViewport();
+		RenderUtil.addToDisposeList(this);
 	}
 
 	public static Renderer getInstance() {
@@ -59,62 +58,143 @@ public final class Renderer {
 	}
 
 	public void resizeViewPort(final int width, final int height) {
-		// calculate new viewport
-		final float aspectRatio = (float) width / (float) height;
-		float scale = 1f;
-		final Vector2 crop = new Vector2(0f, 0f);
-		if (aspectRatio > ASPECT_RATIO) {
-			scale = height / (float) VIRTUAL_HEIGHT;
-			crop.x = (width - VIRTUAL_WIDTH * scale) / 2f;
-		} else if (aspectRatio < ASPECT_RATIO) {
-			scale = width / (float) VIRTUAL_WIDTH;
-			crop.y = (height - VIRTUAL_HEIGHT * scale) / 2f;
-		} else {
-			scale = width / (float) VIRTUAL_WIDTH;
-		}
-
-		final float w = VIRTUAL_WIDTH * scale;
-		final float h = VIRTUAL_HEIGHT * scale;
-		viewport = new Rectangle(crop.x, crop.y, w, h);
-
-		camera.update();
-
-		// see http://codebin.co.uk/blog/pixelated-rendering-in-libgdx/
-
-		viewPortX = Math.round(viewport.x * Renderer.tileSize) / Renderer.tileSize;
-		viewPortY = Math.round(viewport.y * Renderer.tileSize) / Renderer.tileSize;
-		viewPortWidth = Math.round(viewport.width * Renderer.tileSize) / Renderer.tileSize;
-		viewPortHeight = Math.round(viewport.height * Renderer.tileSize) / Renderer.tileSize;
-		Gdx.gl.glViewport(viewPortX, viewPortY, viewPortWidth, viewPortHeight);
+		worldViewport.update(width, height);
+		spriteBatchWorld.setProjectionMatrix(cameraWorld.combined);
+		screenViewport.update(width, height, true);
+		spriteBatchScreen
+				.setProjectionMatrix(screenViewport.getCamera().combined.scale(screenScale, screenScale, 0));
 	}
 
 	/**
-	 * starts rendering
+	 * sets the world camera to a specific tile
+	 *
+	 * @param x
+	 *            horizontal position of the tile
+	 * @param y
+	 *            vertical position of the tile
 	 */
-	public void beginRendering() {
+	public void setWorldCamera(final int x, final int y) {
+		cameraWorld.position.set(x * tileSize, y * tileSize, 0);
+		cameraWorld.update();
+		spriteBatchWorld.setProjectionMatrix(cameraWorld.combined);
+	}
+
+	/**
+	 * starts rendering on the {@link SpriteBatch} of the world.
+	 */
+	public void beginWorldRendering() {
 		Gdx.graphics.setTitle("current fps: " + Gdx.graphics.getFramesPerSecond());
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		BATCH.setProjectionMatrix(camera.combined);
-		BATCH.begin();
-		BATCH.enableBlending();
+		spriteBatchWorld.begin();
 	}
 
 	/**
-	 * finishes rendering
+	 * starts rendering on the {@link SpriteBatch} of the screen.
 	 */
-	public void endRendering() {
-		BATCH.end();
+	public void beginScreenRendering() {
+		spriteBatchScreen.begin();
 	}
 
 	/**
-	 * convenience method
+	 * renders a sprite on the given tile coordinates
 	 *
-	 * @see Camera#unproject(Vector3)
-	 * @param v
-	 *            screen coordinates to translate
+	 * @param region
+	 *            sprite to draw
+	 * @param x
+	 *            horizontal tile position
+	 * @param y
+	 *            vertical tile position
 	 */
-	public void unprojectFromCamera(final Vector3 v) {
-		camera.unproject(v, viewPortX, viewPortY, viewPortWidth, viewPortHeight);
+	public void renderOnTile(final TextureRegion region, final int x, final int y) {
+		renderOnTileWithOffset(region, x, y, 0, 0, region.getRegionWidth(), region.getRegionWidth());
+	}
+
+	/**
+	 * renders a sprite on the given tile coordinates with an offset an the with
+	 * & high of the given {@link TextureRegion}
+	 *
+	 * @param region
+	 *            sprite to draw
+	 * @param x
+	 *            horizontal tile position
+	 * @param y
+	 *            vertical tile position
+	 * @param dX
+	 *            horizontal offset
+	 * @param dY
+	 *            vertical offset
+	 */
+	public void renderOnTileWithOffset(final TextureRegion region, final int x, final int y, final int dX,
+			final int dY) {
+		// TODO implement offset for camera, check if tile should be rendered
+		renderOnTileWithOffset(region, x, y, dX, dY, region.getRegionWidth(), region.getRegionWidth());
+	}
+
+	/**
+	 * renders a sprite on the given tile coordinates with an offset.<br/>
+	 * stretching the region to cover the given width and height.
+	 *
+	 * @param region
+	 *            sprite to draw
+	 * @param x
+	 *            horizontal tile position
+	 * @param y
+	 *            vertical tile position
+	 * @param dX
+	 *            horizontal offset
+	 * @param dY
+	 *            vertical offset
+	 */
+	public void renderOnTileWithOffset(final TextureRegion region, final int x, final int y, final int dX,
+			final int dY, final int width, final int height) {
+		spriteBatchWorld.draw(region, x * tileSize + dX, y * tileSize + dY, width, height);
+	}
+
+	/**
+	 * renders a sprite on the given screen coordinates
+	 *
+	 * @param region
+	 *            sprite to draw
+	 * @param x
+	 *            horizontal position
+	 * @param y
+	 *            vertical position
+	 */
+	public void renderOnScreen(final TextureRegion region, final int x, final int y) {
+		spriteBatchScreen.draw(region, x, y);
+	}
+
+	/**
+	 * finishes rendering on the world {@link SpriteBatch}
+	 */
+	public void endWorldRendering() {
+		spriteBatchWorld.end();
+	}
+
+	/**
+	 * finishes rendering on the world {@link SpriteBatch}
+	 */
+	public void endScreenRendering() {
+		spriteBatchScreen.end();
+	}
+
+	// FIXME reimplement
+	// /**
+	// * convenience method
+	// *
+	// * @see Camera#unproject(Vector3)
+	// * @param v
+	// * screen coordinates to translate
+	// */
+	// public void unprojectFromCamera(final Vector3 v) {
+	// cameraWorld.unproject(v, viewPortX, viewPortY, viewPortWidth,
+	// viewPortHeight);
+	// }
+
+	@Override
+	public void disposeInstance() {
+		spriteBatchWorld.dispose();
+		spriteBatchScreen.dispose();
 	}
 
 }

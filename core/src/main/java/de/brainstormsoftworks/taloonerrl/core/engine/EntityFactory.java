@@ -43,7 +43,8 @@ public final class EntityFactory {
 	 *            vertical position (tiles position)
 	 * @return new entity
 	 */
-	public static Entity createEntity(final EEntity type, final World world, final int xPosition, final int yPosition) {
+	public static Entity createEntity(final EEntity type, final World world, final int xPosition,
+			final int yPosition) {
 		switch (type) {
 		case PLAYER:
 			return createPlayer(world);
@@ -207,7 +208,8 @@ public final class EntityFactory {
 		return newEntity;
 	}
 
-	private static Entity createActor(final EEntity type, final World world, final int xPosition, final int yPosition) {
+	private static Entity createActor(final EEntity type, final World world, final int xPosition,
+			final int yPosition) {
 		final Entity newEntity = world.createEntity(Archetypes.getInstance().actor);
 		newEntity.getComponent(AnimationComponent.class).mapAnimation(type);
 		final PositionComponent posComponent = newEntity.getComponent(PositionComponent.class);

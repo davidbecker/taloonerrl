@@ -4,20 +4,22 @@
  * are made available under the terms of the GNU Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
- * 
+ *
  * Contributors:
  *     David Becker - initial API and implementation
  ******************************************************************************/
-package de.brainstormsoftworks.taloonerrl.dungeon;
+package de.brainstormsoftworks.taloonerrl.components;
 
-import de.brainstormsoftworks.taloonerrl.actors.EActorTypes;
+import com.artemis.Component;
 
 /**
- * TODO is this file needed? maybe use {@link EActorTypes} instead?
+ * this stub component allows the CameraSystem to set the world camera to follow
+ * this entity.<br/>
+ * TODO add support for multiple cameras/entities
  *
  * @author David Becker
  *
  */
-public enum ESprite {
-	NOTHING, SQUIRREL, BLOB
+public class CameraFollowComponent extends Component {
+
 }

@@ -36,38 +36,27 @@ public class TestDungeonUtil {
 			map[3][i] = new Tile(true);
 		}
 
-		final EDungeonSprites[][] sprites = DungeonUtil
-				.calculateDungeonSprites(map, 5, 5);
+		final EDungeonSprites[][] sprites = DungeonUtil.calculateDungeonSprites(map, 5, 5);
 		assertNotNull("expected calculated sprites but got nothing", sprites);
 
 		// corners
-		assertEquals("corner wall piece",
-				EDungeonSprites.WALL_BOTTOMLEFT_CORNER, sprites[0][0]);
-		assertEquals("corner floor piece",
-				EDungeonSprites.FLOOR_BOTTOMLEFT_CORNER, sprites[1][1]);
-		assertEquals("corner wall piece", EDungeonSprites.WALL_TOPLEFT_CORNER,
-				sprites[0][4]);
-		assertEquals("corner floor piece",
-				EDungeonSprites.FLOOR_TOPLEFT_CORNER, sprites[1][3]);
-		assertEquals("corner wall piece",
-				EDungeonSprites.WALL_BOTTOMRIGHT_CORNER, sprites[4][0]);
-		assertEquals("corner floor piece",
-				EDungeonSprites.FLOOR_BOTTOMRIGHT_CORNER, sprites[3][1]);
-		assertEquals("corner wall piece", EDungeonSprites.WALL_TOPRIGHT_CORNER,
-				sprites[4][4]);
-		assertEquals("corner floor piece",
-				EDungeonSprites.FLOOR_TOPRIGHT_CORNER, sprites[3][3]);
+		assertEquals("corner wall piece", EDungeonSprites.WALL_BOTTOMLEFT_CORNER, sprites[0][0]);
+		assertEquals("corner floor piece", EDungeonSprites.FLOOR_BOTTOMLEFT_CORNER, sprites[1][1]);
+		assertEquals("corner wall piece", EDungeonSprites.WALL_TOPLEFT_CORNER, sprites[0][4]);
+		assertEquals("corner floor piece", EDungeonSprites.FLOOR_TOPLEFT_CORNER, sprites[1][3]);
+		assertEquals("corner wall piece", EDungeonSprites.WALL_BOTTOMRIGHT_CORNER, sprites[4][0]);
+		assertEquals("corner floor piece", EDungeonSprites.FLOOR_BOTTOMRIGHT_CORNER, sprites[3][1]);
+		assertEquals("corner wall piece", EDungeonSprites.WALL_TOPRIGHT_CORNER, sprites[4][4]);
+		assertEquals("corner floor piece", EDungeonSprites.FLOOR_TOPRIGHT_CORNER, sprites[3][3]);
 
 		// outer walls
 		for (int i = 1; i < 4; i++) {
-			assertEquals("horizontal wall piece [" + i + "][0]",
-					EDungeonSprites.WALL_HORIZONTAL, sprites[i][0]);
-			assertEquals("horizontal wall piece [" + i + "][4]",
-					EDungeonSprites.WALL_HORIZONTAL, sprites[i][4]);
-			assertEquals("vertical wall piece [0][" + i + "]",
-					EDungeonSprites.WALL_VERTICAL, sprites[0][i]);
-			assertEquals("vertical wall piece [4][" + i + "]",
-					EDungeonSprites.WALL_VERTICAL, sprites[4][i]);
+			assertEquals("horizontal wall piece [" + i + "][0]", EDungeonSprites.WALL_HORIZONTAL,
+					sprites[i][0]);
+			assertEquals("horizontal wall piece [" + i + "][4]", EDungeonSprites.WALL_HORIZONTAL,
+					sprites[i][4]);
+			assertEquals("vertical wall piece [0][" + i + "]", EDungeonSprites.WALL_VERTICAL, sprites[0][i]);
+			assertEquals("vertical wall piece [4][" + i + "]", EDungeonSprites.WALL_VERTICAL, sprites[4][i]);
 		}
 	}
 }

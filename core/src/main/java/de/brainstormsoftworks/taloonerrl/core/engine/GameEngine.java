@@ -13,6 +13,9 @@ package de.brainstormsoftworks.taloonerrl.core.engine;
 import com.artemis.Entity;
 import com.artemis.World;
 import com.artemis.WorldConfiguration;
+import com.badlogic.gdx.Gdx;
+
+import de.brainstormsoftworks.taloonerrl.system.InputSystem;
 
 /**
  * central part of the game<br/>
@@ -32,6 +35,7 @@ public final class GameEngine {
 	private float stateTime;
 
 	private GameEngine() {
+		Gdx.input.setInputProcessor(new InputSystem());
 		final WorldConfiguration config = new WorldConfiguration();
 		Systems.setSystems(config);
 		world = new World(config);

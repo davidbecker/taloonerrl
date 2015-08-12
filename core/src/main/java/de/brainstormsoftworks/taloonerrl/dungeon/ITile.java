@@ -4,7 +4,7 @@
  * are made available under the terms of the GNU Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
- * 
+ *
  * Contributors:
  *     David Becker - initial API and implementation
  ******************************************************************************/
@@ -27,8 +27,6 @@ public interface ITile {
 	EDungeonSprites getDungeonSprite();
 
 	void setDungeonSprite(EDungeonSprites _sprite);
-
-	EDungeonFeature getDungeonFeature();
 
 	boolean isWalkable();
 

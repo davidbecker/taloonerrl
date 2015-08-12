@@ -15,35 +15,35 @@ import com.artemis.ComponentMapper;
 import com.artemis.Entity;
 import com.artemis.systems.EntityProcessingSystem;
 
-import de.brainstormsoftworks.taloonerrl.components.ControllerComponent;
+import de.brainstormsoftworks.taloonerrl.components.CameraFollowComponent;
 import de.brainstormsoftworks.taloonerrl.components.PositionComponent;
 import de.brainstormsoftworks.taloonerrl.core.engine.ComponentMappers;
+import de.brainstormsoftworks.taloonerrl.render.Renderer;
 
-public class MovementSystem extends EntityProcessingSystem {
+/**
+ * this system set the world camera to follow an entity.<br/>
+ * currently it is expected to be only one entity and one camera<br>
+ * TODO refactor
+ *
+ * @author David Becker
+ *
+ */
+public class CameraSystem extends EntityProcessingSystem {
 
 	@SuppressWarnings("unchecked")
-	public MovementSystem() {
-		super(Aspect.all(PositionComponent.class, ControllerComponent.class));
+	public CameraSystem() {
+		super(Aspect.all(PositionComponent.class, CameraFollowComponent.class));
 	}
 
 	@Override
-	protected void process(final Entity entity) {
-		/*
-		 * FIXME probably shouldn't be done this way - implement event system
-		 * for turn based entities instead I'm considering this approach for
-		 * particles (if needed)
-		 */
-		// // TODO implement collision
+	protected void process(final Entity e) {
 		final ComponentMapper<PositionComponent> posMapper = ComponentMappers.getInstance().position;
-		final ComponentMapper<ControllerComponent> controllerMapper = ComponentMappers
-				.getInstance().controller;
-		final PositionComponent position = posMapper.get(entity);
-		final ControllerComponent controllerComponent = controllerMapper.get(entity);
-		// adds the vector to the position
-		position.setX(position.getX() + controllerComponent.getdX());
-		position.setY(position.getY() + controllerComponent.getdY());
-		// resets controller vector
-		controllerComponent.reset();
+		// final ComponentMapper<CameraFollowComponent> cameraMapper =
+		// ComponentMappers.getInstance().camera;
+		final PositionComponent positionComponent = posMapper.get(e);
+		// final CameraFollowComponent spriteComponent = cameraMapper.get(e);
+		Renderer.getInstance().setWorldCamera(positionComponent.getX(), positionComponent.getY());
+
 	}
 
 }

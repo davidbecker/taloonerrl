@@ -16,6 +16,7 @@ import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.Texture.TextureWrap;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
+import de.brainstormsoftworks.taloonerrl.dungeon.IMap;
 import de.brainstormsoftworks.taloonerrl.dungeon.ITile;
 
 public final class DungeonRenderer implements IDisposableInstance {
@@ -55,20 +56,20 @@ public final class DungeonRenderer implements IDisposableInstance {
 		// for the floor
 		sFloorTopLeft = new TextureRegion(floorTexture, 0 * Renderer.tileSize, 1 + 3 * Renderer.tileSize,
 				Renderer.tileSize, Renderer.tileSize);
-		sWallTopLeft = new TextureRegion(wallTexture, 0 * Renderer.tileSize, 3 * Renderer.tileSize, Renderer.tileSize,
-				Renderer.tileSize);
-		sFloorTop = new TextureRegion(floorTexture, 1 * Renderer.tileSize, 1 + 3 * Renderer.tileSize, Renderer.tileSize,
-				Renderer.tileSize);
+		sWallTopLeft = new TextureRegion(wallTexture, 0 * Renderer.tileSize, 3 * Renderer.tileSize,
+				Renderer.tileSize, Renderer.tileSize);
+		sFloorTop = new TextureRegion(floorTexture, 1 * Renderer.tileSize, 1 + 3 * Renderer.tileSize,
+				Renderer.tileSize, Renderer.tileSize);
 		sWallHorizontal = new TextureRegion(wallTexture, 1 * Renderer.tileSize, 3 * Renderer.tileSize,
 				Renderer.tileSize, Renderer.tileSize);
 		sFloorTopRight = new TextureRegion(floorTexture, 2 * Renderer.tileSize, 1 + 3 * Renderer.tileSize,
 				Renderer.tileSize, Renderer.tileSize);
-		sWallTopRight = new TextureRegion(wallTexture, 2 * Renderer.tileSize, 3 * Renderer.tileSize, Renderer.tileSize,
-				Renderer.tileSize);
+		sWallTopRight = new TextureRegion(wallTexture, 2 * Renderer.tileSize, 3 * Renderer.tileSize,
+				Renderer.tileSize, Renderer.tileSize);
 		sFloorLeft = new TextureRegion(floorTexture, 0 * Renderer.tileSize, 1 + 4 * Renderer.tileSize,
 				Renderer.tileSize, Renderer.tileSize);
-		sWallVertical = new TextureRegion(wallTexture, 0 * Renderer.tileSize, 4 * Renderer.tileSize, Renderer.tileSize,
-				Renderer.tileSize);
+		sWallVertical = new TextureRegion(wallTexture, 0 * Renderer.tileSize, 4 * Renderer.tileSize,
+				Renderer.tileSize, Renderer.tileSize);
 		sFloorCenter = new TextureRegion(floorTexture, 1 * Renderer.tileSize, 1 + 4 * Renderer.tileSize,
 				Renderer.tileSize, Renderer.tileSize);
 		sFloorRight = new TextureRegion(floorTexture, 2 * Renderer.tileSize, 1 + 4 * Renderer.tileSize,
@@ -110,16 +111,17 @@ public final class DungeonRenderer implements IDisposableInstance {
 		wallTexture.dispose();
 	}
 
-	public void render(final ITile[][] tileArray, final int tilesHorizontal, final int tilesVertical) {
+	public void render(final IMap map) {
+		final ITile[][] tileArray = map.getMap();
 		// TODO render map into framebuffer and use buffer if player hasn't
 		// moved
-		for (int x = 0; x < tilesHorizontal; x++) {
-			for (int y = 0; y < tilesVertical; y++) {
+		for (int x = 0; x < map.getTilesHorizontal(); x++) {
+			for (int y = 0; y < map.getTilesVertical(); y++) {
 				final TextureRegion tile = getTile(tileArray[x][y]);
 				// final TextureRegion tile = TextureManager.getInstance()
 				// .getTile(tileArray[x][y].getDungeonSprite());
 				if (tile != null) {
-					Renderer.getInstance().BATCH.draw(tile, x * Renderer.scale, y * Renderer.scale);
+					Renderer.getInstance().renderOnTile(tile, x, y);
 				}
 			}
 		}

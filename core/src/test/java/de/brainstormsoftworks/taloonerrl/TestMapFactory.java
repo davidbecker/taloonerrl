@@ -36,12 +36,9 @@ public class TestMapFactory {
 	public void testVisited() {
 		assertNotNull("map expected, but no map created", map);
 		assertFalse("unvisited tile expected",
-				map.getMap()[tilesHorizontal / 2][tilesVertical / 2]
-						.isVisited());
+				map.getMap()[tilesHorizontal / 2][tilesVertical / 2].isVisited());
 		map.getMap()[tilesHorizontal / 2][tilesVertical / 2].setVisited();
-		assertTrue("visited tile expected",
-				map.getMap()[tilesHorizontal / 2][tilesVertical / 2]
-						.isVisited());
+		assertTrue("visited tile expected", map.getMap()[tilesHorizontal / 2][tilesVertical / 2].isVisited());
 	}
 
 }
