@@ -1,7 +1,10 @@
 .metadata
 .metadata/*
 /target/
-*/target/*
-*/bin/*
+*/target/
+/bin/
+*/bin/
 *.class
 *.log
+*/.gitignore
+*/.classpath

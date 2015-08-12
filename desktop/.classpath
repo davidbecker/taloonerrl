@@ -22,6 +22,5 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="src" path="/taloonerrl-core"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
