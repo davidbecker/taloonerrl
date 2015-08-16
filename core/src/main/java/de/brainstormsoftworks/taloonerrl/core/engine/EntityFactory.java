@@ -43,7 +43,7 @@ public final class EntityFactory {
 	 *            vertical position (tiles position)
 	 * @return new entity
 	 */
-	public static Entity createEntity(final EEntity type, final World world, final int xPosition,
+	protected static Entity createEntity(final EEntity type, final World world, final int xPosition,
 			final int yPosition) {
 		switch (type) {
 		case PLAYER:
