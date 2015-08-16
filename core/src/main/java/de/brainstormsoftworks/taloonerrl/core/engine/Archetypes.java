@@ -16,6 +16,7 @@ import com.artemis.World;
 
 import de.brainstormsoftworks.taloonerrl.components.AnimationComponent;
 import de.brainstormsoftworks.taloonerrl.components.CameraFollowComponent;
+import de.brainstormsoftworks.taloonerrl.components.CollectibleComponent;
 import de.brainstormsoftworks.taloonerrl.components.ControllerComponent;
 import de.brainstormsoftworks.taloonerrl.components.FacingAnimationComponent;
 import de.brainstormsoftworks.taloonerrl.components.FacingComponent;
@@ -49,7 +50,7 @@ public final class Archetypes {
 				.remove(AnimationComponent.class).add(FacingAnimationComponent.class)
 				.add(HighlightComponent.class).add(CameraFollowComponent.class).build(world);
 		collectible = new ArchetypeBuilder().add(PositionComponent.class).add(SpriteComponent.class)
-				.build(world);
+				.add(CollectibleComponent.class).build(world);
 		decoration = new ArchetypeBuilder().add(PositionComponent.class).add(AnimationComponent.class)
 				.build(world);
 	}

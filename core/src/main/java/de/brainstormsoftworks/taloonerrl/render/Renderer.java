@@ -96,6 +96,20 @@ public final class Renderer implements IDisposableInstance {
 	}
 
 	/**
+	 * sets the blending to a semi-transparent one
+	 */
+	public void setScreenBlendingAlpha() {
+		spriteBatchScreen.setBlendFunction(GL20.GL_SRC_ALPHA, GL20.GL_DST_COLOR);
+	}
+
+	/**
+	 * sets the blending for the screen sprite batch to the normal behavior
+	 */
+	public void setScreenBlendingNormal() {
+		spriteBatchScreen.setBlendFunction(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+	}
+
+	/**
 	 * renders a sprite on the given tile coordinates
 	 *
 	 * @param region
@@ -161,6 +175,20 @@ public final class Renderer implements IDisposableInstance {
 	 *            vertical position
 	 */
 	public void renderOnScreen(final TextureRegion region, final int x, final int y) {
+		spriteBatchScreen.draw(region, x, y);
+	}
+
+	/**
+	 * renders a sprite on the given screen coordinates
+	 *
+	 * @param region
+	 *            sprite to draw
+	 * @param x
+	 *            horizontal position
+	 * @param y
+	 *            vertical position
+	 */
+	public void renderOnScreen(final TextureRegion region, final float x, final float y) {
 		spriteBatchScreen.draw(region, x, y);
 	}
 

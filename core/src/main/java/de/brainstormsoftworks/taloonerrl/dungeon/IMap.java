@@ -55,4 +55,16 @@ public interface IMap {
 	 */
 	int getTilesVertical();
 
+	/**
+	 * helper method to check if given tile coordinates are in the bounds of the
+	 * map
+	 *
+	 * @param x
+	 *            horizontal coordinate
+	 * @param y
+	 *            vertical coordinate
+	 * @return true if coordinates are in the bounds of the map, false otherwise
+	 */
+	boolean isInMapBounds(int x, int y);
+
 }

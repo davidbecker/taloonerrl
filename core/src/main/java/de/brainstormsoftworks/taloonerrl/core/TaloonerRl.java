@@ -23,6 +23,7 @@ import de.brainstormsoftworks.taloonerrl.dungeon.IMap;
 import de.brainstormsoftworks.taloonerrl.dungeon.MapFactory;
 import de.brainstormsoftworks.taloonerrl.render.DungeonRenderer;
 import de.brainstormsoftworks.taloonerrl.render.GuiRenderer;
+import de.brainstormsoftworks.taloonerrl.render.MapOverlayRenderer;
 import de.brainstormsoftworks.taloonerrl.render.RenderUtil;
 import de.brainstormsoftworks.taloonerrl.render.Renderer;
 
@@ -65,6 +66,14 @@ public class TaloonerRl implements ApplicationListener {
 
 		DungeonRenderer.initInstance();
 		GuiRenderer.initInstance();
+		MapOverlayRenderer.getInstance().initialize(map);
+
+		// a couple of entities for debugging purposes...
+		// for (int i = 2; i < 10; i++) {
+		// gameEngine.createNewEntity(EEntity.ARCHER, i, i);
+		// gameEngine.createNewEntity(EEntity.POTION_A, i + 2, i);
+		// gameEngine.createNewEntity(EEntity.POTION_A, i + 4, i + 6);
+		// }
 
 	}
 
@@ -140,12 +149,16 @@ public class TaloonerRl implements ApplicationListener {
 		// System.out.println(tileX + " " + tileY);
 
 		GameEngine.getInstance().update(deltaTime);
-		System.err.println("turn");
 		Renderer.getInstance().endWorldRendering();
 		Renderer.getInstance().beginScreenRendering();
+		Renderer.getInstance().setScreenBlendingAlpha();
+		MapOverlayRenderer.getInstance().render(map);
+		Renderer.getInstance().setScreenBlendingNormal();
 		GuiRenderer.getInstance().render(Gdx.graphics.getWidth() / Renderer.screenScale,
 				Gdx.graphics.getHeight() / Renderer.screenScale);
 		Renderer.getInstance().endScreenRendering();
+
+		MapOverlayRenderer.getInstance().reset();
 	}
 
 	@Override

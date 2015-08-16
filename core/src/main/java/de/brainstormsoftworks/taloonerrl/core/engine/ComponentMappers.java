@@ -16,12 +16,14 @@ import com.artemis.World;
 
 import de.brainstormsoftworks.taloonerrl.components.AnimationComponent;
 import de.brainstormsoftworks.taloonerrl.components.CameraFollowComponent;
+import de.brainstormsoftworks.taloonerrl.components.CollectibleComponent;
 import de.brainstormsoftworks.taloonerrl.components.ControllerComponent;
 import de.brainstormsoftworks.taloonerrl.components.FacingAnimationComponent;
 import de.brainstormsoftworks.taloonerrl.components.FacingComponent;
 import de.brainstormsoftworks.taloonerrl.components.HealthComponent;
 import de.brainstormsoftworks.taloonerrl.components.HighlightComponent;
 import de.brainstormsoftworks.taloonerrl.components.NameComponent;
+import de.brainstormsoftworks.taloonerrl.components.PlayerComponent;
 import de.brainstormsoftworks.taloonerrl.components.PositionComponent;
 import de.brainstormsoftworks.taloonerrl.components.SpriteComponent;
 
@@ -42,6 +44,8 @@ public final class ComponentMappers {
 	public final ComponentMapper<NameComponent> name;
 	public final ComponentMapper<HighlightComponent> highlight;
 	public final ComponentMapper<CameraFollowComponent> camera;
+	public final ComponentMapper<CollectibleComponent> collectible;
+	public final ComponentMapper<PlayerComponent> player;
 
 	private static ComponentMappers instance = null;
 
@@ -56,6 +60,8 @@ public final class ComponentMappers {
 		name = ComponentMapper.getFor(NameComponent.class, world);
 		highlight = ComponentMapper.getFor(HighlightComponent.class, world);
 		camera = ComponentMapper.getFor(CameraFollowComponent.class, world);
+		collectible = ComponentMapper.getFor(CollectibleComponent.class, world);
+		player = ComponentMapper.getFor(PlayerComponent.class, world);
 	}
 
 	/**
