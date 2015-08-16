@@ -11,7 +11,6 @@
 package de.brainstormsoftworks.taloonerrl.system;
 
 import com.artemis.Aspect;
-import com.artemis.ComponentMapper;
 import com.artemis.Entity;
 import com.artemis.systems.EntityProcessingSystem;
 
@@ -35,10 +34,8 @@ public class SpriteRenderSystem extends EntityProcessingSystem {
 
 	@Override
 	protected void process(final Entity e) {
-		final ComponentMapper<PositionComponent> posMapper = ComponentMappers.getInstance().position;
-		final ComponentMapper<SpriteComponent> spriteMapper = ComponentMappers.getInstance().sprite;
-		final PositionComponent positionComponent = posMapper.get(e);
-		final SpriteComponent spriteComponent = spriteMapper.get(e);
+		final PositionComponent positionComponent = ComponentMappers.getInstance().position.get(e);
+		final SpriteComponent spriteComponent = ComponentMappers.getInstance().sprite.get(e);
 		Renderer.getInstance().renderOnTile(spriteComponent.getSprite(), positionComponent.getX(),
 				positionComponent.getY());
 	}

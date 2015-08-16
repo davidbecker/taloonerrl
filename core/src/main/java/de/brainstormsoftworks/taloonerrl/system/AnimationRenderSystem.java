@@ -11,7 +11,6 @@
 package de.brainstormsoftworks.taloonerrl.system;
 
 import com.artemis.Aspect;
-import com.artemis.ComponentMapper;
 import com.artemis.Entity;
 import com.artemis.systems.EntityProcessingSystem;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -30,6 +29,10 @@ import de.brainstormsoftworks.taloonerrl.render.Renderer;
  */
 public class AnimationRenderSystem extends EntityProcessingSystem {
 
+	private PositionComponent positionComponent;
+	private AnimationComponent spriteComponent;
+	private Animation animation;
+
 	@SuppressWarnings("unchecked")
 	public AnimationRenderSystem() {
 		super(Aspect.all(PositionComponent.class, AnimationComponent.class));
@@ -37,11 +40,9 @@ public class AnimationRenderSystem extends EntityProcessingSystem {
 
 	@Override
 	protected void process(final Entity e) {
-		final ComponentMapper<PositionComponent> posMapper = ComponentMappers.getInstance().position;
-		final ComponentMapper<AnimationComponent> spriteMapper = ComponentMappers.getInstance().animation;
-		final PositionComponent positionComponent = posMapper.get(e);
-		final AnimationComponent spriteComponent = spriteMapper.get(e);
-		final Animation animation = spriteComponent.getAnimation();
+		positionComponent = ComponentMappers.getInstance().position.get(e);
+		spriteComponent = ComponentMappers.getInstance().animation.get(e);
+		animation = spriteComponent.getAnimation();
 		if (animation != null) {
 			Renderer.getInstance().renderOnTile(RenderUtil.getKeyFrame(animation), positionComponent.getX(),
 					positionComponent.getY());

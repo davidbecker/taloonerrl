@@ -11,7 +11,6 @@
 package de.brainstormsoftworks.taloonerrl.system;
 
 import com.artemis.Aspect;
-import com.artemis.ComponentMapper;
 import com.artemis.Entity;
 import com.artemis.systems.EntityProcessingSystem;
 
@@ -30,6 +29,8 @@ import de.brainstormsoftworks.taloonerrl.render.Renderer;
  */
 public class CameraSystem extends EntityProcessingSystem {
 
+	private PositionComponent positionComponent;
+
 	@SuppressWarnings("unchecked")
 	public CameraSystem() {
 		super(Aspect.all(PositionComponent.class, CameraFollowComponent.class));
@@ -37,10 +38,7 @@ public class CameraSystem extends EntityProcessingSystem {
 
 	@Override
 	protected void process(final Entity e) {
-		final ComponentMapper<PositionComponent> posMapper = ComponentMappers.getInstance().position;
-		// final ComponentMapper<CameraFollowComponent> cameraMapper =
-		// ComponentMappers.getInstance().camera;
-		final PositionComponent positionComponent = posMapper.get(e);
+		positionComponent = ComponentMappers.getInstance().position.get(e);
 		// final CameraFollowComponent spriteComponent = cameraMapper.get(e);
 		Renderer.getInstance().setWorldCamera(positionComponent.getX(), positionComponent.getY());
 

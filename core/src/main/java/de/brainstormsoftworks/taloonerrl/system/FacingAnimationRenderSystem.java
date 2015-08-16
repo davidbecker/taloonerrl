@@ -11,7 +11,6 @@
 package de.brainstormsoftworks.taloonerrl.system;
 
 import com.artemis.Aspect;
-import com.artemis.ComponentMapper;
 import com.artemis.Entity;
 import com.artemis.systems.EntityProcessingSystem;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -31,6 +30,11 @@ import de.brainstormsoftworks.taloonerrl.render.Renderer;
  */
 public class FacingAnimationRenderSystem extends EntityProcessingSystem {
 
+	private PositionComponent positionComponent;
+	private FacingComponent facingComponent;
+	private FacingAnimationComponent spriteComponent;
+	private Animation animation;
+
 	@SuppressWarnings("unchecked")
 	public FacingAnimationRenderSystem() {
 		super(Aspect.all(PositionComponent.class, FacingComponent.class, FacingAnimationComponent.class));
@@ -38,14 +42,10 @@ public class FacingAnimationRenderSystem extends EntityProcessingSystem {
 
 	@Override
 	protected void process(final Entity e) {
-		final ComponentMapper<PositionComponent> posMapper = ComponentMappers.getInstance().position;
-		final ComponentMapper<FacingComponent> facingMapper = ComponentMappers.getInstance().facing;
-		final ComponentMapper<FacingAnimationComponent> spriteMapper = ComponentMappers
-				.getInstance().facingAnimation;
-		final PositionComponent positionComponent = posMapper.get(e);
-		final FacingComponent facingComponent = facingMapper.get(e);
-		final FacingAnimationComponent spriteComponent = spriteMapper.get(e);
-		final Animation animation = spriteComponent.getAnimation(facingComponent.getDirection());
+		positionComponent = ComponentMappers.getInstance().position.get(e);
+		facingComponent = ComponentMappers.getInstance().facing.get(e);
+		spriteComponent = ComponentMappers.getInstance().facingAnimation.get(e);
+		animation = spriteComponent.getAnimation(facingComponent.getDirection());
 		if (animation != null) {
 			Renderer.getInstance().renderOnTile(RenderUtil.getKeyFrame(animation), positionComponent.getX(),
 					positionComponent.getY());

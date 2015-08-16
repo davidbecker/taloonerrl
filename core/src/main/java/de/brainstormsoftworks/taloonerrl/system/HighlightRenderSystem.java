@@ -11,7 +11,6 @@
 package de.brainstormsoftworks.taloonerrl.system;
 
 import com.artemis.Aspect;
-import com.artemis.ComponentMapper;
 import com.artemis.Entity;
 import com.artemis.systems.EntityProcessingSystem;
 
@@ -31,6 +30,8 @@ public class HighlightRenderSystem extends EntityProcessingSystem {
 
 	private int x, y;
 	private int cursorAnimationOffset;
+	private PositionComponent positionComponent;
+	private HighlightComponent highlight;
 
 	@SuppressWarnings("unchecked")
 	public HighlightRenderSystem() {
@@ -39,10 +40,8 @@ public class HighlightRenderSystem extends EntityProcessingSystem {
 
 	@Override
 	protected void process(final Entity e) {
-		final ComponentMapper<PositionComponent> posMapper = ComponentMappers.getInstance().position;
-		final ComponentMapper<HighlightComponent> highlightMapper = ComponentMappers.getInstance().highlight;
-		final PositionComponent positionComponent = posMapper.get(e);
-		final HighlightComponent highlight = highlightMapper.get(e);
+		positionComponent = ComponentMappers.getInstance().position.get(e);
+		highlight = ComponentMappers.getInstance().highlight.get(e);
 
 		// TODO refactor getting/setting of offset
 		switch ((int) GameEngine.getInstance().getStateTime() % 4) {

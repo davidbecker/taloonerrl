@@ -11,7 +11,6 @@
 package de.brainstormsoftworks.taloonerrl.system;
 
 import com.artemis.Aspect;
-import com.artemis.ComponentMapper;
 import com.artemis.Entity;
 import com.artemis.systems.EntityProcessingSystem;
 
@@ -29,8 +28,10 @@ import de.brainstormsoftworks.taloonerrl.render.Renderer;
  */
 public class HealthBarRenderSystem extends EntityProcessingSystem {
 	private static final int totalSize = Renderer.tileSize - 2;
+	private HealthComponent healthComponent;
 	private int sizeGreen = 0;
 	private int sizeRed = 0;
+	private PositionComponent positionComponent;
 
 	@SuppressWarnings("unchecked")
 	public HealthBarRenderSystem() {
@@ -39,11 +40,9 @@ public class HealthBarRenderSystem extends EntityProcessingSystem {
 
 	@Override
 	protected void process(final Entity e) {
-		final ComponentMapper<PositionComponent> posMapper = ComponentMappers.getInstance().position;
-		final ComponentMapper<HealthComponent> healthMapper = ComponentMappers.getInstance().health;
-		final HealthComponent healthComponent = healthMapper.get(e);
+		healthComponent = ComponentMappers.getInstance().health.get(e);
 		if (healthComponent.isAlive()) {
-			final PositionComponent positionComponent = posMapper.get(e);
+			positionComponent = ComponentMappers.getInstance().position.get(e);
 			sizeGreen = (int) (totalSize * healthComponent.getHealthPercent());
 			sizeRed = totalSize - sizeGreen;
 			// draw a black border around the bar

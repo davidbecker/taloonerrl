@@ -11,7 +11,6 @@
 package de.brainstormsoftworks.taloonerrl.system;
 
 import com.artemis.Aspect;
-import com.artemis.ComponentMapper;
 import com.artemis.Entity;
 import com.artemis.systems.EntityProcessingSystem;
 
@@ -30,6 +29,9 @@ import de.brainstormsoftworks.taloonerrl.core.engine.ComponentMappers;
  */
 public class ControllerSystem extends EntityProcessingSystem {
 
+	private ControllerComponent controllerComponent;
+	private FacingComponent facingComponent;
+
 	@SuppressWarnings("unchecked")
 	public ControllerSystem() {
 		super(Aspect.all(PlayerComponent.class, FacingComponent.class, ControllerComponent.class));
@@ -37,10 +39,8 @@ public class ControllerSystem extends EntityProcessingSystem {
 
 	@Override
 	protected void process(final Entity e) {
-		final ComponentMapper<ControllerComponent> controllerMapper = ComponentMappers
-				.getInstance().controller;
-		final ControllerComponent controllerComponent = controllerMapper.get(e);
-		final FacingComponent facingComponent = ComponentMappers.getInstance().facing.get(e);
+		controllerComponent = ComponentMappers.getInstance().controller.get(e);
+		facingComponent = ComponentMappers.getInstance().facing.get(e);
 		if (InputSystem.isKeyPressedDown()) {
 			controllerComponent.setdY(-1);
 			facingComponent.setDirection(EDirection.DOWN);
