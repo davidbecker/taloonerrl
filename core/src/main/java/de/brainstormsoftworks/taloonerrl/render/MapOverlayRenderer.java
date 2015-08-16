@@ -112,11 +112,16 @@ public final class MapOverlayRenderer {
 	 * sets the overlay of the given position
 	 *
 	 * @param x
+	 *            horizontal coordinate
 	 * @param y
+	 *            vertical coordinate
 	 * @param v
+	 *            what should be rendered on the given position
 	 */
 	public void setOverlay(final int x, final int y, final Visible v) {
 		if (map.isInMapBounds(x, y)) {
+			// TODO change to enum set to be able to render multiple states on a
+			// given tile?
 			overlay[x][y] = v;
 		}
 	}
