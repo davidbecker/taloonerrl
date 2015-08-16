@@ -4,7 +4,7 @@
  * are made available under the terms of the GNU Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
- * 
+ *
  * Contributors:
  *     David Becker - initial API and implementation
  ******************************************************************************/
@@ -15,6 +15,12 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import de.brainstormsoftworks.taloonerrl.dungeon.IMap;
 
+/**
+ * utility class that renders a map overlay onto the screen
+ *
+ * @author David Becker
+ *
+ */
 public final class MapOverlayRenderer {
 
 	private static final MapOverlayRenderer instance = new MapOverlayRenderer();
@@ -69,10 +75,8 @@ public final class MapOverlayRenderer {
 
 	/**
 	 * renders a map overlay onto the screen
-	 *
-	 * @param map
 	 */
-	public void render(final IMap map) {
+	public void render() {
 		// TODO add FOV data as parameter
 		// compute the offset to draw the overlay
 		final int offsetX = (Gdx.graphics.getWidth() - tilesHorizontal) / Renderer.screenScale / 2;

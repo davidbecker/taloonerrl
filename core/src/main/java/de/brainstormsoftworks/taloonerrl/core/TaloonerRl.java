@@ -150,10 +150,12 @@ public class TaloonerRl implements ApplicationListener {
 
 		GameEngine.getInstance().update(deltaTime);
 		Renderer.getInstance().endWorldRendering();
+
 		Renderer.getInstance().beginScreenRendering();
 		Renderer.getInstance().setScreenBlendingAlpha();
-		MapOverlayRenderer.getInstance().render(map);
+		MapOverlayRenderer.getInstance().render();
 		Renderer.getInstance().setScreenBlendingNormal();
+
 		GuiRenderer.getInstance().render(Gdx.graphics.getWidth() / Renderer.screenScale,
 				Gdx.graphics.getHeight() / Renderer.screenScale);
 		Renderer.getInstance().endScreenRendering();
