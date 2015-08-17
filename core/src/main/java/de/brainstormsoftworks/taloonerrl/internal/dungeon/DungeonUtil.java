@@ -90,21 +90,29 @@ public final class DungeonUtil {
 							&& !southEastWalkable) {
 						// trapped piece -> set to nothing for the time being
 						sprites[x][y] = EDungeonSprites.NOTHING;
-					} else if (!northWalkable && !eastWalkable && northEastWalkable) {
-						// FIXME there are other possibilities
-						// bottom corner
+					} else if (!northWalkable && !eastWalkable && southWalkable && southWestWalkable
+							&& westWalkable
+							|| !northWalkable && northEastWalkable && !eastWalkable && !southEastWalkable
+									&& !southWalkable && !southWestWalkable && !westWalkable
+									&& !northWestWalkable) {
 						sprites[x][y] = EDungeonSprites.WALL_BOTTOMLEFT_CORNER;
-					} else if (!northWalkable && !westWalkable && northWestWalkable) {
-						// FIXME there are other possibilities
-						// top corner
+					} else if (!northWalkable && !westWalkable && eastWalkable && southEastWalkable
+							&& southWalkable
+							|| northWestWalkable && !northWalkable && !northEastWalkable && !eastWalkable
+									&& !southEastWalkable && !southWalkable && !southWestWalkable
+									&& !westWalkable) {
 						sprites[x][y] = EDungeonSprites.WALL_BOTTOMRIGHT_CORNER;
-					} else if (!southWalkable && !eastWalkable && southEastWalkable) {
-						// FIXME there are other possibilities
-						// top corner
+					} else if (!southWalkable && !eastWalkable && westWalkable && northWestWalkable
+							&& northWalkable
+							|| southEastWalkable && !southWalkable && !southWestWalkable && !westWalkable
+									&& !northWestWalkable && !northWalkable && !northEastWalkable
+									&& !eastWalkable) {
 						sprites[x][y] = EDungeonSprites.WALL_TOPLEFT_CORNER;
-					} else if (!southWalkable && !westWalkable && southWestWalkable) {
-						// FIXME there are other possibilities
-						// bottom corner
+					} else if (!southWalkable && !westWalkable && northWalkable && northEastWalkable
+							&& eastWalkable
+							|| southWestWalkable && !westWalkable && !northWestWalkable && !northWalkable
+									&& !northEastWalkable && !eastWalkable && !southEastWalkable
+									&& !southWalkable) {
 						sprites[x][y] = EDungeonSprites.WALL_TOPRIGHT_CORNER;
 					} else if (!westWalkable && !eastWalkable && (northWalkable || southWalkable)) {
 						// horizontal piece
@@ -113,14 +121,13 @@ public final class DungeonUtil {
 						// vertical piece
 						sprites[x][y] = EDungeonSprites.WALL_VERTICAL;
 					}
+					// TODO add T-parts
+					// TODO extends test cases
 				}
 				if (null == sprites[x][y]) {
 					// this should never happen when finished
 					sprites[x][y] = EDungeonSprites.NOTHING;
 				}
-				// TODO is it better to set sprites information here or in
-				// MapFactory?
-				// _map[x][y].setDungeonSprite(sprites[x][y]);
 			}
 		}
 		return sprites;
