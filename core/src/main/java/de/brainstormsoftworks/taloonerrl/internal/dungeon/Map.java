@@ -38,12 +38,7 @@ public class Map implements IMap {
 
 	@Override
 	public boolean isWalkable(final int x, final int y) {
-		return true;
-		// if (!isInMapBounds(x, y)) {
-		// return false;
-		// }
-		// // TODO Auto-generated method stub
-		// return false;
+		return isInMapBounds(x, y) && map[x][y] != '#';
 	}
 
 	@Override
