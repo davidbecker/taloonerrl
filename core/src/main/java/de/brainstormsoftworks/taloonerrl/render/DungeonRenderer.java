@@ -41,6 +41,7 @@ public final class DungeonRenderer implements IDisposableInstance {
 	private final TextureRegion sWallVertical;
 	private final TextureRegion sWallBottomLeft;
 	private final TextureRegion sWallBottomRight;
+	private final TextureRegion sWallPillar;
 
 	private static final String TEXTURE_PATH = "textures/dungeon/";
 
@@ -83,6 +84,8 @@ public final class DungeonRenderer implements IDisposableInstance {
 		sFloorBottomRight = new TextureRegion(floorTexture, 2 * Renderer.tileSize, 1 + 5 * Renderer.tileSize,
 				Renderer.tileSize, Renderer.tileSize);
 		sWallBottomRight = new TextureRegion(wallTexture, 2 * Renderer.tileSize, 5 * Renderer.tileSize,
+				Renderer.tileSize, Renderer.tileSize);
+		sWallPillar = new TextureRegion(wallTexture, 1 * Renderer.tileSize, 4 * Renderer.tileSize,
 				Renderer.tileSize, Renderer.tileSize);
 
 		RenderUtil.addToDisposeList(this);
@@ -159,6 +162,8 @@ public final class DungeonRenderer implements IDisposableInstance {
 			return sWallBottomLeft;
 		case WALL_BOTTOMRIGHT_CORNER:
 			return sWallBottomRight;
+		case WALL_PILLAR:
+			return sWallPillar;
 		case NOTHING:
 			// same as default for now
 		default:

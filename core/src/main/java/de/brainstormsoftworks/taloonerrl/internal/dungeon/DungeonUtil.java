@@ -90,6 +90,10 @@ public final class DungeonUtil {
 							&& !southEastWalkable) {
 						// trapped piece -> set to nothing for the time being
 						sprites[x][y] = EDungeonSprites.NOTHING;
+					} else if (northWalkable && eastWalkable && southWalkable && westWalkable
+							&& northEastWalkable && northWestWalkable && southWestWalkable
+							&& southEastWalkable) {
+						sprites[x][y] = EDungeonSprites.WALL_PILLAR;
 					} else if (!northWalkable && !eastWalkable && southWalkable && southWestWalkable
 							&& westWalkable
 							|| !northWalkable && northEastWalkable && !eastWalkable && !southEastWalkable
