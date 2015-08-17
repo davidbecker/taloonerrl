@@ -4,7 +4,7 @@
  * are made available under the terms of the GNU Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
- * 
+ *
  * Contributors:
  *     David Becker - initial API and implementation
  ******************************************************************************/
@@ -28,5 +28,5 @@ public abstract class Generator {
 	 * @param _tilesVertical
 	 *            number of vertical tiles in the map
 	 */
-	public abstract void generate(final ITile[][] map, final int _tilesHorizontal, final int _tilesVertical);
+	public abstract void generate(final char[][] map, final int _tilesHorizontal, final int _tilesVertical);
 }

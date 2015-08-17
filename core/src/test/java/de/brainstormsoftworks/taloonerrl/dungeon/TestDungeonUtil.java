@@ -4,7 +4,7 @@
  * are made available under the terms of the GNU Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
- * 
+ *
  * Contributors:
  *     David Becker - initial API and implementation
  ******************************************************************************/
@@ -16,24 +16,23 @@ import static org.junit.Assert.assertNotNull;
 import org.junit.Test;
 
 import de.brainstormsoftworks.taloonerrl.internal.dungeon.DungeonUtil;
-import de.brainstormsoftworks.taloonerrl.internal.dungeon.Tile;
 
 public class TestDungeonUtil {
 
 	@Test
 	public void simpleRoom() {
 		// make a map with the border filled and rest walkable
-		final ITile[][] map = new ITile[5][5];
+		final char[][] map = new char[5][5];
 		for (int i = 0; i < 5; i++) {
-			map[0][i] = new Tile(false);
-			map[4][i] = new Tile(false);
-			map[i][0] = new Tile(false);
-			map[i][4] = new Tile(false);
+			map[0][i] = '#';
+			map[4][i] = '#';
+			map[i][0] = '#';
+			map[i][4] = '#';
 		}
 		for (int i = 1; i < 4; i++) {
-			map[1][i] = new Tile(true);
-			map[2][i] = new Tile(true);
-			map[3][i] = new Tile(true);
+			map[1][i] = ' ';
+			map[2][i] = ' ';
+			map[3][i] = ' ';
 		}
 
 		final EDungeonSprites[][] sprites = DungeonUtil.calculateDungeonSprites(map, 5, 5);

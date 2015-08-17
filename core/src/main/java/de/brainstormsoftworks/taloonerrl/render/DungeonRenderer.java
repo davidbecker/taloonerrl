@@ -16,8 +16,8 @@ import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.Texture.TextureWrap;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
+import de.brainstormsoftworks.taloonerrl.dungeon.EDungeonSprites;
 import de.brainstormsoftworks.taloonerrl.dungeon.IMap;
-import de.brainstormsoftworks.taloonerrl.dungeon.ITile;
 
 public final class DungeonRenderer implements IDisposableInstance {
 
@@ -112,12 +112,12 @@ public final class DungeonRenderer implements IDisposableInstance {
 	}
 
 	public void render(final IMap map) {
-		final ITile[][] tileArray = map.getMap();
+		final EDungeonSprites[][] spriteArray = map.getDungeonSprites();
 		// TODO render map into framebuffer and use buffer if player hasn't
 		// moved
 		for (int x = 0; x < map.getTilesHorizontal(); x++) {
 			for (int y = 0; y < map.getTilesVertical(); y++) {
-				final TextureRegion tile = getTile(tileArray[x][y]);
+				final TextureRegion tile = getTile(spriteArray[x][y]);
 				// final TextureRegion tile = TextureManager.getInstance()
 				// .getTile(tileArray[x][y].getDungeonSprite());
 				if (tile != null) {
@@ -127,8 +127,8 @@ public final class DungeonRenderer implements IDisposableInstance {
 		}
 	}
 
-	private TextureRegion getTile(final ITile tile) {
-		switch (tile.getDungeonSprite()) {
+	private TextureRegion getTile(final EDungeonSprites sprite) {
+		switch (sprite) {
 		case FLOOR_BOTTOM:
 			return sFloorBottom;
 		case FLOOR_BOTTOMLEFT_CORNER:

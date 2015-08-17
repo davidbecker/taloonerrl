@@ -39,7 +39,22 @@ public interface IMap {
 	 *
 	 * @return array of tiles
 	 */
-	ITile[][] getMap();
+	char[][] getMap();
+
+	/**
+	 * get the types of tiles on the map
+	 *
+	 * @return
+	 */
+	EDungeonSprites[][] getDungeonSprites();
+
+	/**
+	 * method to set the dungeon sprites
+	 *
+	 * @param sprites
+	 *            array to set
+	 */
+	void setDungeonSprites(EDungeonSprites[][] sprites);
 
 	/**
 	 * get the number of tiles in the map

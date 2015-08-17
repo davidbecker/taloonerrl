@@ -10,19 +10,21 @@
  ******************************************************************************/
 package de.brainstormsoftworks.taloonerrl.internal.dungeon;
 
+import de.brainstormsoftworks.taloonerrl.dungeon.EDungeonSprites;
 import de.brainstormsoftworks.taloonerrl.dungeon.IMap;
-import de.brainstormsoftworks.taloonerrl.dungeon.ITile;
 
 public class Map implements IMap {
 
-	private final ITile[][] map;
+	private final char[][] map;
 	private final int tilesHorizontal;
 	private final int tilesVertical;
+	private EDungeonSprites[][] dungeonSprites;
 
 	public Map(final int _tilesHorizontal, final int _tilesVertical) {
 		tilesHorizontal = _tilesHorizontal;
 		tilesVertical = _tilesVertical;
-		map = new ITile[tilesHorizontal][tilesVertical];
+		map = new char[tilesHorizontal][tilesVertical];
+		dungeonSprites = new EDungeonSprites[tilesHorizontal][tilesVertical];
 	}
 
 	@Override
@@ -53,7 +55,7 @@ public class Map implements IMap {
 	}
 
 	@Override
-	public ITile[][] getMap() {
+	public char[][] getMap() {
 		return map;
 	}
 
@@ -65,6 +67,21 @@ public class Map implements IMap {
 	@Override
 	public int getTilesVertical() {
 		return tilesVertical;
+	}
+
+	/**
+	 * getter for {@link #dungeonSprites}
+	 *
+	 * @return the dungeonSprites
+	 */
+	@Override
+	public final EDungeonSprites[][] getDungeonSprites() {
+		return dungeonSprites;
+	}
+
+	@Override
+	public void setDungeonSprites(final EDungeonSprites[][] sprites) {
+		dungeonSprites = sprites;
 	}
 
 }

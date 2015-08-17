@@ -4,14 +4,13 @@
  * are made available under the terms of the GNU Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
- * 
+ *
  * Contributors:
  *     David Becker - initial API and implementation
  ******************************************************************************/
 package de.brainstormsoftworks.taloonerrl.internal.dungeon;
 
 import de.brainstormsoftworks.taloonerrl.dungeon.Generator;
-import de.brainstormsoftworks.taloonerrl.dungeon.ITile;
 
 /**
  * this is a very basic level generator that just carves a large room into the
@@ -32,10 +31,10 @@ public final class GeneratorCarveBigRoom extends Generator {
 	}
 
 	@Override
-	public void generate(final ITile[][] map, final int _tilesHorizontal, final int _tilesVertical) {
+	public void generate(final char[][] map, final int _tilesHorizontal, final int _tilesVertical) {
 		for (int x = 1; x < _tilesHorizontal - 1; x++) {
 			for (int y = 1; y < _tilesVertical - 1; y++) {
-				map[x][y].setWalkable(true);
+				map[x][y] = ' ';
 			}
 		}
 	}

@@ -11,7 +11,6 @@
 package de.brainstormsoftworks.taloonerrl.internal.dungeon;
 
 import de.brainstormsoftworks.taloonerrl.dungeon.EDungeonSprites;
-import de.brainstormsoftworks.taloonerrl.dungeon.ITile;
 
 /**
  * Utility class to collect methods that help with the dungeon
@@ -36,8 +35,8 @@ public final class DungeonUtil {
 	 * @return array of sprites to display for the given map. has the same
 	 *         dimension as _map
 	 */
-	public static EDungeonSprites[][] calculateDungeonSprites(final ITile[][] _map,
-			final int _tilesHorizontal, final int _tilesVertical) {
+	public static EDungeonSprites[][] calculateDungeonSprites(final char[][] _map, final int _tilesHorizontal,
+			final int _tilesVertical) {
 		final EDungeonSprites[][] sprites = new EDungeonSprites[_tilesHorizontal][_tilesVertical];
 		for (int x = 0; x < _tilesHorizontal; x++) {
 			for (int y = 0; y < _tilesVertical; y++) {
@@ -116,15 +115,15 @@ public final class DungeonUtil {
 				}
 				// TODO is it better to set sprites information here or in
 				// MapFactory?
-				_map[x][y].setDungeonSprite(sprites[x][y]);
+				// _map[x][y].setDungeonSprite(sprites[x][y]);
 			}
 		}
 		return sprites;
 	}
 
-	private static boolean isWalkable(final int x, final int y, final ITile[][] _map,
+	private static boolean isWalkable(final int x, final int y, final char[][] _map,
 			final int _tilesHorizontal, final int _tilesVertical) {
-		return isInBounds(x, y, _tilesHorizontal, _tilesVertical) && _map[x][y].isWalkable();
+		return isInBounds(x, y, _tilesHorizontal, _tilesVertical) && _map[x][y] != '#';
 	}
 
 	private static boolean isInBounds(final int x, final int y, final int _tilesHorizontal,

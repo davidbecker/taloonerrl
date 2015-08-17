@@ -13,6 +13,7 @@ package de.brainstormsoftworks.taloonerrl.internal.dungeon;
 import de.brainstormsoftworks.taloonerrl.dungeon.EDungeonSprites;
 import de.brainstormsoftworks.taloonerrl.dungeon.ITile;
 
+@Deprecated
 public class Tile implements ITile {
 
 	private EDungeonSprites dungeonSprite = EDungeonSprites.NOTHING;

@@ -10,6 +10,7 @@
  ******************************************************************************/
 package de.brainstormsoftworks.taloonerrl.dungeon;
 
+@Deprecated
 public interface ITile {
 
 	/**
