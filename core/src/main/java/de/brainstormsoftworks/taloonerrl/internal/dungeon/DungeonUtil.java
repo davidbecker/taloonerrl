@@ -85,7 +85,12 @@ public final class DungeonUtil {
 					}
 				} else {
 					// wall
-					if (!northWalkable && !eastWalkable && northEastWalkable) {
+					if (!northWalkable && !eastWalkable && !southWalkable && !westWalkable
+							&& !northEastWalkable && !northWestWalkable && !southWestWalkable
+							&& !southEastWalkable) {
+						// trapped piece -> set to nothing for the time being
+						sprites[x][y] = EDungeonSprites.NOTHING;
+					} else if (!northWalkable && !eastWalkable && northEastWalkable) {
 						// FIXME there are other possibilities
 						// bottom corner
 						sprites[x][y] = EDungeonSprites.WALL_BOTTOMLEFT_CORNER;
