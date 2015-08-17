@@ -11,40 +11,44 @@
 package de.brainstormsoftworks.taloonerrl.internal.dungeon;
 
 import de.brainstormsoftworks.taloonerrl.dungeon.Generator;
+import squidpony.squidgrid.mapping.DungeonGenerator;
 
 /**
- * this is a very basic level generator that just carves a large room into the
- * map
+ * Dungeon generator that uses the squidlib generator underneath
  *
- * @author david
+ * @author David Becker
  *
  */
-public final class GeneratorCarveBigRoom extends Generator {
-
-	private static final Generator instance = new GeneratorCarveBigRoom();
+public final class SquidGenerator extends Generator {
+	private static final SquidGenerator instance = new SquidGenerator();
 
 	/**
 	 * constructor.<br/>
-	 * private on purpose, use {@link #getInstance()} instead
+	 * private on purpose
 	 */
-	private GeneratorCarveBigRoom() {
+	private SquidGenerator() {
 	}
 
 	@Override
 	public void generate(final char[][] map, final int _tilesHorizontal, final int _tilesVertical) {
-		for (int x = 1; x < _tilesHorizontal - 1; x++) {
-			for (int y = 1; y < _tilesVertical - 1; y++) {
-				map[x][y] = '.';
+		final DungeonGenerator generator = new DungeonGenerator();
+		generator.setDungeon(map);
+		final char[][] generate = generator.generate();
+		// copy char over
+		// refactor Generator to return char[][] instead
+		for (int x = 0; x < _tilesHorizontal; x++) {
+			for (int y = 0; y < _tilesVertical; y++) {
+				map[x][y] = generate[x][y];
 			}
 		}
 	}
 
 	/**
-	 * gets an instance of this {@link Generator}
+	 * getter for an instance of this singleton
 	 *
-	 * @return instance
+	 * @return
 	 */
-	public static Generator getInstance() {
+	public static SquidGenerator getInstance() {
 		return instance;
 	}
 

@@ -30,9 +30,9 @@ public class TestDungeonUtil {
 			map[i][4] = '#';
 		}
 		for (int i = 1; i < 4; i++) {
-			map[1][i] = ' ';
-			map[2][i] = ' ';
-			map[3][i] = ' ';
+			map[1][i] = '.';
+			map[2][i] = '.';
+			map[3][i] = '.';
 		}
 
 		final EDungeonSprites[][] sprites = DungeonUtil.calculateDungeonSprites(map, 5, 5);

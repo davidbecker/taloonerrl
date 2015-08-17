@@ -11,8 +11,8 @@
 package de.brainstormsoftworks.taloonerrl.dungeon;
 
 import de.brainstormsoftworks.taloonerrl.internal.dungeon.DungeonUtil;
-import de.brainstormsoftworks.taloonerrl.internal.dungeon.GeneratorCarveBigRoom;
 import de.brainstormsoftworks.taloonerrl.internal.dungeon.Map;
+import de.brainstormsoftworks.taloonerrl.internal.dungeon.SquidGenerator;
 
 /**
  * factory for an {@link IMap}
@@ -33,7 +33,9 @@ public final class MapFactory {
 			}
 		}
 		// generate the dungeon
-		GeneratorCarveBigRoom.getInstance().generate(map.getMap(), _tilesHorizontal, _tilesVertical);
+		// GeneratorCarveBigRoom.getInstance().generate(map.getMap(),
+		// _tilesHorizontal, _tilesVertical);
+		SquidGenerator.getInstance().generate(map.getMap(), _tilesHorizontal, _tilesVertical);
 		// calculate which sprite to use on each tile
 		map.setDungeonSprites(
 				DungeonUtil.calculateDungeonSprites(map.getMap(), _tilesHorizontal, _tilesVertical));
