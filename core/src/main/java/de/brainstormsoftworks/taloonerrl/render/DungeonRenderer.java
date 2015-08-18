@@ -46,6 +46,8 @@ public final class DungeonRenderer implements IDisposableInstance {
 	private final TextureRegion sWallTsectionSouth;
 	private final TextureRegion sWallTsectionEast;
 	private final TextureRegion sWallTsectionWest;
+	private final TextureRegion sWallEndEast;
+	private final TextureRegion sWallEndWest;
 
 	private static final String TEXTURE_PATH = "textures/dungeon/";
 
@@ -99,7 +101,10 @@ public final class DungeonRenderer implements IDisposableInstance {
 				Renderer.tileSize, Renderer.tileSize);
 		sWallTsectionWest = new TextureRegion(wallTexture, 3 * Renderer.tileSize, 4 * Renderer.tileSize,
 				Renderer.tileSize, Renderer.tileSize);
-
+		sWallEndEast = new TextureRegion(wallTexture, 5 * Renderer.tileSize, 5 * Renderer.tileSize,
+				Renderer.tileSize, Renderer.tileSize);
+		sWallEndWest = new TextureRegion(wallTexture, 3 * Renderer.tileSize, 5 * Renderer.tileSize,
+				Renderer.tileSize, Renderer.tileSize);
 		RenderUtil.addToDisposeList(this);
 	}
 
@@ -184,6 +189,14 @@ public final class DungeonRenderer implements IDisposableInstance {
 			return sWallTsectionEast;
 		case WALL_TSECTION_WEST:
 			return sWallTsectionWest;
+		case WALL_END_NORT:
+			return sWallVertical;
+		case WALL_END_SOUTH:
+			return sWallPillar;
+		case WALL_END_EAST:
+			return sWallEndEast;
+		case WALL_END_WEST:
+			return sWallEndWest;
 		case NOTHING:
 			// same as default for now
 		default:

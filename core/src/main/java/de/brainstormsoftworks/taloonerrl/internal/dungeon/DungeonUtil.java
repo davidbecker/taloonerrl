@@ -134,6 +134,14 @@ public final class DungeonUtil {
 									&& !northEastWalkable && !eastWalkable && !southEastWalkable
 									&& !southWalkable) {
 						sprites[x][y] = EDungeonSprites.WALL_TOPRIGHT_CORNER;
+					} else if (eastWalkable && !westWalkable && northWalkable && southWalkable) {
+						sprites[x][y] = EDungeonSprites.WALL_END_EAST;
+					} else if (westWalkable && !eastWalkable && northWalkable && southWalkable) {
+						sprites[x][y] = EDungeonSprites.WALL_END_WEST;
+					} else if (northWalkable && !southWalkable && eastWalkable && westWalkable) {
+						sprites[x][y] = EDungeonSprites.WALL_END_NORT;
+					} else if (southWalkable && !northWalkable && eastWalkable && westWalkable) {
+						sprites[x][y] = EDungeonSprites.WALL_END_SOUTH;
 					} else if (!westWalkable && !eastWalkable && (northWalkable || southWalkable)) {
 						// horizontal piece
 						sprites[x][y] = EDungeonSprites.WALL_HORIZONTAL;
