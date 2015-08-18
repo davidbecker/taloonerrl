@@ -94,6 +94,22 @@ public final class DungeonUtil {
 							&& northEastWalkable && northWestWalkable && southWestWalkable
 							&& southEastWalkable) {
 						sprites[x][y] = EDungeonSprites.WALL_PILLAR;
+					} else if (!westWalkable && !eastWalkable && !southWalkable
+							&& (northWalkable && (southEastWalkable || southWestWalkable)
+									|| southEastWalkable && southWestWalkable)) {
+						sprites[x][y] = EDungeonSprites.WALL_TSECTION_NORTH;
+					} else if (!westWalkable && !eastWalkable && !northWalkable
+							&& (southWalkable && (northEastWalkable || northWestWalkable)
+									|| northEastWalkable && northWestWalkable)) {
+						sprites[x][y] = EDungeonSprites.WALL_TSECTION_SOUTH;
+					} else if (!westWalkable && !southWalkable && !northWalkable
+							&& (eastWalkable && (southWestWalkable || northWestWalkable)
+									|| southWestWalkable && northWestWalkable)) {
+						sprites[x][y] = EDungeonSprites.WALL_TSECTION_EAST;
+					} else if (!eastWalkable && !southWalkable && !northWalkable
+							&& (westWalkable && (southEastWalkable || northEastWalkable)
+									|| southEastWalkable && northEastWalkable)) {
+						sprites[x][y] = EDungeonSprites.WALL_TSECTION_WEST;
 					} else if (!northWalkable && !eastWalkable && southWalkable && southWestWalkable
 							&& westWalkable
 							|| !northWalkable && northEastWalkable && !eastWalkable && !southEastWalkable
