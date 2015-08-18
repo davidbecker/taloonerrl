@@ -42,6 +42,7 @@ public final class DungeonRenderer implements IDisposableInstance {
 	private final TextureRegion sWallBottomLeft;
 	private final TextureRegion sWallBottomRight;
 	private final TextureRegion sWallPillar;
+	private final TextureRegion sWallCrossSection;
 	private final TextureRegion sWallTsectionNorth;
 	private final TextureRegion sWallTsectionSouth;
 	private final TextureRegion sWallTsectionEast;
@@ -92,6 +93,8 @@ public final class DungeonRenderer implements IDisposableInstance {
 		sWallBottomRight = new TextureRegion(wallTexture, 2 * Renderer.tileSize, 5 * Renderer.tileSize,
 				Renderer.tileSize, Renderer.tileSize);
 		sWallPillar = new TextureRegion(wallTexture, 1 * Renderer.tileSize, 4 * Renderer.tileSize,
+				Renderer.tileSize, Renderer.tileSize);
+		sWallCrossSection = new TextureRegion(wallTexture, 4 * Renderer.tileSize, 4 * Renderer.tileSize,
 				Renderer.tileSize, Renderer.tileSize);
 		sWallTsectionNorth = new TextureRegion(wallTexture, 4 * Renderer.tileSize, 3 * Renderer.tileSize,
 				Renderer.tileSize, Renderer.tileSize);
@@ -181,6 +184,8 @@ public final class DungeonRenderer implements IDisposableInstance {
 			return sWallBottomRight;
 		case WALL_PILLAR:
 			return sWallPillar;
+		case WALL_CROSSSECTION:
+			return sWallCrossSection;
 		case WALL_TSECTION_NORTH:
 			return sWallTsectionNorth;
 		case WALL_TSECTION_SOUTH:

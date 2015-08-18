@@ -94,6 +94,10 @@ public final class DungeonUtil {
 							&& northEastWalkable && northWestWalkable && southWestWalkable
 							&& southEastWalkable) {
 						sprites[x][y] = EDungeonSprites.WALL_PILLAR;
+					} else if (!northWalkable && !eastWalkable && !southWalkable && !westWalkable
+							&& (northEastWalkable && southWestWalkable
+									|| northWestWalkable && southEastWalkable)) {
+						sprites[x][y] = EDungeonSprites.WALL_CROSSSECTION;
 					} else if (!westWalkable && !eastWalkable && !southWalkable
 							&& (northWalkable && (southEastWalkable || southWestWalkable)
 									|| southEastWalkable && southWestWalkable)) {
