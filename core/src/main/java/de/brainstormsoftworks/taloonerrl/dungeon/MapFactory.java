@@ -26,16 +26,18 @@ public final class MapFactory {
 	}
 
 	public static IMap createMap(final int _tilesHorizontal, final int _tilesVertical) {
-		final IMap map = new Map(_tilesHorizontal, _tilesVertical);
+		final Map map = new Map(_tilesHorizontal, _tilesVertical);
 		for (int x = 0; x < _tilesHorizontal; x++) {
 			for (int y = 0; y < _tilesVertical; y++) {
 				map.getMap()[x][y] = '#';
 			}
 		}
+
 		// generate the dungeon
 		// GeneratorCarveBigRoom.getInstance().generate(map.getMap(),
 		// _tilesHorizontal, _tilesVertical);
 		SquidGenerator.getInstance().generate(map.getMap(), _tilesHorizontal, _tilesVertical);
+
 		// calculate which sprite to use on each tile
 		map.setDungeonSprites(
 				DungeonUtil.calculateDungeonSprites(map.getMap(), _tilesHorizontal, _tilesVertical));

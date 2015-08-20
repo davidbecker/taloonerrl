@@ -74,7 +74,12 @@ public class Map implements IMap {
 		return dungeonSprites;
 	}
 
-	@Override
+	/**
+	 * method to set the dungeon sprites
+	 *
+	 * @param sprites
+	 *            array to set
+	 */
 	public void setDungeonSprites(final EDungeonSprites[][] sprites) {
 		dungeonSprites = sprites;
 	}

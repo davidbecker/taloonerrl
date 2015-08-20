@@ -49,14 +49,6 @@ public interface IMap {
 	EDungeonSprites[][] getDungeonSprites();
 
 	/**
-	 * method to set the dungeon sprites
-	 *
-	 * @param sprites
-	 *            array to set
-	 */
-	void setDungeonSprites(EDungeonSprites[][] sprites);
-
-	/**
 	 * get the number of tiles in the map
 	 *
 	 * @return horizontal dimension of map
