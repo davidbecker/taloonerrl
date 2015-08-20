@@ -57,7 +57,10 @@ public final class DungeonUtil {
 				if (selfWalkable) {
 					// floor
 					if (northWalkable && southWalkable && westWalkable && eastWalkable) {
-						if (!northWestWalkable) {
+						if (northWestWalkable && northEastWalkable && southWestWalkable
+								&& southEastWalkable) {
+							sprites[x][y] = EDungeonSprites.FLOOR_CENTER;
+						} else if (!northWestWalkable) {
 							sprites[x][y] = EDungeonSprites.FLOOR_BOTTOMRIGHT_CORNER_OUTSIDE;
 						} else if (!northEastWalkable) {
 							sprites[x][y] = EDungeonSprites.FLOOR_BOTTOMLEFT_CORNER_OUTSIDE;
@@ -65,8 +68,6 @@ public final class DungeonUtil {
 							sprites[x][y] = EDungeonSprites.FLOOR_TOPRIGHT_CORNER_OUTSIDE;
 						} else if (!southEastWalkable) {
 							sprites[x][y] = EDungeonSprites.FLOOR_TOPLEFT_CORNER_OUTSIDE;
-						} else {
-							sprites[x][y] = EDungeonSprites.FLOOR_CENTER;
 						}
 					} else if (eastWalkable && westWalkable && northWalkable && !southWalkable) {
 						sprites[x][y] = EDungeonSprites.FLOOR_BOTTOM;
