@@ -35,6 +35,10 @@ public final class DungeonRenderer implements IDisposableInstance {
 	private final TextureRegion sFloorBottomLeft;
 	private final TextureRegion sFloorBottom;
 	private final TextureRegion sFloorBottomRight;
+	private final TextureRegion sFloorTopLeftOutside;
+	private final TextureRegion sFloorTopRightOutside;
+	private final TextureRegion sFloorBottomLeftOutside;
+	private final TextureRegion sFloorBottomRightOutside;
 	private final TextureRegion sWallTopLeft;
 	private final TextureRegion sWallHorizontal;
 	private final TextureRegion sWallTopRight;
@@ -42,6 +46,7 @@ public final class DungeonRenderer implements IDisposableInstance {
 	private final TextureRegion sWallBottomLeft;
 	private final TextureRegion sWallBottomRight;
 	private final TextureRegion sWallPillar;
+	private final TextureRegion sWallFull;
 	private final TextureRegion sWallCrossSection;
 	private final TextureRegion sWallTsectionNorth;
 	private final TextureRegion sWallTsectionSouth;
@@ -53,7 +58,7 @@ public final class DungeonRenderer implements IDisposableInstance {
 	private static final String TEXTURE_PATH = "textures/dungeon/";
 
 	private DungeonRenderer() {
-		floorTexture = new Texture(Gdx.files.internal(TEXTURE_PATH + "Floor.png"), false);
+		floorTexture = new Texture(Gdx.files.internal(TEXTURE_PATH + "Floor02.png"), false);
 		floorTexture.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
 		floorTexture.setWrap(TextureWrap.ClampToEdge, TextureWrap.ClampToEdge);
 		wallTexture = new Texture(Gdx.files.internal(TEXTURE_PATH + "Wall.png"), false);
@@ -90,6 +95,14 @@ public final class DungeonRenderer implements IDisposableInstance {
 				Renderer.tileSize, Renderer.tileSize);
 		sFloorBottomRight = new TextureRegion(floorTexture, 2 * Renderer.tileSize, 1 + 5 * Renderer.tileSize,
 				Renderer.tileSize, Renderer.tileSize);
+		sFloorBottomRightOutside = new TextureRegion(floorTexture, 6 * Renderer.tileSize,
+				1 + 5 * Renderer.tileSize, Renderer.tileSize, Renderer.tileSize);
+		sFloorTopRightOutside = new TextureRegion(floorTexture, 6 * Renderer.tileSize,
+				1 + 3 * Renderer.tileSize, Renderer.tileSize, Renderer.tileSize);
+		sFloorBottomLeftOutside = new TextureRegion(floorTexture, 4 * Renderer.tileSize,
+				1 + 5 * Renderer.tileSize, Renderer.tileSize, Renderer.tileSize);
+		sFloorTopLeftOutside = new TextureRegion(floorTexture, 4 * Renderer.tileSize,
+				1 + 3 * Renderer.tileSize, Renderer.tileSize, Renderer.tileSize);
 		sWallBottomRight = new TextureRegion(wallTexture, 2 * Renderer.tileSize, 5 * Renderer.tileSize,
 				Renderer.tileSize, Renderer.tileSize);
 		sWallPillar = new TextureRegion(wallTexture, 1 * Renderer.tileSize, 4 * Renderer.tileSize,
@@ -107,6 +120,8 @@ public final class DungeonRenderer implements IDisposableInstance {
 		sWallEndEast = new TextureRegion(wallTexture, 5 * Renderer.tileSize, 5 * Renderer.tileSize,
 				Renderer.tileSize, Renderer.tileSize);
 		sWallEndWest = new TextureRegion(wallTexture, 3 * Renderer.tileSize, 5 * Renderer.tileSize,
+				Renderer.tileSize, Renderer.tileSize);
+		sWallFull = new TextureRegion(wallTexture, 3 * Renderer.tileSize, 3 * Renderer.tileSize,
 				Renderer.tileSize, Renderer.tileSize);
 		RenderUtil.addToDisposeList(this);
 	}
@@ -170,6 +185,14 @@ public final class DungeonRenderer implements IDisposableInstance {
 			return sFloorTopLeft;
 		case FLOOR_TOPRIGHT_CORNER:
 			return sFloorTopRight;
+		case FLOOR_BOTTOMLEFT_CORNER_OUTSIDE:
+			return sFloorBottomLeftOutside;
+		case FLOOR_BOTTOMRIGHT_CORNER_OUTSIDE:
+			return sFloorBottomRightOutside;
+		case FLOOR_TOPLEFT_CORNER_OUTSIDE:
+			return sFloorTopLeftOutside;
+		case FLOOR_TOPRIGHT_CORNER_OUTSIDE:
+			return sFloorTopRightOutside;
 		case WALL_TOPLEFT_CORNER:
 			return sWallTopLeft;
 		case WALL_HORIZONTAL:
@@ -202,6 +225,8 @@ public final class DungeonRenderer implements IDisposableInstance {
 			return sWallEndEast;
 		case WALL_END_WEST:
 			return sWallEndWest;
+		case WALL_FULL:
+			return sWallFull;
 		case NOTHING:
 			// same as default for now
 		default:
