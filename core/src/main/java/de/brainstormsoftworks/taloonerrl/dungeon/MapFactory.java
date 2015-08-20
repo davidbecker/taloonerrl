@@ -13,6 +13,7 @@ package de.brainstormsoftworks.taloonerrl.dungeon;
 import de.brainstormsoftworks.taloonerrl.internal.dungeon.DungeonUtil;
 import de.brainstormsoftworks.taloonerrl.internal.dungeon.Map;
 import de.brainstormsoftworks.taloonerrl.internal.dungeon.SquidGenerator;
+import squidpony.squidmath.RNG;
 
 /**
  * factory for an {@link IMap}
@@ -21,6 +22,9 @@ import de.brainstormsoftworks.taloonerrl.internal.dungeon.SquidGenerator;
  *
  */
 public final class MapFactory {
+	private static final RNG rng = new RNG();
+	private static int playerStartX = -1;
+	private static int playerStartY = -1;
 
 	private MapFactory() {
 	}
@@ -41,6 +45,37 @@ public final class MapFactory {
 		// calculate which sprite to use on each tile
 		map.setDungeonSprites(
 				DungeonUtil.calculateDungeonSprites(map.getMap(), _tilesHorizontal, _tilesVertical));
+
+		// set player starting position to a random walkable position for now
+		playerStartX = -1;
+		playerStartY = -1;
+		while (!map.isWalkable(playerStartX, playerStartY)) {
+			playerStartX = rng.nextInt(_tilesHorizontal);
+			playerStartY = rng.nextInt(_tilesVertical);
+		}
+
 		return map;
+	}
+
+	/**
+	 * Will return the horizontal starting position that was computed on the
+	 * last call of {@link #createMap(int, int)}. Will be -1 before
+	 * {@link #createMap(int, int)} was first called
+	 *
+	 * @return the playerStartX
+	 */
+	public static final int getPlayerStartX() {
+		return playerStartX;
+	}
+
+	/**
+	 * Will return the vertical starting position that was computed on the last
+	 * call of {@link #createMap(int, int)}. Will be -1 before
+	 * {@link #createMap(int, int)} was first called
+	 *
+	 * @return the playerStartY
+	 */
+	public static final int getPlayerStartY() {
+		return playerStartY;
 	}
 }

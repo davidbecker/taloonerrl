@@ -61,8 +61,8 @@ public class TaloonerRl implements ApplicationListener {
 		playerPositionComponent = playerEntity.getComponent(PositionComponent.class);
 		playerFacingComponent = playerEntity.getComponent(FacingComponent.class);
 		// TODO only use one player
-		playerPositionComponent.setX(4);
-		playerPositionComponent.setY(4);
+		playerPositionComponent.setX(MapFactory.getPlayerStartX());
+		playerPositionComponent.setY(MapFactory.getPlayerStartY());
 
 		DungeonRenderer.initInstance();
 		GuiRenderer.initInstance();
