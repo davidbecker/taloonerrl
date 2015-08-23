@@ -25,6 +25,15 @@ public final class MapFactory {
 	private MapFactory() {
 	}
 
+	/**
+	 * creates a new map
+	 *
+	 * @param _tilesHorizontal
+	 *            amount of horizontal tiles
+	 * @param _tilesVertical
+	 *            amount of vertical tiles
+	 * @return map
+	 */
 	public static synchronized IMap createMap(final int _tilesHorizontal, final int _tilesVertical) {
 		final Map map = new Map(_tilesHorizontal, _tilesVertical);
 		for (int x = 0; x < _tilesHorizontal; x++) {

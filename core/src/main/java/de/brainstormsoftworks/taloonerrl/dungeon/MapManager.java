@@ -36,16 +36,21 @@ public final class MapManager {
 	private MapManager() {
 	}
 
-	public static void createEntities(final IMap map, final int _tilesHorizontal, final int _tilesVertical) {
-
-		/*
-		 * TODO refactor - move creation of player, monsters, items & decoration
-		 * into own class only create blank map here
-		 */
+	/**
+	 * creates entities for the given map
+	 *
+	 * @param _map
+	 *            to check against
+	 * @param _tilesHorizontal
+	 *            amount of horizontal tiles
+	 * @param _tilesVertical
+	 *            amount of vertical tiles
+	 */
+	public static void createEntities(final IMap _map, final int _tilesHorizontal, final int _tilesVertical) {
 		// set player starting position to a random walkable position for now
 		playerStartX = -1;
 		playerStartY = -1;
-		while (!map.isWalkable(playerStartX, playerStartY)) {
+		while (!_map.isWalkable(playerStartX, playerStartY)) {
 			playerStartX = rng.nextInt(_tilesHorizontal);
 			playerStartY = rng.nextInt(_tilesVertical);
 		}
@@ -64,7 +69,7 @@ public final class MapManager {
 		for (int i = 0; i < 10; i++) {
 			int monsterX = -1;
 			int monsterY = -1;
-			while (!map.isWalkable(monsterX, monsterY)) {
+			while (!_map.isWalkable(monsterX, monsterY)) {
 				monsterX = rng.nextInt(_tilesHorizontal);
 				monsterY = rng.nextInt(_tilesVertical);
 			}
