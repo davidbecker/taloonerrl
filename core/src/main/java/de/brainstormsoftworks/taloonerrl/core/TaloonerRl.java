@@ -36,8 +36,6 @@ import de.brainstormsoftworks.taloonerrl.render.Renderer;
 public class TaloonerRl implements ApplicationListener {
 
 	EDirection walkingDirection = EDirection.RIGHT;
-	float mouseX;
-	float mouseY;
 
 	private float delayToNextTurn = 0f;
 	/** minimum delay between player turns */
@@ -52,15 +50,11 @@ public class TaloonerRl implements ApplicationListener {
 	public void create() {
 		map = MapFactory.createMap(Renderer.TILES_HORIZONTAL * 2, Renderer.TILES_VERTICAL * 2);
 
-		mouseX = Gdx.graphics.getWidth() / 2;
-		mouseY = Gdx.graphics.getHeight() / 2;
-
 		// forces the engine to initialize
 		final GameEngine gameEngine = GameEngine.getInstance();
 		playerEntity = gameEngine.createNewEntity(EEntity.PLAYER);
 		playerPositionComponent = playerEntity.getComponent(PositionComponent.class);
 		playerFacingComponent = playerEntity.getComponent(FacingComponent.class);
-		// TODO only use one player
 		playerPositionComponent.setX(MapFactory.getPlayerStartX());
 		playerPositionComponent.setY(MapFactory.getPlayerStartY());
 
@@ -132,21 +126,6 @@ public class TaloonerRl implements ApplicationListener {
 
 		Renderer.getInstance().beginWorldRendering();
 		DungeonRenderer.getInstance().render(map);
-
-		// final Vector3 touchPos = new Vector3();
-		// touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
-		// Renderer.getInstance().unprojectFromCamera(touchPos);
-		// mouseX = touchPos.x - Renderer.tileSize / 2;
-		// mouseY = touchPos.y - Renderer.tileSize / 2;
-		//
-		// Renderer.getInstance().renderOnScreen(cursor, mouseX, mouseY);
-
-		// FIXME WIP
-		// // translate mouse coordinates to selected tile
-		// final float tileX = touchPos.x /Renderer.TILES_HORIZONTAL; // 0-18
-		// final float tileY = touchPos.y / Renderer.TILES_VERTICAL;
-		// Renderer.getInstance().BATCH.draw(cursor, tileX, tileY);
-		// System.out.println(tileX + " " + tileY);
 
 		GameEngine.getInstance().update(deltaTime);
 		Renderer.getInstance().endWorldRendering();
