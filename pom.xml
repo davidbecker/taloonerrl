@@ -14,9 +14,9 @@
 		<jxr.version>2.5</jxr.version>
 		<pmd.version>3.5</pmd.version>
 		<checkstyle.version>2.16</checkstyle.version>
-		<findbugs.version>3.0.1</findbugs.version>
-		<gdx.version>1.6.4</gdx.version>
-		<artemis.version>0.10.2</artemis.version>
+		<findbugs.version>3.0.2</findbugs.version>
+		<gdx.version>1.6.5</gdx.version>
+		<artemis.version>0.11.4</artemis.version>
 		<maven.compiler.version>3.3</maven.compiler.version>
 		<maven.sources.version>2.4</maven.sources.version>
 		<jdk.version>1.7</jdk.version>
