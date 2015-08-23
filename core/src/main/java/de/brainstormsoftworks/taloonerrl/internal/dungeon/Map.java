@@ -16,6 +16,7 @@ import de.brainstormsoftworks.taloonerrl.dungeon.IMap;
 public class Map implements IMap {
 
 	private final char[][] map;
+	private final double[][] fovResistance;
 	private final int tilesHorizontal;
 	private final int tilesVertical;
 	private EDungeonSprites[][] dungeonSprites;
@@ -24,6 +25,7 @@ public class Map implements IMap {
 		tilesHorizontal = _tilesHorizontal;
 		tilesVertical = _tilesVertical;
 		map = new char[tilesHorizontal][tilesVertical];
+		fovResistance = new double[tilesHorizontal][tilesVertical];
 		dungeonSprites = new EDungeonSprites[tilesHorizontal][tilesVertical];
 	}
 
@@ -52,6 +54,11 @@ public class Map implements IMap {
 	@Override
 	public char[][] getMap() {
 		return map;
+	}
+
+	@Override
+	public final double[][] getFovResistance() {
+		return fovResistance;
 	}
 
 	@Override

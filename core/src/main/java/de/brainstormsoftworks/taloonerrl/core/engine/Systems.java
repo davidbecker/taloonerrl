@@ -16,6 +16,7 @@ import de.brainstormsoftworks.taloonerrl.system.AnimationRenderSystem;
 import de.brainstormsoftworks.taloonerrl.system.CameraSystem;
 import de.brainstormsoftworks.taloonerrl.system.ControllerSystem;
 import de.brainstormsoftworks.taloonerrl.system.FacingAnimationRenderSystem;
+import de.brainstormsoftworks.taloonerrl.system.FovUpdaterSystem;
 import de.brainstormsoftworks.taloonerrl.system.HealthBarRenderSystem;
 import de.brainstormsoftworks.taloonerrl.system.HighlightRenderSystem;
 import de.brainstormsoftworks.taloonerrl.system.MapOverlayPreparerSystem;
@@ -38,6 +39,7 @@ public final class Systems {
 	private static final CameraSystem CAMERA_SYSTEM = new CameraSystem();
 	private static final ControllerSystem CONTROLLER_SYSTEM = new ControllerSystem();
 	private static final MapOverlayPreparerSystem MAP_OVERLAY_PREPARER_SYSTEM = new MapOverlayPreparerSystem();
+	private static final FovUpdaterSystem FOV_UPDATER_SYSTEM = new FovUpdaterSystem();
 
 	private Systems() {
 	}
@@ -51,6 +53,7 @@ public final class Systems {
 		// order is important! systems are processed in given order
 		// config.setSystem(CONTROLLER_SYSTEM);
 		config.setSystem(CAMERA_SYSTEM);
+		config.setSystem(FOV_UPDATER_SYSTEM);
 		config.setSystem(HIGHLIGHT_SYSTEM);
 		config.setSystem(SPRITE_RENDER_SYSTEM);
 		// config.setSystem(MOVEMENT_SYSTEM);

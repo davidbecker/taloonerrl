@@ -10,6 +10,8 @@
  ******************************************************************************/
 package de.brainstormsoftworks.taloonerrl.dungeon;
 
+import squidpony.squidgrid.FOV;
+
 public interface IMap {
 
 	/**
@@ -40,6 +42,13 @@ public interface IMap {
 	 * @return array of tiles
 	 */
 	char[][] getMap();
+
+	/**
+	 * gets the resistance map for {@link FOV}
+	 *
+	 * @return array with 1.0 for a wall and 0.0 for any walkable tile
+	 */
+	double[][] getFovResistance();
 
 	/**
 	 * get the types of tiles on the map

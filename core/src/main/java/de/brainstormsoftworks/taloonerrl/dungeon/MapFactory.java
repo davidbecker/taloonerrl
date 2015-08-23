@@ -47,6 +47,13 @@ public final class MapFactory {
 		// _tilesHorizontal, _tilesVertical);
 		SquidGenerator.getInstance().generate(map.getMap(), _tilesHorizontal, _tilesVertical);
 
+		// sets the resistance for FOV
+		for (int x = 0; x < _tilesHorizontal; x++) {
+			for (int y = 0; y < _tilesVertical; y++) {
+				map.getFovResistance()[x][y] = map.getMap()[x][y] == '#' ? 1.0 : 0.00;
+			}
+		}
+
 		// calculate which sprite to use on each tile
 		map.setDungeonSprites(
 				DungeonUtil.calculateDungeonSprites(map.getMap(), _tilesHorizontal, _tilesVertical));

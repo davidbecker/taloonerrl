@@ -155,11 +155,13 @@ public final class DungeonRenderer implements IDisposableInstance {
 		// moved
 		for (int x = 0; x < map.getTilesHorizontal(); x++) {
 			for (int y = 0; y < map.getTilesVertical(); y++) {
-				final TextureRegion tile = getTile(spriteArray[x][y]);
-				// final TextureRegion tile = TextureManager.getInstance()
-				// .getTile(tileArray[x][y].getDungeonSprite());
-				if (tile != null) {
-					Renderer.getInstance().renderOnTile(tile, x, y);
+				if (FovWrapper.getInstance().isLit(x, y)) {
+					final TextureRegion tile = getTile(spriteArray[x][y]);
+					// final TextureRegion tile = TextureManager.getInstance()
+					// .getTile(tileArray[x][y].getDungeonSprite());
+					if (tile != null) {
+						Renderer.getInstance().renderOnTile(tile, x, y);
+					}
 				}
 			}
 		}
