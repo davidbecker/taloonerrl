@@ -27,6 +27,8 @@ import de.brainstormsoftworks.taloonerrl.render.FovWrapper;
  */
 public class FovUpdaterSystem extends EntityProcessingSystem {
 	private PositionComponent positionComponent;
+	private int oldX = -1;
+	private int oldY = -1;
 
 	@SuppressWarnings("unchecked")
 	public FovUpdaterSystem() {
@@ -36,7 +38,15 @@ public class FovUpdaterSystem extends EntityProcessingSystem {
 	@Override
 	protected void process(final Entity e) {
 		positionComponent = ComponentMappers.getInstance().position.get(e);
-		FovWrapper.getInstance().calculateFovForPosition(positionComponent.getX(), positionComponent.getY());
+		final int x = positionComponent.getX();
+		final int y = positionComponent.getY();
+		// only compute fov if position has changed
+		if (!(oldX == x && oldY == y)) {
+			// TODO move into different thread
+			FovWrapper.getInstance().calculateFovForPosition(x, y);
+		}
+		oldX = x;
+		oldY = y;
 	}
 
 }
