@@ -102,10 +102,12 @@ public class TaloonerRl implements ApplicationListener {
 					walkingDirection = EDirection.UP;
 				}
 				// TODO refactor
-				MapManager.getPlayerPositionComponent()
-						.setX(MapManager.getPlayerPositionComponent().getX() + dX);
-				MapManager.getPlayerPositionComponent()
-						.setY(MapManager.getPlayerPositionComponent().getY() + dY);
+				final int newX = MapManager.getPlayerPositionComponent().getX() + dX;
+				final int newY = MapManager.getPlayerPositionComponent().getY() + dY;
+				if (map.isWalkable(newX, newY)) {
+					MapManager.getPlayerPositionComponent().setX(newX);
+					MapManager.getPlayerPositionComponent().setY(newY);
+				}
 				MapManager.getPlayerFacingComponent().setDirection(walkingDirection);
 				delayToNextTurn = delayBetweenTurns;
 			}
