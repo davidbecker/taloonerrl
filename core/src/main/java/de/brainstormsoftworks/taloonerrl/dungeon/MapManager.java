@@ -58,6 +58,19 @@ public final class MapManager {
 		playerPositionComponent.setX(playerStartX);
 		playerPositionComponent.setY(playerStartY);
 
+		// TODO refactor
+		// simple method to create 10 monster, it is possible to create monster
+		// on top of each other!
+		for (int i = 0; i < 10; i++) {
+			int monsterX = -1;
+			int monsterY = -1;
+			while (!map.isWalkable(monsterX, monsterY)) {
+				monsterX = rng.nextInt(_tilesHorizontal);
+				monsterY = rng.nextInt(_tilesVertical);
+			}
+			GameEngine.getInstance().createNewEntity(EEntity.BAT, monsterX, monsterY);
+		}
+
 	}
 
 	/**
