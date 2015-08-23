@@ -10,17 +10,14 @@
  ******************************************************************************/
 package de.brainstormsoftworks.taloonerrl.core;
 
-import com.artemis.Entity;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 
-import de.brainstormsoftworks.taloonerrl.components.FacingComponent;
-import de.brainstormsoftworks.taloonerrl.components.PositionComponent;
-import de.brainstormsoftworks.taloonerrl.core.engine.EEntity;
 import de.brainstormsoftworks.taloonerrl.core.engine.GameEngine;
 import de.brainstormsoftworks.taloonerrl.dungeon.IMap;
 import de.brainstormsoftworks.taloonerrl.dungeon.MapFactory;
+import de.brainstormsoftworks.taloonerrl.dungeon.MapManager;
 import de.brainstormsoftworks.taloonerrl.render.DungeonRenderer;
 import de.brainstormsoftworks.taloonerrl.render.GuiRenderer;
 import de.brainstormsoftworks.taloonerrl.render.MapOverlayRenderer;
@@ -42,32 +39,17 @@ public class TaloonerRl implements ApplicationListener {
 	private static final float delayBetweenTurns = 0.03f;
 
 	public static IMap map = null;
-	private Entity playerEntity;
-	private PositionComponent playerPositionComponent;
-	private FacingComponent playerFacingComponent;
 
 	@Override
 	public void create() {
-		map = MapFactory.createMap(Renderer.TILES_HORIZONTAL * 2, Renderer.TILES_VERTICAL * 2);
-
-		// forces the engine to initialize
-		final GameEngine gameEngine = GameEngine.getInstance();
-		playerEntity = gameEngine.createNewEntity(EEntity.PLAYER);
-		playerPositionComponent = playerEntity.getComponent(PositionComponent.class);
-		playerFacingComponent = playerEntity.getComponent(FacingComponent.class);
-		playerPositionComponent.setX(MapFactory.getPlayerStartX());
-		playerPositionComponent.setY(MapFactory.getPlayerStartY());
+		final int tilesHorizontal = Renderer.TILES_HORIZONTAL * 2;
+		final int tilesVertical = Renderer.TILES_VERTICAL * 2;
+		map = MapFactory.createMap(tilesHorizontal, tilesVertical);
+		MapManager.createEntities(map, tilesHorizontal, tilesVertical);
 
 		DungeonRenderer.initInstance();
 		GuiRenderer.initInstance();
 		MapOverlayRenderer.getInstance().initialize(map);
-
-		// a couple of entities for debugging purposes...
-		// for (int i = 2; i < 10; i++) {
-		// gameEngine.createNewEntity(EEntity.ARCHER, i, i);
-		// gameEngine.createNewEntity(EEntity.POTION_A, i + 2, i);
-		// gameEngine.createNewEntity(EEntity.POTION_A, i + 4, i + 6);
-		// }
 
 	}
 
@@ -116,10 +98,12 @@ public class TaloonerRl implements ApplicationListener {
 					dY = 1;
 					walkingDirection = EDirection.UP;
 				}
-				// TODO only use one player
-				playerPositionComponent.setX(playerPositionComponent.getX() + dX);
-				playerPositionComponent.setY(playerPositionComponent.getY() + dY);
-				playerFacingComponent.setDirection(walkingDirection);
+				// TODO refactor
+				MapManager.getPlayerPositionComponent()
+						.setX(MapManager.getPlayerPositionComponent().getX() + dX);
+				MapManager.getPlayerPositionComponent()
+						.setY(MapManager.getPlayerPositionComponent().getY() + dY);
+				MapManager.getPlayerFacingComponent().setDirection(walkingDirection);
 				delayToNextTurn = delayBetweenTurns;
 			}
 		}
