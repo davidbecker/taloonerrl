@@ -12,6 +12,7 @@ package de.brainstormsoftworks.taloonerrl.internal.dungeon;
 
 import de.brainstormsoftworks.taloonerrl.dungeon.EDungeonSprites;
 import de.brainstormsoftworks.taloonerrl.dungeon.IMap;
+import de.brainstormsoftworks.taloonerrl.math.ArrayHelper;
 
 public class Map implements IMap {
 
@@ -45,10 +46,7 @@ public class Map implements IMap {
 
 	@Override
 	public boolean isInMapBounds(final int x, final int y) {
-		if (x < 0 || x >= tilesHorizontal || y < 0 || y >= tilesVertical) {
-			return false;
-		}
-		return true;
+		return ArrayHelper.isInArrayBounds(map, x, y);
 	}
 
 	@Override

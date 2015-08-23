@@ -10,6 +10,7 @@
  ******************************************************************************/
 package de.brainstormsoftworks.taloonerrl.render;
 
+import de.brainstormsoftworks.taloonerrl.math.ArrayHelper;
 import squidpony.squidgrid.FOV;
 
 /**
@@ -22,7 +23,7 @@ public final class FovWrapper {
 
 	private static final FovWrapper instance = new FovWrapper();
 
-	private final FOV fov = new FOV();
+	private final FOV fov = new FOV(FOV.RIPPLE);
 	private double[][] fovResistance;
 
 	private FovWrapper() {
@@ -37,8 +38,9 @@ public final class FovWrapper {
 	 *            vertical tile position
 	 */
 	public void calculateFovForPosition(final int x, final int y) {
-		// calculate FOV for player position
-		fov.calculateFOV(fovResistance, x, y);
+		if (ArrayHelper.isInArrayBounds(fovResistance, x, y)) {
+			fov.calculateFOV(fovResistance, x, y);
+		}
 	}
 
 	/**
@@ -51,7 +53,10 @@ public final class FovWrapper {
 	 * @return true if position is visible, false otherwise
 	 */
 	public boolean isLit(final int x, final int y) {
-		return fov.isLit(x, y);
+		if (ArrayHelper.isInArrayBounds(fovResistance, x, y)) {
+			return fov.isLit(x, y);
+		}
+		return false;
 	}
 
 	/**
