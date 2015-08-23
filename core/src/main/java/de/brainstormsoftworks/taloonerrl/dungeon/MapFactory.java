@@ -39,6 +39,7 @@ public final class MapFactory {
 		for (int x = 0; x < _tilesHorizontal; x++) {
 			for (int y = 0; y < _tilesVertical; y++) {
 				map.getMap()[x][y] = '#';
+				map.getVisited()[x][y] = false;
 			}
 		}
 

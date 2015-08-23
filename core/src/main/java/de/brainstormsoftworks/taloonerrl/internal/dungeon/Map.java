@@ -18,6 +18,7 @@ public class Map implements IMap {
 
 	private final char[][] map;
 	private final double[][] fovResistance;
+	private final boolean[][] visited;
 	private final int tilesHorizontal;
 	private final int tilesVertical;
 	private EDungeonSprites[][] dungeonSprites;
@@ -27,6 +28,7 @@ public class Map implements IMap {
 		tilesVertical = _tilesVertical;
 		map = new char[tilesHorizontal][tilesVertical];
 		fovResistance = new double[tilesHorizontal][tilesVertical];
+		visited = new boolean[tilesHorizontal][tilesVertical];
 		dungeonSprites = new EDungeonSprites[tilesHorizontal][tilesVertical];
 	}
 
@@ -87,6 +89,11 @@ public class Map implements IMap {
 	 */
 	public void setDungeonSprites(final EDungeonSprites[][] sprites) {
 		dungeonSprites = sprites;
+	}
+
+	@Override
+	public final boolean[][] getVisited() {
+		return visited;
 	}
 
 }

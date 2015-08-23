@@ -63,18 +63,15 @@ public final class MapOverlayRenderer {
 	public void reset() {
 		for (int x = 0; x < tilesHorizontal; x++) {
 			for (int y = 0; y < tilesVertical; y++) {
-				// todo add map.isExplored() or something like that
-				if (map.isWalkable(x, y)) {
-					overlay[x][y] = Visible.WALKABLE;
-				} else {
-					overlay[x][y] = Visible.NOTHING;
-				}
+				overlay[x][y] = Visible.NOTHING;
 			}
 		}
 	}
 
 	/**
 	 * renders a map overlay onto the screen
+	 *
+	 * @param map2
 	 */
 	public void render() {
 		// TODO add FOV data as parameter
@@ -84,12 +81,18 @@ public final class MapOverlayRenderer {
 		TextureRegion tempOverlay = null;
 		for (int x = 0; x < tilesHorizontal; x++) {
 			for (int y = 0; y < tilesVertical; y++) {
-				tempOverlay = getOverlay(overlay[x][y]);
+				if (Visible.NOTHING.equals(overlay[x][y]) && map.getVisited()[x][y] && map.isWalkable(x, y)) {
+					tempOverlay = getOverlay(Visible.WALKABLE);
+				} else {
+					tempOverlay = getOverlay(overlay[x][y]);
+				}
 				if (tempOverlay != null) {
 					Renderer.getInstance().renderOnScreen(tempOverlay, x + offsetX, y + offsetY);
 				}
 			}
 		}
+		// TODO run in background thread
+		reset();
 	}
 
 	private static TextureRegion getOverlay(final Visible v) {

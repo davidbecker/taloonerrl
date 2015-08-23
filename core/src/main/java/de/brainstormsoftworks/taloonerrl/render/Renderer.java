@@ -163,9 +163,7 @@ public final class Renderer implements IDisposableInstance {
 			final int dY, final int width, final int height) {
 		// render on a visible tile
 		// TODO refactor to take offset into account
-		if (FovWrapper.getInstance().isLit(x, y)) {
-			spriteBatchWorld.draw(region, x * tileSize + dX, y * tileSize + dY, width, height);
-		}
+		spriteBatchWorld.draw(region, x * tileSize + dX, y * tileSize + dY, width, height);
 	}
 
 	/**

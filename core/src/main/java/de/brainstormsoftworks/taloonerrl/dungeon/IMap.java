@@ -51,6 +51,13 @@ public interface IMap {
 	double[][] getFovResistance();
 
 	/**
+	 * gets the visited map
+	 *
+	 * @return array
+	 */
+	boolean[][] getVisited();
+
+	/**
 	 * get the types of tiles on the map
 	 *
 	 * @return
