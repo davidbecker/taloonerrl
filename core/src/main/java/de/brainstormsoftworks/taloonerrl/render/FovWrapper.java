@@ -12,6 +12,7 @@ package de.brainstormsoftworks.taloonerrl.render;
 
 import de.brainstormsoftworks.taloonerrl.math.ArrayHelper;
 import squidpony.squidgrid.FOV;
+import squidpony.squidgrid.Radius;
 
 /**
  * this singleton know the current state of the field of view of the player
@@ -23,7 +24,7 @@ public final class FovWrapper {
 
 	private static final FovWrapper instance = new FovWrapper();
 
-	private final FOV fov = new FOV(FOV.RIPPLE);
+	private final FOV fov = new FOV(FOV.SHADOW);
 	private double[][] fovResistance;
 
 	private FovWrapper() {
@@ -39,7 +40,7 @@ public final class FovWrapper {
 	 */
 	public void calculateFovForPosition(final int x, final int y) {
 		if (ArrayHelper.isInArrayBounds(fovResistance, x, y)) {
-			fov.calculateFOV(fovResistance, x, y);
+			fov.calculateFOV(fovResistance, x, y, 8, Radius.DIAMOND);
 		}
 	}
 
