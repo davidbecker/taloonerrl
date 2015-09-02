@@ -32,7 +32,6 @@ public class ControllerSystem extends EntityProcessingSystem {
 	private ControllerComponent controllerComponent;
 	private FacingComponent facingComponent;
 
-	@SuppressWarnings("unchecked")
 	public ControllerSystem() {
 		super(Aspect.all(PlayerComponent.class, FacingComponent.class, ControllerComponent.class));
 	}
@@ -44,15 +43,19 @@ public class ControllerSystem extends EntityProcessingSystem {
 		if (InputSystem.isKeyPressedDown()) {
 			controllerComponent.setdY(-1);
 			facingComponent.setDirection(EDirection.DOWN);
+			InputSystem.reset();
 		} else if (InputSystem.isKeyPressedUp()) {
 			controllerComponent.setdY(1);
 			facingComponent.setDirection(EDirection.UP);
+			InputSystem.reset();
 		} else if (InputSystem.isKeyPressedLeft()) {
 			controllerComponent.setdX(-1);
 			facingComponent.setDirection(EDirection.LEFT);
+			InputSystem.reset();
 		} else if (InputSystem.isKeyPressedRight()) {
 			controllerComponent.setdX(1);
 			facingComponent.setDirection(EDirection.RIGHT);
+			InputSystem.reset();
 		}
 	}
 

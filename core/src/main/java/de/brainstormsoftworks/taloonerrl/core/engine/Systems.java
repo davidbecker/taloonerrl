@@ -51,12 +51,12 @@ public final class Systems {
 	 */
 	public static void setSystems(final WorldConfiguration config) {
 		// order is important! systems are processed in given order
-		// config.setSystem(CONTROLLER_SYSTEM);
+		config.setSystem(CONTROLLER_SYSTEM);
 		config.setSystem(CAMERA_SYSTEM);
 		config.setSystem(FOV_UPDATER_SYSTEM);
 		config.setSystem(HIGHLIGHT_SYSTEM);
 		config.setSystem(SPRITE_RENDER_SYSTEM);
-		// config.setSystem(MOVEMENT_SYSTEM);
+		config.setSystem(MOVEMENT_SYSTEM);
 		config.setSystem(ANIMATION_RENDER_SYSTEM);
 		config.setSystem(FACING_ANIMATION_RENDER_SYSTEM);
 		config.setSystem(RENDER_BAR_SYSTEM);

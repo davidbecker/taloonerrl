@@ -12,7 +12,6 @@ package de.brainstormsoftworks.taloonerrl.core;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input.Keys;
 
 import de.brainstormsoftworks.taloonerrl.core.engine.GameEngine;
 import de.brainstormsoftworks.taloonerrl.dungeon.IMap;
@@ -32,12 +31,6 @@ import de.brainstormsoftworks.taloonerrl.render.Renderer;
  *
  */
 public class TaloonerRl implements ApplicationListener {
-
-	EDirection walkingDirection = EDirection.RIGHT;
-
-	private float delayToNextTurn = 0f;
-	/** minimum delay between player turns */
-	private static final float delayBetweenTurns = 0.03f;
 
 	public static IMap map = null;
 
@@ -63,55 +56,7 @@ public class TaloonerRl implements ApplicationListener {
 
 	@Override
 	public void render() {
-		// check if the player did something first
-		// TODO change to a more general system
-
 		final float deltaTime = Gdx.graphics.getDeltaTime();
-		delayToNextTurn -= deltaTime;
-
-		boolean keyPressedLeft = false;
-		boolean keyPressedRight = false;
-		boolean keyPressedDown = false;
-		boolean keyPressedUp = false;
-		if (delayToNextTurn <= 0f) {
-			// possible for player to make his turn
-			keyPressedLeft = Gdx.input.isKeyPressed(Keys.LEFT);
-			keyPressedRight = Gdx.input.isKeyPressed(Keys.RIGHT);
-			keyPressedDown = Gdx.input.isKeyPressed(Keys.DOWN);
-			keyPressedUp = Gdx.input.isKeyPressed(Keys.UP);
-			if (keyPressedDown || keyPressedLeft || keyPressedRight || keyPressedUp) {
-				// player did a move
-				// isPlayerTurn = true;
-				// TODO refactor into controller input system
-				int dX = 0;
-				int dY = 0;
-				if (keyPressedLeft) {
-					dX = -1;
-					walkingDirection = EDirection.LEFT;
-				}
-				if (keyPressedRight) {
-					dX = 1;
-					walkingDirection = EDirection.RIGHT;
-				}
-				if (keyPressedDown) {
-					dY = -1;
-					walkingDirection = EDirection.DOWN;
-				}
-				if (keyPressedUp) {
-					dY = 1;
-					walkingDirection = EDirection.UP;
-				}
-				// TODO refactor
-				final int newX = MapManager.getPlayerPositionComponent().getX() + dX;
-				final int newY = MapManager.getPlayerPositionComponent().getY() + dY;
-				if (map.isWalkable(newX, newY)) {
-					MapManager.getPlayerPositionComponent().setX(newX);
-					MapManager.getPlayerPositionComponent().setY(newY);
-				}
-				MapManager.getPlayerFacingComponent().setDirection(walkingDirection);
-				delayToNextTurn = delayBetweenTurns;
-			}
-		}
 
 		Renderer.getInstance().beginWorldRendering();
 		DungeonRenderer.getInstance().render(map);
