@@ -40,6 +40,7 @@ public class ControllerSystem extends EntityProcessingSystem {
 	protected void process(final Entity e) {
 		controllerComponent = ComponentMappers.getInstance().controller.get(e);
 		facingComponent = ComponentMappers.getInstance().facing.get(e);
+		// TODO add check if tile is walkable/occupied by monster
 		if (InputSystem.isKeyPressedDown()) {
 			controllerComponent.setdY(-1);
 			facingComponent.setDirection(EDirection.DOWN);
