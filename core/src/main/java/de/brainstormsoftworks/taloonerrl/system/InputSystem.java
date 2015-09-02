@@ -10,7 +10,6 @@
  ******************************************************************************/
 package de.brainstormsoftworks.taloonerrl.system;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputAdapter;
 
@@ -27,35 +26,73 @@ public final class InputSystem extends InputAdapter {
 	private static boolean keyPressedLeft = false;
 	private static boolean keyPressedRight = false;
 
-	private float delayToNextTurn = 0f;
-	/** minimum delay between player turns */
-	private static final float delayBetweenTurns = 0.03f;
+	// FIXME not needed?
+	// private final float delayToNextTurn = 0f;
+	// /** minimum delay between player turns */
+	// private static final float delayBetweenTurns = 0.03f;
 
 	@Override
 	public boolean keyDown(final int keycode) {
 		// invalidate all the previous input
+		reset();
+
+		// final float deltaTime = Gdx.graphics.getDeltaTime();
+		// delayToNextTurn -= deltaTime;
+		// if (delayToNextTurn <= 0f) {
+		// set new input
+		switch (keycode) {
+		case Keys.UP:
+			keyPressedUp = true;
+			// delayToNextTurn = delayBetweenTurns;
+			return true;
+		case Keys.DOWN:
+			keyPressedDown = true;
+			// delayToNextTurn = delayBetweenTurns;
+			return true;
+		case Keys.LEFT:
+			keyPressedLeft = true;
+			// delayToNextTurn = delayBetweenTurns;
+			return true;
+		case Keys.RIGHT:
+			keyPressedRight = true;
+			// delayToNextTurn = delayBetweenTurns;
+			return true;
+		default:
+			// don't count as a turn
+			return false;
+		}
+		// }
+		// return false;
+	}
+
+	/**
+	 * sets all key presses to false
+	 */
+	public static void reset() {
 		keyPressedUp = false;
 		keyPressedDown = false;
 		keyPressedLeft = false;
 		keyPressedRight = false;
+	}
 
-		final float deltaTime = Gdx.graphics.getDeltaTime();
-		delayToNextTurn -= deltaTime;
-		if (delayToNextTurn <= 0f) {
-			// set new input
-			if (Keys.UP == keycode) {
-				keyPressedUp = true;
-			} else if (Keys.DOWN == keycode) {
-				keyPressedDown = true;
-			} else if (Keys.LEFT == keycode) {
-				keyPressedLeft = true;
-			} else if (Keys.RIGHT == keycode) {
-				keyPressedRight = true;
-			}
-			delayToNextTurn = delayBetweenTurns;
+	@Override
+	public boolean keyUp(final int keycode) {
+		switch (keycode) {
+		case Keys.UP:
+			keyPressedUp = false;
 			return true;
+		case Keys.DOWN:
+			keyPressedDown = false;
+			return true;
+		case Keys.LEFT:
+			keyPressedLeft = false;
+			return true;
+		case Keys.RIGHT:
+			keyPressedRight = false;
+			return true;
+		default:
+			return false;
 		}
-		return false;
 	}
 
 	/**
