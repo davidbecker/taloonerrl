@@ -13,5 +13,15 @@ As of now this project probably isn't in a usable state for anybody, but the cod
 - No need for spoilers (full information to the player, maybe Angband-style monster memory(global, not per character))
 - Only meaningful mechanics: food-clock not needed when we don't implement healing per turn and so on
 
-#### screen shot
-![screen shot](http://i.imgur.com/aZIBzzD.png|width=450px)
+#### screenshot
+![screenshot](/images/screenshot1.png|width=450px)
+
+#### getting started
+This is an [eclipse](https://www.eclipse.org/) project managed by [Apache Maven](https://maven.apache.org/)
+
+To get started run from the command line:
+```
+mvn integration-test -P desktop
+```
+
+or import this project into eclipse as a maven project and eclipse will do the magic for you. To start the game you need to run TaloonerRlDesktop
