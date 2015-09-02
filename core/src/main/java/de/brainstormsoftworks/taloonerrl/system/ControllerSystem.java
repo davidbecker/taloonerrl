@@ -41,6 +41,12 @@ public class ControllerSystem extends EntityProcessingSystem {
 		controllerComponent = ComponentMappers.getInstance().controller.get(e);
 		facingComponent = ComponentMappers.getInstance().facing.get(e);
 		// TODO add check if tile is walkable/occupied by monster
+		/*
+		 * FIXME refactor input system to use an event based system to move each
+		 * component. this way we can have proper animations when transition
+		 * between tiles and not a "warping" to the next tile
+		 *
+		 */
 		if (InputSystem.isKeyPressedDown()) {
 			controllerComponent.setdY(-1);
 			facingComponent.setDirection(EDirection.DOWN);
