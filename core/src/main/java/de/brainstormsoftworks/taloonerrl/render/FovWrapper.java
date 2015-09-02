@@ -15,7 +15,9 @@ import squidpony.squidgrid.FOV;
 import squidpony.squidgrid.Radius;
 
 /**
- * this singleton know the current state of the field of view of the player
+ * this singleton know the current state of the field of view for the player.
+ * <br/>
+ * it is a wrapper around {@link FOV}
  *
  * @author David Becker
  *
@@ -31,7 +33,7 @@ public final class FovWrapper {
 	}
 
 	/**
-	 * sets the position for which the fov should be calculated
+	 * sets the position for which the field of view should be calculated
 	 *
 	 * @param x
 	 *            horizontal tile position
@@ -61,7 +63,7 @@ public final class FovWrapper {
 	}
 
 	/**
-	 * sets the resistance map that is used for fov calculation
+	 * sets the resistance map that is used for field of view calculation
 	 *
 	 * @param _fovResistance
 	 *            the fovResistance to set
