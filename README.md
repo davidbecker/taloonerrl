@@ -14,7 +14,7 @@ As of now this project probably isn't in a usable state for anybody, but the cod
 - Only meaningful mechanics: food-clock not needed when we don't implement healing per turn and so on
 
 #### screenshot
-![screenshot](/images/screenshot1.png|width=450px)
+![screenshot](images/screenshot1.png)
 
 #### getting started
 This is an [eclipse](https://www.eclipse.org/) project managed by [Apache Maven](https://maven.apache.org/)
