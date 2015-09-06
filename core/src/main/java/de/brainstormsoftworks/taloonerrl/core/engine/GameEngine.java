@@ -33,6 +33,10 @@ public final class GameEngine {
 	 * total time in milliseconds that the application has been run
 	 */
 	private float stateTime;
+	/**
+	 * time since last frame
+	 */
+	private float deltaTime;
 
 	private GameEngine() {
 		Gdx.input.setInputProcessor(new InputSystem());
@@ -46,14 +50,23 @@ public final class GameEngine {
 	/**
 	 * updates all the systems in the word
 	 *
-	 * @param delta
-	 *            time in milliseconds since last update
 	 * @see World#setDelta(float)
 	 */
-	public void update(final float delta) {
-		stateTime += delta;
-		world.setDelta(delta);
+	public void update() {
+		deltaTime = Gdx.graphics.getDeltaTime();
+		stateTime += deltaTime;
+		world.setDelta(deltaTime);
 		world.process();
+	}
+
+	/**
+	 * gets the time span between the current frame and the last frame in
+	 * seconds. Might be smoothed over n frames.
+	 *
+	 * @return delta time
+	 */
+	public float getDeltaTime() {
+		return deltaTime;
 	}
 
 	/**

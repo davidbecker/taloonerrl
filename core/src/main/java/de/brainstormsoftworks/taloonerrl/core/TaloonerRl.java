@@ -56,12 +56,10 @@ public class TaloonerRl implements ApplicationListener {
 
 	@Override
 	public void render() {
-		final float deltaTime = Gdx.graphics.getDeltaTime();
-
 		Renderer.getInstance().beginWorldRendering();
 		DungeonRenderer.getInstance().render(map);
 
-		GameEngine.getInstance().update(deltaTime);
+		GameEngine.getInstance().update();
 		Renderer.getInstance().endWorldRendering();
 
 		Renderer.getInstance().beginScreenRendering();
