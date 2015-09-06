@@ -14,7 +14,7 @@
 	<properties>
 		<guava.version>19.0-rc1</guava.version>
 		<junit.version>4.11</junit.version>
-		<squidlib.version>2.9.0</squidlib.version>
+		<squidlib.version>2.9.1</squidlib.version>
 	</properties>
 
 	<dependencies>
