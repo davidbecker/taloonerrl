@@ -76,7 +76,7 @@ public final class MapOverlayRenderer {
 	public void render() {
 		// TODO add FOV data as parameter
 		// compute the offset to draw the overlay
-		final int offsetX = (Gdx.graphics.getWidth() - tilesHorizontal) / Renderer.screenScale / 2;
+		final float offsetX = (Gdx.graphics.getWidth() - tilesHorizontal) / Renderer.screenScale / 2;
 		final float offsetY = (Gdx.graphics.getHeight() - tilesVertical) / Renderer.screenScale / 1.5f;
 		TextureRegion tempOverlay = null;
 		for (int x = 0; x < tilesHorizontal; x++) {

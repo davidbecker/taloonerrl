@@ -25,7 +25,7 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
  */
 public final class Renderer implements IDisposableInstance {
 
-	public static final int screenScale = 2;
+	public static final float screenScale = 2.0f;
 	public static final float scale = 16f;
 	public static final int tileSize = 16;
 	public static final int TILES_HORIZONTAL = 30;

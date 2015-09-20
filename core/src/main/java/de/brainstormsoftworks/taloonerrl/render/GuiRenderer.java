@@ -157,7 +157,7 @@ public final class GuiRenderer implements IDisposableInstance {
 	 * @param height
 	 *            height of the screen
 	 */
-	public void render(final int width, final int height) {
+	public void render(final float width, final float height) {
 		// hack to avoid null pointer on first frame
 		final Entity player = GameEngine.getInstance().getEntity(0);
 		if (player != null) {

@@ -42,9 +42,10 @@ public class Event implements Comparable<Event> {
 		expireTime = _eventStartTime + _delay;
 	}
 
+	/** {@inheritDoc} */
 	@Override
 	public int compareTo(final Event other) {
-		return Long.valueOf(getEventStartTime()).compareTo(other.getEventStartTime());
+		return Long.compare(getEventStartTime(), other.getEventStartTime());
 	}
 
 	/**
@@ -72,6 +73,42 @@ public class Event implements Comparable<Event> {
 	 */
 	public final long getExpireTime() {
 		return expireTime;
+	}
+
+	/** {@inheritDoc} */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (int) (delay ^ delay >>> 32);
+		result = prime * result + (int) (eventStartTime ^ eventStartTime >>> 32);
+		result = prime * result + (int) (expireTime ^ expireTime >>> 32);
+		return result;
+	}
+
+	/** {@inheritDoc} */
+	@Override
+	public boolean equals(final Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		final Event other = (Event) obj;
+		if (delay != other.delay) {
+			return false;
+		}
+		if (eventStartTime != other.eventStartTime) {
+			return false;
+		}
+		if (expireTime != other.expireTime) {
+			return false;
+		}
+		return true;
 	}
 
 }
