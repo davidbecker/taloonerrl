@@ -119,7 +119,7 @@ public final class Renderer implements IDisposableInstance {
 	 * @param y
 	 *            vertical tile position
 	 */
-	public void renderOnTile(final TextureRegion region, final int x, final int y) {
+	public void renderOnTile(final TextureRegion region, final float x, final float y) {
 		renderOnTileWithOffset(region, x, y, 0, 0, region.getRegionWidth(), region.getRegionWidth());
 	}
 
@@ -138,8 +138,8 @@ public final class Renderer implements IDisposableInstance {
 	 * @param dY
 	 *            vertical offset
 	 */
-	public void renderOnTileWithOffset(final TextureRegion region, final int x, final int y, final int dX,
-			final int dY) {
+	public void renderOnTileWithOffset(final TextureRegion region, final float x, final float y,
+			final float dX, final float dY) {
 		// TODO implement offset for camera, check if tile should be rendered
 		renderOnTileWithOffset(region, x, y, dX, dY, region.getRegionWidth(), region.getRegionWidth());
 	}
@@ -159,25 +159,11 @@ public final class Renderer implements IDisposableInstance {
 	 * @param dY
 	 *            vertical offset
 	 */
-	public void renderOnTileWithOffset(final TextureRegion region, final int x, final int y, final int dX,
-			final int dY, final int width, final int height) {
+	public void renderOnTileWithOffset(final TextureRegion region, final float x, final float y,
+			final float dX, final float dY, final float width, final float height) {
 		// render on a visible tile
 		// TODO refactor to take offset into account
 		spriteBatchWorld.draw(region, x * tileSize + dX, y * tileSize + dY, width, height);
-	}
-
-	/**
-	 * renders a sprite on the given screen coordinates
-	 *
-	 * @param region
-	 *            sprite to draw
-	 * @param x
-	 *            horizontal position
-	 * @param y
-	 *            vertical position
-	 */
-	public void renderOnScreen(final TextureRegion region, final int x, final int y) {
-		spriteBatchScreen.draw(region, x, y);
 	}
 
 	/**

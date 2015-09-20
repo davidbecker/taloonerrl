@@ -331,7 +331,6 @@ public final class DungeonRenderer implements IDisposableInstance {
 			// keep tile blank
 			return null;
 		}
-		// return TextureManager.getInstance().getTile(tile.getDungeonSprite());
 	}
 
 }
