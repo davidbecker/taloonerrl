@@ -35,6 +35,8 @@ public class AnimationRenderSystem extends EntityProcessingSystem {
 	private Animation animation;
 	private int x = -1;
 	private int y = -1;
+	private int oX = -1;
+	private int oY = -1;
 
 	public AnimationRenderSystem() {
 		super(Aspect.all(PositionComponent.class, AnimationComponent.class));
@@ -47,8 +49,10 @@ public class AnimationRenderSystem extends EntityProcessingSystem {
 		animation = spriteComponent.getAnimation();
 		x = positionComponent.getX();
 		y = positionComponent.getY();
+		oX = positionComponent.getOffsetX();
+		oY = positionComponent.getOffsetY();
 		if (animation != null && FovWrapper.getInstance().isLit(x, y)) {
-			Renderer.getInstance().renderOnTile(RenderUtil.getKeyFrame(animation), x, y);
+			Renderer.getInstance().renderOnTile(RenderUtil.getKeyFrame(animation), x, y, oX, oY);
 		}
 	}
 }

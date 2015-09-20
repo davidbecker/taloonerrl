@@ -133,7 +133,7 @@ public final class Renderer implements IDisposableInstance {
 	 *            vertical tile position
 	 */
 	public void renderOnTile(final TextureRegion region, final float x, final float y) {
-		renderOnTileWithOffset(region, x, y, 0, 0, region.getRegionWidth(), region.getRegionWidth());
+		renderOnTile(region, x, y, 0, 0, region.getRegionWidth(), region.getRegionWidth());
 	}
 
 	/**
@@ -151,10 +151,10 @@ public final class Renderer implements IDisposableInstance {
 	 * @param dY
 	 *            vertical offset
 	 */
-	public void renderOnTileWithOffset(final TextureRegion region, final float x, final float y,
-			final float dX, final float dY) {
+	public void renderOnTile(final TextureRegion region, final float x, final float y, final float dX,
+			final float dY) {
 		// TODO implement offset for camera, check if tile should be rendered
-		renderOnTileWithOffset(region, x, y, dX, dY, region.getRegionWidth(), region.getRegionWidth());
+		renderOnTile(region, x, y, dX, dY, region.getRegionWidth(), region.getRegionWidth());
 	}
 
 	/**
@@ -172,8 +172,8 @@ public final class Renderer implements IDisposableInstance {
 	 * @param dY
 	 *            vertical offset
 	 */
-	public void renderOnTileWithOffset(final TextureRegion region, final float x, final float y,
-			final float dX, final float dY, final float width, final float height) {
+	public void renderOnTile(final TextureRegion region, final float x, final float y, final float dX,
+			final float dY, final float width, final float height) {
 		// render on a visible tile
 		// TODO refactor to take offset into account
 		spriteBatchWorld.draw(region, x * tileSize + dX, y * tileSize + dY, width, height);

@@ -63,16 +63,16 @@ public class HighlightRenderSystem extends EntityProcessingSystem {
 
 		x = positionComponent.getX();
 		y = positionComponent.getY();
-		Renderer.getInstance().renderOnTileWithOffset(HighlightComponent.getCursorTopLeft(), x, y,
+		Renderer.getInstance().renderOnTile(HighlightComponent.getCursorTopLeft(), x, y,
 				HighlightComponent.cursorTopLeftOffsetX - highlight.getCursorAnimationOffset(),
 				HighlightComponent.cursorTopLeftOffsetY + highlight.getCursorAnimationOffset());
-		Renderer.getInstance().renderOnTileWithOffset(HighlightComponent.getCursorTopRight(), x, y,
+		Renderer.getInstance().renderOnTile(HighlightComponent.getCursorTopRight(), x, y,
 				HighlightComponent.cursorTopRightOffsetX + highlight.getCursorAnimationOffset(),
 				+HighlightComponent.cursorTopRightOffsetY + highlight.getCursorAnimationOffset());
-		Renderer.getInstance().renderOnTileWithOffset(HighlightComponent.getCursorBottomLeft(), x, y,
+		Renderer.getInstance().renderOnTile(HighlightComponent.getCursorBottomLeft(), x, y,
 				HighlightComponent.cursorBottomLeftOffsetX - highlight.getCursorAnimationOffset(),
 				HighlightComponent.cursorBottomLeftOffsetY - highlight.getCursorAnimationOffset());
-		Renderer.getInstance().renderOnTileWithOffset(HighlightComponent.getCursorBottomRight(), x, y,
+		Renderer.getInstance().renderOnTile(HighlightComponent.getCursorBottomRight(), x, y,
 				HighlightComponent.cursorBottomRightOffsetX + highlight.getCursorAnimationOffset(),
 				HighlightComponent.cursorBottomRightOffsetY - highlight.getCursorAnimationOffset());
 

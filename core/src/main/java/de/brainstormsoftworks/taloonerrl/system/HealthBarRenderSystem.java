@@ -50,14 +50,14 @@ public class HealthBarRenderSystem extends EntityProcessingSystem {
 			if (FovWrapper.getInstance().isLit(x, y)) {
 				sizeGreen = (int) (totalSize * healthComponent.getHealthPercent());
 				sizeRed = totalSize - sizeGreen;
-				Renderer.getInstance().renderOnTileWithOffset(PaletteUtil.getInstance().BLACK, x, y, 0, 0,
+				Renderer.getInstance().renderOnTile(PaletteUtil.getInstance().BLACK, x, y, 0, 0,
 						Renderer.tileSize, 3);
 				for (int i = 0; i < sizeGreen; i++) {
-					Renderer.getInstance().renderOnTileWithOffset(PaletteUtil.getInstance().LIGHT_GREEN, x, y,
+					Renderer.getInstance().renderOnTile(PaletteUtil.getInstance().LIGHT_GREEN, x, y,
 							i + 1, 1);
 				}
 				for (int i = 0; i < sizeRed; i++) {
-					Renderer.getInstance().renderOnTileWithOffset(PaletteUtil.getInstance().RED, x, y,
+					Renderer.getInstance().renderOnTile(PaletteUtil.getInstance().RED, x, y,
 							i + 1 + sizeGreen, 1);
 				}
 			}
