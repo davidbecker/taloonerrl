@@ -33,7 +33,6 @@ public class HighlightRenderSystem extends EntityProcessingSystem {
 	private PositionComponent positionComponent;
 	private HighlightComponent highlight;
 
-	@SuppressWarnings("unchecked")
 	public HighlightRenderSystem() {
 		super(Aspect.all(PositionComponent.class, HighlightComponent.class));
 	}

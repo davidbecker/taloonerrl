@@ -36,7 +36,6 @@ public class AnimationRenderSystem extends EntityProcessingSystem {
 	private int x = -1;
 	private int y = -1;
 
-	@SuppressWarnings("unchecked")
 	public AnimationRenderSystem() {
 		super(Aspect.all(PositionComponent.class, AnimationComponent.class));
 	}

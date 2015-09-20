@@ -36,7 +36,6 @@ public class HealthBarRenderSystem extends EntityProcessingSystem {
 	private int x = -1;
 	private int y = -1;
 
-	@SuppressWarnings("unchecked")
 	public HealthBarRenderSystem() {
 		super(Aspect.all(PositionComponent.class, HealthComponent.class));
 	}

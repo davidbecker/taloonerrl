@@ -23,7 +23,6 @@ public class MovementSystem extends EntityProcessingSystem {
 	private PositionComponent position;
 	private ControllerComponent controllerComponent;
 
-	@SuppressWarnings("unchecked")
 	public MovementSystem() {
 		super(Aspect.all(PositionComponent.class, ControllerComponent.class));
 	}

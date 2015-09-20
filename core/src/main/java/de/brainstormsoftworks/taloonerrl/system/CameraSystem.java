@@ -31,7 +31,6 @@ public class CameraSystem extends EntityProcessingSystem {
 
 	private PositionComponent positionComponent;
 
-	@SuppressWarnings("unchecked")
 	public CameraSystem() {
 		super(Aspect.all(PositionComponent.class, CameraFollowComponent.class));
 	}

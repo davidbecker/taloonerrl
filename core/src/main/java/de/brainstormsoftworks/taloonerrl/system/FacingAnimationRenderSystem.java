@@ -35,7 +35,6 @@ public class FacingAnimationRenderSystem extends EntityProcessingSystem {
 	private FacingAnimationComponent spriteComponent;
 	private Animation animation;
 
-	@SuppressWarnings("unchecked")
 	public FacingAnimationRenderSystem() {
 		super(Aspect.all(PositionComponent.class, FacingComponent.class, FacingAnimationComponent.class));
 	}
