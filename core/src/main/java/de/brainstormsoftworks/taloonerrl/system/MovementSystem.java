@@ -32,8 +32,8 @@ public class MovementSystem extends EntityProcessingSystem {
 		position = ComponentMappers.getInstance().position.get(entity);
 		controllerComponent = ComponentMappers.getInstance().controller.get(entity);
 		// adds the vector to the position
-		position.setX(position.getX() + controllerComponent.getdX());
-		position.setY(position.getY() + controllerComponent.getdY());
+		position.setX(position.getX() + controllerComponent.getOffsetX());
+		position.setY(position.getY() + controllerComponent.getOffsetY());
 		// resets controller vector
 		controllerComponent.reset();
 	}

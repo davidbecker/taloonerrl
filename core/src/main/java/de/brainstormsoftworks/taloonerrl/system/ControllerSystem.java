@@ -15,55 +15,76 @@ import com.artemis.Entity;
 import com.artemis.systems.EntityProcessingSystem;
 
 import de.brainstormsoftworks.taloonerrl.components.ControllerComponent;
-import de.brainstormsoftworks.taloonerrl.components.FacingComponent;
-import de.brainstormsoftworks.taloonerrl.components.PlayerComponent;
-import de.brainstormsoftworks.taloonerrl.core.EDirection;
 import de.brainstormsoftworks.taloonerrl.core.engine.ComponentMappers;
 
 /**
- * this system updates the controller component of the player entity when an
- * input was registered
+ * updates {@link ControllerComponent}s
  *
  * @author David Becker
  *
  */
 public class ControllerSystem extends EntityProcessingSystem {
 
-	private ControllerComponent controllerComponent;
-	private FacingComponent facingComponent;
+	private int totalX = 0;
+	private int totalY = 0;
+	private int absTotalX = 0;
+	private int absTotalY = 0;
+	private int deltaX = 0;
+	private int deltaY = 0;
 
+	private int offsetX = 0;
+	private int offsetY = 0;
+
+	// TODO implement velocity into component
+	private static final int velocity = 1;
+
+	/**
+	 * Constructor.
+	 */
 	public ControllerSystem() {
-		super(Aspect.all(PlayerComponent.class, FacingComponent.class, ControllerComponent.class));
+		super(Aspect.all(ControllerComponent.class));
 	}
 
+	/** {@inheritDoc} */
 	@Override
-	protected void process(final Entity e) {
-		controllerComponent = ComponentMappers.getInstance().controller.get(e);
-		facingComponent = ComponentMappers.getInstance().facing.get(e);
-		// TODO add check if tile is walkable/occupied by monster
-		/*
-		 * FIXME refactor input system to use an event based system to move each
-		 * component. this way we can have proper animations when transition
-		 * between tiles and not a "warping" to the next tile
-		 *
-		 */
-		if (InputSystem.getInstance().isKeyPressedDown()) {
-			controllerComponent.setdY(-1);
-			facingComponent.setDirection(EDirection.DOWN);
-			InputSystem.getInstance().reset();
-		} else if (InputSystem.getInstance().isKeyPressedUp()) {
-			controllerComponent.setdY(1);
-			facingComponent.setDirection(EDirection.UP);
-			InputSystem.getInstance().reset();
-		} else if (InputSystem.getInstance().isKeyPressedLeft()) {
-			controllerComponent.setdX(-1);
-			facingComponent.setDirection(EDirection.LEFT);
-			InputSystem.getInstance().reset();
-		} else if (InputSystem.getInstance().isKeyPressedRight()) {
-			controllerComponent.setdX(1);
-			facingComponent.setDirection(EDirection.RIGHT);
-			InputSystem.getInstance().reset();
+	protected void process(final Entity entity) {
+		final ControllerComponent controller = ComponentMappers.getInstance().controller.get(entity);
+		totalX = controller.getTotalX();
+		totalY = controller.getTotalY();
+		offsetX = controller.getOffsetX();
+		offsetY = controller.getOffsetY();
+		// shortcut
+		if (totalX == 0 && totalY == 0) {
+			return;
 		}
+
+		absTotalX = Math.abs(totalX);
+		absTotalY = Math.abs(totalY);
+		deltaX = Math.min(absTotalX, velocity);
+		deltaY = Math.min(absTotalY, velocity);
+
+		if (absTotalX > 0) {
+			if (absTotalX == totalX) {
+				totalX -= deltaX;
+				offsetX += deltaX;
+			} else {
+				totalX += deltaX;
+				offsetX -= deltaX;
+			}
+		}
+		if (absTotalY > 0) {
+			if (absTotalY == totalY) {
+				totalY -= deltaY;
+				offsetY += deltaY;
+			} else {
+				totalY += deltaY;
+				offsetY -= deltaY;
+			}
+		}
+		controller.setOffsetX(offsetX);
+		controller.setOffsetY(offsetY);
+		controller.setTotalX(totalX);
+		controller.setTotalY(totalY);
 	}
 
 }

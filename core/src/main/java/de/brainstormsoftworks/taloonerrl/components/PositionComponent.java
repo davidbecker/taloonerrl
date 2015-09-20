@@ -22,15 +22,11 @@ public class PositionComponent extends PooledComponent {
 
 	private int x = 0;
 	private int y = 0;
-	private int offsetX = 0;
-	private int offsetY = 0;
 
 	@Override
 	protected void reset() {
 		x = 0;
 		y = 0;
-		offsetX = 0;
-		offsetY = 0;
 	}
 
 	/**
@@ -69,44 +65,6 @@ public class PositionComponent extends PooledComponent {
 	 */
 	public void setY(final int _y) {
 		y = _y;
-	}
-
-	/**
-	 * getter for {@link #offsetX}
-	 *
-	 * @return the offsetX
-	 */
-	public final int getOffsetX() {
-		return offsetX;
-	}
-
-	/**
-	 * setter for offsetX
-	 *
-	 * @param _offsetX
-	 *            the offsetX to set
-	 */
-	public final void setOffsetX(final int _offsetX) {
-		offsetX = _offsetX;
-	}
-
-	/**
-	 * getter for {@link #offsetY}
-	 *
-	 * @return the offsetY
-	 */
-	public final int getOffsetY() {
-		return offsetY;
-	}
-
-	/**
-	 * setter for offsetY
-	 *
-	 * @param _offsetY
-	 *            the offsetY to set
-	 */
-	public final void setOffsetY(final int _offsetY) {
-		offsetY = _offsetY;
 	}
 
 }

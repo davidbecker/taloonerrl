@@ -14,57 +14,102 @@ import com.artemis.PooledComponent;
 
 /**
  * component for an entity that can get input<br/>
- * TODO implement use
+ * is ment to be used as an offset for {@link PositionComponent}
  *
  * @author David Becker
  *
  */
 public class ControllerComponent extends PooledComponent {
-	private int dX = 0;
-	private int dY = 0;
+	// the offset this entity has from its current position
+	private int offsetX = 0;
+	private int offsetY = 0;
+
+	// amount of offset that this entity will be moving
+	private int totalX = 0;
+	private int totalY = 0;
 
 	@Override
 	public void reset() {
-		dX = 0;
-		dY = 0;
+		offsetX = 0;
+		offsetY = 0;
+		totalX = 0;
+		totalY = 0;
 	}
 
 	/**
-	 * getter for {@link #dX}
+	 * getter for offsetX
 	 *
-	 * @return the dX
+	 * @return the offsetX
 	 */
-	public final int getdX() {
-		return dX;
+	public final int getOffsetX() {
+		return offsetX;
 	}
 
 	/**
-	 * setter for dX
+	 * setter for offsetX
 	 *
-	 * @param _dX
-	 *            the dX to set
+	 * @param _offsetX
+	 *            the offsetX to set
 	 */
-	public final void setdX(final int _dX) {
-		dX = _dX;
+	public final void setOffsetX(final int _offsetX) {
+		offsetX = _offsetX;
 	}
 
 	/**
-	 * getter for {@link #dY}
+	 * getter for offsetY
 	 *
-	 * @return the dY
+	 * @return the offsetY
 	 */
-	public final int getdY() {
-		return dY;
+	public final int getOffsetY() {
+		return offsetY;
 	}
 
 	/**
-	 * setter for dY
+	 * setter for offsetY
 	 *
-	 * @param _dY
-	 *            the dY to set
+	 * @param _offsetY
+	 *            the offsetY to set
 	 */
-	public final void setdY(final int _dY) {
-		dY = _dY;
+	public final void setOffsetY(final int _offsetY) {
+		offsetY = _offsetY;
+	}
+
+	/**
+	 * getter for totalX
+	 *
+	 * @return the totalX
+	 */
+	public final int getTotalX() {
+		return totalX;
+	}
+
+	/**
+	 * setter for totalX
+	 *
+	 * @param _totalX
+	 *            the totalX to set
+	 */
+	public final void setTotalX(final int _totalX) {
+		totalX = _totalX;
+	}
+
+	/**
+	 * getter for totalY
+	 *
+	 * @return the totalY
+	 */
+	public final int getTotalY() {
+		return totalY;
+	}
+
+	/**
+	 * setter for totalY
+	 *
+	 * @param _totalY
+	 *            the totalY to set
+	 */
+	public final void setTotalY(final int _totalY) {
+		totalY = _totalY;
 	}
 
 }

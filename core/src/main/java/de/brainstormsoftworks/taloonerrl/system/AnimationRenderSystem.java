@@ -16,6 +16,7 @@ import com.artemis.systems.EntityProcessingSystem;
 import com.badlogic.gdx.graphics.g2d.Animation;
 
 import de.brainstormsoftworks.taloonerrl.components.AnimationComponent;
+import de.brainstormsoftworks.taloonerrl.components.ControllerComponent;
 import de.brainstormsoftworks.taloonerrl.components.PositionComponent;
 import de.brainstormsoftworks.taloonerrl.core.engine.ComponentMappers;
 import de.brainstormsoftworks.taloonerrl.render.FovWrapper;
@@ -32,6 +33,7 @@ public class AnimationRenderSystem extends EntityProcessingSystem {
 
 	private PositionComponent positionComponent;
 	private AnimationComponent spriteComponent;
+	private ControllerComponent controllerComponent;
 	private Animation animation;
 	private int x = -1;
 	private int y = -1;
@@ -46,11 +48,18 @@ public class AnimationRenderSystem extends EntityProcessingSystem {
 	protected void process(final Entity e) {
 		positionComponent = ComponentMappers.getInstance().position.get(e);
 		spriteComponent = ComponentMappers.getInstance().animation.get(e);
+		controllerComponent = ComponentMappers.getInstance().controller.get(e);
 		animation = spriteComponent.getAnimation();
 		x = positionComponent.getX();
 		y = positionComponent.getY();
-		oX = positionComponent.getOffsetX();
-		oY = positionComponent.getOffsetY();
+		if (controllerComponent == null) {
+			// no controller -> offset is 0
+			oX = 0;
+			oY = 0;
+		} else {
+			oX = controllerComponent.getOffsetX();
+			oY = controllerComponent.getOffsetY();
+		}
 		if (animation != null && FovWrapper.getInstance().isLit(x, y)) {
 			Renderer.getInstance().renderOnTile(RenderUtil.getKeyFrame(animation), x, y, oX, oY);
 		}

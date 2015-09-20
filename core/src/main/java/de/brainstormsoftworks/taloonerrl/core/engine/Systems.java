@@ -19,8 +19,10 @@ import de.brainstormsoftworks.taloonerrl.system.FacingAnimationRenderSystem;
 import de.brainstormsoftworks.taloonerrl.system.FovUpdaterSystem;
 import de.brainstormsoftworks.taloonerrl.system.HealthBarRenderSystem;
 import de.brainstormsoftworks.taloonerrl.system.HighlightRenderSystem;
+import de.brainstormsoftworks.taloonerrl.system.InputProcessSystem;
 import de.brainstormsoftworks.taloonerrl.system.MapOverlayPreparerSystem;
 import de.brainstormsoftworks.taloonerrl.system.MovementSystem;
+import de.brainstormsoftworks.taloonerrl.system.OffsetSystem;
 import de.brainstormsoftworks.taloonerrl.system.SpriteRenderSystem;
 
 /**
@@ -37,9 +39,11 @@ public final class Systems {
 	private static final HealthBarRenderSystem RENDER_BAR_SYSTEM = new HealthBarRenderSystem();
 	private static final HighlightRenderSystem HIGHLIGHT_SYSTEM = new HighlightRenderSystem();
 	private static final CameraSystem CAMERA_SYSTEM = new CameraSystem();
+	private static final InputProcessSystem INPUT_PROCESS_SYSTEM = new InputProcessSystem();
 	private static final ControllerSystem CONTROLLER_SYSTEM = new ControllerSystem();
 	private static final MapOverlayPreparerSystem MAP_OVERLAY_PREPARER_SYSTEM = new MapOverlayPreparerSystem();
 	private static final FovUpdaterSystem FOV_UPDATER_SYSTEM = new FovUpdaterSystem();
+	private static final OffsetSystem OFFSET_SYSTEM = new OffsetSystem();
 
 	private Systems() {
 	}
@@ -52,12 +56,14 @@ public final class Systems {
 	 */
 	public static void setSystems(final WorldConfiguration config) {
 		// order is important! systems are processed in given order
+		config.setSystem(INPUT_PROCESS_SYSTEM);
 		config.setSystem(CONTROLLER_SYSTEM);
+		config.setSystem(OFFSET_SYSTEM);
+		config.setSystem(MOVEMENT_SYSTEM);
 		config.setSystem(CAMERA_SYSTEM);
 		config.setSystem(FOV_UPDATER_SYSTEM);
 		config.setSystem(HIGHLIGHT_SYSTEM);
 		config.setSystem(SPRITE_RENDER_SYSTEM);
-		config.setSystem(MOVEMENT_SYSTEM);
 		config.setSystem(ANIMATION_RENDER_SYSTEM);
 		config.setSystem(FACING_ANIMATION_RENDER_SYSTEM);
 		config.setSystem(RENDER_BAR_SYSTEM);
