@@ -123,6 +123,7 @@ public final class RenderUtil {
 	 * when the application is closed
 	 *
 	 * @param disposableInstance
+	 *            instance that should be disposed
 	 */
 	public static void addToDisposeList(final IDisposableInstance disposableInstance) {
 		toDispose.add(disposableInstance);

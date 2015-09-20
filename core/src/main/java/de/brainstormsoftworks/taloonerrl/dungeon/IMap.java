@@ -12,6 +12,12 @@ package de.brainstormsoftworks.taloonerrl.dungeon;
 
 import squidpony.squidgrid.FOV;
 
+/**
+ * interface for a map
+ *
+ * @author David Becker
+ *
+ */
 public interface IMap {
 
 	/**
@@ -60,7 +66,7 @@ public interface IMap {
 	/**
 	 * get the types of tiles on the map
 	 *
-	 * @return
+	 * @return array
 	 */
 	EDungeonSprites[][] getDungeonSprites();
 

@@ -29,6 +29,7 @@ public final class SquidGenerator extends Generator {
 	private SquidGenerator() {
 	}
 
+	/** {@inheritDoc} */
 	@Override
 	public void generate(final char[][] map, final int _tilesHorizontal, final int _tilesVertical) {
 		final DungeonGenerator generator = new DungeonGenerator();
@@ -46,7 +47,7 @@ public final class SquidGenerator extends Generator {
 	/**
 	 * getter for an instance of this singleton
 	 *
-	 * @return
+	 * @return instance
 	 */
 	public static SquidGenerator getInstance() {
 		return instance;

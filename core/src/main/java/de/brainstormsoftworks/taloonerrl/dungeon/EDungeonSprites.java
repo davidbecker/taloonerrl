@@ -10,6 +10,13 @@
  ******************************************************************************/
 package de.brainstormsoftworks.taloonerrl.dungeon;
 
+/**
+ * enum describing types of sprites that are part of the dungeon<br/>
+ * floor tiles & wall tiles
+ *
+ * @author David Becker
+ *
+ */
 public enum EDungeonSprites {
 	NOTHING, FLOOR_TOPLEFT_CORNER, FLOOR_TOP, FLOOR_TOPRIGHT_CORNER, FLOOR_LEFT, FLOOR_CENTER, FLOOR_RIGHT,
 	FLOOR_BOTTOMLEFT_CORNER, FLOOR_BOTTOM, FLOOR_BOTTOMRIGHT_CORNER, FLOOR_TOPRIGHT_CORNER_OUTSIDE,

@@ -62,6 +62,14 @@ public final class Renderer implements IDisposableInstance {
 		return instance;
 	}
 
+	/**
+	 * resizes the current view port
+	 *
+	 * @param width
+	 *            with of the screen
+	 * @param height
+	 *            height of the screen
+	 */
 	public void resizeViewPort(final int width, final int height) {
 		worldViewport.update(width, height);
 		spriteBatchWorld.setProjectionMatrix(cameraWorld.combined);

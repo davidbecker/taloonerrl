@@ -32,6 +32,7 @@ public class Map implements IMap {
 		dungeonSprites = new EDungeonSprites[tilesHorizontal][tilesVertical];
 	}
 
+	/** {@inheritDoc} */
 	@Override
 	public boolean isVisible(final int x, final int y) {
 		if (!isInMapBounds(x, y)) {
@@ -41,41 +42,43 @@ public class Map implements IMap {
 		throw new UnsupportedOperationException("TODO: implement");
 	}
 
+	/** {@inheritDoc} */
 	@Override
 	public boolean isWalkable(final int x, final int y) {
 		return isInMapBounds(x, y) && map[x][y] != '#';
 	}
 
+	/** {@inheritDoc} */
 	@Override
 	public boolean isInMapBounds(final int x, final int y) {
 		return ArrayHelper.isInArrayBounds(map, x, y);
 	}
 
+	/** {@inheritDoc} */
 	@Override
 	public char[][] getMap() {
 		return map;
 	}
 
+	/** {@inheritDoc} */
 	@Override
 	public final double[][] getFovResistance() {
 		return fovResistance;
 	}
 
+	/** {@inheritDoc} */
 	@Override
 	public int getTilesHorizontal() {
 		return tilesHorizontal;
 	}
 
+	/** {@inheritDoc} */
 	@Override
 	public int getTilesVertical() {
 		return tilesVertical;
 	}
 
-	/**
-	 * getter for {@link #dungeonSprites}
-	 *
-	 * @return the dungeonSprites
-	 */
+	/** {@inheritDoc} */
 	@Override
 	public final EDungeonSprites[][] getDungeonSprites() {
 		return dungeonSprites;
@@ -91,6 +94,7 @@ public class Map implements IMap {
 		dungeonSprites = sprites;
 	}
 
+	/** {@inheritDoc} */
 	@Override
 	public final boolean[][] getVisited() {
 		return visited;

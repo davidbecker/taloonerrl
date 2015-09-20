@@ -48,6 +48,7 @@ public final class MapOverlayRenderer {
 	 * the rendering
 	 *
 	 * @param _map
+	 *            map to get information from
 	 */
 	public void initialize(final IMap _map) {
 		map = _map;

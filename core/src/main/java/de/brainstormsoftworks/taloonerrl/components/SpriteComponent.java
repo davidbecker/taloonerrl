@@ -64,10 +64,10 @@ public class SpriteComponent extends PooledComponent {
 	/**
 	 * setter for sprite
 	 *
-	 * @param sprite
+	 * @param region
 	 *            the sprite to set
 	 */
-	public final void setSprite(final TextureRegion sprite) {
-		this.sprite = sprite;
+	public final void setSprite(final TextureRegion region) {
+		sprite = region;
 	}
 }
