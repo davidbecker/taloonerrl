@@ -32,7 +32,7 @@ import de.brainstormsoftworks.taloonerrl.render.Renderer;
  */
 public class TaloonerRl implements ApplicationListener {
 
-	public static IMap map = null;
+	private IMap map = null;
 
 	@Override
 	public void create() {
