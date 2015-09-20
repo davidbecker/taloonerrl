@@ -37,8 +37,8 @@ public class Map implements IMap {
 		if (!isInMapBounds(x, y)) {
 			return false;
 		}
-		// TODO Auto-generated method stub
-		return false;
+		// FIXME
+		throw new UnsupportedOperationException("TODO: implement");
 	}
 
 	@Override
