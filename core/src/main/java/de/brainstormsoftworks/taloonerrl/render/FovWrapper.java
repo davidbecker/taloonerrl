@@ -68,7 +68,7 @@ public final class FovWrapper {
 	 * @param _fovResistance
 	 *            the fovResistance to set
 	 */
-	public final void setFovResistance(final double[][] _fovResistance) {
+	public void setFovResistance(final double[][] _fovResistance) {
 		fovResistance = _fovResistance;
 	}
 
@@ -77,7 +77,7 @@ public final class FovWrapper {
 	 *
 	 * @return the instance
 	 */
-	public static final FovWrapper getInstance() {
+	public static FovWrapper getInstance() {
 		return instance;
 	}
 
