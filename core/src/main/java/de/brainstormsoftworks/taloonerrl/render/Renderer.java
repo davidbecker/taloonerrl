@@ -53,6 +53,11 @@ public final class Renderer implements IDisposableInstance {
 		RenderUtil.addToDisposeList(this);
 	}
 
+	/**
+	 * get an instance of this singleton
+	 *
+	 * @return instance
+	 */
 	public static Renderer getInstance() {
 		return instance;
 	}
