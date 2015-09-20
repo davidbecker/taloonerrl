@@ -21,10 +21,28 @@ import com.badlogic.gdx.InputAdapter;
  */
 public final class InputSystem extends InputAdapter {
 
-	private static boolean keyPressedUp = false;
-	private static boolean keyPressedDown = false;
-	private static boolean keyPressedLeft = false;
-	private static boolean keyPressedRight = false;
+	private boolean keyPressedUp = false;
+	private boolean keyPressedDown = false;
+	private boolean keyPressedLeft = false;
+	private boolean keyPressedRight = false;
+
+	private static final InputSystem instance = new InputSystem();
+
+	/**
+	 * Constructor.<br/>
+	 * private on purpose
+	 */
+	private InputSystem() {
+	}
+
+	/**
+	 * getter for the instance of the singleton
+	 *
+	 * @return instance
+	 */
+	public static InputSystem getInstance() {
+		return instance;
+	}
 
 	// FIXME not needed?
 	// private final float delayToNextTurn = 0f;
@@ -68,7 +86,7 @@ public final class InputSystem extends InputAdapter {
 	/**
 	 * sets all key presses to false
 	 */
-	public static void reset() {
+	public void reset() {
 		keyPressedUp = false;
 		keyPressedDown = false;
 		keyPressedLeft = false;
@@ -96,38 +114,38 @@ public final class InputSystem extends InputAdapter {
 	}
 
 	/**
-	 * getter for {@link #keyPressedUp}
+	 * getter for keyPressedUp
 	 *
 	 * @return the keyPressedUp
 	 */
-	public static boolean isKeyPressedUp() {
+	public boolean isKeyPressedUp() {
 		return keyPressedUp;
 	}
 
 	/**
-	 * getter for {@link #keyPressedDown}
+	 * getter for keyPressedDown
 	 *
 	 * @return the keyPressedDown
 	 */
-	public static boolean isKeyPressedDown() {
+	public boolean isKeyPressedDown() {
 		return keyPressedDown;
 	}
 
 	/**
-	 * getter for {@link #keyPressedLeft}
+	 * getter for keyPressedLeft
 	 *
 	 * @return the keyPressedLeft
 	 */
-	public static boolean isKeyPressedLeft() {
+	public boolean isKeyPressedLeft() {
 		return keyPressedLeft;
 	}
 
 	/**
-	 * getter for {@link #keyPressedRight}
+	 * getter for keyPressedRight
 	 *
 	 * @return the keyPressedRight
 	 */
-	public static boolean isKeyPressedRight() {
+	public boolean isKeyPressedRight() {
 		return keyPressedRight;
 	}
 

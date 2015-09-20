@@ -39,7 +39,7 @@ public final class GameEngine {
 	private float deltaTime;
 
 	private GameEngine() {
-		Gdx.input.setInputProcessor(new InputSystem());
+		Gdx.input.setInputProcessor(InputSystem.getInstance());
 		final WorldConfiguration config = new WorldConfiguration();
 		Systems.setSystems(config);
 		world = new World(config);

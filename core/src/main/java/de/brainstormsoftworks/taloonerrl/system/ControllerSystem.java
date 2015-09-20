@@ -47,22 +47,22 @@ public class ControllerSystem extends EntityProcessingSystem {
 		 * between tiles and not a "warping" to the next tile
 		 *
 		 */
-		if (InputSystem.isKeyPressedDown()) {
+		if (InputSystem.getInstance().isKeyPressedDown()) {
 			controllerComponent.setdY(-1);
 			facingComponent.setDirection(EDirection.DOWN);
-			InputSystem.reset();
-		} else if (InputSystem.isKeyPressedUp()) {
+			InputSystem.getInstance().reset();
+		} else if (InputSystem.getInstance().isKeyPressedUp()) {
 			controllerComponent.setdY(1);
 			facingComponent.setDirection(EDirection.UP);
-			InputSystem.reset();
-		} else if (InputSystem.isKeyPressedLeft()) {
+			InputSystem.getInstance().reset();
+		} else if (InputSystem.getInstance().isKeyPressedLeft()) {
 			controllerComponent.setdX(-1);
 			facingComponent.setDirection(EDirection.LEFT);
-			InputSystem.reset();
-		} else if (InputSystem.isKeyPressedRight()) {
+			InputSystem.getInstance().reset();
+		} else if (InputSystem.getInstance().isKeyPressedRight()) {
 			controllerComponent.setdX(1);
 			facingComponent.setDirection(EDirection.RIGHT);
-			InputSystem.reset();
+			InputSystem.getInstance().reset();
 		}
 	}
 
