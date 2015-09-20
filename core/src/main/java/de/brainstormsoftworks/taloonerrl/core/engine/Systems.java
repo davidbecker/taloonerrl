@@ -14,13 +14,11 @@ import com.artemis.WorldConfiguration;
 
 import de.brainstormsoftworks.taloonerrl.system.AnimationRenderSystem;
 import de.brainstormsoftworks.taloonerrl.system.CameraSystem;
-import de.brainstormsoftworks.taloonerrl.system.ControllerSystem;
 import de.brainstormsoftworks.taloonerrl.system.FacingAnimationRenderSystem;
 import de.brainstormsoftworks.taloonerrl.system.FovUpdaterSystem;
 import de.brainstormsoftworks.taloonerrl.system.HealthBarRenderSystem;
 import de.brainstormsoftworks.taloonerrl.system.HighlightRenderSystem;
 import de.brainstormsoftworks.taloonerrl.system.MapOverlayPreparerSystem;
-import de.brainstormsoftworks.taloonerrl.system.MovementSystem;
 import de.brainstormsoftworks.taloonerrl.system.SpriteRenderSystem;
 
 /**
@@ -30,14 +28,16 @@ import de.brainstormsoftworks.taloonerrl.system.SpriteRenderSystem;
  *
  */
 public final class Systems {
-	private static final MovementSystem MOVEMENT_SYSTEM = new MovementSystem();
+	// private static final MovementSystem MOVEMENT_SYSTEM = new
+	// MovementSystem();
 	private static final AnimationRenderSystem ANIMATION_RENDER_SYSTEM = new AnimationRenderSystem();
 	private static final FacingAnimationRenderSystem FACING_ANIMATION_RENDER_SYSTEM = new FacingAnimationRenderSystem();
 	private static final SpriteRenderSystem SPRITE_RENDER_SYSTEM = new SpriteRenderSystem();
 	private static final HealthBarRenderSystem RENDER_BAR_SYSTEM = new HealthBarRenderSystem();
 	private static final HighlightRenderSystem HIGHLIGHT_SYSTEM = new HighlightRenderSystem();
 	private static final CameraSystem CAMERA_SYSTEM = new CameraSystem();
-	private static final ControllerSystem CONTROLLER_SYSTEM = new ControllerSystem();
+	// private static final ControllerSystem CONTROLLER_SYSTEM = new
+	// ControllerSystem();
 	private static final MapOverlayPreparerSystem MAP_OVERLAY_PREPARER_SYSTEM = new MapOverlayPreparerSystem();
 	private static final FovUpdaterSystem FOV_UPDATER_SYSTEM = new FovUpdaterSystem();
 

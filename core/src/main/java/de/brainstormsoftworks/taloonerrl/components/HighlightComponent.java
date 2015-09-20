@@ -25,6 +25,7 @@ import de.brainstormsoftworks.taloonerrl.render.RenderUtil;
  *
  */
 public class HighlightComponent extends PooledComponent implements IDisposableInstance {
+	private static final Texture cursor = new Texture(Gdx.files.internal("cursor.png"));
 	// FIXME currently expecting a tile size of 16
 	public static final int cursorTopLeftOffsetX = -2;
 	public static final int cursorTopLeftOffsetY = 11;
@@ -35,25 +36,18 @@ public class HighlightComponent extends PooledComponent implements IDisposableIn
 	public static final int cursorBottomRightOffsetX = 11;
 	public static final int cursorBottomRightOffsetY = -2;
 
-	private static TextureRegion cursorTopLeft = null;
-	private static TextureRegion cursorTopRight = null;
-	private static TextureRegion cursorBottomLeft = null;
-	private static TextureRegion cursorBottomRight = null;
+	private static final TextureRegion cursorTopLeft = new TextureRegion(cursor, 0, 0, 8, 8);
+	private static final TextureRegion cursorTopRight = new TextureRegion(cursor, 8, 0, 8, 8);
+	private static final TextureRegion cursorBottomLeft = new TextureRegion(cursor, 0, 8, 8, 8);
+	private static final TextureRegion cursorBottomRight = new TextureRegion(cursor, 8, 8, 8, 8);
+
+	{
+		RenderUtil.addToDisposeList(this);
+	}
 
 	private int cursorAnimationOffset = 0;
-	private final Texture cursor;
 
 	public HighlightComponent() {
-		if (cursorTopLeft == null) {
-			cursor = new Texture(Gdx.files.internal("cursor.png"));
-			cursorTopLeft = new TextureRegion(cursor, 0, 0, 8, 8);
-			cursorTopRight = new TextureRegion(cursor, 8, 0, 8, 8);
-			cursorBottomLeft = new TextureRegion(cursor, 0, 8, 8, 8);
-			cursorBottomRight = new TextureRegion(cursor, 8, 8, 8, 8);
-			RenderUtil.addToDisposeList(this);
-		} else {
-			cursor = null;
-		}
 	}
 
 	@Override
@@ -71,32 +65,12 @@ public class HighlightComponent extends PooledComponent implements IDisposableIn
 	}
 
 	/**
-	 * setter for cursorTopLeft
-	 *
-	 * @param cursorTopLeft
-	 *            the cursorTopLeft to set
-	 */
-	public static final void setCursorTopLeft(final TextureRegion cursorTopLeft) {
-		HighlightComponent.cursorTopLeft = cursorTopLeft;
-	}
-
-	/**
 	 * getter for {@link #cursorTopRight}
 	 *
 	 * @return the cursorTopRight
 	 */
 	public static final TextureRegion getCursorTopRight() {
 		return cursorTopRight;
-	}
-
-	/**
-	 * setter for cursorTopRight
-	 *
-	 * @param cursorTopRight
-	 *            the cursorTopRight to set
-	 */
-	public static final void setCursorTopRight(final TextureRegion cursorTopRight) {
-		HighlightComponent.cursorTopRight = cursorTopRight;
 	}
 
 	/**
@@ -109,32 +83,12 @@ public class HighlightComponent extends PooledComponent implements IDisposableIn
 	}
 
 	/**
-	 * setter for cursorBottomLeft
-	 *
-	 * @param cursorBottomLeft
-	 *            the cursorBottomLeft to set
-	 */
-	public static final void setCursorBottomLeft(final TextureRegion cursorBottomLeft) {
-		HighlightComponent.cursorBottomLeft = cursorBottomLeft;
-	}
-
-	/**
 	 * getter for {@link #cursorBottomRight}
 	 *
 	 * @return the cursorBottomRight
 	 */
 	public static final TextureRegion getCursorBottomRight() {
 		return cursorBottomRight;
-	}
-
-	/**
-	 * setter for cursorBottomRight
-	 *
-	 * @param cursorBottomRight
-	 *            the cursorBottomRight to set
-	 */
-	public static final void setCursorBottomRight(final TextureRegion cursorBottomRight) {
-		HighlightComponent.cursorBottomRight = cursorBottomRight;
 	}
 
 	/**
@@ -149,11 +103,11 @@ public class HighlightComponent extends PooledComponent implements IDisposableIn
 	/**
 	 * setter for cursorAnimationOffset
 	 *
-	 * @param cursorAnimationOffset
+	 * @param animationOffset
 	 *            the cursorAnimationOffset to set
 	 */
-	public final void setCursorAnimationOffset(final int cursorAnimationOffset) {
-		this.cursorAnimationOffset = cursorAnimationOffset;
+	public final void setCursorAnimationOffset(final int animationOffset) {
+		cursorAnimationOffset = animationOffset;
 	}
 
 	@Override

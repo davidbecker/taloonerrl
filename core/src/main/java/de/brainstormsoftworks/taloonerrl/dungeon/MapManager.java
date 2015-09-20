@@ -83,7 +83,7 @@ public final class MapManager {
 	 *
 	 * @return the playerPositionComponent
 	 */
-	public static final PositionComponent getPlayerPositionComponent() {
+	public static PositionComponent getPlayerPositionComponent() {
 		return playerPositionComponent;
 	}
 
@@ -92,7 +92,7 @@ public final class MapManager {
 	 *
 	 * @return the playerFacingComponent
 	 */
-	public static final FacingComponent getPlayerFacingComponent() {
+	public static FacingComponent getPlayerFacingComponent() {
 		return playerFacingComponent;
 	}
 
