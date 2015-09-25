@@ -14,7 +14,6 @@ import com.artemis.Aspect;
 import com.artemis.Entity;
 import com.artemis.systems.EntityProcessingSystem;
 
-import de.brainstormsoftworks.taloonerrl.components.ControllerComponent;
 import de.brainstormsoftworks.taloonerrl.components.PositionComponent;
 import de.brainstormsoftworks.taloonerrl.core.engine.ComponentMappers;
 import de.brainstormsoftworks.taloonerrl.render.Renderer;
@@ -22,7 +21,8 @@ import de.brainstormsoftworks.taloonerrl.render.Renderer;
 /**
  *
  * a system that checks if the offset of a position is greater than the width of
- * a tile and updates the position accordingly
+ * a tile and updates the position accordingly<br/>
+ * TODO combine with {@link ControllerSystem}
  *
  * @author David Becker
  *
@@ -30,7 +30,6 @@ import de.brainstormsoftworks.taloonerrl.render.Renderer;
 public class OffsetSystem extends EntityProcessingSystem {
 
 	private PositionComponent position;
-	private ControllerComponent controller;
 
 	private int offsetX = 0;
 	private int offsetY = 0;
@@ -43,16 +42,15 @@ public class OffsetSystem extends EntityProcessingSystem {
 	 * Constructor.
 	 */
 	public OffsetSystem() {
-		super(Aspect.all(PositionComponent.class, ControllerComponent.class));
+		super(Aspect.all(PositionComponent.class));
 	}
 
 	/** {@inheritDoc} */
 	@Override
 	protected void process(final Entity entity) {
 		position = ComponentMappers.getInstance().position.get(entity);
-		controller = ComponentMappers.getInstance().controller.get(entity);
-		offsetX = controller.getOffsetX();
-		offsetY = controller.getOffsetY();
+		offsetX = position.getOffsetX();
+		offsetY = position.getOffsetY();
 		// shortcut
 		if (offsetX == 0 && offsetY == 0) {
 			return;
@@ -84,8 +82,8 @@ public class OffsetSystem extends EntityProcessingSystem {
 		}
 		position.setX(position.getX() + deltaX);
 		position.setY(position.getY() + deltaY);
-		controller.setOffsetX(offsetX);
-		controller.setOffsetY(offsetY);
+		position.setOffsetX(offsetX);
+		position.setOffsetY(offsetY);
 
 	}
 

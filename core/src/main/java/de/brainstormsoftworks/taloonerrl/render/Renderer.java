@@ -86,8 +86,8 @@ public final class Renderer implements IDisposableInstance {
 	 * @param y
 	 *            vertical position of the tile
 	 */
-	public void setWorldCamera(final int x, final int y) {
-		cameraWorld.position.set(x * tileSize, y * tileSize, 0);
+	public void setWorldCamera(final int x, final int y, final int offsetX, final int offsetY) {
+		cameraWorld.position.set(x * tileSize + offsetX, y * tileSize + offsetY, 0);
 		cameraWorld.update();
 		spriteBatchWorld.setProjectionMatrix(cameraWorld.combined);
 	}

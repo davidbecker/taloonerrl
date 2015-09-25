@@ -38,8 +38,8 @@ public class CameraSystem extends EntityProcessingSystem {
 	@Override
 	protected void process(final Entity e) {
 		positionComponent = ComponentMappers.getInstance().position.get(e);
-		// final CameraFollowComponent spriteComponent = cameraMapper.get(e);
-		Renderer.getInstance().setWorldCamera(positionComponent.getX(), positionComponent.getY());
+		Renderer.getInstance().setWorldCamera(positionComponent.getX(), positionComponent.getY(),
+				positionComponent.getOffsetX(), positionComponent.getOffsetY());
 
 	}
 

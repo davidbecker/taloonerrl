@@ -35,6 +35,8 @@ public class HealthBarRenderSystem extends EntityProcessingSystem {
 	private PositionComponent positionComponent;
 	private int x = -1;
 	private int y = -1;
+	private int offsetX = -1;
+	private int offsetY = -1;
 
 	public HealthBarRenderSystem() {
 		super(Aspect.all(PositionComponent.class, HealthComponent.class));
@@ -47,18 +49,20 @@ public class HealthBarRenderSystem extends EntityProcessingSystem {
 			positionComponent = ComponentMappers.getInstance().position.get(e);
 			x = positionComponent.getX();
 			y = positionComponent.getY();
+			offsetX = positionComponent.getOffsetX();
+			offsetY = positionComponent.getOffsetY();
 			if (FovWrapper.getInstance().isLit(x, y)) {
 				sizeGreen = (int) (totalSize * healthComponent.getHealthPercent());
 				sizeRed = totalSize - sizeGreen;
-				Renderer.getInstance().renderOnTile(PaletteUtil.getInstance().BLACK, x, y, 0, 0,
+				Renderer.getInstance().renderOnTile(PaletteUtil.getInstance().BLACK, x, y, offsetX, offsetY,
 						Renderer.tileSize, 3);
 				for (int i = 0; i < sizeGreen; i++) {
 					Renderer.getInstance().renderOnTile(PaletteUtil.getInstance().LIGHT_GREEN, x, y,
-							i + 1, 1);
+							i + 1 + offsetX, 1 + offsetY);
 				}
 				for (int i = 0; i < sizeRed; i++) {
 					Renderer.getInstance().renderOnTile(PaletteUtil.getInstance().RED, x, y,
-							i + 1 + sizeGreen, 1);
+							i + 1 + sizeGreen + offsetX, 1 + offsetY);
 				}
 			}
 		}

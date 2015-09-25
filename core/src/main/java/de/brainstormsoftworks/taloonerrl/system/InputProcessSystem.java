@@ -14,9 +14,9 @@ import com.artemis.Aspect;
 import com.artemis.Entity;
 import com.artemis.systems.EntityProcessingSystem;
 
-import de.brainstormsoftworks.taloonerrl.components.ControllerComponent;
 import de.brainstormsoftworks.taloonerrl.components.FacingComponent;
 import de.brainstormsoftworks.taloonerrl.components.PlayerComponent;
+import de.brainstormsoftworks.taloonerrl.components.PositionComponent;
 import de.brainstormsoftworks.taloonerrl.core.EDirection;
 import de.brainstormsoftworks.taloonerrl.core.engine.ComponentMappers;
 import de.brainstormsoftworks.taloonerrl.render.Renderer;
@@ -30,16 +30,16 @@ import de.brainstormsoftworks.taloonerrl.render.Renderer;
  */
 public class InputProcessSystem extends EntityProcessingSystem {
 
-	private ControllerComponent controllerComponent;
+	private PositionComponent positionComponent;
 	private FacingComponent facingComponent;
 
 	public InputProcessSystem() {
-		super(Aspect.all(PlayerComponent.class, FacingComponent.class, ControllerComponent.class));
+		super(Aspect.all(PlayerComponent.class, FacingComponent.class, PositionComponent.class));
 	}
 
 	@Override
 	protected void process(final Entity e) {
-		controllerComponent = ComponentMappers.getInstance().controller.get(e);
+		positionComponent = ComponentMappers.getInstance().position.get(e);
 		facingComponent = ComponentMappers.getInstance().facing.get(e);
 		// TODO add check if tile is walkable/occupied by monster
 		/*
@@ -49,23 +49,23 @@ public class InputProcessSystem extends EntityProcessingSystem {
 		 *
 		 */
 		if (InputSystem.getInstance().isKeyPressedDown()) {
-			controllerComponent.setOffsetY(0);
-			controllerComponent.setTotalY(-1 * Renderer.tileSize);
+			positionComponent.setOffsetY(0);
+			positionComponent.setTotalY(-1 * Renderer.tileSize);
 			facingComponent.setDirection(EDirection.DOWN);
 			InputSystem.getInstance().reset();
 		} else if (InputSystem.getInstance().isKeyPressedUp()) {
-			controllerComponent.setOffsetY(1);
-			controllerComponent.setTotalY(Renderer.tileSize);
+			positionComponent.setOffsetY(1);
+			positionComponent.setTotalY(Renderer.tileSize);
 			facingComponent.setDirection(EDirection.UP);
 			InputSystem.getInstance().reset();
 		} else if (InputSystem.getInstance().isKeyPressedLeft()) {
-			controllerComponent.setOffsetX(0);
-			controllerComponent.setTotalX(-1 * Renderer.tileSize);
+			positionComponent.setOffsetX(0);
+			positionComponent.setTotalX(-1 * Renderer.tileSize);
 			facingComponent.setDirection(EDirection.LEFT);
 			InputSystem.getInstance().reset();
 		} else if (InputSystem.getInstance().isKeyPressedRight()) {
-			controllerComponent.setOffsetX(0);
-			controllerComponent.setTotalX(Renderer.tileSize);
+			positionComponent.setOffsetX(0);
+			positionComponent.setTotalX(Renderer.tileSize);
 			facingComponent.setDirection(EDirection.RIGHT);
 			InputSystem.getInstance().reset();
 		}

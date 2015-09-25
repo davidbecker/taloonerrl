@@ -17,11 +17,9 @@ import com.artemis.World;
 import de.brainstormsoftworks.taloonerrl.components.AnimationComponent;
 import de.brainstormsoftworks.taloonerrl.components.CameraFollowComponent;
 import de.brainstormsoftworks.taloonerrl.components.CollectibleComponent;
-import de.brainstormsoftworks.taloonerrl.components.ControllerComponent;
 import de.brainstormsoftworks.taloonerrl.components.FacingAnimationComponent;
 import de.brainstormsoftworks.taloonerrl.components.FacingComponent;
 import de.brainstormsoftworks.taloonerrl.components.HealthComponent;
-import de.brainstormsoftworks.taloonerrl.components.HighlightComponent;
 import de.brainstormsoftworks.taloonerrl.components.NameComponent;
 import de.brainstormsoftworks.taloonerrl.components.PlayerComponent;
 import de.brainstormsoftworks.taloonerrl.components.PositionComponent;
@@ -43,12 +41,11 @@ public final class Archetypes {
 	private static Archetypes instance;
 
 	private Archetypes(final World world) {
-		actor = new ArchetypeBuilder().add(ControllerComponent.class).add(HealthComponent.class)
-				.add(PositionComponent.class).add(AnimationComponent.class).add(NameComponent.class)
-				.build(world);
+		actor = new ArchetypeBuilder().add(HealthComponent.class).add(PositionComponent.class)
+				.add(AnimationComponent.class).add(NameComponent.class).build(world);
 		player = new ArchetypeBuilder(actor).add(PlayerComponent.class).add(FacingComponent.class)
 				.remove(AnimationComponent.class).add(FacingAnimationComponent.class)
-				.add(HighlightComponent.class).add(CameraFollowComponent.class).build(world);
+				.add(CameraFollowComponent.class).build(world);
 		collectible = new ArchetypeBuilder().add(PositionComponent.class).add(SpriteComponent.class)
 				.add(CollectibleComponent.class).build(world);
 		decoration = new ArchetypeBuilder().add(PositionComponent.class).add(AnimationComponent.class)

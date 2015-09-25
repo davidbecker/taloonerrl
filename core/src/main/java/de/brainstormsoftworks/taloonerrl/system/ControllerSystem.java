@@ -14,7 +14,7 @@ import com.artemis.Aspect;
 import com.artemis.Entity;
 import com.artemis.systems.EntityProcessingSystem;
 
-import de.brainstormsoftworks.taloonerrl.components.ControllerComponent;
+import de.brainstormsoftworks.taloonerrl.components.PositionComponent;
 import de.brainstormsoftworks.taloonerrl.core.engine.ComponentMappers;
 
 /**
@@ -42,17 +42,17 @@ public class ControllerSystem extends EntityProcessingSystem {
 	 * Constructor.
 	 */
 	public ControllerSystem() {
-		super(Aspect.all(ControllerComponent.class));
+		super(Aspect.all(PositionComponent.class));
 	}
 
 	/** {@inheritDoc} */
 	@Override
 	protected void process(final Entity entity) {
-		final ControllerComponent controller = ComponentMappers.getInstance().controller.get(entity);
-		totalX = controller.getTotalX();
-		totalY = controller.getTotalY();
-		offsetX = controller.getOffsetX();
-		offsetY = controller.getOffsetY();
+		final PositionComponent position = ComponentMappers.getInstance().position.get(entity);
+		totalX = position.getTotalX();
+		totalY = position.getTotalY();
+		offsetX = position.getOffsetX();
+		offsetY = position.getOffsetY();
 		// shortcut
 		if (totalX == 0 && totalY == 0) {
 			return;
@@ -81,10 +81,10 @@ public class ControllerSystem extends EntityProcessingSystem {
 				offsetY -= deltaY;
 			}
 		}
-		controller.setOffsetX(offsetX);
-		controller.setOffsetY(offsetY);
-		controller.setTotalX(totalX);
-		controller.setTotalY(totalY);
+		position.setOffsetX(offsetX);
+		position.setOffsetY(offsetY);
+		position.setTotalX(totalX);
+		position.setTotalY(totalY);
 	}
 
 }

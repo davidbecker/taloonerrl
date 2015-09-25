@@ -45,9 +45,11 @@ public class FacingAnimationRenderSystem extends EntityProcessingSystem {
 		facingComponent = ComponentMappers.getInstance().facing.get(e);
 		spriteComponent = ComponentMappers.getInstance().facingAnimation.get(e);
 		animation = spriteComponent.getAnimation(facingComponent.getDirection());
+		// TODO check if is lid first
+		// see AnimationRenderSystem
 		if (animation != null) {
 			Renderer.getInstance().renderOnTile(RenderUtil.getKeyFrame(animation), positionComponent.getX(),
-					positionComponent.getY());
+					positionComponent.getY(), positionComponent.getOffsetX(), positionComponent.getOffsetY());
 		}
 	}
 }
