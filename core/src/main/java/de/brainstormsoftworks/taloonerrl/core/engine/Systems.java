@@ -31,8 +31,6 @@ import de.brainstormsoftworks.taloonerrl.system.SpriteRenderSystem;
  *
  */
 public final class Systems {
-	// private static final MovementSystem MOVEMENT_SYSTEM = new
-	// MovementSystem();
 	private static final AnimationRenderSystem ANIMATION_RENDER_SYSTEM = new AnimationRenderSystem();
 	private static final FacingAnimationRenderSystem FACING_ANIMATION_RENDER_SYSTEM = new FacingAnimationRenderSystem();
 	private static final SpriteRenderSystem SPRITE_RENDER_SYSTEM = new SpriteRenderSystem();
@@ -59,7 +57,6 @@ public final class Systems {
 		config.setSystem(INPUT_PROCESS_SYSTEM);
 		config.setSystem(CONTROLLER_SYSTEM);
 		config.setSystem(OFFSET_SYSTEM);
-		// config.setSystem(MOVEMENT_SYSTEM);
 		config.setSystem(CAMERA_SYSTEM);
 		config.setSystem(FOV_UPDATER_SYSTEM);
 		config.setSystem(HIGHLIGHT_SYSTEM);
