@@ -16,7 +16,6 @@ import de.brainstormsoftworks.taloonerrl.components.FacingComponent;
 import de.brainstormsoftworks.taloonerrl.components.PositionComponent;
 import de.brainstormsoftworks.taloonerrl.core.engine.EEntity;
 import de.brainstormsoftworks.taloonerrl.core.engine.GameEngine;
-import de.brainstormsoftworks.taloonerrl.internal.dungeon.MapChangeProvider;
 import squidpony.squidmath.RNG;
 
 /**

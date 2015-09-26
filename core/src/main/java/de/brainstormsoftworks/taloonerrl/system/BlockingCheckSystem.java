@@ -18,7 +18,7 @@ import de.brainstormsoftworks.taloonerrl.components.PositionComponent;
 import de.brainstormsoftworks.taloonerrl.core.engine.ComponentMappers;
 import de.brainstormsoftworks.taloonerrl.dungeon.IMap;
 import de.brainstormsoftworks.taloonerrl.dungeon.IMapChangeListener;
-import de.brainstormsoftworks.taloonerrl.internal.dungeon.MapChangeProvider;
+import de.brainstormsoftworks.taloonerrl.dungeon.MapChangeProvider;
 import de.brainstormsoftworks.taloonerrl.render.Renderer;
 
 /**

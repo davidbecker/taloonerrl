@@ -12,7 +12,6 @@ package de.brainstormsoftworks.taloonerrl.dungeon;
 
 import de.brainstormsoftworks.taloonerrl.internal.dungeon.DungeonUtil;
 import de.brainstormsoftworks.taloonerrl.internal.dungeon.Map;
-import de.brainstormsoftworks.taloonerrl.internal.dungeon.MapChangeProvider;
 import de.brainstormsoftworks.taloonerrl.internal.dungeon.SquidGenerator;
 
 /**

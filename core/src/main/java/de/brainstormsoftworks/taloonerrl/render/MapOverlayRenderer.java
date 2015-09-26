@@ -15,7 +15,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import de.brainstormsoftworks.taloonerrl.dungeon.IMap;
 import de.brainstormsoftworks.taloonerrl.dungeon.IMapChangeListener;
-import de.brainstormsoftworks.taloonerrl.internal.dungeon.MapChangeProvider;
+import de.brainstormsoftworks.taloonerrl.dungeon.MapChangeProvider;
 
 /**
  * utility class that renders a map overlay onto the screen

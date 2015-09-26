@@ -41,7 +41,6 @@ public class TaloonerRl implements ApplicationListener {
 
 		// forcing the instance to be created
 		MapManager.getInstance();
-
 		DungeonRenderer.initInstance();
 		GuiRenderer.initInstance();
 	}

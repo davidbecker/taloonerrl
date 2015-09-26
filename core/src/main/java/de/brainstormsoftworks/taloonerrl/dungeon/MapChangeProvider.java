@@ -1,14 +1,10 @@
 /**
  *
  */
-package de.brainstormsoftworks.taloonerrl.internal.dungeon;
+package de.brainstormsoftworks.taloonerrl.dungeon;
 
 import java.util.HashSet;
 import java.util.Set;
-
-import de.brainstormsoftworks.taloonerrl.dungeon.IMap;
-import de.brainstormsoftworks.taloonerrl.dungeon.IMapChangeListener;
-import de.brainstormsoftworks.taloonerrl.dungeon.IMapChangeProvider;
 
 /**
  * propagator for a changed map to listeners
@@ -64,7 +60,6 @@ public final class MapChangeProvider implements IMapChangeProvider {
 		for (final IMapChangeListener listener : changeListener) {
 			listener.setMap(lastCreatedMap);
 		}
-
 	}
 
 }

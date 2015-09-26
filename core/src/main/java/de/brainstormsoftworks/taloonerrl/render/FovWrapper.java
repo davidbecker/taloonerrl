@@ -12,7 +12,7 @@ package de.brainstormsoftworks.taloonerrl.render;
 
 import de.brainstormsoftworks.taloonerrl.dungeon.IMap;
 import de.brainstormsoftworks.taloonerrl.dungeon.IMapChangeListener;
-import de.brainstormsoftworks.taloonerrl.internal.dungeon.MapChangeProvider;
+import de.brainstormsoftworks.taloonerrl.dungeon.MapChangeProvider;
 import de.brainstormsoftworks.taloonerrl.math.ArrayHelper;
 import squidpony.squidgrid.FOV;
 import squidpony.squidgrid.Radius;
