@@ -10,12 +10,15 @@
  ******************************************************************************/
 package de.brainstormsoftworks.taloonerrl.render;
 
+import java.util.HashMap;
+
 import de.brainstormsoftworks.taloonerrl.dungeon.IMap;
 import de.brainstormsoftworks.taloonerrl.dungeon.IMapChangeListener;
 import de.brainstormsoftworks.taloonerrl.dungeon.MapChangeProvider;
 import de.brainstormsoftworks.taloonerrl.math.ArrayHelper;
 import squidpony.squidgrid.FOV;
 import squidpony.squidgrid.Radius;
+import squidpony.squidmath.Coord;
 
 /**
  * this singleton know the current state of the field of view for the player.
@@ -27,10 +30,17 @@ import squidpony.squidgrid.Radius;
  */
 public final class FovWrapper implements IMapChangeListener {
 
+	private static final int FOV_TYPE = FOV.SHADOW;
+	private static final int FOV_RADIUS = 8;
+	private static final Radius RADIUS_TECHNIQUE = Radius.DIAMOND;
+
 	private static final FovWrapper instance = new FovWrapper();
 
-	private final FOV fov = new FOV(FOV.SHADOW);
+	private final HashMap<Coord, double[][]> storedFovMaps = new HashMap<>();
+	private final FOV fov = new FOV(FOV_TYPE);
+
 	private double[][] fovResistance;
+	private double[][] lightMap;
 
 	private FovWrapper() {
 		MapChangeProvider.getInstance().registerListener(this);
@@ -45,8 +55,14 @@ public final class FovWrapper implements IMapChangeListener {
 	 *            vertical tile position
 	 */
 	public void calculateFovForPosition(final int x, final int y) {
-		if (ArrayHelper.isInArrayBounds(fovResistance, x, y)) {
-			fov.calculateFOV(fovResistance, x, y, 8, Radius.DIAMOND);
+		final Coord c = new Coord(x, y);
+		if (storedFovMaps.containsKey(c)) {
+			lightMap = storedFovMaps.get(c);
+		} else {
+			if (ArrayHelper.isInArrayBounds(fovResistance, x, y)) {
+				lightMap = fov.calculateFOV(fovResistance, x, y, FOV_RADIUS, RADIUS_TECHNIQUE);
+				storedFovMaps.put(c, lightMap);
+			}
 		}
 	}
 
@@ -60,10 +76,7 @@ public final class FovWrapper implements IMapChangeListener {
 	 * @return true if position is visible, false otherwise
 	 */
 	public boolean isLit(final int x, final int y) {
-		if (ArrayHelper.isInArrayBounds(fovResistance, x, y)) {
-			return fov.isLit(x, y);
-		}
-		return false;
+		return ArrayHelper.isInArrayBounds(lightMap, x, y) && lightMap[x][y] > 0;
 	}
 
 	/**
@@ -79,6 +92,7 @@ public final class FovWrapper implements IMapChangeListener {
 	@Override
 	public void setMap(final IMap map) {
 		fovResistance = map != null ? map.getFovResistance() : null;
+		storedFovMaps.clear();
 	}
 
 }
