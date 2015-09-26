@@ -36,7 +36,7 @@ public class ControllerSystem extends EntityProcessingSystem {
 	private int offsetY = 0;
 
 	// TODO implement velocity into component
-	private static final int velocity = 1;
+	private static final int velocity = 2;
 
 	/**
 	 * Constructor.
