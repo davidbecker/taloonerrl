@@ -10,6 +10,9 @@
  ******************************************************************************/
 package de.brainstormsoftworks.taloonerrl.render;
 
+import de.brainstormsoftworks.taloonerrl.dungeon.IMap;
+import de.brainstormsoftworks.taloonerrl.dungeon.IMapChangeListener;
+import de.brainstormsoftworks.taloonerrl.internal.dungeon.MapChangeProvider;
 import de.brainstormsoftworks.taloonerrl.math.ArrayHelper;
 import squidpony.squidgrid.FOV;
 import squidpony.squidgrid.Radius;
@@ -22,7 +25,7 @@ import squidpony.squidgrid.Radius;
  * @author David Becker
  *
  */
-public final class FovWrapper {
+public final class FovWrapper implements IMapChangeListener {
 
 	private static final FovWrapper instance = new FovWrapper();
 
@@ -30,6 +33,7 @@ public final class FovWrapper {
 	private double[][] fovResistance;
 
 	private FovWrapper() {
+		MapChangeProvider.getInstance().registerListener(this);
 	}
 
 	/**
@@ -63,22 +67,18 @@ public final class FovWrapper {
 	}
 
 	/**
-	 * sets the resistance map that is used for field of view calculation
-	 *
-	 * @param _fovResistance
-	 *            the fovResistance to set
-	 */
-	public void setFovResistance(final double[][] _fovResistance) {
-		fovResistance = _fovResistance;
-	}
-
-	/**
 	 * getter for {@link #instance}
 	 *
 	 * @return the instance
 	 */
 	public static FovWrapper getInstance() {
 		return instance;
+	}
+
+	/** {@inheritDoc} */
+	@Override
+	public void setMap(final IMap map) {
+		fovResistance = map != null ? map.getFovResistance() : null;
 	}
 
 }

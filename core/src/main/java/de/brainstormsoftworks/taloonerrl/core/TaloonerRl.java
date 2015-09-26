@@ -18,7 +18,6 @@ import de.brainstormsoftworks.taloonerrl.dungeon.IMap;
 import de.brainstormsoftworks.taloonerrl.dungeon.MapFactory;
 import de.brainstormsoftworks.taloonerrl.dungeon.MapManager;
 import de.brainstormsoftworks.taloonerrl.render.DungeonRenderer;
-import de.brainstormsoftworks.taloonerrl.render.FovWrapper;
 import de.brainstormsoftworks.taloonerrl.render.GuiRenderer;
 import de.brainstormsoftworks.taloonerrl.render.MapOverlayRenderer;
 import de.brainstormsoftworks.taloonerrl.render.RenderUtil;
@@ -39,7 +38,6 @@ public class TaloonerRl implements ApplicationListener {
 		final int tilesHorizontal = Renderer.TILES_HORIZONTAL * 2;
 		final int tilesVertical = Renderer.TILES_VERTICAL * 2;
 		map = MapFactory.createMap(tilesHorizontal, tilesVertical);
-		FovWrapper.getInstance().setFovResistance(map.getFovResistance());
 
 		MapManager.createEntities(map, tilesHorizontal, tilesVertical);
 
