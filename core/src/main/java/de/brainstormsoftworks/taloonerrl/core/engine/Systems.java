@@ -13,6 +13,7 @@ package de.brainstormsoftworks.taloonerrl.core.engine;
 import com.artemis.WorldConfiguration;
 
 import de.brainstormsoftworks.taloonerrl.system.AnimationRenderSystem;
+import de.brainstormsoftworks.taloonerrl.system.BlockingCheckSystem;
 import de.brainstormsoftworks.taloonerrl.system.CameraSystem;
 import de.brainstormsoftworks.taloonerrl.system.ControllerSystem;
 import de.brainstormsoftworks.taloonerrl.system.FacingAnimationRenderSystem;
@@ -42,6 +43,7 @@ public final class Systems {
 	private static final MapOverlayPreparerSystem MAP_OVERLAY_PREPARER_SYSTEM = new MapOverlayPreparerSystem();
 	private static final FovUpdaterSystem FOV_UPDATER_SYSTEM = new FovUpdaterSystem();
 	private static final OffsetSystem OFFSET_SYSTEM = new OffsetSystem();
+	private static final BlockingCheckSystem BLOCKING_CHECK_SYSTEM = new BlockingCheckSystem();
 
 	private Systems() {
 	}
@@ -55,6 +57,7 @@ public final class Systems {
 	public static void setSystems(final WorldConfiguration config) {
 		// order is important! systems are processed in given order
 		config.setSystem(INPUT_PROCESS_SYSTEM);
+		config.setSystem(BLOCKING_CHECK_SYSTEM);
 		config.setSystem(CONTROLLER_SYSTEM);
 		config.setSystem(OFFSET_SYSTEM);
 		config.setSystem(CAMERA_SYSTEM);

@@ -41,33 +41,34 @@ public class InputProcessSystem extends EntityProcessingSystem {
 	protected void process(final Entity e) {
 		positionComponent = ComponentMappers.getInstance().position.get(e);
 		facingComponent = ComponentMappers.getInstance().facing.get(e);
-		// TODO add check if tile is walkable/occupied by monster
 		/*
 		 * FIXME refactor input system to use an event based system to move each
 		 * component. this way we can have proper animations when transition
 		 * between tiles and not a "warping" to the next tile
 		 *
 		 */
-		if (InputSystem.getInstance().isKeyPressedDown()) {
-			positionComponent.setOffsetY(0);
-			positionComponent.setTotalY(-1 * Renderer.tileSize);
-			facingComponent.setDirection(EDirection.DOWN);
-			InputSystem.getInstance().reset();
-		} else if (InputSystem.getInstance().isKeyPressedUp()) {
-			positionComponent.setOffsetY(1);
-			positionComponent.setTotalY(Renderer.tileSize);
-			facingComponent.setDirection(EDirection.UP);
-			InputSystem.getInstance().reset();
-		} else if (InputSystem.getInstance().isKeyPressedLeft()) {
-			positionComponent.setOffsetX(0);
-			positionComponent.setTotalX(-1 * Renderer.tileSize);
-			facingComponent.setDirection(EDirection.LEFT);
-			InputSystem.getInstance().reset();
-		} else if (InputSystem.getInstance().isKeyPressedRight()) {
-			positionComponent.setOffsetX(0);
-			positionComponent.setTotalX(Renderer.tileSize);
-			facingComponent.setDirection(EDirection.RIGHT);
-			InputSystem.getInstance().reset();
+		if (positionComponent.getTotalX() == 0 && positionComponent.getTotalY() == 0) {
+			if (InputSystem.getInstance().isKeyPressedDown()) {
+				positionComponent.setOffsetY(0);
+				positionComponent.setTotalY(-1 * Renderer.tileSize);
+				facingComponent.setDirection(EDirection.DOWN);
+				InputSystem.getInstance().reset();
+			} else if (InputSystem.getInstance().isKeyPressedUp()) {
+				positionComponent.setOffsetY(1);
+				positionComponent.setTotalY(Renderer.tileSize);
+				facingComponent.setDirection(EDirection.UP);
+				InputSystem.getInstance().reset();
+			} else if (InputSystem.getInstance().isKeyPressedLeft()) {
+				positionComponent.setOffsetX(0);
+				positionComponent.setTotalX(-1 * Renderer.tileSize);
+				facingComponent.setDirection(EDirection.LEFT);
+				InputSystem.getInstance().reset();
+			} else if (InputSystem.getInstance().isKeyPressedRight()) {
+				positionComponent.setOffsetX(0);
+				positionComponent.setTotalX(Renderer.tileSize);
+				facingComponent.setDirection(EDirection.RIGHT);
+				InputSystem.getInstance().reset();
+			}
 		}
 	}
 

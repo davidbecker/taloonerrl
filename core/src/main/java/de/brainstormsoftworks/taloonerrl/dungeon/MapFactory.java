@@ -12,6 +12,7 @@ package de.brainstormsoftworks.taloonerrl.dungeon;
 
 import de.brainstormsoftworks.taloonerrl.internal.dungeon.DungeonUtil;
 import de.brainstormsoftworks.taloonerrl.internal.dungeon.Map;
+import de.brainstormsoftworks.taloonerrl.internal.dungeon.MapChangeProvider;
 import de.brainstormsoftworks.taloonerrl.internal.dungeon.SquidGenerator;
 
 /**
@@ -21,6 +22,8 @@ import de.brainstormsoftworks.taloonerrl.internal.dungeon.SquidGenerator;
  *
  */
 public final class MapFactory {
+
+	private static final IMapChangeProvider CHANGE_PROVIDER = MapChangeProvider.getInstance();
 
 	private MapFactory() {
 	}
@@ -58,7 +61,7 @@ public final class MapFactory {
 		// calculate which sprite to use on each tile
 		map.setDungeonSprites(
 				DungeonUtil.calculateDungeonSprites(map.getMap(), _tilesHorizontal, _tilesVertical));
-
+		CHANGE_PROVIDER.propagateMap(map);
 		return map;
 	}
 }
