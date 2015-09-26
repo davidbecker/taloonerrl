@@ -19,6 +19,7 @@ import de.brainstormsoftworks.taloonerrl.components.PlayerComponent;
 import de.brainstormsoftworks.taloonerrl.components.PositionComponent;
 import de.brainstormsoftworks.taloonerrl.core.EDirection;
 import de.brainstormsoftworks.taloonerrl.core.engine.ComponentMappers;
+import de.brainstormsoftworks.taloonerrl.core.engine.InputSystem;
 import de.brainstormsoftworks.taloonerrl.render.Renderer;
 
 /**

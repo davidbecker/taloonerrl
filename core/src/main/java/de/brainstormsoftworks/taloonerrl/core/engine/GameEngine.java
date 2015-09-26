@@ -15,8 +15,6 @@ import com.artemis.World;
 import com.artemis.WorldConfiguration;
 import com.badlogic.gdx.Gdx;
 
-import de.brainstormsoftworks.taloonerrl.system.InputSystem;
-
 /**
  * central part of the game<br/>
  * controls & sets up the game world
