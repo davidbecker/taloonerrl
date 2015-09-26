@@ -12,6 +12,9 @@ package de.brainstormsoftworks.taloonerrl.components;
 
 import com.artemis.PooledComponent;
 
+import lombok.Getter;
+import lombok.Setter;
+
 /**
  * component to give a name and a description to an entity
  *
@@ -20,51 +23,12 @@ import com.artemis.PooledComponent;
  */
 public class NameComponent extends PooledComponent {
 
-	private String name = "";
-	private String description = "";
+	private @Getter @Setter String name = "";
+	private @Getter @Setter String description = "";
 
 	@Override
 	protected void reset() {
 		name = "";
 		description = "";
 	}
-
-	/**
-	 * getter for {@link #name}
-	 *
-	 * @return the name
-	 */
-	public final String getName() {
-		return name;
-	}
-
-	/**
-	 * setter for name
-	 *
-	 * @param _name
-	 *            the name to set
-	 */
-	public final void setName(final String _name) {
-		name = _name;
-	}
-
-	/**
-	 * getter for {@link #description}
-	 *
-	 * @return the description
-	 */
-	public final String getDescription() {
-		return description;
-	}
-
-	/**
-	 * setter for description
-	 *
-	 * @param _description
-	 *            the description to set
-	 */
-	public final void setDescription(final String _description) {
-		description = _description;
-	}
-
 }

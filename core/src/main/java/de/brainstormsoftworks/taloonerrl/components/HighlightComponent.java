@@ -17,6 +17,8 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import de.brainstormsoftworks.taloonerrl.render.IDisposableInstance;
 import de.brainstormsoftworks.taloonerrl.render.RenderUtil;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * empty component that can be added to an entity to mark it for highlighting
@@ -36,16 +38,16 @@ public class HighlightComponent extends PooledComponent implements IDisposableIn
 	public static final int cursorBottomRightOffsetX = 11;
 	public static final int cursorBottomRightOffsetY = -2;
 
-	private static final TextureRegion cursorTopLeft = new TextureRegion(cursor, 0, 0, 8, 8);
-	private static final TextureRegion cursorTopRight = new TextureRegion(cursor, 8, 0, 8, 8);
-	private static final TextureRegion cursorBottomLeft = new TextureRegion(cursor, 0, 8, 8, 8);
-	private static final TextureRegion cursorBottomRight = new TextureRegion(cursor, 8, 8, 8, 8);
+	private static final @Getter TextureRegion cursorTopLeft = new TextureRegion(cursor, 0, 0, 8, 8);
+	private static final @Getter TextureRegion cursorTopRight = new TextureRegion(cursor, 8, 0, 8, 8);
+	private static final @Getter TextureRegion cursorBottomLeft = new TextureRegion(cursor, 0, 8, 8, 8);
+	private static final @Getter TextureRegion cursorBottomRight = new TextureRegion(cursor, 8, 8, 8, 8);
 
 	{
 		RenderUtil.addToDisposeList(this);
 	}
 
-	private int cursorAnimationOffset = 0;
+	private @Getter @Setter int cursorAnimationOffset = 0;
 
 	public HighlightComponent() {
 	}
@@ -53,61 +55,6 @@ public class HighlightComponent extends PooledComponent implements IDisposableIn
 	@Override
 	protected void reset() {
 		cursorAnimationOffset = 0;
-	}
-
-	/**
-	 * getter for {@link #cursorTopLeft}
-	 *
-	 * @return the cursorTopLeft
-	 */
-	public static final TextureRegion getCursorTopLeft() {
-		return cursorTopLeft;
-	}
-
-	/**
-	 * getter for {@link #cursorTopRight}
-	 *
-	 * @return the cursorTopRight
-	 */
-	public static final TextureRegion getCursorTopRight() {
-		return cursorTopRight;
-	}
-
-	/**
-	 * getter for {@link #cursorBottomLeft}
-	 *
-	 * @return the cursorBottomLeft
-	 */
-	public static final TextureRegion getCursorBottomLeft() {
-		return cursorBottomLeft;
-	}
-
-	/**
-	 * getter for {@link #cursorBottomRight}
-	 *
-	 * @return the cursorBottomRight
-	 */
-	public static final TextureRegion getCursorBottomRight() {
-		return cursorBottomRight;
-	}
-
-	/**
-	 * getter for {@link #cursorAnimationOffset}
-	 *
-	 * @return the cursorAnimationOffset
-	 */
-	public final int getCursorAnimationOffset() {
-		return cursorAnimationOffset;
-	}
-
-	/**
-	 * setter for cursorAnimationOffset
-	 *
-	 * @param animationOffset
-	 *            the cursorAnimationOffset to set
-	 */
-	public final void setCursorAnimationOffset(final int animationOffset) {
-		cursorAnimationOffset = animationOffset;
 	}
 
 	@Override

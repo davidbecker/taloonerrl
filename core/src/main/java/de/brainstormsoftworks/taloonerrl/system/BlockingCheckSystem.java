@@ -46,7 +46,7 @@ public class BlockingCheckSystem extends EntityProcessingSystem implements IMapC
 			final int deltaY = position.getTotalY() == Renderer.tileSize ? 1
 					: position.getTotalY() == -1 * Renderer.tileSize ? -1 : 0;
 			if (deltaX != 0 || deltaY != 0) {
-				if (!map.isWalkable(position.getPositionX() + deltaX, position.getPositionY() + deltaY)) {
+				if (!map.isWalkable(position.getX() + deltaX, position.getY() + deltaY)) {
 					// not walkable -> reset movement
 					position.setTotalX(0);
 					position.setTotalY(0);

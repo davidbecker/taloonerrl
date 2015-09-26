@@ -15,6 +15,8 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 
 import de.brainstormsoftworks.taloonerrl.core.engine.EEntity;
 import de.brainstormsoftworks.taloonerrl.core.engine.SpriteMapper;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * component for an entity that has an animation
@@ -23,22 +25,13 @@ import de.brainstormsoftworks.taloonerrl.core.engine.SpriteMapper;
  *
  */
 public class AnimationComponent extends PooledComponent {
-	private EEntity entityType = EEntity.NOTHING;
-	private Animation animation = null;
+	private @Getter EEntity entityType = EEntity.NOTHING;
+	private @Getter @Setter Animation animation = null;
 
 	@Override
 	protected void reset() {
 		entityType = EEntity.NOTHING;
 		animation = null;
-	}
-
-	/**
-	 * getter for entityType
-	 *
-	 * @return the entityType
-	 */
-	public final EEntity getEntityType() {
-		return entityType;
 	}
 
 	/**
@@ -52,22 +45,4 @@ public class AnimationComponent extends PooledComponent {
 		SpriteMapper.getInstance().mapAnimation(this);
 	}
 
-	/**
-	 * getter for animation
-	 *
-	 * @return the animation
-	 */
-	public final Animation getAnimation() {
-		return animation;
-	}
-
-	/**
-	 * setter for animation
-	 *
-	 * @param _animation
-	 *            the animation to set
-	 */
-	public final void setAnimation(final Animation _animation) {
-		animation = _animation;
-	}
 }

@@ -19,6 +19,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import de.brainstormsoftworks.taloonerrl.core.EDirection;
 import de.brainstormsoftworks.taloonerrl.core.engine.EEntity;
 import de.brainstormsoftworks.taloonerrl.core.engine.SpriteMapper;
+import lombok.Getter;
 
 /**
  * component to store animations for entities that change based on direction
@@ -28,22 +29,13 @@ import de.brainstormsoftworks.taloonerrl.core.engine.SpriteMapper;
  */
 public class FacingAnimationComponent extends PooledComponent {
 
-	private EEntity entityType = EEntity.NOTHING;
+	private @Getter EEntity entityType = EEntity.NOTHING;
 	final Map<EDirection, Animation> animationMap = new HashMap<EDirection, Animation>();
 
 	@Override
 	protected void reset() {
 		entityType = EEntity.NOTHING;
 		animationMap.clear();
-	}
-
-	/**
-	 * getter for entityType
-	 *
-	 * @return the entityType
-	 */
-	public final EEntity getEntityType() {
-		return entityType;
 	}
 
 	/**

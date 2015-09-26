@@ -12,6 +12,9 @@ package de.brainstormsoftworks.taloonerrl.components;
 
 import com.artemis.PooledComponent;
 
+import lombok.Getter;
+import lombok.Setter;
+
 /**
  * component that stores the percentage of health and total max health that the
  * entity has
@@ -21,43 +24,15 @@ import com.artemis.PooledComponent;
  */
 public class HealthComponent extends PooledComponent {
 
-	private int healthMax = 1;
-	private float healthPercent = 1.0f;
-	private boolean alive = true;
+	private @Getter @Setter int healthMax = 1;
+	private @Getter float healthPercent = 1.0f;
+	private @Getter @Setter boolean alive = true;
 
 	@Override
 	protected void reset() {
 		healthMax = 1;
 		healthPercent = 1.0f;
 		alive = true;
-	}
-
-	/**
-	 * getter for {@link #healthMax}
-	 *
-	 * @return the healthMax
-	 */
-	public final int getHealthMax() {
-		return healthMax;
-	}
-
-	/**
-	 * setter for healthMax
-	 *
-	 * @param _healthMax
-	 *            the healthMax to set
-	 */
-	public final void setHealthMax(final int _healthMax) {
-		healthMax = _healthMax;
-	}
-
-	/**
-	 * getter for {@link #healthPercent}
-	 *
-	 * @return the healthPercent
-	 */
-	public final float getHealthPercent() {
-		return healthPercent;
 	}
 
 	/**
@@ -74,25 +49,6 @@ public class HealthComponent extends PooledComponent {
 		} else if (healthPercent > 1) {
 			healthPercent = 1;
 		}
-	}
-
-	/**
-	 * getter for {@link #alive}
-	 *
-	 * @return the alive
-	 */
-	public final boolean isAlive() {
-		return alive;
-	}
-
-	/**
-	 * setter for alive
-	 *
-	 * @param _alive
-	 *            the alive to set
-	 */
-	public final void setAlive(final boolean _alive) {
-		alive = _alive;
 	}
 
 }

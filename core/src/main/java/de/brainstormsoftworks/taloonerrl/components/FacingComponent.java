@@ -13,6 +13,8 @@ package de.brainstormsoftworks.taloonerrl.components;
 import com.artemis.PooledComponent;
 
 import de.brainstormsoftworks.taloonerrl.core.EDirection;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * component for an entity that has a direction to face
@@ -21,30 +23,11 @@ import de.brainstormsoftworks.taloonerrl.core.EDirection;
  *
  */
 public class FacingComponent extends PooledComponent {
-	private EDirection direction = EDirection.RIGHT;
+	private @Getter @Setter EDirection direction = EDirection.RIGHT;
 
 	@Override
 	protected void reset() {
 		direction = EDirection.RIGHT;
-	}
-
-	/**
-	 * getter for direction
-	 *
-	 * @return the direction
-	 */
-	public final EDirection getDirection() {
-		return direction;
-	}
-
-	/**
-	 * setter for direction
-	 *
-	 * @param _direction
-	 *            the direction to set
-	 */
-	public final void setDirection(final EDirection _direction) {
-		direction = _direction;
 	}
 
 }
