@@ -39,12 +39,11 @@ public class TaloonerRl implements ApplicationListener {
 		final int tilesVertical = Renderer.TILES_VERTICAL * 2;
 		map = MapFactory.createMap(tilesHorizontal, tilesVertical);
 
-		MapManager.createEntities(map, tilesHorizontal, tilesVertical);
+		// forcing the instance to be created
+		MapManager.getInstance();
 
 		DungeonRenderer.initInstance();
 		GuiRenderer.initInstance();
-		MapOverlayRenderer.getInstance().initialize(map);
-
 	}
 
 	@Override

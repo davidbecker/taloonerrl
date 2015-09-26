@@ -16,6 +16,7 @@ import de.brainstormsoftworks.taloonerrl.components.FacingComponent;
 import de.brainstormsoftworks.taloonerrl.components.PositionComponent;
 import de.brainstormsoftworks.taloonerrl.core.engine.EEntity;
 import de.brainstormsoftworks.taloonerrl.core.engine.GameEngine;
+import de.brainstormsoftworks.taloonerrl.internal.dungeon.MapChangeProvider;
 import squidpony.squidmath.RNG;
 
 /**
@@ -24,7 +25,7 @@ import squidpony.squidmath.RNG;
  * @author David Becker
  *
  */
-public final class MapManager {
+public final class MapManager implements IMapChangeListener {
 	private static final RNG rng = new RNG();
 	private static int playerStartX = -1;
 	private static int playerStartY = -1;
@@ -33,7 +34,19 @@ public final class MapManager {
 	private static PositionComponent playerPositionComponent;
 	private static FacingComponent playerFacingComponent;
 
+	private static final MapManager instance = new MapManager();
+
 	private MapManager() {
+		MapChangeProvider.getInstance().registerListener(this);
+	}
+
+	/**
+	 * getter for {@link #instance}
+	 *
+	 * @return the instance
+	 */
+	public static MapManager getInstance() {
+		return instance;
 	}
 
 	/**
@@ -41,18 +54,18 @@ public final class MapManager {
 	 *
 	 * @param _map
 	 *            to check against
-	 * @param _tilesHorizontal
+	 * @param tilesHorizontal
 	 *            amount of horizontal tiles
-	 * @param _tilesVertical
+	 * @param tilesVertical
 	 *            amount of vertical tiles
 	 */
-	public static void createEntities(final IMap _map, final int _tilesHorizontal, final int _tilesVertical) {
+	private void createEntities(final IMap map, final int tilesHorizontal, final int tilesVertical) {
 		// set player starting position to a random walkable position for now
 		playerStartX = -1;
 		playerStartY = -1;
-		while (!_map.isWalkable(playerStartX, playerStartY)) {
-			playerStartX = rng.nextInt(_tilesHorizontal);
-			playerStartY = rng.nextInt(_tilesVertical);
+		while (!map.isWalkable(playerStartX, playerStartY)) {
+			playerStartX = rng.nextInt(tilesHorizontal);
+			playerStartY = rng.nextInt(tilesVertical);
 		}
 
 		// forces the engine to initialize
@@ -69,9 +82,9 @@ public final class MapManager {
 		for (int i = 0; i < 10; i++) {
 			int monsterX = -1;
 			int monsterY = -1;
-			while (!_map.isWalkable(monsterX, monsterY)) {
-				monsterX = rng.nextInt(_tilesHorizontal);
-				monsterY = rng.nextInt(_tilesVertical);
+			while (!map.isWalkable(monsterX, monsterY)) {
+				monsterX = rng.nextInt(tilesHorizontal);
+				monsterY = rng.nextInt(tilesVertical);
 			}
 			GameEngine.getInstance().createNewEntity(EEntity.BAT, monsterX, monsterY);
 		}
@@ -94,6 +107,14 @@ public final class MapManager {
 	 */
 	public static FacingComponent getPlayerFacingComponent() {
 		return playerFacingComponent;
+	}
+
+	/** {@inheritDoc} */
+	@Override
+	public void setMap(final IMap map) {
+		final int width = map.getMap().length;
+		final int height = width > 0 ? map.getMap()[0].length : 0;
+		createEntities(map, width, height);
 	}
 
 }
