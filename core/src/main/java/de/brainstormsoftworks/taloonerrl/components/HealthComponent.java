@@ -22,11 +22,12 @@ import lombok.Setter;
  * @author David Becker
  *
  */
+@Getter
 public class HealthComponent extends PooledComponent {
 
-	private @Getter @Setter int healthMax = 1;
-	private @Getter float healthPercent = 1.0f;
-	private @Getter @Setter boolean alive = true;
+	private @Setter int healthMax = 1;
+	private float healthPercent = 1.0f;
+	private @Setter boolean alive = true;
 
 	@Override
 	protected void reset() {

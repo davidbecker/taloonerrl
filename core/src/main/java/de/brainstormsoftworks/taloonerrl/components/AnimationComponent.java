@@ -24,9 +24,10 @@ import lombok.Setter;
  * @author David Becker
  *
  */
+@Getter
 public class AnimationComponent extends PooledComponent {
-	private @Getter EEntity entityType = EEntity.NOTHING;
-	private @Getter @Setter Animation animation = null;
+	private EEntity entityType = EEntity.NOTHING;
+	private @Setter Animation animation = null;
 
 	@Override
 	protected void reset() {

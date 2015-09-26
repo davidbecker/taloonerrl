@@ -21,10 +21,12 @@ import lombok.Setter;
  * @author David Becker
  *
  */
+@Getter
+@Setter
 public class NameComponent extends PooledComponent {
 
-	private @Getter @Setter String name = "";
-	private @Getter @Setter String description = "";
+	private String name = "";
+	private String description = "";
 
 	@Override
 	protected void reset() {

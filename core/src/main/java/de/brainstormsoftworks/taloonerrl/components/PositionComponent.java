@@ -22,18 +22,20 @@ import lombok.Setter;
  * @author David Becker
  *
  */
+@Getter
+@Setter
 public class PositionComponent extends PooledComponent {
 
-	private @Getter @Setter int x = 0;
-	private @Getter @Setter int y = 0;
+	private int x = 0;
+	private int y = 0;
 
 	// the offset this entity has from its current position
-	private @Getter @Setter int offsetX = 0;
-	private @Getter @Setter int offsetY = 0;
+	private int offsetX = 0;
+	private int offsetY = 0;
 
 	// amount of offset that this entity will be moving
-	private @Getter @Setter int totalX = 0;
-	private @Getter @Setter int totalY = 0;
+	private int totalX = 0;
+	private int totalY = 0;
 
 	@Override
 	protected void reset() {

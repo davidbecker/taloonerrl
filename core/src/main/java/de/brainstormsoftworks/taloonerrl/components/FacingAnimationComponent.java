@@ -30,7 +30,7 @@ import lombok.Getter;
 public class FacingAnimationComponent extends PooledComponent {
 
 	private @Getter EEntity entityType = EEntity.NOTHING;
-	final Map<EDirection, Animation> animationMap = new HashMap<EDirection, Animation>();
+	private final Map<EDirection, Animation> animationMap = new HashMap<EDirection, Animation>();
 
 	@Override
 	protected void reset() {
