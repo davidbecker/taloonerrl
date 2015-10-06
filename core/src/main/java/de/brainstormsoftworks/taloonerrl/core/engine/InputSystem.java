@@ -13,12 +13,15 @@ package de.brainstormsoftworks.taloonerrl.core.engine;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputAdapter;
 
+import lombok.Getter;
+
 /**
  * system that processes the input of the player
  *
  * @author David Becker
  *
  */
+@Getter
 public final class InputSystem extends InputAdapter {
 
 	private boolean keyPressedUp = false;
@@ -111,42 +114,6 @@ public final class InputSystem extends InputAdapter {
 		default:
 			return false;
 		}
-	}
-
-	/**
-	 * getter for keyPressedUp
-	 *
-	 * @return the keyPressedUp
-	 */
-	public boolean isKeyPressedUp() {
-		return keyPressedUp;
-	}
-
-	/**
-	 * getter for keyPressedDown
-	 *
-	 * @return the keyPressedDown
-	 */
-	public boolean isKeyPressedDown() {
-		return keyPressedDown;
-	}
-
-	/**
-	 * getter for keyPressedLeft
-	 *
-	 * @return the keyPressedLeft
-	 */
-	public boolean isKeyPressedLeft() {
-		return keyPressedLeft;
-	}
-
-	/**
-	 * getter for keyPressedRight
-	 *
-	 * @return the keyPressedRight
-	 */
-	public boolean isKeyPressedRight() {
-		return keyPressedRight;
 	}
 
 }
