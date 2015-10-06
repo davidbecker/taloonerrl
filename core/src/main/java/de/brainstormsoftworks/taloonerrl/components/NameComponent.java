@@ -23,7 +23,7 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-public class NameComponent extends PooledComponent {
+public class NameComponent extends PooledComponent implements ISetAbleComponent<NameComponent> {
 
 	private String name = "";
 	private String description = "";
@@ -32,5 +32,12 @@ public class NameComponent extends PooledComponent {
 	protected void reset() {
 		name = "";
 		description = "";
+	}
+
+	/** {@inheritDoc} */
+	@Override
+	public void overrideComponent(final NameComponent _component) {
+		name = _component.getName();
+		description = _component.getDescription();
 	}
 }

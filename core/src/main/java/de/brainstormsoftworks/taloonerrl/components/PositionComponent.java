@@ -24,7 +24,7 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-public class PositionComponent extends PooledComponent {
+public class PositionComponent extends PooledComponent implements ISetAbleComponent<PositionComponent> {
 
 	private int x = 0;
 	private int y = 0;
@@ -45,5 +45,16 @@ public class PositionComponent extends PooledComponent {
 		offsetY = 0;
 		totalX = 0;
 		totalY = 0;
+	}
+
+	/** {@inheritDoc} */
+	@Override
+	public void overrideComponent(final PositionComponent _component) {
+		x = _component.getX();
+		y = _component.getY();
+		offsetX = _component.getOffsetX();
+		offsetY = _component.getOffsetY();
+		totalX = _component.getTotalX();
+		totalY = _component.getTotalY();
 	}
 }

@@ -10,30 +10,27 @@
  ******************************************************************************/
 package de.brainstormsoftworks.taloonerrl.components;
 
-import com.artemis.PooledComponent;
-
-import de.brainstormsoftworks.taloonerrl.core.EDirection;
-import lombok.Getter;
-import lombok.Setter;
+import com.artemis.Component;
 
 /**
- * component for an entity that has a direction to face
+ * interface for an component that can be set with an other object of the same
+ * type as an input.<br>
+ * clients of this interface are expected to provide a way to set all fields to
+ * the values of the input object
  *
  * @author David Becker
- *
+ * @param <T>
+ *            type of component
  */
-public class FacingComponent extends PooledComponent implements ISetAbleComponent<FacingComponent> {
-	private @Getter @Setter EDirection direction = EDirection.RIGHT;
+public interface ISetAbleComponent<T extends Component> {
 
-	@Override
-	protected void reset() {
-		direction = EDirection.RIGHT;
-	}
-
-	/** {@inheritDoc} */
-	@Override
-	public void overrideComponent(final FacingComponent _component) {
-		direction = _component.getDirection();
-	}
+	/**
+	 * overrides all fields of this object with the values of the fields of the
+	 * parameter object
+	 *
+	 * @param component
+	 *            component to take the values from
+	 */
+	void overrideComponent(T component);
 
 }
