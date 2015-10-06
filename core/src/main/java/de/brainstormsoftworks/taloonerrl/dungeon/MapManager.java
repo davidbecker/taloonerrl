@@ -58,7 +58,7 @@ public final class MapManager implements IMapChangeListener {
 	 * @param tilesVertical
 	 *            amount of vertical tiles
 	 */
-	private void createEntities(final IMap map, final int tilesHorizontal, final int tilesVertical) {
+	private static void createEntities(final IMap map, final int tilesHorizontal, final int tilesVertical) {
 		// set player starting position to a random walkable position for now
 		playerStartX = -1;
 		playerStartY = -1;

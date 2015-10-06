@@ -758,7 +758,7 @@ public final class SpriteMapper implements IDisposableInstance {
 		return texture;
 	}
 
-	private TextureRegion loadFrame(final Texture texture, final int x, final int y) {
+	private static TextureRegion loadFrame(final Texture texture, final int x, final int y) {
 		return new TextureRegion(texture, x * Renderer.tileSize, y * Renderer.tileSize, Renderer.tileSize,
 				Renderer.tileSize);
 	}
