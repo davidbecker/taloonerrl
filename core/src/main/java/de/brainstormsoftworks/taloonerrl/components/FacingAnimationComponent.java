@@ -16,7 +16,6 @@ import java.util.Map;
 import com.artemis.PooledComponent;
 import com.badlogic.gdx.graphics.g2d.Animation;
 
-import de.brainstormsoftworks.taloonerrl.core.EDirection;
 import de.brainstormsoftworks.taloonerrl.core.engine.EEntity;
 import de.brainstormsoftworks.taloonerrl.core.engine.SpriteMapper;
 import lombok.Getter;
@@ -31,7 +30,7 @@ public class FacingAnimationComponent extends PooledComponent
 		implements ISetAbleComponent<FacingAnimationComponent> {
 
 	private @Getter EEntity entityType = EEntity.NOTHING;
-	private final Map<EDirection, Animation> animationMap = new HashMap<EDirection, Animation>();
+	private final Map<Integer, Animation> animationMap = new HashMap<Integer, Animation>();
 
 	@Override
 	protected void reset() {
@@ -50,11 +49,11 @@ public class FacingAnimationComponent extends PooledComponent
 		SpriteMapper.getInstance().mapAnimation(this);
 	}
 
-	public void setAnimations(final Map<EDirection, Animation> animations) {
+	public void setAnimations(final Map<Integer, Animation> animations) {
 		animationMap.putAll(animations);
 	}
 
-	public Animation getAnimation(final EDirection direction) {
+	public Animation getAnimation(final Integer direction) {
 		return animationMap.get(direction);
 	}
 

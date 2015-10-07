@@ -17,7 +17,7 @@ import com.artemis.systems.EntityProcessingSystem;
 import de.brainstormsoftworks.taloonerrl.components.FacingComponent;
 import de.brainstormsoftworks.taloonerrl.components.PlayerComponent;
 import de.brainstormsoftworks.taloonerrl.components.PositionComponent;
-import de.brainstormsoftworks.taloonerrl.core.EDirection;
+import de.brainstormsoftworks.taloonerrl.core.Direction;
 import de.brainstormsoftworks.taloonerrl.core.engine.ComponentMappers;
 import de.brainstormsoftworks.taloonerrl.core.engine.InputSystem;
 import de.brainstormsoftworks.taloonerrl.render.Renderer;
@@ -52,22 +52,22 @@ public class InputProcessSystem extends EntityProcessingSystem {
 			if (InputSystem.getInstance().isKeyPressedDown()) {
 				positionComponent.setOffsetY(0);
 				positionComponent.setTotalY(-1 * Renderer.tileSize);
-				facingComponent.setDirection(EDirection.DOWN);
+				facingComponent.setDirection(Direction.DOWN);
 				InputSystem.getInstance().reset();
 			} else if (InputSystem.getInstance().isKeyPressedUp()) {
 				positionComponent.setOffsetY(1);
 				positionComponent.setTotalY(Renderer.tileSize);
-				facingComponent.setDirection(EDirection.UP);
+				facingComponent.setDirection(Direction.UP);
 				InputSystem.getInstance().reset();
 			} else if (InputSystem.getInstance().isKeyPressedLeft()) {
 				positionComponent.setOffsetX(0);
 				positionComponent.setTotalX(-1 * Renderer.tileSize);
-				facingComponent.setDirection(EDirection.LEFT);
+				facingComponent.setDirection(Direction.LEFT);
 				InputSystem.getInstance().reset();
 			} else if (InputSystem.getInstance().isKeyPressedRight()) {
 				positionComponent.setOffsetX(0);
 				positionComponent.setTotalX(Renderer.tileSize);
-				facingComponent.setDirection(EDirection.RIGHT);
+				facingComponent.setDirection(Direction.RIGHT);
 				InputSystem.getInstance().reset();
 			}
 		}

@@ -4,7 +4,7 @@
  * are made available under the terms of the GNU Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
- * 
+ *
  * Contributors:
  *     David Becker - initial API and implementation
  ******************************************************************************/
@@ -17,6 +17,10 @@ package de.brainstormsoftworks.taloonerrl.core;
  * @author David Becker
  *
  */
-public enum EDirection {
-	UP, DOWN, LEFT, RIGHT
+public final class Direction {
+	public static final int NOTHING = 1 >> 1;
+	public static final int UP = 1;
+	public static final int DOWN = 1 << 1;
+	public static final int LEFT = 1 << 2;
+	public static final int RIGHT = 1 << 3;
 }
