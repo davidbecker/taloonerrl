@@ -27,12 +27,12 @@ import de.brainstormsoftworks.taloonerrl.render.Renderer;
  * @author David Becker
  *
  */
-public class BlockingCheckSystem extends EntityProcessingSystem implements IMapChangeListener {
+public class BlockingTileCheckSystem extends EntityProcessingSystem implements IMapChangeListener {
 
 	private PositionComponent position;
 	private IMap map;
 
-	public BlockingCheckSystem() {
+	public BlockingTileCheckSystem() {
 		super(Aspect.all(PositionComponent.class));
 		MapChangeProvider.getInstance().registerListener(this);
 	}
