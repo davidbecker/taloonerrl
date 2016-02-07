@@ -19,7 +19,7 @@ import de.brainstormsoftworks.taloonerrl.core.engine.ComponentMappers;
 import de.brainstormsoftworks.taloonerrl.dungeon.IMap;
 import de.brainstormsoftworks.taloonerrl.dungeon.IMapChangeListener;
 import de.brainstormsoftworks.taloonerrl.dungeon.MapChangeProvider;
-import de.brainstormsoftworks.taloonerrl.render.Renderer;
+import de.brainstormsoftworks.taloonerrl.system.util.PositionUtil;
 
 /**
  * system to check if the tile a is walkable
@@ -41,11 +41,9 @@ public class BlockingTileCheckSystem extends EntityProcessingSystem implements I
 	protected void process(final Entity e) {
 		position = ComponentMappers.getInstance().position.get(e);
 		if (map != null) {
-			final int deltaX = position.getTotalX() == Renderer.tileSize ? 1
-					: position.getTotalX() == -1 * Renderer.tileSize ? -1 : 0;
-			final int deltaY = position.getTotalY() == Renderer.tileSize ? 1
-					: position.getTotalY() == -1 * Renderer.tileSize ? -1 : 0;
-			if (deltaX != 0 || deltaY != 0) {
+			final int deltaX = PositionUtil.getDeltaX(position);
+			final int deltaY = PositionUtil.getDeltaY(position);
+			if (PositionUtil.isMovingWholeTile(deltaX, deltaY)) {
 				if (!map.isWalkable(position.getX() + deltaX, position.getY() + deltaY)) {
 					// not walkable -> reset movement
 					position.setTotalX(0);
