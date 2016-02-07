@@ -55,7 +55,7 @@ public final class FovWrapper implements IMapChangeListener {
 	 *            vertical tile position
 	 */
 	public void calculateFovForPosition(final int x, final int y) {
-		final Coord c = new Coord(x, y);
+		final Coord c = Coord.get(x, y);
 		if (storedFovMaps.containsKey(c)) {
 			lightMap = storedFovMaps.get(c);
 		} else {
