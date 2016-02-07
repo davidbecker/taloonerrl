@@ -8,7 +8,7 @@
  * Contributors:
  *     David Becker - initial API and implementation
  ******************************************************************************/
-package de.brainstormsoftworks.taloonerrl.core;
+package de.brainstormsoftworks.taloonerrl.core.engine;
 
 /**
  * a hack<br/>
@@ -17,10 +17,10 @@ package de.brainstormsoftworks.taloonerrl.core;
  * @author David Becker
  *
  */
-public final class Direction {
+public class Direction {
 	public static final int NOTHING = 1 >> 1;
 	public static final int UP = 1;
-	public static final int DOWN = 1 << 1;
-	public static final int LEFT = 1 << 2;
-	public static final int RIGHT = 1 << 3;
+	public static final int DOWN = UP << 1;
+	public static final int LEFT = DOWN << 1;
+	public static final int RIGHT = LEFT << 1;
 }

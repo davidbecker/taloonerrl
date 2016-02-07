@@ -25,7 +25,6 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import de.brainstormsoftworks.taloonerrl.components.AnimationComponent;
 import de.brainstormsoftworks.taloonerrl.components.FacingAnimationComponent;
 import de.brainstormsoftworks.taloonerrl.components.SpriteComponent;
-import de.brainstormsoftworks.taloonerrl.core.Direction;
 import de.brainstormsoftworks.taloonerrl.render.IDisposableInstance;
 import de.brainstormsoftworks.taloonerrl.render.RenderUtil;
 import de.brainstormsoftworks.taloonerrl.render.Renderer;

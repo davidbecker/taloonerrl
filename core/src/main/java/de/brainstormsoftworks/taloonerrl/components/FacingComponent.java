@@ -12,7 +12,7 @@ package de.brainstormsoftworks.taloonerrl.components;
 
 import com.artemis.PooledComponent;
 
-import de.brainstormsoftworks.taloonerrl.core.Direction;
+import de.brainstormsoftworks.taloonerrl.core.engine.Direction;
 import lombok.Getter;
 import lombok.Setter;
 
