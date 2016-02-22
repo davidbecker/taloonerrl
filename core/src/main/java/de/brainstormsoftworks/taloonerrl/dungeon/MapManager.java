@@ -88,6 +88,8 @@ public final class MapManager implements IMapChangeListener {
 			GameEngine.getInstance().createNewEntity(EEntity.BAT, monsterX, monsterY);
 		}
 
+		// create an entity for tile highlighting
+		GameEngine.getInstance().createNewEntity(EEntity.CURSOR, 0, 0);
 	}
 
 	/**

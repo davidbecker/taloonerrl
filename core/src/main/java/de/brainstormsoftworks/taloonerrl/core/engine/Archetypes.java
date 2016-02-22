@@ -20,6 +20,7 @@ import de.brainstormsoftworks.taloonerrl.components.CollectibleComponent;
 import de.brainstormsoftworks.taloonerrl.components.FacingAnimationComponent;
 import de.brainstormsoftworks.taloonerrl.components.FacingComponent;
 import de.brainstormsoftworks.taloonerrl.components.HealthComponent;
+import de.brainstormsoftworks.taloonerrl.components.HighlightComponent;
 import de.brainstormsoftworks.taloonerrl.components.NameComponent;
 import de.brainstormsoftworks.taloonerrl.components.PlayerComponent;
 import de.brainstormsoftworks.taloonerrl.components.PositionComponent;
@@ -38,6 +39,8 @@ public final class Archetypes {
 	public final Archetype player;
 	public final Archetype collectible;
 	public final Archetype decoration;
+
+	public final Archetype cursor;
 	private static Archetypes instance;
 
 	private Archetypes(final World world) {
@@ -49,6 +52,8 @@ public final class Archetypes {
 		collectible = new ArchetypeBuilder().add(PositionComponent.class).add(SpriteComponent.class)
 				.add(CollectibleComponent.class).build(world);
 		decoration = new ArchetypeBuilder().add(PositionComponent.class).add(AnimationComponent.class)
+				.build(world);
+		cursor = new ArchetypeBuilder().add(PositionComponent.class).add(HighlightComponent.class)
 				.build(world);
 	}
 
