@@ -14,6 +14,7 @@ import com.artemis.Entity;
 import com.artemis.World;
 import com.artemis.WorldConfiguration;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputMultiplexer;
 
 /**
  * central part of the game<br/>
@@ -37,7 +38,10 @@ public final class GameEngine {
 	private float deltaTime;
 
 	private GameEngine() {
-		Gdx.input.setInputProcessor(InputSystem.getInstance());
+		final InputMultiplexer inputMultiplexer = new InputMultiplexer();
+		inputMultiplexer.addProcessor(UserIntefaceInputProcessor.getInstance());
+		inputMultiplexer.addProcessor(InputSystem.getInstance());
+		Gdx.input.setInputProcessor(inputMultiplexer);
 		final WorldConfiguration config = new WorldConfiguration();
 		Systems.setSystems(config);
 		world = new World(config);
