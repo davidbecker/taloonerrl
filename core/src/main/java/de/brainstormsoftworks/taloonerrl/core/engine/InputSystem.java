@@ -10,6 +10,7 @@
  ******************************************************************************/
 package de.brainstormsoftworks.taloonerrl.core.engine;
 
+import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.math.Vector3;
@@ -31,6 +32,12 @@ public final class InputSystem extends InputAdapter {
 	private boolean keyPressedDown = false;
 	private boolean keyPressedLeft = false;
 	private boolean keyPressedRight = false;
+	private boolean buttonPressedBack = false;
+	private boolean buttonPressedForward = false;
+	private boolean buttonPressedLeft = false;
+	private boolean buttonPressedMiddle = false;
+	private boolean buttonPressedRight = false;
+
 	private int mouseOverX = 0;
 	private int mouseOverY = 0;
 
@@ -99,6 +106,11 @@ public final class InputSystem extends InputAdapter {
 		keyPressedDown = false;
 		keyPressedLeft = false;
 		keyPressedRight = false;
+		buttonPressedBack = false;
+		buttonPressedForward = false;
+		buttonPressedLeft = false;
+		buttonPressedMiddle = false;
+		buttonPressedRight = false;
 	}
 
 	@Override
@@ -115,6 +127,55 @@ public final class InputSystem extends InputAdapter {
 			return true;
 		case Keys.RIGHT:
 			keyPressedRight = false;
+			return true;
+		default:
+			return false;
+		}
+	}
+
+	@Override
+	public boolean touchDown(final int _screenX, final int _screenY, final int _pointer, final int _button) {
+		// invalidate all the previous input
+		reset();
+
+		switch (_button) {
+		case Buttons.BACK:
+			buttonPressedBack = true;
+			return true;
+		case Buttons.FORWARD:
+			buttonPressedForward = true;
+			return true;
+		case Buttons.LEFT:
+			buttonPressedLeft = true;
+			return true;
+		case Buttons.MIDDLE:
+			buttonPressedMiddle = true;
+			return true;
+		case Buttons.RIGHT:
+			buttonPressedRight = true;
+			return true;
+		default:
+			return false;
+		}
+	}
+
+	@Override
+	public boolean touchUp(final int _screenX, final int _screenY, final int _pointer, final int _button) {
+		switch (_button) {
+		case Buttons.BACK:
+			buttonPressedBack = false;
+			return true;
+		case Buttons.FORWARD:
+			buttonPressedForward = false;
+			return true;
+		case Buttons.LEFT:
+			buttonPressedLeft = false;
+			return true;
+		case Buttons.MIDDLE:
+			buttonPressedMiddle = false;
+			return true;
+		case Buttons.RIGHT:
+			buttonPressedRight = false;
 			return true;
 		default:
 			return false;
