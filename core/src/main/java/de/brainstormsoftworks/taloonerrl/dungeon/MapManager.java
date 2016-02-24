@@ -16,6 +16,7 @@ import de.brainstormsoftworks.taloonerrl.components.FacingComponent;
 import de.brainstormsoftworks.taloonerrl.components.PositionComponent;
 import de.brainstormsoftworks.taloonerrl.core.engine.EEntity;
 import de.brainstormsoftworks.taloonerrl.core.engine.GameEngine;
+import lombok.Getter;
 import squidpony.squidmath.RNG;
 
 /**
@@ -34,6 +35,8 @@ public final class MapManager implements IMapChangeListener {
 	private static FacingComponent playerFacingComponent;
 
 	private static final MapManager instance = new MapManager();
+	@Getter
+	private IMap map;
 
 	private MapManager() {
 		MapChangeProvider.getInstance().registerListener(this);
@@ -112,10 +115,11 @@ public final class MapManager implements IMapChangeListener {
 
 	/** {@inheritDoc} */
 	@Override
-	public void setMap(final IMap map) {
-		final int width = map.getMap().length;
-		final int height = width > 0 ? map.getMap()[0].length : 0;
-		createEntities(map, width, height);
+	public void setMap(final IMap _map) {
+		map = _map;
+		final int width = _map.getMap().length;
+		final int height = width > 0 ? _map.getMap()[0].length : 0;
+		createEntities(_map, width, height);
 	}
 
 }

@@ -32,6 +32,17 @@ public interface IMap {
 	boolean isVisible(int x, int y);
 
 	/**
+	 * check if a position on the map was visited by the player
+	 *
+	 * @param x
+	 *            coordinate
+	 * @param y
+	 *            coordinate
+	 * @return true if position was visited, false otherwise
+	 */
+	boolean isVisited(int x, int y);
+
+	/**
 	 * check if a position on the map is walkable to any actor
 	 *
 	 * @param x

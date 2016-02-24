@@ -35,9 +35,7 @@ public class TaloonerRl implements ApplicationListener {
 
 	@Override
 	public void create() {
-		final int tilesHorizontal = Renderer.TILES_HORIZONTAL * 2;
-		final int tilesVertical = Renderer.TILES_VERTICAL * 2;
-		map = MapFactory.createMap(tilesHorizontal, tilesVertical);
+		map = MapFactory.createMap(Renderer.TILES_HORIZONTAL, Renderer.TILES_VERTICAL);
 
 		// forcing the instance to be created
 		MapManager.getInstance();

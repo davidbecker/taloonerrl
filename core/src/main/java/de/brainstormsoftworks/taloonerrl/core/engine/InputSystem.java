@@ -12,7 +12,10 @@ package de.brainstormsoftworks.taloonerrl.core.engine;
 
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputAdapter;
+import com.badlogic.gdx.math.Vector3;
 
+import de.brainstormsoftworks.taloonerrl.math.IntVector2;
+import de.brainstormsoftworks.taloonerrl.render.Renderer;
 import lombok.Getter;
 
 /**
@@ -28,6 +31,8 @@ public final class InputSystem extends InputAdapter {
 	private boolean keyPressedDown = false;
 	private boolean keyPressedLeft = false;
 	private boolean keyPressedRight = false;
+	private int mouseOverX = 0;
+	private int mouseOverY = 0;
 
 	private static final InputSystem instance = new InputSystem();
 
@@ -114,6 +119,21 @@ public final class InputSystem extends InputAdapter {
 		default:
 			return false;
 		}
+	}
+
+	@Override
+	public boolean mouseMoved(final int _screenX, final int _screenY) {
+		final IntVector2 unproject = Renderer.getInstance()
+				.unprojectFromCamera(new Vector3(_screenX, _screenY, 0));
+		mouseOverX = unproject.getX();
+		mouseOverY = unproject.getY();
+		return true;
+	}
+
+	@Override
+	public boolean touchDragged(final int _screenX, final int _screenY, final int _pointer) {
+		System.err.println("dragged " + _screenX + " " + _screenY + " " + _pointer);
+		return super.touchDragged(_screenX, _screenY, _pointer);
 	}
 
 }

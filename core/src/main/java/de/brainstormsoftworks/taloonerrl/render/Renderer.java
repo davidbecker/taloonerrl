@@ -11,11 +11,15 @@
 package de.brainstormsoftworks.taloonerrl.render;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+
+import de.brainstormsoftworks.taloonerrl.math.IntVector2;
 
 /**
  * singleton to keep track of on globally accessible {@link SpriteBatch}
@@ -207,18 +211,22 @@ public final class Renderer implements IDisposableInstance {
 		spriteBatchScreen.end();
 	}
 
-	// FIXME reimplement
-	// /**
-	// * convenience method
-	// *
-	// * @see Camera#unproject(Vector3)
-	// * @param v
-	// * screen coordinates to translate
-	// */
-	// public void unprojectFromCamera(final Vector3 v) {
-	// cameraWorld.unproject(v, viewPortX, viewPortY, viewPortWidth,
-	// viewPortHeight);
-	// }
+	/**
+	 * convenience method to translate screen coordinates into tiles
+	 *
+	 * @see Camera#unproject(Vector3)
+	 * @param v
+	 *            screen coordinates to translate
+	 * @return
+	 */
+	public IntVector2 unprojectFromCamera(final Vector3 v) {
+		final Vector3 unproject = cameraWorld.unproject(v);
+		int x = (int) (unproject.x / scale);
+		x = x < 0 ? 0 : x > TILES_HORIZONTAL ? TILES_HORIZONTAL : x;
+		int y = (int) (unproject.y / scale);
+		y = y < 0 ? 0 : y > TILES_VERTICAL ? TILES_VERTICAL : y;
+		return new IntVector2(x, y);
+	}
 
 	@Override
 	public void disposeInstance() {

@@ -42,6 +42,11 @@ public class Map implements IMap {
 		throw new UnsupportedOperationException("TODO: implement");
 	}
 
+	@Override
+	public boolean isVisited(final int x, final int y) {
+		return ArrayHelper.isInArrayBounds(visited, x, y) && visited[x][y];
+	}
+
 	/** {@inheritDoc} */
 	@Override
 	public boolean isWalkable(final int x, final int y) {
