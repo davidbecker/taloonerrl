@@ -123,17 +123,22 @@ public final class InputSystem extends InputAdapter {
 
 	@Override
 	public boolean mouseMoved(final int _screenX, final int _screenY) {
-		final IntVector2 unproject = Renderer.getInstance()
-				.unprojectFromCamera(new Vector3(_screenX, _screenY, 0));
-		mouseOverX = unproject.getX();
-		mouseOverY = unproject.getY();
+		unprojectMouseOver(_screenX, _screenY);
 		return true;
 	}
 
 	@Override
 	public boolean touchDragged(final int _screenX, final int _screenY, final int _pointer) {
+		unprojectMouseOver(_screenX, _screenY);
 		System.err.println("dragged " + _screenX + " " + _screenY + " " + _pointer);
 		return super.touchDragged(_screenX, _screenY, _pointer);
+	}
+
+	private final void unprojectMouseOver(final int _screenX, final int _screenY) {
+		final IntVector2 unproject = Renderer.getInstance()
+				.unprojectFromCamera(new Vector3(_screenX, _screenY, 0));
+		mouseOverX = unproject.getX();
+		mouseOverY = unproject.getY();
 	}
 
 }
