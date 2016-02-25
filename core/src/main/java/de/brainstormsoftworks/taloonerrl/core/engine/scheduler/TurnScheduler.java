@@ -74,6 +74,17 @@ public final class TurnScheduler {
 	}
 
 	/**
+	 * add single turn to queue
+	 *
+	 * @param turnToAdd
+	 */
+	public void addTurnToQueue(final int turnToAdd) {
+		clearQueue();
+		queue[pointer] = turnToAdd;
+		queue[pointer + 1] = Direction.NOTHING;
+	}
+
+	/**
 	 * add turns to queue
 	 *
 	 * @param turnsToAdd

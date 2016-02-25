@@ -52,6 +52,11 @@ public class TurnSchedulerTest {
 		assertEquals(Direction.LEFT, scheduler.getNextTurn());
 		assertTrue(scheduler.isQueueEmpty());
 		assertEquals(Direction.NOTHING, scheduler.getNextTurn());
+
+		// test single turn
+		scheduler.addTurnToQueue(Direction.LEFT);
+		assertEquals(Direction.LEFT, scheduler.getNextTurn());
+		assertEquals(Direction.NOTHING, scheduler.getNextTurn());
 	}
 
 	@Test
