@@ -57,6 +57,11 @@ public class TurnSchedulerTest {
 		scheduler.addTurnToQueue(Direction.LEFT);
 		assertEquals(Direction.LEFT, scheduler.getNextTurn());
 		assertEquals(Direction.NOTHING, scheduler.getNextTurn());
+		assertEquals(Direction.NOTHING, scheduler.getNextTurn());
+		assertEquals(Direction.NOTHING, scheduler.getNextTurn());
+		assertEquals(Direction.NOTHING, scheduler.getNextTurn());
+		assertEquals(Direction.NOTHING, scheduler.getNextTurn());
+		assertEquals(Direction.NOTHING, scheduler.getNextTurn());
 	}
 
 	@Test

@@ -49,10 +49,15 @@ public final class TurnScheduler {
 	 * @return
 	 */
 	public int getNextTurn() {
+		int result = Direction.NOTHING;
 		if (pointer < QUEUE_LENGTH) {
-			return queue[pointer++];
+			result = queue[pointer];
+			if (result != Direction.NOTHING) {
+				// only update update pointer on "real" turn
+				pointer++;
+			}
 		}
-		return Direction.NOTHING;
+		return result;
 	}
 
 	/**
