@@ -29,7 +29,6 @@ public class TurnSchedulerTest {
 
 	@Test
 	public void testNormalTurns() {
-		scheduler.clearQueue();
 		final int[] turns = new int[4];
 		turns[0] = Direction.DOWN;
 		turns[1] = Direction.LEFT;
@@ -43,7 +42,6 @@ public class TurnSchedulerTest {
 		assertEquals(Direction.NOTHING, scheduler.getNextTurn());
 
 		// test that "reset" works as expected
-		scheduler.clearQueue();
 		final int[] turns2 = new int[2];
 		turns2[0] = Direction.DOWN;
 		turns2[1] = Direction.LEFT;
@@ -58,7 +56,6 @@ public class TurnSchedulerTest {
 
 	@Test
 	public void overLimit() {
-		scheduler.clearQueue();
 		final int length = TurnScheduler.QUEUE_LENGTH + 1;
 		final int[] turns = new int[length];
 		for (int i = 0; i < length; i++) {

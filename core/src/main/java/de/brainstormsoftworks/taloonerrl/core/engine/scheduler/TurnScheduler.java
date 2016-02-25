@@ -79,6 +79,7 @@ public final class TurnScheduler {
 	 * @param turnsToAdd
 	 */
 	public void addTurnsToQueue(final int[] turnsToAdd) {
+		clearQueue();
 		int length = turnsToAdd.length;
 		final boolean overLimit = length > QUEUE_LENGTH;
 		if (overLimit) {
