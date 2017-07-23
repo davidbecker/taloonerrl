@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2015 David Becker.
+ * Copyright (c) 2015, 2017 David Becker.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the GNU Public License v2.0
  * which accompanies this distribution, and is available at
@@ -26,6 +26,9 @@ import lombok.Setter;
 @Setter
 public class PositionComponent extends PooledComponent implements ISetAbleComponent<PositionComponent> {
 
+	private static final int VELOCITY_DEFAULT = 2;
+	private int velocity = VELOCITY_DEFAULT;
+
 	private int x = 0;
 	private int y = 0;
 
@@ -45,6 +48,7 @@ public class PositionComponent extends PooledComponent implements ISetAbleCompon
 		offsetY = 0;
 		totalX = 0;
 		totalY = 0;
+		velocity = VELOCITY_DEFAULT;
 	}
 
 	/** {@inheritDoc} */
@@ -56,5 +60,6 @@ public class PositionComponent extends PooledComponent implements ISetAbleCompon
 		offsetY = _component.getOffsetY();
 		totalX = _component.getTotalX();
 		totalY = _component.getTotalY();
+		velocity = _component.getVelocity();
 	}
 }

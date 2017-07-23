@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2015 David Becker.
+ * Copyright (c) 2015, 2017 David Becker.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the GNU Public License v2.0
  * which accompanies this distribution, and is available at
@@ -35,8 +35,7 @@ public class ControllerSystem extends EntityProcessingSystem {
 	private int offsetX = 0;
 	private int offsetY = 0;
 
-	// TODO implement velocity into component
-	private static final int velocity = 2;
+	private int velocity = 0;
 
 	/**
 	 * Constructor.
@@ -53,6 +52,7 @@ public class ControllerSystem extends EntityProcessingSystem {
 		totalY = position.getTotalY();
 		offsetX = position.getOffsetX();
 		offsetY = position.getOffsetY();
+		velocity = position.getVelocity();
 		// shortcut
 		if (totalX == 0 && totalY == 0) {
 			return;
