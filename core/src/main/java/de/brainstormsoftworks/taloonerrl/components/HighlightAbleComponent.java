@@ -26,7 +26,7 @@ import lombok.Setter;
  * @author David Becker
  *
  */
-public class HighlightComponent extends PooledComponent implements IDisposableInstance {
+public class HighlightAbleComponent extends PooledComponent implements IDisposableInstance {
 	private static final Texture cursor = new Texture(Gdx.files.internal("cursor.png"));
 	// FIXME currently expecting a tile size of 16
 	public static final int cursorTopLeftOffsetX = -2;
@@ -49,7 +49,7 @@ public class HighlightComponent extends PooledComponent implements IDisposableIn
 
 	private @Getter @Setter int cursorAnimationOffset = 0;
 
-	public HighlightComponent() {
+	public HighlightAbleComponent() {
 	}
 
 	@Override

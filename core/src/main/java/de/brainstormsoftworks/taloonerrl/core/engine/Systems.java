@@ -20,7 +20,7 @@ import de.brainstormsoftworks.taloonerrl.system.FacingAnimationRenderSystem;
 import de.brainstormsoftworks.taloonerrl.system.FovUpdaterSystem;
 import de.brainstormsoftworks.taloonerrl.system.HealthBarRenderSystem;
 import de.brainstormsoftworks.taloonerrl.system.HighlightRenderSystem;
-import de.brainstormsoftworks.taloonerrl.system.HighlightUpdateSystem;
+import de.brainstormsoftworks.taloonerrl.system.HighlightMouseOverUpdateSystem;
 import de.brainstormsoftworks.taloonerrl.system.InputProcessSystem;
 import de.brainstormsoftworks.taloonerrl.system.MapOverlayPreparerSystem;
 import de.brainstormsoftworks.taloonerrl.system.OffsetSystem;
@@ -37,7 +37,7 @@ public final class Systems {
 	private static final FacingAnimationRenderSystem FACING_ANIMATION_RENDER_SYSTEM = new FacingAnimationRenderSystem();
 	private static final SpriteRenderSystem SPRITE_RENDER_SYSTEM = new SpriteRenderSystem();
 	private static final HealthBarRenderSystem RENDER_BAR_SYSTEM = new HealthBarRenderSystem();
-	private static final HighlightUpdateSystem HIGHLIGHT_UPDATE_SYSTEM = new HighlightUpdateSystem();
+	private static final HighlightMouseOverUpdateSystem HIGHLIGHT_UPDATE_SYSTEM = new HighlightMouseOverUpdateSystem();
 	private static final HighlightRenderSystem HIGHLIGHT_SYSTEM = new HighlightRenderSystem();
 	private static final CameraSystem CAMERA_SYSTEM = new CameraSystem();
 	private static final InputProcessSystem INPUT_PROCESS_SYSTEM = new InputProcessSystem();

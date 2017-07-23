@@ -14,23 +14,24 @@ import com.artemis.Aspect;
 import com.artemis.Entity;
 import com.artemis.systems.EntityProcessingSystem;
 
-import de.brainstormsoftworks.taloonerrl.components.HighlightComponent;
+import de.brainstormsoftworks.taloonerrl.components.HighlightAbleComponent;
 import de.brainstormsoftworks.taloonerrl.components.PositionComponent;
 import de.brainstormsoftworks.taloonerrl.core.engine.ComponentMappers;
 import de.brainstormsoftworks.taloonerrl.core.engine.InputSystem;
 
 /**
- * update system to set the position of the highlighted tile
+ * update system to set the position of the highlighted tile based on the mouse
+ * cursor
  *
  * @author David Becker
  *
  */
-public class HighlightUpdateSystem extends EntityProcessingSystem {
+public class HighlightMouseOverUpdateSystem extends EntityProcessingSystem {
 
 	private PositionComponent positionComponent;
 
-	public HighlightUpdateSystem() {
-		super(Aspect.all(PositionComponent.class, HighlightComponent.class));
+	public HighlightMouseOverUpdateSystem() {
+		super(Aspect.all(PositionComponent.class, HighlightAbleComponent.class));
 	}
 
 	@Override

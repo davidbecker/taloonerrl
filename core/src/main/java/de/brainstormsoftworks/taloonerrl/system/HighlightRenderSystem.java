@@ -14,7 +14,7 @@ import com.artemis.Aspect;
 import com.artemis.Entity;
 import com.artemis.systems.EntityProcessingSystem;
 
-import de.brainstormsoftworks.taloonerrl.components.HighlightComponent;
+import de.brainstormsoftworks.taloonerrl.components.HighlightAbleComponent;
 import de.brainstormsoftworks.taloonerrl.components.PositionComponent;
 import de.brainstormsoftworks.taloonerrl.core.engine.ComponentMappers;
 import de.brainstormsoftworks.taloonerrl.core.engine.GameEngine;
@@ -32,10 +32,10 @@ public class HighlightRenderSystem extends EntityProcessingSystem {
 	private int x, y;
 	private int cursorAnimationOffset;
 	private PositionComponent positionComponent;
-	private HighlightComponent highlight;
+	private HighlightAbleComponent highlight;
 
 	public HighlightRenderSystem() {
-		super(Aspect.all(PositionComponent.class, HighlightComponent.class));
+		super(Aspect.all(PositionComponent.class, HighlightAbleComponent.class));
 	}
 
 	@Override
@@ -65,18 +65,18 @@ public class HighlightRenderSystem extends EntityProcessingSystem {
 		x = positionComponent.getX();
 		y = positionComponent.getY();
 		if (MapManager.getInstance().getMap().isVisited(x, y)) {
-			Renderer.getInstance().renderOnTile(HighlightComponent.getCursorTopLeft(), x, y,
-					HighlightComponent.cursorTopLeftOffsetX - highlight.getCursorAnimationOffset(),
-					HighlightComponent.cursorTopLeftOffsetY + highlight.getCursorAnimationOffset());
-			Renderer.getInstance().renderOnTile(HighlightComponent.getCursorTopRight(), x, y,
-					HighlightComponent.cursorTopRightOffsetX + highlight.getCursorAnimationOffset(),
-					+HighlightComponent.cursorTopRightOffsetY + highlight.getCursorAnimationOffset());
-			Renderer.getInstance().renderOnTile(HighlightComponent.getCursorBottomLeft(), x, y,
-					HighlightComponent.cursorBottomLeftOffsetX - highlight.getCursorAnimationOffset(),
-					HighlightComponent.cursorBottomLeftOffsetY - highlight.getCursorAnimationOffset());
-			Renderer.getInstance().renderOnTile(HighlightComponent.getCursorBottomRight(), x, y,
-					HighlightComponent.cursorBottomRightOffsetX + highlight.getCursorAnimationOffset(),
-					HighlightComponent.cursorBottomRightOffsetY - highlight.getCursorAnimationOffset());
+			Renderer.getInstance().renderOnTile(HighlightAbleComponent.getCursorTopLeft(), x, y,
+					HighlightAbleComponent.cursorTopLeftOffsetX - highlight.getCursorAnimationOffset(),
+					HighlightAbleComponent.cursorTopLeftOffsetY + highlight.getCursorAnimationOffset());
+			Renderer.getInstance().renderOnTile(HighlightAbleComponent.getCursorTopRight(), x, y,
+					HighlightAbleComponent.cursorTopRightOffsetX + highlight.getCursorAnimationOffset(),
+					+HighlightAbleComponent.cursorTopRightOffsetY + highlight.getCursorAnimationOffset());
+			Renderer.getInstance().renderOnTile(HighlightAbleComponent.getCursorBottomLeft(), x, y,
+					HighlightAbleComponent.cursorBottomLeftOffsetX - highlight.getCursorAnimationOffset(),
+					HighlightAbleComponent.cursorBottomLeftOffsetY - highlight.getCursorAnimationOffset());
+			Renderer.getInstance().renderOnTile(HighlightAbleComponent.getCursorBottomRight(), x, y,
+					HighlightAbleComponent.cursorBottomRightOffsetX + highlight.getCursorAnimationOffset(),
+					HighlightAbleComponent.cursorBottomRightOffsetY - highlight.getCursorAnimationOffset());
 		}
 	}
 }
