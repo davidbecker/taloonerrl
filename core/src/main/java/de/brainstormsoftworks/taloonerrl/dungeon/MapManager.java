@@ -13,6 +13,7 @@ package de.brainstormsoftworks.taloonerrl.dungeon;
 import com.artemis.Entity;
 
 import de.brainstormsoftworks.taloonerrl.components.FacingComponent;
+import de.brainstormsoftworks.taloonerrl.components.HighlightAbleComponent;
 import de.brainstormsoftworks.taloonerrl.components.PositionComponent;
 import de.brainstormsoftworks.taloonerrl.core.engine.EEntity;
 import de.brainstormsoftworks.taloonerrl.core.engine.GameEngine;
@@ -92,7 +93,9 @@ public final class MapManager implements IMapChangeListener {
 		}
 
 		// create an entity for tile highlighting
-		GameEngine.getInstance().createNewEntity(EEntity.CURSOR, 0, 0);
+		final Entity cursorEntity = GameEngine.getInstance().createNewEntity(EEntity.CURSOR, 0, 0);
+		cursorEntity.getComponent(HighlightAbleComponent.class)
+				.setHighlightStyle(HighlightAbleComponent.HIGHLIGHT_STYLE_BLINKING);
 	}
 
 	/**

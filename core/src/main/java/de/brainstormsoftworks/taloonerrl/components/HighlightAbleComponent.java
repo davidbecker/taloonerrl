@@ -27,6 +27,10 @@ import lombok.Setter;
  *
  */
 public class HighlightAbleComponent extends PooledComponent implements IDisposableInstance {
+	public static final int HIGHLIGHT_STYLE_NONE = 0;
+	public static final int HIGHLIGHT_STYLE_BLINKING = 1;
+	public static final int HIGHLIGHT_STYLE_STATIC = 2;
+
 	private static final Texture cursor = new Texture(Gdx.files.internal("cursor.png"));
 	// FIXME currently expecting a tile size of 16
 	public static final int cursorTopLeftOffsetX = -2;
@@ -48,6 +52,7 @@ public class HighlightAbleComponent extends PooledComponent implements IDisposab
 	}
 
 	private @Getter @Setter int cursorAnimationOffset = 0;
+	private @Getter @Setter int highlightStyle = HIGHLIGHT_STYLE_NONE;
 
 	public HighlightAbleComponent() {
 	}
@@ -60,6 +65,14 @@ public class HighlightAbleComponent extends PooledComponent implements IDisposab
 	@Override
 	public void disposeInstance() {
 		cursor.dispose();
+	}
+
+	public final boolean isHighlightStyleNone() {
+		return highlightStyle == HIGHLIGHT_STYLE_NONE;
+	}
+
+	public final boolean isHighlightStyleBlinking() {
+		return highlightStyle == HIGHLIGHT_STYLE_BLINKING;
 	}
 
 }

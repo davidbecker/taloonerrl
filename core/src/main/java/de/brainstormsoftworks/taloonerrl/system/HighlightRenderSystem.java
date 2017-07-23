@@ -42,25 +42,30 @@ public class HighlightRenderSystem extends EntityProcessingSystem {
 	protected void process(final Entity e) {
 		positionComponent = ComponentMappers.getInstance().position.get(e);
 		highlight = ComponentMappers.getInstance().highlight.get(e);
-
-		// TODO refactor getting/setting of offset
-		switch ((int) GameEngine.getInstance().getStateTime() % 4) {
-		case 0:
-			cursorAnimationOffset = 0;
-			break;
-		case 1:
-			cursorAnimationOffset = 1;
-			break;
-		case 2:
-			cursorAnimationOffset = 2;
-			break;
-		case 3:
-			cursorAnimationOffset = 1;
-			break;
-		default:
-			cursorAnimationOffset = 0;
+		if (highlight.isHighlightStyleNone()) {
+			return;
 		}
-		highlight.setCursorAnimationOffset(cursorAnimationOffset);
+		if (highlight.isHighlightStyleBlinking()) {
+
+			// TODO refactor getting/setting of offset
+			switch ((int) GameEngine.getInstance().getStateTime() % 4) {
+			case 0:
+				cursorAnimationOffset = 0;
+				break;
+			case 1:
+				cursorAnimationOffset = 1;
+				break;
+			case 2:
+				cursorAnimationOffset = 2;
+				break;
+			case 3:
+				cursorAnimationOffset = 1;
+				break;
+			default:
+				cursorAnimationOffset = 0;
+			}
+			highlight.setCursorAnimationOffset(cursorAnimationOffset);
+		}
 
 		x = positionComponent.getX();
 		y = positionComponent.getY();
