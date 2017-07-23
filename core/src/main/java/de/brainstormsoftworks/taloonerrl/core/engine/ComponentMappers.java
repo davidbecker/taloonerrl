@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2015 David Becker.
+ * Copyright (c) 2015, 2017 David Becker.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the GNU Public License v2.0
  * which accompanies this distribution, and is available at
@@ -17,6 +17,7 @@ import com.artemis.World;
 import de.brainstormsoftworks.taloonerrl.components.AnimationComponent;
 import de.brainstormsoftworks.taloonerrl.components.CameraFollowComponent;
 import de.brainstormsoftworks.taloonerrl.components.CollectibleComponent;
+import de.brainstormsoftworks.taloonerrl.components.CursorComponent;
 import de.brainstormsoftworks.taloonerrl.components.FacingAnimationComponent;
 import de.brainstormsoftworks.taloonerrl.components.FacingComponent;
 import de.brainstormsoftworks.taloonerrl.components.HealthComponent;
@@ -44,6 +45,7 @@ public final class ComponentMappers {
 	public final ComponentMapper<CameraFollowComponent> camera;
 	public final ComponentMapper<CollectibleComponent> collectible;
 	public final ComponentMapper<PlayerComponent> player;
+	public final ComponentMapper<CursorComponent> cursor;
 
 	private static ComponentMappers instance = null;
 
@@ -59,6 +61,7 @@ public final class ComponentMappers {
 		camera = ComponentMapper.getFor(CameraFollowComponent.class, world);
 		collectible = ComponentMapper.getFor(CollectibleComponent.class, world);
 		player = ComponentMapper.getFor(PlayerComponent.class, world);
+		cursor = ComponentMapper.getFor(CursorComponent.class, world);
 	}
 
 	/**

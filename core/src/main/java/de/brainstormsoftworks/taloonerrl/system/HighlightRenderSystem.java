@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2015 David Becker.
+ * Copyright (c) 2015, 2017 David Becker.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the GNU Public License v2.0
  * which accompanies this distribution, and is available at
@@ -42,7 +42,7 @@ public class HighlightRenderSystem extends EntityProcessingSystem {
 	protected void process(final Entity e) {
 		positionComponent = ComponentMappers.getInstance().position.get(e);
 		highlight = ComponentMappers.getInstance().highlight.get(e);
-		if (highlight.isHighlightStyleNone()) {
+		if (highlight.isHighlightStyleNone() || !highlight.isHighlightActive()) {
 			return;
 		}
 		if (highlight.isHighlightStyleBlinking()) {

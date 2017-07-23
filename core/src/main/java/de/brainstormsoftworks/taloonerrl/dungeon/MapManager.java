@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2015 David Becker.
+ * Copyright (c) 2015, 2017 David Becker.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the GNU Public License v2.0
  * which accompanies this distribution, and is available at
@@ -94,8 +94,10 @@ public final class MapManager implements IMapChangeListener {
 
 		// create an entity for tile highlighting
 		final Entity cursorEntity = GameEngine.getInstance().createNewEntity(EEntity.CURSOR, 0, 0);
-		cursorEntity.getComponent(HighlightAbleComponent.class)
-				.setHighlightStyle(HighlightAbleComponent.HIGHLIGHT_STYLE_BLINKING);
+		final HighlightAbleComponent highlightComponent = cursorEntity
+				.getComponent(HighlightAbleComponent.class);
+		highlightComponent.setHighlightStyle(HighlightAbleComponent.HIGHLIGHT_STYLE_BLINKING);
+		highlightComponent.setHighlightActive(true);
 	}
 
 	/**

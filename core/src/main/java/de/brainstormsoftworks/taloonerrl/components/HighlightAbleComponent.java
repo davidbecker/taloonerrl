@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2015 David Becker.
+ * Copyright (c) 2015, 2017 David Becker.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the GNU Public License v2.0
  * which accompanies this distribution, and is available at
@@ -53,6 +53,7 @@ public class HighlightAbleComponent extends PooledComponent implements IDisposab
 
 	private @Getter @Setter int cursorAnimationOffset = 0;
 	private @Getter @Setter int highlightStyle = HIGHLIGHT_STYLE_NONE;
+	private @Getter @Setter boolean highlightActive = false;
 
 	public HighlightAbleComponent() {
 	}
