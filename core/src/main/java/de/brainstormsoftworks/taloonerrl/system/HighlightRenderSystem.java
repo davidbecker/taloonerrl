@@ -19,6 +19,7 @@ import de.brainstormsoftworks.taloonerrl.components.PositionComponent;
 import de.brainstormsoftworks.taloonerrl.core.engine.ComponentMappers;
 import de.brainstormsoftworks.taloonerrl.core.engine.GameEngine;
 import de.brainstormsoftworks.taloonerrl.dungeon.MapManager;
+import de.brainstormsoftworks.taloonerrl.render.FovWrapper;
 import de.brainstormsoftworks.taloonerrl.render.Renderer;
 
 /**
@@ -69,7 +70,8 @@ public class HighlightRenderSystem extends EntityProcessingSystem {
 
 		x = positionComponent.getX();
 		y = positionComponent.getY();
-		if (MapManager.getInstance().getMap().isVisited(x, y)) {
+		if ((highlight.isHighlightOutsideFOV() || FovWrapper.getInstance().isLit(x, y))
+				&& (highlight.isHighlightUnvisited() || MapManager.getInstance().getMap().isVisited(x, y))) {
 			Renderer.getInstance().renderOnTile(HighlightAbleComponent.getCursorTopLeft(), x, y,
 					HighlightAbleComponent.cursorTopLeftOffsetX - highlight.getCursorAnimationOffset(),
 					HighlightAbleComponent.cursorTopLeftOffsetY + highlight.getCursorAnimationOffset());

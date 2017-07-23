@@ -98,6 +98,8 @@ public final class MapManager implements IMapChangeListener {
 				.getComponent(HighlightAbleComponent.class);
 		highlightComponent.setHighlightStyle(HighlightAbleComponent.HIGHLIGHT_STYLE_BLINKING);
 		highlightComponent.setHighlightActive(true);
+		highlightComponent.setHighlightToggleAble(false);
+		highlightComponent.setHighlightOutsideFOV(true);
 	}
 
 	/**

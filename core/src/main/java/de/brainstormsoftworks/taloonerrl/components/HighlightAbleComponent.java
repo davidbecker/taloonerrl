@@ -54,6 +54,9 @@ public class HighlightAbleComponent extends PooledComponent implements IDisposab
 	private @Getter @Setter int cursorAnimationOffset = 0;
 	private @Getter @Setter int highlightStyle = HIGHLIGHT_STYLE_NONE;
 	private @Getter @Setter boolean highlightActive = false;
+	private @Getter @Setter boolean highlightToggleAble = true;
+	private @Getter @Setter boolean highlightUnvisited = false;
+	private @Getter @Setter boolean highlightOutsideFOV = false;
 
 	public HighlightAbleComponent() {
 	}
@@ -61,6 +64,11 @@ public class HighlightAbleComponent extends PooledComponent implements IDisposab
 	@Override
 	protected void reset() {
 		cursorAnimationOffset = 0;
+		highlightStyle = HIGHLIGHT_STYLE_NONE;
+		highlightActive = false;
+		highlightToggleAble = true;
+		highlightUnvisited = false;
+		highlightOutsideFOV = false;
 	}
 
 	@Override
@@ -74,6 +82,17 @@ public class HighlightAbleComponent extends PooledComponent implements IDisposab
 
 	public final boolean isHighlightStyleBlinking() {
 		return highlightStyle == HIGHLIGHT_STYLE_BLINKING;
+	}
+
+	public final void toggleHighlighted() {
+		if (highlightToggleAble) {
+			if (highlightActive) {
+				reset();
+			} else {
+				setHighlightActive(true);
+				setHighlightStyle(HIGHLIGHT_STYLE_STATIC);
+			}
+		}
 	}
 
 }
