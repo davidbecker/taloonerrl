@@ -40,6 +40,8 @@ public class PositionComponent extends PooledComponent implements ISetAbleCompon
 	private int totalX = 0;
 	private int totalY = 0;
 
+	boolean processingTurn = false;
+
 	@Override
 	protected void reset() {
 		x = 0;
@@ -49,6 +51,7 @@ public class PositionComponent extends PooledComponent implements ISetAbleCompon
 		totalX = 0;
 		totalY = 0;
 		velocity = VELOCITY_DEFAULT;
+		processingTurn = false;
 	}
 
 	/** {@inheritDoc} */
@@ -61,5 +64,6 @@ public class PositionComponent extends PooledComponent implements ISetAbleCompon
 		totalX = _component.getTotalX();
 		totalY = _component.getTotalY();
 		velocity = _component.getVelocity();
+		processingTurn = _component.isProcessingTurn();
 	}
 }

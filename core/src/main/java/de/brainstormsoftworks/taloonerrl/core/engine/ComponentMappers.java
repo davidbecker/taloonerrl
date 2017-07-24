@@ -26,6 +26,7 @@ import de.brainstormsoftworks.taloonerrl.components.NameComponent;
 import de.brainstormsoftworks.taloonerrl.components.PlayerComponent;
 import de.brainstormsoftworks.taloonerrl.components.PositionComponent;
 import de.brainstormsoftworks.taloonerrl.components.SpriteComponent;
+import de.brainstormsoftworks.taloonerrl.components.TurnComponent;
 
 /**
  * singleton to get the {@link Component}s for our {@link World}
@@ -46,6 +47,7 @@ public final class ComponentMappers {
 	public final ComponentMapper<CollectibleComponent> collectible;
 	public final ComponentMapper<PlayerComponent> player;
 	public final ComponentMapper<CursorComponent> cursor;
+	public final ComponentMapper<TurnComponent> turn;
 
 	private static ComponentMappers instance = null;
 
@@ -62,6 +64,7 @@ public final class ComponentMappers {
 		collectible = ComponentMapper.getFor(CollectibleComponent.class, world);
 		player = ComponentMapper.getFor(PlayerComponent.class, world);
 		cursor = ComponentMapper.getFor(CursorComponent.class, world);
+		turn = ComponentMapper.getFor(TurnComponent.class, world);
 	}
 
 	/**

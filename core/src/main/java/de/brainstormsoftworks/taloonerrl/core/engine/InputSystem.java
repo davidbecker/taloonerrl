@@ -20,6 +20,7 @@ import com.badlogic.gdx.math.Vector3;
 
 import de.brainstormsoftworks.taloonerrl.components.HighlightAbleComponent;
 import de.brainstormsoftworks.taloonerrl.components.PositionComponent;
+import de.brainstormsoftworks.taloonerrl.core.engine.scheduler.TurnScheduler;
 import de.brainstormsoftworks.taloonerrl.math.IntVector2;
 import de.brainstormsoftworks.taloonerrl.render.Renderer;
 import lombok.Getter;
@@ -112,16 +113,20 @@ public final class InputSystem extends InputAdapter {
 	public boolean keyUp(final int keycode) {
 		switch (keycode) {
 		case Keys.UP:
-			keyPressedUp = false;
+			TurnScheduler.getInstance().addTurnToQueue(Direction.UP);
+			// keyPressedUp = false;
 			return true;
 		case Keys.DOWN:
-			keyPressedDown = false;
+			TurnScheduler.getInstance().addTurnToQueue(Direction.DOWN);
+			// keyPressedDown = false;
 			return true;
 		case Keys.LEFT:
-			keyPressedLeft = false;
+			TurnScheduler.getInstance().addTurnToQueue(Direction.LEFT);
+			// keyPressedLeft = false;
 			return true;
 		case Keys.RIGHT:
-			keyPressedRight = false;
+			TurnScheduler.getInstance().addTurnToQueue(Direction.RIGHT);
+			// keyPressedRight = false;
 			return true;
 		default:
 			return false;

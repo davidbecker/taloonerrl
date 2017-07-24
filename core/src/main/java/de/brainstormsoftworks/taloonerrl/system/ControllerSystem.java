@@ -48,15 +48,15 @@ public class ControllerSystem extends EntityProcessingSystem {
 	@Override
 	protected void process(final Entity entity) {
 		final PositionComponent position = ComponentMappers.getInstance().position.get(entity);
+		// shortcut
+		if (!position.isProcessingTurn()) {
+			return;
+		}
 		totalX = position.getTotalX();
 		totalY = position.getTotalY();
 		offsetX = position.getOffsetX();
 		offsetY = position.getOffsetY();
 		velocity = position.getVelocity();
-		// shortcut
-		if (totalX == 0 && totalY == 0) {
-			return;
-		}
 
 		absTotalX = Math.abs(totalX);
 		absTotalY = Math.abs(totalY);
@@ -85,6 +85,7 @@ public class ControllerSystem extends EntityProcessingSystem {
 		position.setOffsetY(offsetY);
 		position.setTotalX(totalX);
 		position.setTotalY(totalY);
+		position.setProcessingTurn(!(totalX == 0 && totalY == 0));
 	}
 
 }
