@@ -10,11 +10,16 @@
  ******************************************************************************/
 package de.brainstormsoftworks.taloonerrl.core.engine;
 
+import com.artemis.Aspect;
+import com.artemis.EntitySubscription;
+import com.artemis.utils.IntBag;
 import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.math.Vector3;
 
+import de.brainstormsoftworks.taloonerrl.components.HighlightAbleComponent;
+import de.brainstormsoftworks.taloonerrl.components.PositionComponent;
 import de.brainstormsoftworks.taloonerrl.math.IntVector2;
 import de.brainstormsoftworks.taloonerrl.render.Renderer;
 import lombok.Getter;
@@ -32,11 +37,6 @@ public final class InputSystem extends InputAdapter {
 	private boolean keyPressedDown = false;
 	private boolean keyPressedLeft = false;
 	private boolean keyPressedRight = false;
-	private boolean buttonPressedBack = false;
-	private boolean buttonPressedForward = false;
-	private boolean buttonPressedLeft = false;
-	private boolean buttonPressedMiddle = false;
-	private boolean buttonPressedRight = false;
 
 	private int mouseOverX = 0;
 	private int mouseOverY = 0;
@@ -106,11 +106,6 @@ public final class InputSystem extends InputAdapter {
 		keyPressedDown = false;
 		keyPressedLeft = false;
 		keyPressedRight = false;
-		buttonPressedBack = false;
-		buttonPressedForward = false;
-		buttonPressedLeft = false;
-		buttonPressedMiddle = false;
-		buttonPressedRight = false;
 	}
 
 	@Override
@@ -138,48 +133,38 @@ public final class InputSystem extends InputAdapter {
 		// invalidate all the previous input
 		reset();
 
-		switch (_button) {
-		case Buttons.BACK:
-			buttonPressedBack = true;
+		if (_button == Buttons.LEFT) {
+			// TODO check if UI has been clicked
+
+			toggleHighlightedActors();
 			return true;
-		case Buttons.FORWARD:
-			buttonPressedForward = true;
-			return true;
-		case Buttons.LEFT:
-			buttonPressedLeft = true;
-			return true;
-		case Buttons.MIDDLE:
-			buttonPressedMiddle = true;
-			return true;
-		case Buttons.RIGHT:
-			buttonPressedRight = true;
-			return true;
-		default:
-			return false;
+		}
+		return false;
+	}
+
+	/**
+	 * toggles highlighted state of actor that is on the same tile as the mouse is
+	 * over
+	 */
+	private void toggleHighlightedActors() {
+		final EntitySubscription entitySubscription = GameEngine.getInstance().getAspectSubscriptionManager()
+				.get(Aspect.all(PositionComponent.class, HighlightAbleComponent.class));
+		final IntBag entities = entitySubscription.getEntities();
+		PositionComponent positionComponent;
+		HighlightAbleComponent highlight;
+		for (int i = 0; i < entities.size(); i++) {
+			positionComponent = ComponentMappers.getInstance().position.get(i);
+			if (positionComponent.getX() == InputSystem.getInstance().getMouseOverX()
+					&& positionComponent.getY() == InputSystem.getInstance().getMouseOverY()) {
+				highlight = ComponentMappers.getInstance().highlight.get(i);
+				highlight.toggleHighlighted();
+			}
 		}
 	}
 
 	@Override
 	public boolean touchUp(final int _screenX, final int _screenY, final int _pointer, final int _button) {
-		switch (_button) {
-		case Buttons.BACK:
-			buttonPressedBack = false;
-			return true;
-		case Buttons.FORWARD:
-			buttonPressedForward = false;
-			return true;
-		case Buttons.LEFT:
-			buttonPressedLeft = false;
-			return true;
-		case Buttons.MIDDLE:
-			buttonPressedMiddle = false;
-			return true;
-		case Buttons.RIGHT:
-			buttonPressedRight = false;
-			return true;
-		default:
-			return false;
-		}
+		return false;
 	}
 
 	@Override

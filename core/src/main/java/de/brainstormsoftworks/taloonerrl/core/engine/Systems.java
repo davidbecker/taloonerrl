@@ -20,7 +20,6 @@ import de.brainstormsoftworks.taloonerrl.system.FacingAnimationRenderSystem;
 import de.brainstormsoftworks.taloonerrl.system.FovUpdaterSystem;
 import de.brainstormsoftworks.taloonerrl.system.HealthBarRenderSystem;
 import de.brainstormsoftworks.taloonerrl.system.HighlightRenderSystem;
-import de.brainstormsoftworks.taloonerrl.system.HighlightToggleSystem;
 import de.brainstormsoftworks.taloonerrl.system.InputProcessSystem;
 import de.brainstormsoftworks.taloonerrl.system.MapOverlayPreparerSystem;
 import de.brainstormsoftworks.taloonerrl.system.MouseCursorUpdateSystem;
@@ -48,9 +47,6 @@ public final class Systems {
 	private static final OffsetSystem OFFSET_SYSTEM = new OffsetSystem();
 	private static final BlockingTileCheckSystem BLOCKING_TILE_CHECK_SYSTEM = new BlockingTileCheckSystem();
 
-	// DEBUG systems
-	private static final HighlightToggleSystem HIGHLIGHT_TOGGLE_SYSTEM = new HighlightToggleSystem();
-
 	private Systems() {
 	}
 
@@ -62,7 +58,6 @@ public final class Systems {
 	 */
 	public static void setSystems(final WorldConfiguration config) {
 		// order is important! systems are processed in given order
-		config.setSystem(HIGHLIGHT_TOGGLE_SYSTEM);
 		config.setSystem(INPUT_PROCESS_SYSTEM);
 		config.setSystem(BLOCKING_TILE_CHECK_SYSTEM);
 		config.setSystem(CONTROLLER_SYSTEM);

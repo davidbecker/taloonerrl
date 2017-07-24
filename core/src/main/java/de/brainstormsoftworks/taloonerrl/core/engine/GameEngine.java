@@ -10,6 +10,7 @@
  ******************************************************************************/
 package de.brainstormsoftworks.taloonerrl.core.engine;
 
+import com.artemis.AspectSubscriptionManager;
 import com.artemis.Entity;
 import com.artemis.World;
 import com.artemis.WorldConfiguration;
@@ -62,8 +63,8 @@ public final class GameEngine {
 	}
 
 	/**
-	 * gets the time span between the current frame and the last frame in
-	 * seconds. Might be smoothed over n frames.
+	 * gets the time span between the current frame and the last frame in seconds.
+	 * Might be smoothed over n frames.
 	 *
 	 * @return delta time
 	 */
@@ -125,5 +126,15 @@ public final class GameEngine {
 	 */
 	public static GameEngine getInstance() {
 		return instance;
+	}
+
+	/**
+	 * getter for an aspect subscription manager. used to iterate over entities with
+	 * given aspects
+	 *
+	 * @return manager
+	 */
+	public AspectSubscriptionManager getAspectSubscriptionManager() {
+		return world.getAspectSubscriptionManager();
 	}
 }
