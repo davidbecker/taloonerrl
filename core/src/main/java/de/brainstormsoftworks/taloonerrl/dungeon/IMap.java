@@ -10,6 +10,7 @@
  ******************************************************************************/
 package de.brainstormsoftworks.taloonerrl.dungeon;
 
+import squidpony.squidai.DijkstraMap;
 import squidpony.squidgrid.FOV;
 
 /**
@@ -68,6 +69,13 @@ public interface IMap {
 	double[][] getFovResistance();
 
 	/**
+	 * gets the cost map for pathfinding
+	 *
+	 * @return array with 1.0 for a wall and 0.0 for any walkable tile
+	 */
+	double[][] getCostMap();
+
+	/**
 	 * gets the visited map
 	 *
 	 * @return array
@@ -96,8 +104,7 @@ public interface IMap {
 	int getTilesVertical();
 
 	/**
-	 * helper method to check if given tile coordinates are in the bounds of the
-	 * map
+	 * helper method to check if given tile coordinates are in the bounds of the map
 	 *
 	 * @param x
 	 *            horizontal coordinate
@@ -106,5 +113,7 @@ public interface IMap {
 	 * @return true if coordinates are in the bounds of the map, false otherwise
 	 */
 	boolean isInMapBounds(int x, int y);
+
+	DijkstraMap getDijkstraMap();
 
 }

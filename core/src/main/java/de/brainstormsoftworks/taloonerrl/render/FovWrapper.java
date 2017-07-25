@@ -55,15 +55,30 @@ public final class FovWrapper implements IMapChangeListener {
 	 *            vertical tile position
 	 */
 	public void calculateFovForPosition(final int x, final int y) {
+		lightMap = getFovForPosition(x, y);
+	}
+
+	/**
+	 * lookup/create the fov map for the given map position
+	 *
+	 * @param x
+	 *            horizontal tile position
+	 * @param y
+	 *            vertical tile position
+	 * @return values in returned array mean 0 for no light and 1.0 for fully lit
+	 */
+	public double[][] getFovForPosition(final int x, final int y) {
+		double[][] fovLighMap = null;
 		final Coord c = Coord.get(x, y);
 		if (storedFovMaps.containsKey(c)) {
-			lightMap = storedFovMaps.get(c);
+			fovLighMap = storedFovMaps.get(c);
 		} else {
 			if (ArrayHelper.isInArrayBounds(fovResistance, x, y)) {
-				lightMap = fov.calculateFOV(fovResistance, x, y, FOV_RADIUS, RADIUS_TECHNIQUE);
-				storedFovMaps.put(c, lightMap);
+				fovLighMap = fov.calculateFOV(fovResistance, x, y, FOV_RADIUS, RADIUS_TECHNIQUE);
+				storedFovMaps.put(c, fovLighMap);
 			}
 		}
+		return fovLighMap;
 	}
 
 	/**

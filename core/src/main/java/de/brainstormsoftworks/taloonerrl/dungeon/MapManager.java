@@ -12,7 +12,6 @@ package de.brainstormsoftworks.taloonerrl.dungeon;
 
 import com.artemis.Entity;
 
-import de.brainstormsoftworks.taloonerrl.components.FacingComponent;
 import de.brainstormsoftworks.taloonerrl.components.HighlightAbleComponent;
 import de.brainstormsoftworks.taloonerrl.components.PositionComponent;
 import de.brainstormsoftworks.taloonerrl.core.engine.EEntity;
@@ -30,10 +29,6 @@ public final class MapManager implements IMapChangeListener {
 	private static final RNG rng = new RNG();
 	private static int playerStartX = -1;
 	private static int playerStartY = -1;
-
-	// TODO refactor - don't keep references here
-	private static PositionComponent playerPositionComponent;
-	private static FacingComponent playerFacingComponent;
 
 	private static final MapManager instance = new MapManager();
 	@Getter
@@ -74,8 +69,7 @@ public final class MapManager implements IMapChangeListener {
 		// forces the engine to initialize
 		final GameEngine gameEngine = GameEngine.getInstance();
 		final Entity playerEntity = gameEngine.createNewEntity(EEntity.PLAYER);
-		playerPositionComponent = playerEntity.getComponent(PositionComponent.class);
-		playerFacingComponent = playerEntity.getComponent(FacingComponent.class);
+		final PositionComponent playerPositionComponent = playerEntity.getComponent(PositionComponent.class);
 		playerPositionComponent.setX(playerStartX);
 		playerPositionComponent.setY(playerStartY);
 
@@ -100,24 +94,6 @@ public final class MapManager implements IMapChangeListener {
 		highlightComponent.setHighlightActive(true);
 		highlightComponent.setHighlightToggleAble(false);
 		highlightComponent.setHighlightOutsideFOV(true);
-	}
-
-	/**
-	 * getter for {@link #playerPositionComponent}
-	 *
-	 * @return the playerPositionComponent
-	 */
-	public static PositionComponent getPlayerPositionComponent() {
-		return playerPositionComponent;
-	}
-
-	/**
-	 * getter for {@link #playerFacingComponent}
-	 *
-	 * @return the playerFacingComponent
-	 */
-	public static FacingComponent getPlayerFacingComponent() {
-		return playerFacingComponent;
 	}
 
 	/** {@inheritDoc} */
