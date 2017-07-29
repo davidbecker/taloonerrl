@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2015 David Becker.
+ * Copyright (c) 2015, 2017 David Becker.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the GNU Public License v2.0
  * which accompanies this distribution, and is available at
@@ -43,8 +43,8 @@ public class TaloonerRl implements ApplicationListener {
 
 	@Override
 	public void create() {
-		final int tilesHorizontal = Renderer.TILES_HORIZONTAL * 2;
-		final int tilesVertical = Renderer.TILES_VERTICAL * 2;
+		final int tilesHorizontal = Renderer.TILES_HORIZONTAL;
+		final int tilesVertical = Renderer.TILES_VERTICAL;
 		map = MapFactory.createMap(tilesHorizontal, tilesVertical);
 		FovWrapper.getInstance().setFovResistance(map.getFovResistance());
 
