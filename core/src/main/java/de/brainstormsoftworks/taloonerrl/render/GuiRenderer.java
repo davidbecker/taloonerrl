@@ -57,74 +57,69 @@ public final class GuiRenderer implements IDisposableInstance {
 	private GuiRenderer() {
 		guiTexture0 = new Texture(Gdx.files.internal(TEXTURE_PATH + "GUI0.png"), false);
 		guiTexture1 = new Texture(Gdx.files.internal(TEXTURE_PATH + "GUI1.png"), false);
-		sBarLeft = new TextureRegion(guiTexture0, 6 * Renderer.tileSize, 0 * Renderer.tileSize,
-				Renderer.tileSize, Renderer.tileSize);
-		sBarCenter = new TextureRegion(guiTexture0, 7 * Renderer.tileSize, 0 * Renderer.tileSize,
-				Renderer.tileSize, Renderer.tileSize);
-		sBarRight = new TextureRegion(guiTexture0, 8 * Renderer.tileSize, 0 * Renderer.tileSize,
-				Renderer.tileSize, Renderer.tileSize);
-		sBarSmall = new TextureRegion(guiTexture0, 9 * Renderer.tileSize, 0 * Renderer.tileSize,
-				Renderer.tileSize, Renderer.tileSize);
 
-		sBarRed100 = new TextureRegion(guiTexture0, 6 * Renderer.tileSize, 1 * Renderer.tileSize,
-				Renderer.tileSize, Renderer.tileSize);
-		sBarRed75 = new TextureRegion(guiTexture0, 7 * Renderer.tileSize, 1 * Renderer.tileSize,
-				Renderer.tileSize, Renderer.tileSize);
-		sBarRed50 = new TextureRegion(guiTexture0, 8 * Renderer.tileSize, 1 * Renderer.tileSize,
-				Renderer.tileSize, Renderer.tileSize);
-		sBarRed25 = new TextureRegion(guiTexture0, 9 * Renderer.tileSize, 1 * Renderer.tileSize,
-				Renderer.tileSize, Renderer.tileSize);
+		// outline for GUI bars
+		sBarLeft = createTextureRegion(guiTexture0, 6, 0);
+		sBarCenter = createTextureRegion(guiTexture0, 7, 0);
+		sBarRight = createTextureRegion(guiTexture0, 8, 0);
+		sBarSmall = createTextureRegion(guiTexture0, 9, 0);
 
-		sBarBlue100 = new TextureRegion(guiTexture0, 6 * Renderer.tileSize, 2 * Renderer.tileSize,
-				Renderer.tileSize, Renderer.tileSize);
-		sBarBlue75 = new TextureRegion(guiTexture0, 7 * Renderer.tileSize, 2 * Renderer.tileSize,
-				Renderer.tileSize, Renderer.tileSize);
-		sBarBlue50 = new TextureRegion(guiTexture0, 8 * Renderer.tileSize, 2 * Renderer.tileSize,
-				Renderer.tileSize, Renderer.tileSize);
-		sBarBlue25 = new TextureRegion(guiTexture0, 9 * Renderer.tileSize, 2 * Renderer.tileSize,
-				Renderer.tileSize, Renderer.tileSize);
+		// red content for GUI bars
+		sBarRed100 = createTextureRegion(guiTexture0, 6, 1);
+		sBarRed75 = createTextureRegion(guiTexture0, 7, 1);
+		sBarRed50 = createTextureRegion(guiTexture0, 8, 1);
+		sBarRed25 = createTextureRegion(guiTexture0, 9, 1);
 
-		sBarGreen100 = new TextureRegion(guiTexture0, 6 * Renderer.tileSize, 3 * Renderer.tileSize,
-				Renderer.tileSize, Renderer.tileSize);
-		sBarGreen75 = new TextureRegion(guiTexture0, 7 * Renderer.tileSize, 3 * Renderer.tileSize,
-				Renderer.tileSize, Renderer.tileSize);
-		sBarGreen50 = new TextureRegion(guiTexture0, 8 * Renderer.tileSize, 3 * Renderer.tileSize,
-				Renderer.tileSize, Renderer.tileSize);
-		sBarGreen25 = new TextureRegion(guiTexture0, 9 * Renderer.tileSize, 3 * Renderer.tileSize,
-				Renderer.tileSize, Renderer.tileSize);
+		// blue content for GUI bars
+		sBarBlue100 = createTextureRegion(guiTexture0, 6, 2);
+		sBarBlue75 = createTextureRegion(guiTexture0, 7, 2);
+		sBarBlue50 = createTextureRegion(guiTexture0, 8, 2);
+		sBarBlue25 = createTextureRegion(guiTexture0, 9, 2);
 
-		sBarYellow100 = new TextureRegion(guiTexture0, 6 * Renderer.tileSize, 4 * Renderer.tileSize,
-				Renderer.tileSize, Renderer.tileSize);
-		sBarYellow75 = new TextureRegion(guiTexture0, 7 * Renderer.tileSize, 4 * Renderer.tileSize,
-				Renderer.tileSize, Renderer.tileSize);
-		sBarYellow50 = new TextureRegion(guiTexture0, 8 * Renderer.tileSize, 4 * Renderer.tileSize,
-				Renderer.tileSize, Renderer.tileSize);
-		sBarYellow25 = new TextureRegion(guiTexture0, 9 * Renderer.tileSize, 4 * Renderer.tileSize,
-				Renderer.tileSize, Renderer.tileSize);
+		// green content for GUI bars
+		sBarGreen100 = createTextureRegion(guiTexture0, 6, 3);
+		sBarGreen75 = createTextureRegion(guiTexture0, 7, 3);
+		sBarGreen50 = createTextureRegion(guiTexture0, 8, 3);
+		sBarGreen25 = createTextureRegion(guiTexture0, 9, 3);
 
-		sBarSilver100 = new TextureRegion(guiTexture0, 6 * Renderer.tileSize, 5 * Renderer.tileSize,
-				Renderer.tileSize, Renderer.tileSize);
-		sBarSilver75 = new TextureRegion(guiTexture0, 7 * Renderer.tileSize, 5 * Renderer.tileSize,
-				Renderer.tileSize, Renderer.tileSize);
-		sBarSilver50 = new TextureRegion(guiTexture0, 8 * Renderer.tileSize, 5 * Renderer.tileSize,
-				Renderer.tileSize, Renderer.tileSize);
-		sBarSilver25 = new TextureRegion(guiTexture0, 9 * Renderer.tileSize, 5 * Renderer.tileSize,
-				Renderer.tileSize, Renderer.tileSize);
+		// yellow content for GUI bars
+		sBarYellow100 = createTextureRegion(guiTexture0, 6, 4);
+		sBarYellow75 = createTextureRegion(guiTexture0, 7, 4);
+		sBarYellow50 = createTextureRegion(guiTexture0, 8, 4);
+		sBarYellow25 = createTextureRegion(guiTexture0, 9, 4);
+
+		// silver content for GUI bars
+		sBarSilver100 = createTextureRegion(guiTexture0, 6, 5);
+		sBarSilver75 = createTextureRegion(guiTexture0, 7, 5);
+		sBarSilver50 = createTextureRegion(guiTexture0, 8, 5);
+		sBarSilver25 = createTextureRegion(guiTexture0, 9, 5);
 
 		final TextureRegion[] heartFrames = new TextureRegion[2];
-		heartFrames[0] = new TextureRegion(guiTexture0, 0 * Renderer.tileSize, 5 * Renderer.tileSize,
-				Renderer.tileSize, Renderer.tileSize);
-		heartFrames[1] = new TextureRegion(guiTexture1, 0 * Renderer.tileSize, 5 * Renderer.tileSize,
-				Renderer.tileSize, Renderer.tileSize);
+		heartFrames[0] = createTextureRegion(guiTexture0, 0, 5);
+		heartFrames[1] = createTextureRegion(guiTexture1, 0, 5);
 		heartAnimation = new Animation(1f, heartFrames);
 		final TextureRegion[] levelUpFrames = new TextureRegion[2];
-		levelUpFrames[0] = new TextureRegion(guiTexture0, 1 * Renderer.tileSize, 6 * Renderer.tileSize,
-				Renderer.tileSize, Renderer.tileSize);
-		levelUpFrames[1] = new TextureRegion(guiTexture1, 1 * Renderer.tileSize, 6 * Renderer.tileSize,
-				Renderer.tileSize, Renderer.tileSize);
+		levelUpFrames[0] = createTextureRegion(guiTexture0, 1, 6);
+		levelUpFrames[1] = createTextureRegion(guiTexture1, 1, 6);
 		levelUpAnimation = new Animation(1f, levelUpFrames);
 
 		RenderUtil.addToDisposeList(this);
+	}
+
+	/**
+	 * convenience method to create a texture region from our sprite sheet
+	 *
+	 * @param texture
+	 *            base texture
+	 * @param x
+	 *            coordinate
+	 * @param y
+	 *            coordinate
+	 * @return
+	 */
+	private static TextureRegion createTextureRegion(final Texture texture, final int x, final int y) {
+		return new TextureRegion(texture, x * Renderer.tileSize, y * Renderer.tileSize, Renderer.tileSize,
+				Renderer.tileSize);
 	}
 
 	/**
