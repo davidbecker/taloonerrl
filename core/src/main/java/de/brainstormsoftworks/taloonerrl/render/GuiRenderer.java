@@ -121,6 +121,17 @@ public final class GuiRenderer implements IDisposableInstance {
 	private final TextureRegion guiBlackYellowBottomLeft;
 	private final TextureRegion guiBlackYellowLeft;
 
+	// "tiny" variant for GUI - only needed corners (not 16x16)
+	private final TextureRegion guiRedBlackTinyTopLeft;
+	private final TextureRegion guiRedBlackTinyTop;
+	private final TextureRegion guiRedBlackTinyTopRight;
+	private final TextureRegion guiRedBlackTinyRight;
+	private final TextureRegion guiRedBlackTinyBottomRight;
+	private final TextureRegion guiRedBlackTinyBottom;
+	private final TextureRegion guiRedBlackTinyBottomLeft;
+	private final TextureRegion guiRedBlackTinyLeft;
+	private final TextureRegion guiRedBlackTinyBackground;
+
 	private final Animation heartAnimation;
 	private final Animation levelUpAnimation;
 
@@ -263,6 +274,19 @@ public final class GuiRenderer implements IDisposableInstance {
 		guiBlackYellowBottomLeft = createTextureRegion(guiTexture0, guiOffsetX, guiOffsetY + 2);
 		guiBlackYellowLeft = createTextureRegion(guiTexture0, guiOffsetX, guiOffsetY + 1);
 
+		guiRedBlackTinyTopLeft = new TextureRegion(guiTexture0, 0, 7 * Renderer.tileSize, 5, 5);
+		guiRedBlackTinyTop = new TextureRegion(guiTexture0, 5, 7 * Renderer.tileSize, 1, 5);
+		guiRedBlackTinyTopRight = new TextureRegion(guiTexture0, Renderer.tileSize - 6, 7 * Renderer.tileSize,
+				5, 5);
+		guiRedBlackTinyRight = new TextureRegion(guiTexture0, Renderer.tileSize - 6,
+				7 * Renderer.tileSize + 6, 5, 1);
+		guiRedBlackTinyBottomRight = new TextureRegion(guiTexture0, Renderer.tileSize - 6,
+				8 * Renderer.tileSize - 6, 5, 5);
+		guiRedBlackTinyBottom = new TextureRegion(guiTexture0, 5, 8 * Renderer.tileSize - 6, 1, 5);
+		guiRedBlackTinyBottomLeft = new TextureRegion(guiTexture0, 0, 8 * Renderer.tileSize - 6, 5, 5);
+		guiRedBlackTinyLeft = new TextureRegion(guiTexture0, 0, 7 * Renderer.tileSize + 6, 5, 1);
+		guiRedBlackTinyBackground = new TextureRegion(guiTexture0, 6, 7 * Renderer.tileSize + 6, 1, 1);
+
 		RenderUtil.addToDisposeList(this);
 	}
 
@@ -323,7 +347,6 @@ public final class GuiRenderer implements IDisposableInstance {
 			renderBar(0, 3, 1, 1, EBarElementColor.SILVER);
 			Renderer.getInstance().renderOnScreen(RenderUtil.getKeyFrame(levelUpAnimation),
 					-Renderer.tileSize / 4, 1 * Renderer.tileSize + Renderer.tileSize / 4);
-
 		}
 	}
 
