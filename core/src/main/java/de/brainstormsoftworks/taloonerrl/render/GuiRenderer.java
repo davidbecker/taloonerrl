@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2015 David Becker.
+ * Copyright (c) 2015, 2017 David Becker.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the GNU Public License v2.0
  * which accompanies this distribution, and is available at
@@ -48,6 +48,78 @@ public final class GuiRenderer implements IDisposableInstance {
 	private final TextureRegion sBarSilver75;
 	private final TextureRegion sBarSilver50;
 	private final TextureRegion sBarSilver25;
+
+	private final TextureRegion guiRedBlackTopLeft;
+	private final TextureRegion guiRedBlackTop;
+	private final TextureRegion guiRedBlackTopRight;
+	private final TextureRegion guiRedBlackRight;
+	private final TextureRegion guiRedBlackBottomRight;
+	private final TextureRegion guiRedBlackBottom;
+	private final TextureRegion guiRedBlackBottomLeft;
+	private final TextureRegion guiRedBlackLeft;
+
+	private final TextureRegion guiBlueBlackTopLeft;
+	private final TextureRegion guiBlueBlackTop;
+	private final TextureRegion guiBlueBlackTopRight;
+	private final TextureRegion guiBlueBlackRight;
+	private final TextureRegion guiBlueBlackBottomRight;
+	private final TextureRegion guiBlueBlackBottom;
+	private final TextureRegion guiBlueBlackBottomLeft;
+	private final TextureRegion guiBlueBlackLeft;
+
+	private final TextureRegion guiGreenBlackTopLeft;
+	private final TextureRegion guiGreenBlackTop;
+	private final TextureRegion guiGreenBlackTopRight;
+	private final TextureRegion guiGreenBlackRight;
+	private final TextureRegion guiGreenBlackBottomRight;
+	private final TextureRegion guiGreenBlackBottom;
+	private final TextureRegion guiGreenBlackBottomLeft;
+	private final TextureRegion guiGreenBlackLeft;
+
+	private final TextureRegion guiYellowBlackTopLeft;
+	private final TextureRegion guiYellowBlackTop;
+	private final TextureRegion guiYellowBlackTopRight;
+	private final TextureRegion guiYellowBlackRight;
+	private final TextureRegion guiYellowBlackBottomRight;
+	private final TextureRegion guiYellowBlackBottom;
+	private final TextureRegion guiYellowBlackBottomLeft;
+	private final TextureRegion guiYellowBlackLeft;
+
+	private final TextureRegion guiGreenRedTopLeft;
+	private final TextureRegion guiGreenRedTop;
+	private final TextureRegion guiGreenRedTopRight;
+	private final TextureRegion guiGreenRedRight;
+	private final TextureRegion guiGreenRedBottomRight;
+	private final TextureRegion guiGreenRedBottom;
+	private final TextureRegion guiGreenRedBottomLeft;
+	private final TextureRegion guiGreenRedLeft;
+
+	private final TextureRegion guiOrangeBlueTopLeft;
+	private final TextureRegion guiOrangeBlueTop;
+	private final TextureRegion guiOrangeBlueTopRight;
+	private final TextureRegion guiOrangeBlueRight;
+	private final TextureRegion guiOrangeBlueBottomRight;
+	private final TextureRegion guiOrangeBlueBottom;
+	private final TextureRegion guiOrangeBlueBottomLeft;
+	private final TextureRegion guiOrangeBlueLeft;
+
+	private final TextureRegion guiRedGreenTopLeft;
+	private final TextureRegion guiRedGreenTop;
+	private final TextureRegion guiRedGreenTopRight;
+	private final TextureRegion guiRedGreenRight;
+	private final TextureRegion guiRedGreenBottomRight;
+	private final TextureRegion guiRedGreenBottom;
+	private final TextureRegion guiRedGreenBottomLeft;
+	private final TextureRegion guiRedGreenLeft;
+
+	private final TextureRegion guiBlackYellowTopLeft;
+	private final TextureRegion guiBlackYellowTop;
+	private final TextureRegion guiBlackYellowTopRight;
+	private final TextureRegion guiBlackYellowRight;
+	private final TextureRegion guiBlackYellowBottomRight;
+	private final TextureRegion guiBlackYellowBottom;
+	private final TextureRegion guiBlackYellowBottomLeft;
+	private final TextureRegion guiBlackYellowLeft;
 
 	private final Animation heartAnimation;
 	private final Animation levelUpAnimation;
@@ -102,6 +174,94 @@ public final class GuiRenderer implements IDisposableInstance {
 		levelUpFrames[0] = createTextureRegion(guiTexture0, 1, 6);
 		levelUpFrames[1] = createTextureRegion(guiTexture1, 1, 6);
 		levelUpAnimation = new Animation(1f, levelUpFrames);
+
+		int guiOffsetX = 1;
+		int guiOffsetY = 7;
+		guiRedBlackTopLeft = createTextureRegion(guiTexture0, guiOffsetX, guiOffsetY);
+		guiRedBlackTop = createTextureRegion(guiTexture0, guiOffsetX + 1, guiOffsetY);
+		guiRedBlackTopRight = createTextureRegion(guiTexture0, guiOffsetX + 2, guiOffsetY);
+		guiRedBlackRight = createTextureRegion(guiTexture0, guiOffsetX + 2, guiOffsetY + 1);
+		guiRedBlackBottomRight = createTextureRegion(guiTexture0, guiOffsetX + 2, guiOffsetY + 2);
+		guiRedBlackBottom = createTextureRegion(guiTexture0, guiOffsetX + 1, guiOffsetY + 2);
+		guiRedBlackBottomLeft = createTextureRegion(guiTexture0, guiOffsetX, guiOffsetY + 2);
+		guiRedBlackLeft = createTextureRegion(guiTexture0, guiOffsetX, guiOffsetY + 1);
+
+		guiOffsetX = 1;
+		guiOffsetY = 10;
+		guiBlueBlackTopLeft = createTextureRegion(guiTexture0, guiOffsetX, guiOffsetY);
+		guiBlueBlackTop = createTextureRegion(guiTexture0, guiOffsetX + 1, guiOffsetY);
+		guiBlueBlackTopRight = createTextureRegion(guiTexture0, guiOffsetX + 2, guiOffsetY);
+		guiBlueBlackRight = createTextureRegion(guiTexture0, guiOffsetX + 2, guiOffsetY + 1);
+		guiBlueBlackBottomRight = createTextureRegion(guiTexture0, guiOffsetX + 2, guiOffsetY + 2);
+		guiBlueBlackBottom = createTextureRegion(guiTexture0, guiOffsetX + 1, guiOffsetY + 2);
+		guiBlueBlackBottomLeft = createTextureRegion(guiTexture0, guiOffsetX, guiOffsetY + 2);
+		guiBlueBlackLeft = createTextureRegion(guiTexture0, guiOffsetX, guiOffsetY + 1);
+
+		guiOffsetX = 1;
+		guiOffsetY = 13;
+		guiGreenBlackTopLeft = createTextureRegion(guiTexture0, guiOffsetX, guiOffsetY);
+		guiGreenBlackTop = createTextureRegion(guiTexture0, guiOffsetX + 1, guiOffsetY);
+		guiGreenBlackTopRight = createTextureRegion(guiTexture0, guiOffsetX + 2, guiOffsetY);
+		guiGreenBlackRight = createTextureRegion(guiTexture0, guiOffsetX + 2, guiOffsetY + 1);
+		guiGreenBlackBottomRight = createTextureRegion(guiTexture0, guiOffsetX + 2, guiOffsetY + 2);
+		guiGreenBlackBottom = createTextureRegion(guiTexture0, guiOffsetX + 1, guiOffsetY + 2);
+		guiGreenBlackBottomLeft = createTextureRegion(guiTexture0, guiOffsetX, guiOffsetY + 2);
+		guiGreenBlackLeft = createTextureRegion(guiTexture0, guiOffsetX, guiOffsetY + 1);
+
+		guiOffsetX = 1;
+		guiOffsetY = 16;
+		guiYellowBlackTopLeft = createTextureRegion(guiTexture0, guiOffsetX, guiOffsetY);
+		guiYellowBlackTop = createTextureRegion(guiTexture0, guiOffsetX + 1, guiOffsetY);
+		guiYellowBlackTopRight = createTextureRegion(guiTexture0, guiOffsetX + 2, guiOffsetY);
+		guiYellowBlackRight = createTextureRegion(guiTexture0, guiOffsetX + 2, guiOffsetY + 1);
+		guiYellowBlackBottomRight = createTextureRegion(guiTexture0, guiOffsetX + 2, guiOffsetY + 2);
+		guiYellowBlackBottom = createTextureRegion(guiTexture0, guiOffsetX + 1, guiOffsetY + 2);
+		guiYellowBlackBottomLeft = createTextureRegion(guiTexture0, guiOffsetX, guiOffsetY + 2);
+		guiYellowBlackLeft = createTextureRegion(guiTexture0, guiOffsetX, guiOffsetY + 1);
+
+		guiOffsetX = 5;
+		guiOffsetY = 7;
+		guiGreenRedTopLeft = createTextureRegion(guiTexture0, guiOffsetX, guiOffsetY);
+		guiGreenRedTop = createTextureRegion(guiTexture0, guiOffsetX + 1, guiOffsetY);
+		guiGreenRedTopRight = createTextureRegion(guiTexture0, guiOffsetX + 2, guiOffsetY);
+		guiGreenRedRight = createTextureRegion(guiTexture0, guiOffsetX + 2, guiOffsetY + 1);
+		guiGreenRedBottomRight = createTextureRegion(guiTexture0, guiOffsetX + 2, guiOffsetY + 2);
+		guiGreenRedBottom = createTextureRegion(guiTexture0, guiOffsetX + 1, guiOffsetY + 2);
+		guiGreenRedBottomLeft = createTextureRegion(guiTexture0, guiOffsetX, guiOffsetY + 2);
+		guiGreenRedLeft = createTextureRegion(guiTexture0, guiOffsetX, guiOffsetY + 1);
+
+		guiOffsetX = 5;
+		guiOffsetY = 10;
+		guiOrangeBlueTopLeft = createTextureRegion(guiTexture0, guiOffsetX, guiOffsetY);
+		guiOrangeBlueTop = createTextureRegion(guiTexture0, guiOffsetX + 1, guiOffsetY);
+		guiOrangeBlueTopRight = createTextureRegion(guiTexture0, guiOffsetX + 2, guiOffsetY);
+		guiOrangeBlueRight = createTextureRegion(guiTexture0, guiOffsetX + 2, guiOffsetY + 1);
+		guiOrangeBlueBottomRight = createTextureRegion(guiTexture0, guiOffsetX + 2, guiOffsetY + 2);
+		guiOrangeBlueBottom = createTextureRegion(guiTexture0, guiOffsetX + 1, guiOffsetY + 2);
+		guiOrangeBlueBottomLeft = createTextureRegion(guiTexture0, guiOffsetX, guiOffsetY + 2);
+		guiOrangeBlueLeft = createTextureRegion(guiTexture0, guiOffsetX, guiOffsetY + 1);
+
+		guiOffsetX = 5;
+		guiOffsetY = 13;
+		guiRedGreenTopLeft = createTextureRegion(guiTexture0, guiOffsetX, guiOffsetY);
+		guiRedGreenTop = createTextureRegion(guiTexture0, guiOffsetX + 1, guiOffsetY);
+		guiRedGreenTopRight = createTextureRegion(guiTexture0, guiOffsetX + 2, guiOffsetY);
+		guiRedGreenRight = createTextureRegion(guiTexture0, guiOffsetX + 2, guiOffsetY + 1);
+		guiRedGreenBottomRight = createTextureRegion(guiTexture0, guiOffsetX + 2, guiOffsetY + 2);
+		guiRedGreenBottom = createTextureRegion(guiTexture0, guiOffsetX + 1, guiOffsetY + 2);
+		guiRedGreenBottomLeft = createTextureRegion(guiTexture0, guiOffsetX, guiOffsetY + 2);
+		guiRedGreenLeft = createTextureRegion(guiTexture0, guiOffsetX, guiOffsetY + 1);
+
+		guiOffsetX = 5;
+		guiOffsetY = 16;
+		guiBlackYellowTopLeft = createTextureRegion(guiTexture0, guiOffsetX, guiOffsetY);
+		guiBlackYellowTop = createTextureRegion(guiTexture0, guiOffsetX + 1, guiOffsetY);
+		guiBlackYellowTopRight = createTextureRegion(guiTexture0, guiOffsetX + 2, guiOffsetY);
+		guiBlackYellowRight = createTextureRegion(guiTexture0, guiOffsetX + 2, guiOffsetY + 1);
+		guiBlackYellowBottomRight = createTextureRegion(guiTexture0, guiOffsetX + 2, guiOffsetY + 2);
+		guiBlackYellowBottom = createTextureRegion(guiTexture0, guiOffsetX + 1, guiOffsetY + 2);
+		guiBlackYellowBottomLeft = createTextureRegion(guiTexture0, guiOffsetX, guiOffsetY + 2);
+		guiBlackYellowLeft = createTextureRegion(guiTexture0, guiOffsetX, guiOffsetY + 1);
 
 		RenderUtil.addToDisposeList(this);
 	}
