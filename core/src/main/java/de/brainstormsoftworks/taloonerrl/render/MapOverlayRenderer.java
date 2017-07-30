@@ -44,8 +44,8 @@ public final class MapOverlayRenderer {
 	}
 
 	/**
-	 * initializes this overlay renderer with the map that should be used for
-	 * the rendering
+	 * initializes this overlay renderer with the map that should be used for the
+	 * rendering
 	 *
 	 * @param _map
 	 */
@@ -74,25 +74,28 @@ public final class MapOverlayRenderer {
 	 * @param map2
 	 */
 	public void render() {
-		// TODO add FOV data as parameter
-		// compute the offset to draw the overlay
-		final float offsetX = (Gdx.graphics.getWidth() - tilesHorizontal) / Renderer.screenScale / 2;
-		final float offsetY = (Gdx.graphics.getHeight() - tilesVertical) / Renderer.screenScale / 1.5f;
-		TextureRegion tempOverlay = null;
-		for (int x = 0; x < tilesHorizontal; x++) {
-			for (int y = 0; y < tilesVertical; y++) {
-				if (Visible.NOTHING.equals(overlay[x][y]) && map.getVisited()[x][y] && map.isWalkable(x, y)) {
-					tempOverlay = getOverlay(Visible.WALKABLE);
-				} else {
-					tempOverlay = getOverlay(overlay[x][y]);
-				}
-				if (tempOverlay != null) {
-					Renderer.getInstance().renderOnScreen(tempOverlay, x + offsetX, y + offsetY);
+		if (!Renderer.getInstance().isFullMapVisible()) {
+			// TODO add FOV data as parameter
+			// compute the offset to draw the overlay
+			final float offsetX = (Gdx.graphics.getWidth() - tilesHorizontal) / Renderer.screenScale / 2;
+			final float offsetY = (Gdx.graphics.getHeight() - tilesVertical) / Renderer.screenScale / 1.5f;
+			TextureRegion tempOverlay = null;
+			for (int x = 0; x < tilesHorizontal; x++) {
+				for (int y = 0; y < tilesVertical; y++) {
+					if (Visible.NOTHING.equals(overlay[x][y]) && map.getVisited()[x][y]
+							&& map.isWalkable(x, y)) {
+						tempOverlay = getOverlay(Visible.WALKABLE);
+					} else {
+						tempOverlay = getOverlay(overlay[x][y]);
+					}
+					if (tempOverlay != null) {
+						Renderer.getInstance().renderOnScreen(tempOverlay, x + offsetX, y + offsetY);
+					}
 				}
 			}
+			// TODO run in background thread
+			reset();
 		}
-		// TODO run in background thread
-		reset();
 	}
 
 	private static TextureRegion getOverlay(final Visible v) {
@@ -130,8 +133,8 @@ public final class MapOverlayRenderer {
 	}
 
 	/**
-	 * helper class to distinguish the different things that could be rendered
-	 * at a given position
+	 * helper class to distinguish the different things that could be rendered at a
+	 * given position
 	 *
 	 * @author David Becker
 	 *
