@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2015 David Becker.
+ * Copyright (c) 2015, 2017 David Becker.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the GNU Public License v2.0
  * which accompanies this distribution, and is available at
@@ -14,29 +14,30 @@ import com.artemis.Aspect;
 import com.artemis.Entity;
 import com.artemis.systems.EntityProcessingSystem;
 
-import de.brainstormsoftworks.taloonerrl.components.ControllerComponent;
+import de.brainstormsoftworks.taloonerrl.components.CursorComponent;
 import de.brainstormsoftworks.taloonerrl.components.PositionComponent;
 import de.brainstormsoftworks.taloonerrl.core.engine.ComponentMappers;
+import de.brainstormsoftworks.taloonerrl.core.engine.InputSystem;
 
-public class MovementSystem extends EntityProcessingSystem {
+/**
+ * update system to set the position of the highlighted tile based on the mouse
+ * cursor
+ *
+ * @author David Becker
+ *
+ */
+public class MouseCursorUpdateSystem extends EntityProcessingSystem {
 
-	private PositionComponent position;
-	private ControllerComponent controllerComponent;
+	private PositionComponent positionComponent;
 
-	@SuppressWarnings("unchecked")
-	public MovementSystem() {
-		super(Aspect.all(PositionComponent.class, ControllerComponent.class));
+	public MouseCursorUpdateSystem() {
+		super(Aspect.all(PositionComponent.class, CursorComponent.class));
 	}
 
 	@Override
-	protected void process(final Entity entity) {
-		position = ComponentMappers.getInstance().position.get(entity);
-		controllerComponent = ComponentMappers.getInstance().controller.get(entity);
-		// adds the vector to the position
-		position.setX(position.getX() + controllerComponent.getdX());
-		position.setY(position.getY() + controllerComponent.getdY());
-		// resets controller vector
-		controllerComponent.reset();
+	protected void process(final Entity e) {
+		positionComponent = ComponentMappers.getInstance().position.get(e);
+		positionComponent.setX(InputSystem.getInstance().getMouseOverX());
+		positionComponent.setY(InputSystem.getInstance().getMouseOverY());
 	}
-
 }

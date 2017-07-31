@@ -321,4 +321,11 @@ public final class IntVector2 implements Serializable, Vector<IntVector2> {
 		return "{ " + x + ", " + y + "}";
 	}
 
+	/** {@inheritDoc} */
+	@Override
+	public IntVector2 setToRandomDirection() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

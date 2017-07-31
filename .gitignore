@@ -8,3 +8,5 @@
 *.log
 */.gitignore
 */.classpath
+/.settings/
+*/.settings/

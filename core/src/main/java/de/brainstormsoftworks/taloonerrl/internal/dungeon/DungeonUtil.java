@@ -10,7 +10,9 @@
  ******************************************************************************/
 package de.brainstormsoftworks.taloonerrl.internal.dungeon;
 
+import de.brainstormsoftworks.taloonerrl.core.engine.Direction;
 import de.brainstormsoftworks.taloonerrl.dungeon.EDungeonSprites;
+import squidpony.squidmath.Coord;
 
 /**
  * Utility class to collect methods that help with the dungeon
@@ -174,6 +176,29 @@ public final class DungeonUtil {
 			}
 		}
 		return sprites;
+	}
+
+	/**
+	 * calculate the direction from one adjacent {@link Coord} to another
+	 *
+	 * @param from
+	 * @param to
+	 * @return
+	 */
+	public static int calculateDirection(final Coord from, final Coord to) {
+		if (from.x < to.x) {
+			return Direction.RIGHT;
+		}
+		if (from.x > to.x) {
+			return Direction.LEFT;
+		}
+		if (from.y < to.y) {
+			return Direction.UP;
+		}
+		if (from.y > to.y) {
+			return Direction.DOWN;
+		}
+		return Direction.NOTHING;
 	}
 
 	private static boolean isWalkable(final int x, final int y, final char[][] _map,

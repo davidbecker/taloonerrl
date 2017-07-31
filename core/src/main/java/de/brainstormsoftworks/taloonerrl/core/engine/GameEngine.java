@@ -10,12 +10,12 @@
  ******************************************************************************/
 package de.brainstormsoftworks.taloonerrl.core.engine;
 
+import com.artemis.AspectSubscriptionManager;
 import com.artemis.Entity;
 import com.artemis.World;
 import com.artemis.WorldConfiguration;
 import com.badlogic.gdx.Gdx;
-
-import de.brainstormsoftworks.taloonerrl.system.InputSystem;
+import com.badlogic.gdx.InputMultiplexer;
 
 /**
  * central part of the game<br/>
@@ -33,9 +33,16 @@ public final class GameEngine {
 	 * total time in milliseconds that the application has been run
 	 */
 	private float stateTime;
+	/**
+	 * time since last frame
+	 */
+	private float deltaTime;
 
 	private GameEngine() {
-		Gdx.input.setInputProcessor(new InputSystem());
+		final InputMultiplexer inputMultiplexer = new InputMultiplexer();
+		inputMultiplexer.addProcessor(UserIntefaceInputProcessor.getInstance());
+		inputMultiplexer.addProcessor(InputSystem.getInstance());
+		Gdx.input.setInputProcessor(inputMultiplexer);
 		final WorldConfiguration config = new WorldConfiguration();
 		Systems.setSystems(config);
 		world = new World(config);
@@ -46,14 +53,23 @@ public final class GameEngine {
 	/**
 	 * updates all the systems in the word
 	 *
-	 * @param delta
-	 *            time in milliseconds since last update
 	 * @see World#setDelta(float)
 	 */
-	public void update(final float delta) {
-		stateTime += delta;
-		world.setDelta(delta);
+	public void update() {
+		deltaTime = Gdx.graphics.getDeltaTime();
+		stateTime += deltaTime;
+		world.setDelta(deltaTime);
 		world.process();
+	}
+
+	/**
+	 * gets the time span between the current frame and the last frame in seconds.
+	 * Might be smoothed over n frames.
+	 *
+	 * @return delta time
+	 */
+	public float getDeltaTime() {
+		return deltaTime;
 	}
 
 	/**
@@ -110,5 +126,15 @@ public final class GameEngine {
 	 */
 	public static GameEngine getInstance() {
 		return instance;
+	}
+
+	/**
+	 * getter for an aspect subscription manager. used to iterate over entities with
+	 * given aspects
+	 *
+	 * @return manager
+	 */
+	public AspectSubscriptionManager getAspectSubscriptionManager() {
+		return world.getAspectSubscriptionManager();
 	}
 }

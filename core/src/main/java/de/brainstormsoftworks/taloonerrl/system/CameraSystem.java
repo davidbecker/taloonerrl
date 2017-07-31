@@ -20,7 +20,7 @@ import de.brainstormsoftworks.taloonerrl.core.engine.ComponentMappers;
 import de.brainstormsoftworks.taloonerrl.render.Renderer;
 
 /**
- * this system set the world camera to follow an entity.<br>
+ * this system set the world camera to follow an entity.<br/>
  * currently it is expected to be only one entity and one camera<br>
  * TODO refactor
  *
@@ -41,8 +41,8 @@ public class CameraSystem extends EntityProcessingSystem {
 		// if the screen isn't big enough to display the whole map, we follow the player
 		if (!Renderer.getInstance().isFullMapVisible()) {
 			positionComponent = ComponentMappers.getInstance().position.get(e);
-			// final CameraFollowComponent spriteComponent = cameraMapper.get(e);
-			Renderer.getInstance().setWorldCamera(positionComponent.getX(), positionComponent.getY());
+			Renderer.getInstance().setWorldCamera(positionComponent.getX(), positionComponent.getY(),
+					positionComponent.getOffsetX(), positionComponent.getOffsetY());
 		}
 	}
 

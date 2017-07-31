@@ -14,6 +14,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import de.brainstormsoftworks.taloonerrl.dungeon.IMap;
+import de.brainstormsoftworks.taloonerrl.dungeon.IMapChangeListener;
+import de.brainstormsoftworks.taloonerrl.dungeon.MapChangeProvider;
 
 /**
  * utility class that renders a map overlay onto the screen
@@ -21,7 +23,7 @@ import de.brainstormsoftworks.taloonerrl.dungeon.IMap;
  * @author David Becker
  *
  */
-public final class MapOverlayRenderer {
+public final class MapOverlayRenderer implements IMapChangeListener {
 
 	private static final MapOverlayRenderer instance = new MapOverlayRenderer();
 	private int tilesHorizontal = 0;
@@ -32,6 +34,7 @@ public final class MapOverlayRenderer {
 	private Visible[][] overlay;
 
 	private MapOverlayRenderer() {
+		MapChangeProvider.getInstance().registerListener(this);
 	}
 
 	/**
@@ -46,10 +49,9 @@ public final class MapOverlayRenderer {
 	/**
 	 * initializes this overlay renderer with the map that should be used for the
 	 * rendering
-	 *
-	 * @param _map
 	 */
-	public void initialize(final IMap _map) {
+	@Override
+	public void setMap(final IMap _map) {
 		map = _map;
 		tilesHorizontal = map.getTilesHorizontal();
 		tilesVertical = map.getTilesVertical();

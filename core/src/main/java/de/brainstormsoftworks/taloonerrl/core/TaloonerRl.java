@@ -12,14 +12,12 @@ package de.brainstormsoftworks.taloonerrl.core;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input.Keys;
 
 import de.brainstormsoftworks.taloonerrl.core.engine.GameEngine;
 import de.brainstormsoftworks.taloonerrl.dungeon.IMap;
 import de.brainstormsoftworks.taloonerrl.dungeon.MapFactory;
 import de.brainstormsoftworks.taloonerrl.dungeon.MapManager;
 import de.brainstormsoftworks.taloonerrl.render.DungeonRenderer;
-import de.brainstormsoftworks.taloonerrl.render.FovWrapper;
 import de.brainstormsoftworks.taloonerrl.render.GuiRenderer;
 import de.brainstormsoftworks.taloonerrl.render.MapOverlayRenderer;
 import de.brainstormsoftworks.taloonerrl.render.RenderUtil;
@@ -33,27 +31,16 @@ import de.brainstormsoftworks.taloonerrl.render.Renderer;
  */
 public class TaloonerRl implements ApplicationListener {
 
-	EDirection walkingDirection = EDirection.RIGHT;
-
-	private float delayToNextTurn = 0f;
-	/** minimum delay between player turns */
-	private static final float delayBetweenTurns = 0.03f;
-
-	public static IMap map = null;
+	private IMap map = null;
 
 	@Override
 	public void create() {
-		final int tilesHorizontal = Renderer.TILES_HORIZONTAL;
-		final int tilesVertical = Renderer.TILES_VERTICAL;
-		map = MapFactory.createMap(tilesHorizontal, tilesVertical);
-		FovWrapper.getInstance().setFovResistance(map.getFovResistance());
+		map = MapFactory.createMap(Renderer.TILES_HORIZONTAL, Renderer.TILES_VERTICAL);
 
-		MapManager.createEntities(map, tilesHorizontal, tilesVertical);
-
+		// forcing the instance to be created
+		MapManager.getInstance();
 		DungeonRenderer.initInstance();
 		GuiRenderer.initInstance();
-		MapOverlayRenderer.getInstance().initialize(map);
-
 	}
 
 	@Override
@@ -63,60 +50,10 @@ public class TaloonerRl implements ApplicationListener {
 
 	@Override
 	public void render() {
-		// check if the player did something first
-		// TODO change to a more general system
-
-		final float deltaTime = Gdx.graphics.getDeltaTime();
-		delayToNextTurn -= deltaTime;
-
-		boolean keyPressedLeft = false;
-		boolean keyPressedRight = false;
-		boolean keyPressedDown = false;
-		boolean keyPressedUp = false;
-		if (delayToNextTurn <= 0f) {
-			// possible for player to make his turn
-			keyPressedLeft = Gdx.input.isKeyPressed(Keys.LEFT);
-			keyPressedRight = Gdx.input.isKeyPressed(Keys.RIGHT);
-			keyPressedDown = Gdx.input.isKeyPressed(Keys.DOWN);
-			keyPressedUp = Gdx.input.isKeyPressed(Keys.UP);
-			if (keyPressedDown || keyPressedLeft || keyPressedRight || keyPressedUp) {
-				// player did a move
-				// isPlayerTurn = true;
-				// TODO refactor into controller input system
-				int dX = 0;
-				int dY = 0;
-				if (keyPressedLeft) {
-					dX = -1;
-					walkingDirection = EDirection.LEFT;
-				}
-				if (keyPressedRight) {
-					dX = 1;
-					walkingDirection = EDirection.RIGHT;
-				}
-				if (keyPressedDown) {
-					dY = -1;
-					walkingDirection = EDirection.DOWN;
-				}
-				if (keyPressedUp) {
-					dY = 1;
-					walkingDirection = EDirection.UP;
-				}
-				// TODO refactor
-				final int newX = MapManager.getPlayerPositionComponent().getX() + dX;
-				final int newY = MapManager.getPlayerPositionComponent().getY() + dY;
-				if (map.isWalkable(newX, newY)) {
-					MapManager.getPlayerPositionComponent().setX(newX);
-					MapManager.getPlayerPositionComponent().setY(newY);
-				}
-				MapManager.getPlayerFacingComponent().setDirection(walkingDirection);
-				delayToNextTurn = delayBetweenTurns;
-			}
-		}
-
 		Renderer.getInstance().beginWorldRendering();
 		DungeonRenderer.getInstance().render(map);
 
-		GameEngine.getInstance().update(deltaTime);
+		GameEngine.getInstance().update();
 		Renderer.getInstance().endWorldRendering();
 
 		Renderer.getInstance().beginScreenRendering();

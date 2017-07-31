@@ -30,7 +30,6 @@ public class FovUpdaterSystem extends EntityProcessingSystem {
 	private int oldX = -1;
 	private int oldY = -1;
 
-	@SuppressWarnings("unchecked")
 	public FovUpdaterSystem() {
 		super(Aspect.all(PositionComponent.class, PlayerComponent.class));
 	}

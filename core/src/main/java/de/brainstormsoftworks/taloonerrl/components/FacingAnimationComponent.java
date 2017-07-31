@@ -16,9 +16,9 @@ import java.util.Map;
 import com.artemis.PooledComponent;
 import com.badlogic.gdx.graphics.g2d.Animation;
 
-import de.brainstormsoftworks.taloonerrl.core.EDirection;
 import de.brainstormsoftworks.taloonerrl.core.engine.EEntity;
 import de.brainstormsoftworks.taloonerrl.core.engine.SpriteMapper;
+import lombok.Getter;
 
 /**
  * component to store animations for entities that change based on direction
@@ -26,24 +26,16 @@ import de.brainstormsoftworks.taloonerrl.core.engine.SpriteMapper;
  * @author David Becker
  *
  */
-public class FacingAnimationComponent extends PooledComponent {
+public class FacingAnimationComponent extends PooledComponent
+		implements ISetAbleComponent<FacingAnimationComponent> {
 
-	private EEntity entityType = EEntity.NOTHING;
-	final Map<EDirection, Animation> animationMap = new HashMap<EDirection, Animation>();
+	private @Getter EEntity entityType = EEntity.NOTHING;
+	private final Map<Integer, Animation> animationMap = new HashMap<Integer, Animation>();
 
 	@Override
 	protected void reset() {
 		entityType = EEntity.NOTHING;
 		animationMap.clear();
-	}
-
-	/**
-	 * getter for entityType
-	 *
-	 * @return the entityType
-	 */
-	public final EEntity getEntityType() {
-		return entityType;
 	}
 
 	/**
@@ -57,12 +49,21 @@ public class FacingAnimationComponent extends PooledComponent {
 		SpriteMapper.getInstance().mapAnimation(this);
 	}
 
-	public void setAnimations(final Map<EDirection, Animation> animations) {
+	public void setAnimations(final Map<Integer, Animation> animations) {
 		animationMap.putAll(animations);
 	}
 
-	public Animation getAnimation(final EDirection direction) {
+	public Animation getAnimation(final Integer direction) {
 		return animationMap.get(direction);
+	}
+
+	/** {@inheritDoc} */
+	@Override
+	public void overrideComponent(final FacingAnimationComponent _component) {
+		entityType = _component.getEntityType();
+		animationMap.clear();
+		animationMap.putAll(_component.animationMap);
+
 	}
 
 }
