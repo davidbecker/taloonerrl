@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2015 David Becker.
+ * Copyright (c) 2015, 2017 David Becker.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the GNU Public License v2.0
  * which accompanies this distribution, and is available at
@@ -37,10 +37,13 @@ public class CameraSystem extends EntityProcessingSystem {
 
 	@Override
 	protected void process(final Entity e) {
-		positionComponent = ComponentMappers.getInstance().position.get(e);
-		Renderer.getInstance().setWorldCamera(positionComponent.getX(), positionComponent.getY(),
-				positionComponent.getOffsetX(), positionComponent.getOffsetY());
-
+		// if the full map is visible we center the camera on the screen
+		// if the screen isn't big enough to display the whole map, we follow the player
+		if (!Renderer.getInstance().isFullMapVisible()) {
+			positionComponent = ComponentMappers.getInstance().position.get(e);
+			Renderer.getInstance().setWorldCamera(positionComponent.getX(), positionComponent.getY(),
+					positionComponent.getOffsetX(), positionComponent.getOffsetY());
+		}
 	}
 
 }

@@ -34,7 +34,7 @@ public final class Renderer implements IDisposableInstance {
 	public static final int tileSize = 16;
 	public static final int TILES_HORIZONTAL = 30;
 	public static final int TILES_VERTICAL = 20;
-	public static final int VIRTUAL_WIDTH = TILES_HORIZONTAL * tileSize + 4 * tileSize;
+	public static final int VIRTUAL_WIDTH = TILES_HORIZONTAL * tileSize;
 	public static final int VIRTUAL_HEIGHT = TILES_VERTICAL * tileSize;
 	public static final float ASPECT_RATIO = (float) VIRTUAL_WIDTH / (float) VIRTUAL_HEIGHT;
 
@@ -45,6 +45,9 @@ public final class Renderer implements IDisposableInstance {
 	private final SpriteBatch spriteBatchScreen;
 	private final ScreenViewport worldViewport;
 	ScreenViewport screenViewport;
+
+	// if the screen is big enough to display the full map this should be true
+	private boolean fullMapVisible;
 
 	private Renderer() {
 		spriteBatchWorld = new SpriteBatch();
@@ -75,6 +78,15 @@ public final class Renderer implements IDisposableInstance {
 	 *            height of the screen
 	 */
 	public void resizeViewPort(final int width, final int height) {
+		fullMapVisible = width >= VIRTUAL_WIDTH && height >= VIRTUAL_HEIGHT;
+		if (fullMapVisible) {
+			// if the full map is visible we center the camera on the screen
+			// if the screen isn't big enough to display the whole map, we follow the player
+			// cameraWorld.position.set(width, height, 0);
+			cameraWorld.position.set(VIRTUAL_WIDTH / 2.0f, VIRTUAL_HEIGHT / 2.0f, 0);
+			cameraWorld.update();
+		}
+		// System.err.println("Full map visible: " + Boolean.valueOf(fullMapVisible));
 		worldViewport.update(width, height);
 		spriteBatchWorld.setProjectionMatrix(cameraWorld.combined);
 		screenViewport.update(width, height, true);
@@ -141,8 +153,8 @@ public final class Renderer implements IDisposableInstance {
 	}
 
 	/**
-	 * renders a sprite on the given tile coordinates with an offset an the with
-	 * & high of the given {@link TextureRegion}
+	 * renders a sprite on the given tile coordinates with an offset an the with &
+	 * high of the given {@link TextureRegion}
 	 *
 	 * @param region
 	 *            sprite to draw
@@ -162,7 +174,7 @@ public final class Renderer implements IDisposableInstance {
 	}
 
 	/**
-	 * renders a sprite on the given tile coordinates with an offset.<br/>
+	 * renders a sprite on the given tile coordinates with an offset.<br>
 	 * stretching the region to cover the given width and height.
 	 *
 	 * @param region
@@ -232,6 +244,15 @@ public final class Renderer implements IDisposableInstance {
 	public void disposeInstance() {
 		spriteBatchWorld.dispose();
 		spriteBatchScreen.dispose();
+	}
+
+	/**
+	 * getter for fullMapVisible
+	 *
+	 * @return the fullMapVisible
+	 */
+	public boolean isFullMapVisible() {
+		return fullMapVisible;
 	}
 
 }
