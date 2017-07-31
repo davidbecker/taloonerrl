@@ -10,26 +10,35 @@
  ******************************************************************************/
 package de.brainstormsoftworks.taloonerrl.dungeon;
 
-@Deprecated
-public interface ITile {
+/**
+ * can manages {@link IMapChangeListener}
+ *
+ * @author David Becker
+ *
+ */
+public interface IMapChangeProvider {
 
 	/**
-	 * was this tile in field of view before?
+	 * adds the given listener to be added to the list of registered listeners
 	 *
-	 * @return
+	 * @param listener
+	 *            listener to register
 	 */
-	boolean isVisited();
+	void registerListener(IMapChangeListener listener);
 
 	/**
-	 * set flag that the tile was in field of view before
+	 * unregisters the given listener
+	 *
+	 * @param listener
+	 *            listerer to remove
 	 */
-	void setVisited();
+	void removeListener(IMapChangeListener listener);
 
-	EDungeonSprites getDungeonSprite();
-
-	void setDungeonSprite(EDungeonSprites _sprite);
-
-	boolean isWalkable();
-
-	void setWalkable(boolean _walkable);
+	/**
+	 * propagate the given map to the listeners
+	 *
+	 * @param map
+	 *            map to set
+	 */
+	void propagateMap(IMap map);
 }

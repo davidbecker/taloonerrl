@@ -15,7 +15,9 @@ import static org.junit.Assert.assertNotNull;
 
 import org.junit.Test;
 
+import de.brainstormsoftworks.taloonerrl.core.engine.Direction;
 import de.brainstormsoftworks.taloonerrl.internal.dungeon.DungeonUtil;
+import squidpony.squidmath.Coord;
 
 public class TestDungeonUtil {
 
@@ -57,5 +59,19 @@ public class TestDungeonUtil {
 			assertEquals("vertical wall piece [0][" + i + "]", EDungeonSprites.WALL_VERTICAL, sprites[0][i]);
 			assertEquals("vertical wall piece [4][" + i + "]", EDungeonSprites.WALL_VERTICAL, sprites[4][i]);
 		}
+	}
+
+	@Test
+	public void directionFromCoords() {
+		final Coord up = Coord.get(1, 2);
+		final Coord down = Coord.get(1, 0);
+		final Coord left = Coord.get(0, 1);
+		final Coord right = Coord.get(2, 1);
+		final Coord center = Coord.get(1, 1);
+		assertEquals(Direction.DOWN, DungeonUtil.calculateDirection(up, center));
+		assertEquals(Direction.UP, DungeonUtil.calculateDirection(down, center));
+		assertEquals(Direction.LEFT, DungeonUtil.calculateDirection(right, center));
+		assertEquals(Direction.RIGHT, DungeonUtil.calculateDirection(left, center));
+		assertEquals(Direction.NOTHING, DungeonUtil.calculateDirection(center, center));
 	}
 }

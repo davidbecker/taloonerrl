@@ -25,7 +25,6 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import de.brainstormsoftworks.taloonerrl.components.AnimationComponent;
 import de.brainstormsoftworks.taloonerrl.components.FacingAnimationComponent;
 import de.brainstormsoftworks.taloonerrl.components.SpriteComponent;
-import de.brainstormsoftworks.taloonerrl.core.EDirection;
 import de.brainstormsoftworks.taloonerrl.render.IDisposableInstance;
 import de.brainstormsoftworks.taloonerrl.render.RenderUtil;
 import de.brainstormsoftworks.taloonerrl.render.Renderer;
@@ -75,7 +74,7 @@ public final class SpriteMapper implements IDisposableInstance {
 	private static final SpriteMapper instance = new SpriteMapper();
 
 	private final Map<EEntity, Animation> mappedAnimations = new HashMap<EEntity, Animation>();
-	private final Map<EEntity, Map<EDirection, Animation>> mappedDirectionalAnimations = new HashMap<EEntity, Map<EDirection, Animation>>();
+	private final Map<EEntity, Map<Integer, Animation>> mappedDirectionalAnimations = new HashMap<EEntity, Map<Integer, Animation>>();
 	private final Map<EEntity, TextureRegion> mappedSprites = new HashMap<EEntity, TextureRegion>();
 	private final Set<Texture> toDispose = new HashSet<Texture>();
 
@@ -387,11 +386,11 @@ public final class SpriteMapper implements IDisposableInstance {
 				framesRight[i] = loadFrame(tWarrior, i, 2);
 				framesUp[i] = loadFrame(tWarrior, i, 3);
 			}
-			final Map<EDirection, Animation> animations = new HashMap<EDirection, Animation>();
-			animations.put(EDirection.UP, new Animation(0.25f, framesUp));
-			animations.put(EDirection.DOWN, new Animation(0.25f, framesDown));
-			animations.put(EDirection.LEFT, new Animation(0.25f, framesLeft));
-			animations.put(EDirection.RIGHT, new Animation(0.25f, framesRight));
+			final Map<Integer, Animation> animations = new HashMap<Integer, Animation>();
+			animations.put(Direction.UP, new Animation(0.25f, framesUp));
+			animations.put(Direction.DOWN, new Animation(0.25f, framesDown));
+			animations.put(Direction.LEFT, new Animation(0.25f, framesLeft));
+			animations.put(Direction.RIGHT, new Animation(0.25f, framesRight));
 			mappedDirectionalAnimations.put(type, animations);
 			break;
 		default:
@@ -758,7 +757,7 @@ public final class SpriteMapper implements IDisposableInstance {
 		return texture;
 	}
 
-	private TextureRegion loadFrame(final Texture texture, final int x, final int y) {
+	private static TextureRegion loadFrame(final Texture texture, final int x, final int y) {
 		return new TextureRegion(texture, x * Renderer.tileSize, y * Renderer.tileSize, Renderer.tileSize,
 				Renderer.tileSize);
 	}

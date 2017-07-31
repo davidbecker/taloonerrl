@@ -19,7 +19,6 @@
 		<module name="EqualsAvoidNull" />
 		<module name="EqualsHashCode" />
 		<module name="FinalLocalVariable" />
-		<module name="HiddenField" />
 		<module name="MethodCount" />
 		<module name="MethodLength">
 			<property name="max" value="200" />
@@ -31,11 +30,6 @@
 		</module>
 		<module name="JavadocMethod">
 			<property name="scope" value="public" />
-		</module>
-		<module name="JavadocStyle">
-			<property name="scope" value="public" />
-			<property name="checkEmptyJavadoc" value="true" />
-			<property name="checkFirstSentence" value="false" />
 		</module>
 	</module>
 	<module name="FileLength" />

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2015 David Becker.
+ * Copyright (c) 2015, 2017 David Becker.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the GNU Public License v2.0
  * which accompanies this distribution, and is available at
@@ -14,10 +14,12 @@ import com.artemis.Aspect;
 import com.artemis.Entity;
 import com.artemis.systems.EntityProcessingSystem;
 
-import de.brainstormsoftworks.taloonerrl.components.HighlightComponent;
+import de.brainstormsoftworks.taloonerrl.components.HighlightAbleComponent;
 import de.brainstormsoftworks.taloonerrl.components.PositionComponent;
 import de.brainstormsoftworks.taloonerrl.core.engine.ComponentMappers;
 import de.brainstormsoftworks.taloonerrl.core.engine.GameEngine;
+import de.brainstormsoftworks.taloonerrl.dungeon.MapManager;
+import de.brainstormsoftworks.taloonerrl.render.FovWrapper;
 import de.brainstormsoftworks.taloonerrl.render.Renderer;
 
 /**
@@ -31,51 +33,57 @@ public class HighlightRenderSystem extends EntityProcessingSystem {
 	private int x, y;
 	private int cursorAnimationOffset;
 	private PositionComponent positionComponent;
-	private HighlightComponent highlight;
+	private HighlightAbleComponent highlight;
 
-	@SuppressWarnings("unchecked")
 	public HighlightRenderSystem() {
-		super(Aspect.all(PositionComponent.class, HighlightComponent.class));
+		super(Aspect.all(PositionComponent.class, HighlightAbleComponent.class));
 	}
 
 	@Override
 	protected void process(final Entity e) {
 		positionComponent = ComponentMappers.getInstance().position.get(e);
 		highlight = ComponentMappers.getInstance().highlight.get(e);
-
-		// TODO refactor getting/setting of offset
-		switch ((int) GameEngine.getInstance().getStateTime() % 4) {
-		case 0:
-			cursorAnimationOffset = 0;
-			break;
-		case 1:
-			cursorAnimationOffset = 1;
-			break;
-		case 2:
-			cursorAnimationOffset = 2;
-			break;
-		case 3:
-			cursorAnimationOffset = 1;
-			break;
-		default:
-			cursorAnimationOffset = 0;
+		if (highlight.isHighlightStyleNone() || !highlight.isHighlightActive()) {
+			return;
 		}
-		highlight.setCursorAnimationOffset(cursorAnimationOffset);
+		if (highlight.isHighlightStyleBlinking()) {
+
+			// TODO refactor getting/setting of offset
+			switch ((int) GameEngine.getInstance().getStateTime() % 4) {
+			case 0:
+				cursorAnimationOffset = 0;
+				break;
+			case 1:
+				cursorAnimationOffset = 1;
+				break;
+			case 2:
+				cursorAnimationOffset = 2;
+				break;
+			case 3:
+				cursorAnimationOffset = 1;
+				break;
+			default:
+				cursorAnimationOffset = 0;
+			}
+			highlight.setCursorAnimationOffset(cursorAnimationOffset);
+		}
 
 		x = positionComponent.getX();
 		y = positionComponent.getY();
-		Renderer.getInstance().renderOnTileWithOffset(HighlightComponent.getCursorTopLeft(), x, y,
-				HighlightComponent.cursorTopLeftOffsetX - highlight.getCursorAnimationOffset(),
-				HighlightComponent.cursorTopLeftOffsetY + highlight.getCursorAnimationOffset());
-		Renderer.getInstance().renderOnTileWithOffset(HighlightComponent.getCursorTopRight(), x, y,
-				HighlightComponent.cursorTopRightOffsetX + highlight.getCursorAnimationOffset(),
-				+HighlightComponent.cursorTopRightOffsetY + highlight.getCursorAnimationOffset());
-		Renderer.getInstance().renderOnTileWithOffset(HighlightComponent.getCursorBottomLeft(), x, y,
-				HighlightComponent.cursorBottomLeftOffsetX - highlight.getCursorAnimationOffset(),
-				HighlightComponent.cursorBottomLeftOffsetY - highlight.getCursorAnimationOffset());
-		Renderer.getInstance().renderOnTileWithOffset(HighlightComponent.getCursorBottomRight(), x, y,
-				HighlightComponent.cursorBottomRightOffsetX + highlight.getCursorAnimationOffset(),
-				HighlightComponent.cursorBottomRightOffsetY - highlight.getCursorAnimationOffset());
-
+		if ((highlight.isHighlightOutsideFOV() || FovWrapper.getInstance().isLit(x, y))
+				&& (highlight.isHighlightUnvisited() || MapManager.getInstance().getMap().isVisited(x, y))) {
+			Renderer.getInstance().renderOnTile(HighlightAbleComponent.getCursorTopLeft(), x, y,
+					HighlightAbleComponent.cursorTopLeftOffsetX - highlight.getCursorAnimationOffset(),
+					HighlightAbleComponent.cursorTopLeftOffsetY + highlight.getCursorAnimationOffset());
+			Renderer.getInstance().renderOnTile(HighlightAbleComponent.getCursorTopRight(), x, y,
+					HighlightAbleComponent.cursorTopRightOffsetX + highlight.getCursorAnimationOffset(),
+					+HighlightAbleComponent.cursorTopRightOffsetY + highlight.getCursorAnimationOffset());
+			Renderer.getInstance().renderOnTile(HighlightAbleComponent.getCursorBottomLeft(), x, y,
+					HighlightAbleComponent.cursorBottomLeftOffsetX - highlight.getCursorAnimationOffset(),
+					HighlightAbleComponent.cursorBottomLeftOffsetY - highlight.getCursorAnimationOffset());
+			Renderer.getInstance().renderOnTile(HighlightAbleComponent.getCursorBottomRight(), x, y,
+					HighlightAbleComponent.cursorBottomRightOffsetX + highlight.getCursorAnimationOffset(),
+					HighlightAbleComponent.cursorBottomRightOffsetY - highlight.getCursorAnimationOffset());
+		}
 	}
 }

@@ -72,6 +72,9 @@ public final class ArrayHelper {
 	 * @return true if (x, y) is in the bounds of the array
 	 */
 	public static boolean isInArrayBounds(final double[][] array, final int x, final int y) {
+		if (array == null) {
+			return false;
+		}
 		final int width = array.length;
 		int height = 0;
 		if (width > 0) {

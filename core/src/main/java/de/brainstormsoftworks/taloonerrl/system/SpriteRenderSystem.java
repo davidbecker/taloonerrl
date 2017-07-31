@@ -27,7 +27,6 @@ import de.brainstormsoftworks.taloonerrl.render.Renderer;
  */
 public class SpriteRenderSystem extends EntityProcessingSystem {
 
-	@SuppressWarnings("unchecked")
 	public SpriteRenderSystem() {
 		super(Aspect.all(PositionComponent.class, SpriteComponent.class));
 	}

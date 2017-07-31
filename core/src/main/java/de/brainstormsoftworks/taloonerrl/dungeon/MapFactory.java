@@ -22,6 +22,8 @@ import de.brainstormsoftworks.taloonerrl.internal.dungeon.SquidGenerator;
  */
 public final class MapFactory {
 
+	private static final IMapChangeProvider CHANGE_PROVIDER = MapChangeProvider.getInstance();
+
 	private MapFactory() {
 	}
 
@@ -44,21 +46,25 @@ public final class MapFactory {
 		}
 
 		// generate the dungeon
-		// GeneratorCarveBigRoom.getInstance().generate(map.getMap(),
-		// _tilesHorizontal, _tilesVertical);
 		SquidGenerator.getInstance().generate(map.getMap(), _tilesHorizontal, _tilesVertical);
 
 		// sets the resistance for FOV
+		// sets the cost for movement
 		for (int x = 0; x < _tilesHorizontal; x++) {
 			for (int y = 0; y < _tilesVertical; y++) {
 				map.getFovResistance()[x][y] = map.getMap()[x][y] == '#' ? 1.0 : 0.00;
+				map.getCostMap()[x][y] = map.getMap()[x][y] == '#' ? 0.0 : 1.00;
 			}
 		}
+
+		// currently we don't have variable cost for tiles, just to be lazy for the
+		// future...
+		map.getDijkstraMap().initialize(map.getMap()).initializeCost(map.getCostMap());
 
 		// calculate which sprite to use on each tile
 		map.setDungeonSprites(
 				DungeonUtil.calculateDungeonSprites(map.getMap(), _tilesHorizontal, _tilesVertical));
-
+		CHANGE_PROVIDER.propagateMap(map);
 		return map;
 	}
 }

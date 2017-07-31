@@ -15,6 +15,8 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import de.brainstormsoftworks.taloonerrl.core.engine.EEntity;
 import de.brainstormsoftworks.taloonerrl.core.engine.SpriteMapper;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * component for an entity that has an animation
@@ -22,23 +24,14 @@ import de.brainstormsoftworks.taloonerrl.core.engine.SpriteMapper;
  * @author David Becker
  *
  */
-public class SpriteComponent extends PooledComponent {
-	private EEntity entityType = EEntity.NOTHING;
-	private TextureRegion sprite = null;
+public class SpriteComponent extends PooledComponent implements ISetAbleComponent<SpriteComponent> {
+	private @Getter EEntity entityType = EEntity.NOTHING;
+	private @Getter @Setter TextureRegion sprite = null;
 
 	@Override
 	protected void reset() {
 		entityType = EEntity.NOTHING;
 		sprite = null;
-	}
-
-	/**
-	 * getter for entityType
-	 *
-	 * @return the entityType
-	 */
-	public final EEntity getEntityType() {
-		return entityType;
 	}
 
 	/**
@@ -52,22 +45,10 @@ public class SpriteComponent extends PooledComponent {
 		SpriteMapper.getInstance().mapSprite(this);
 	}
 
-	/**
-	 * getter for {@link #sprite}
-	 *
-	 * @return the sprite
-	 */
-	public final TextureRegion getSprite() {
-		return sprite;
-	}
-
-	/**
-	 * setter for sprite
-	 *
-	 * @param sprite
-	 *            the sprite to set
-	 */
-	public final void setSprite(final TextureRegion sprite) {
-		this.sprite = sprite;
+	/** {@inheritDoc} */
+	@Override
+	public void overrideComponent(final SpriteComponent _component) {
+		entityType = _component.getEntityType();
+		sprite = _component.getSprite();
 	}
 }

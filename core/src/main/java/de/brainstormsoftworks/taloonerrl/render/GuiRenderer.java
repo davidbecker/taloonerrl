@@ -19,6 +19,12 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import de.brainstormsoftworks.taloonerrl.components.HealthComponent;
 import de.brainstormsoftworks.taloonerrl.core.engine.GameEngine;
 
+/**
+ * renders the graphical user interface on the screen
+ *
+ * @author David Becker
+ *
+ */
 public final class GuiRenderer implements IDisposableInstance {
 	private static GuiRenderer instance = null;
 	private Texture guiTexture0 = null;

@@ -14,8 +14,16 @@
 	<properties>
 		<guava.version>19.0-rc1</guava.version>
 		<junit.version>4.11</junit.version>
-		<squidlib.version>2.9.0</squidlib.version>
+		<squidlib.version>3.0.0-b3</squidlib.version>
+		<lombok.version>1.16.18</lombok.version>
 	</properties>
+
+	<repositories>
+		<repository>
+			<id>projectlombok.org</id>
+			<url>http://projectlombok.org/mavenrepo</url>
+		</repository>
+	</repositories>
 
 	<dependencies>
 		<dependency>
@@ -45,6 +53,12 @@
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
 			<version>${guava.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>${lombok.version}</version>
+			<!-- <scope>provided</scope> -->
 		</dependency>
 	</dependencies>
 

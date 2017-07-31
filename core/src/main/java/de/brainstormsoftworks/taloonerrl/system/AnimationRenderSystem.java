@@ -33,10 +33,9 @@ public class AnimationRenderSystem extends EntityProcessingSystem {
 	private PositionComponent positionComponent;
 	private AnimationComponent spriteComponent;
 	private Animation animation;
-	private int x = -1;
-	private int y = -1;
+	private int x;
+	private int y;
 
-	@SuppressWarnings("unchecked")
 	public AnimationRenderSystem() {
 		super(Aspect.all(PositionComponent.class, AnimationComponent.class));
 	}
@@ -49,7 +48,8 @@ public class AnimationRenderSystem extends EntityProcessingSystem {
 		x = positionComponent.getX();
 		y = positionComponent.getY();
 		if (animation != null && FovWrapper.getInstance().isLit(x, y)) {
-			Renderer.getInstance().renderOnTile(RenderUtil.getKeyFrame(animation), x, y);
+			Renderer.getInstance().renderOnTile(RenderUtil.getKeyFrame(animation), x, y,
+					positionComponent.getOffsetX(), positionComponent.getOffsetY());
 		}
 	}
 }

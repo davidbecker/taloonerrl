@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2015 David Becker.
+ * Copyright (c) 2015, 2017 David Becker.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the GNU Public License v2.0
  * which accompanies this distribution, and is available at
@@ -14,46 +14,78 @@ import com.artemis.Aspect;
 import com.artemis.Entity;
 import com.artemis.systems.EntityProcessingSystem;
 
-import de.brainstormsoftworks.taloonerrl.components.ControllerComponent;
-import de.brainstormsoftworks.taloonerrl.components.FacingComponent;
-import de.brainstormsoftworks.taloonerrl.components.PlayerComponent;
-import de.brainstormsoftworks.taloonerrl.core.EDirection;
+import de.brainstormsoftworks.taloonerrl.components.PositionComponent;
 import de.brainstormsoftworks.taloonerrl.core.engine.ComponentMappers;
 
 /**
- * this system updates the controller component of the player entity when an
- * input was registered
+ * updates {@link ControllerComponent}s
  *
  * @author David Becker
  *
  */
 public class ControllerSystem extends EntityProcessingSystem {
 
-	private ControllerComponent controllerComponent;
-	private FacingComponent facingComponent;
+	private int totalX = 0;
+	private int totalY = 0;
+	private int absTotalX = 0;
+	private int absTotalY = 0;
+	private int deltaX = 0;
+	private int deltaY = 0;
 
-	@SuppressWarnings("unchecked")
+	private int offsetX = 0;
+	private int offsetY = 0;
+
+	private int velocity = 0;
+
+	/**
+	 * Constructor.
+	 */
 	public ControllerSystem() {
-		super(Aspect.all(PlayerComponent.class, FacingComponent.class, ControllerComponent.class));
+		super(Aspect.all(PositionComponent.class));
 	}
 
+	/** {@inheritDoc} */
 	@Override
-	protected void process(final Entity e) {
-		controllerComponent = ComponentMappers.getInstance().controller.get(e);
-		facingComponent = ComponentMappers.getInstance().facing.get(e);
-		if (InputSystem.isKeyPressedDown()) {
-			controllerComponent.setdY(-1);
-			facingComponent.setDirection(EDirection.DOWN);
-		} else if (InputSystem.isKeyPressedUp()) {
-			controllerComponent.setdY(1);
-			facingComponent.setDirection(EDirection.UP);
-		} else if (InputSystem.isKeyPressedLeft()) {
-			controllerComponent.setdX(-1);
-			facingComponent.setDirection(EDirection.LEFT);
-		} else if (InputSystem.isKeyPressedRight()) {
-			controllerComponent.setdX(1);
-			facingComponent.setDirection(EDirection.RIGHT);
+	protected void process(final Entity entity) {
+		final PositionComponent position = ComponentMappers.getInstance().position.get(entity);
+		// shortcut
+		if (!position.isProcessingTurn()) {
+			return;
 		}
+		totalX = position.getTotalX();
+		totalY = position.getTotalY();
+		offsetX = position.getOffsetX();
+		offsetY = position.getOffsetY();
+		velocity = position.getVelocity();
+
+		absTotalX = Math.abs(totalX);
+		absTotalY = Math.abs(totalY);
+		deltaX = Math.min(absTotalX, velocity);
+		deltaY = Math.min(absTotalY, velocity);
+
+		if (absTotalX > 0) {
+			if (absTotalX == totalX) {
+				totalX -= deltaX;
+				offsetX += deltaX;
+			} else {
+				totalX += deltaX;
+				offsetX -= deltaX;
+			}
+		}
+		if (absTotalY > 0) {
+			if (absTotalY == totalY) {
+				totalY -= deltaY;
+				offsetY += deltaY;
+			} else {
+				totalY += deltaY;
+				offsetY -= deltaY;
+			}
+		}
+		position.setOffsetX(offsetX);
+		position.setOffsetY(offsetY);
+		position.setTotalX(totalX);
+		position.setTotalY(totalY);
+		position.setProcessingTurn(!(totalX == 0 && totalY == 0));
 	}
 
 }

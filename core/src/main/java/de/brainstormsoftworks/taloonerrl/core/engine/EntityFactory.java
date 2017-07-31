@@ -196,6 +196,8 @@ public final class EntityFactory {
 			return createCollectible(type, world, xPosition, yPosition);
 		case TORCH:
 			return createDecoration(type, world, xPosition, yPosition);
+		case CURSOR:
+			return world.createEntity(Archetypes.getInstance().cursor);
 		default:
 			return null;
 		}

@@ -24,4 +24,6 @@ To get started run from the command line:
 mvn integration-test -P desktop
 ```
 
-or import this project into eclipse as a maven project and eclipse will do the magic for you. To start the game you need to run TaloonerRlDesktop
+or import this project into eclipse as a maven project and eclipse will do the magic for you.
+This project uses [Project Lombock](https://projectlombok.org/) to reduce boiler plate code.
+To start the game you need to run TaloonerRlDesktop

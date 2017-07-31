@@ -19,6 +19,12 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import de.brainstormsoftworks.taloonerrl.dungeon.EDungeonSprites;
 import de.brainstormsoftworks.taloonerrl.dungeon.IMap;
 
+/**
+ * class that renders the dungeon
+ *
+ * @author David Becker
+ *
+ */
 public final class DungeonRenderer implements IDisposableInstance {
 
 	private static DungeonRenderer instance = null;
@@ -235,6 +241,12 @@ public final class DungeonRenderer implements IDisposableInstance {
 		wallTexture.dispose();
 	}
 
+	/**
+	 * does the actual job
+	 *
+	 * @param map
+	 *            map to render
+	 */
 	public void render(final IMap map) {
 		// TODO render map into framebuffer and use buffer if player hasn't
 		// moved
@@ -331,7 +343,6 @@ public final class DungeonRenderer implements IDisposableInstance {
 			// keep tile blank
 			return null;
 		}
-		// return TextureManager.getInstance().getTile(tile.getDungeonSprite());
 	}
 
 }

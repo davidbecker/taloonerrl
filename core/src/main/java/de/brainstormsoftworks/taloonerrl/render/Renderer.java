@@ -11,11 +11,15 @@
 package de.brainstormsoftworks.taloonerrl.render;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+
+import de.brainstormsoftworks.taloonerrl.math.IntVector2;
 
 /**
  * singleton to keep track of on globally accessible {@link SpriteBatch}
@@ -53,10 +57,23 @@ public final class Renderer implements IDisposableInstance {
 		RenderUtil.addToDisposeList(this);
 	}
 
+	/**
+	 * get an instance of this singleton
+	 *
+	 * @return instance
+	 */
 	public static Renderer getInstance() {
 		return instance;
 	}
 
+	/**
+	 * resizes the current view port
+	 *
+	 * @param width
+	 *            with of the screen
+	 * @param height
+	 *            height of the screen
+	 */
 	public void resizeViewPort(final int width, final int height) {
 		worldViewport.update(width, height);
 		spriteBatchWorld.setProjectionMatrix(cameraWorld.combined);
@@ -73,8 +90,8 @@ public final class Renderer implements IDisposableInstance {
 	 * @param y
 	 *            vertical position of the tile
 	 */
-	public void setWorldCamera(final int x, final int y) {
-		cameraWorld.position.set(x * tileSize, y * tileSize, 0);
+	public void setWorldCamera(final int x, final int y, final int offsetX, final int offsetY) {
+		cameraWorld.position.set(x * tileSize + offsetX, y * tileSize + offsetY, 0);
 		cameraWorld.update();
 		spriteBatchWorld.setProjectionMatrix(cameraWorld.combined);
 	}
@@ -119,8 +136,8 @@ public final class Renderer implements IDisposableInstance {
 	 * @param y
 	 *            vertical tile position
 	 */
-	public void renderOnTile(final TextureRegion region, final int x, final int y) {
-		renderOnTileWithOffset(region, x, y, 0, 0, region.getRegionWidth(), region.getRegionWidth());
+	public void renderOnTile(final TextureRegion region, final float x, final float y) {
+		renderOnTile(region, x, y, 0, 0, region.getRegionWidth(), region.getRegionWidth());
 	}
 
 	/**
@@ -138,10 +155,10 @@ public final class Renderer implements IDisposableInstance {
 	 * @param dY
 	 *            vertical offset
 	 */
-	public void renderOnTileWithOffset(final TextureRegion region, final int x, final int y, final int dX,
-			final int dY) {
+	public void renderOnTile(final TextureRegion region, final float x, final float y, final float dX,
+			final float dY) {
 		// TODO implement offset for camera, check if tile should be rendered
-		renderOnTileWithOffset(region, x, y, dX, dY, region.getRegionWidth(), region.getRegionWidth());
+		renderOnTile(region, x, y, dX, dY, region.getRegionWidth(), region.getRegionWidth());
 	}
 
 	/**
@@ -159,25 +176,11 @@ public final class Renderer implements IDisposableInstance {
 	 * @param dY
 	 *            vertical offset
 	 */
-	public void renderOnTileWithOffset(final TextureRegion region, final int x, final int y, final int dX,
-			final int dY, final int width, final int height) {
+	public void renderOnTile(final TextureRegion region, final float x, final float y, final float dX,
+			final float dY, final float width, final float height) {
 		// render on a visible tile
 		// TODO refactor to take offset into account
 		spriteBatchWorld.draw(region, x * tileSize + dX, y * tileSize + dY, width, height);
-	}
-
-	/**
-	 * renders a sprite on the given screen coordinates
-	 *
-	 * @param region
-	 *            sprite to draw
-	 * @param x
-	 *            horizontal position
-	 * @param y
-	 *            vertical position
-	 */
-	public void renderOnScreen(final TextureRegion region, final int x, final int y) {
-		spriteBatchScreen.draw(region, x, y);
 	}
 
 	/**
@@ -208,18 +211,22 @@ public final class Renderer implements IDisposableInstance {
 		spriteBatchScreen.end();
 	}
 
-	// FIXME reimplement
-	// /**
-	// * convenience method
-	// *
-	// * @see Camera#unproject(Vector3)
-	// * @param v
-	// * screen coordinates to translate
-	// */
-	// public void unprojectFromCamera(final Vector3 v) {
-	// cameraWorld.unproject(v, viewPortX, viewPortY, viewPortWidth,
-	// viewPortHeight);
-	// }
+	/**
+	 * convenience method to translate screen coordinates into tiles
+	 *
+	 * @see Camera#unproject(Vector3)
+	 * @param v
+	 *            screen coordinates to translate
+	 * @return
+	 */
+	public IntVector2 unprojectFromCamera(final Vector3 v) {
+		final Vector3 unproject = cameraWorld.unproject(v);
+		int x = (int) (unproject.x / scale);
+		x = x < 0 ? 0 : x > TILES_HORIZONTAL ? TILES_HORIZONTAL : x;
+		int y = (int) (unproject.y / scale);
+		y = y < 0 ? 0 : y > TILES_VERTICAL ? TILES_VERTICAL : y;
+		return new IntVector2(x, y);
+	}
 
 	@Override
 	public void disposeInstance() {
