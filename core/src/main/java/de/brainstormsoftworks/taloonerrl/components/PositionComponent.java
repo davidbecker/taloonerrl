@@ -12,6 +12,7 @@ package de.brainstormsoftworks.taloonerrl.components;
 
 import com.artemis.PooledComponent;
 
+import de.brainstormsoftworks.taloonerrl.render.Renderer;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -58,6 +59,26 @@ public class PositionComponent extends PooledComponent implements ISetAbleCompon
 	 */
 	public boolean isProcessingTurn() {
 		return !(totalX == 0 && totalY == 0);
+	}
+
+	/**
+	 * gets the x position of this component<br>
+	 * takes the present offset into consideration
+	 *
+	 * @return
+	 */
+	public int getXEffective() {
+		return Math.round(x + (float) offsetX / Renderer.tileSize);
+	}
+
+	/**
+	 * gets the y position of this component<br>
+	 * takes the present offset into consideration
+	 *
+	 * @return
+	 */
+	public int getYEffective() {
+		return Math.round(y + (float) offsetY / Renderer.tileSize);
 	}
 
 	/** {@inheritDoc} */
