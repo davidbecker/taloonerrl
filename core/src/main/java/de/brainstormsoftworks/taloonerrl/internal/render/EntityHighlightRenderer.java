@@ -28,7 +28,7 @@ import de.brainstormsoftworks.taloonerrl.render.Renderer;
  */
 public class EntityHighlightRenderer extends AbstractRender {
 
-	private int x, y;
+	private int x, y, offsetX, offsetY;
 	private int cursorAnimationOffset;
 	private PositionComponent positionComponent;
 	private HighlightAbleComponent highlight;
@@ -69,20 +69,30 @@ public class EntityHighlightRenderer extends AbstractRender {
 
 		x = positionComponent.getX();
 		y = positionComponent.getY();
+		offsetX = positionComponent.getOffsetX();
+		offsetY = positionComponent.getOffsetY();
 		if ((highlight.isHighlightOutsideFOV() || FovWrapper.getInstance().isLit(x, y))
 				&& (highlight.isHighlightUnvisited() || MapManager.getInstance().getMap().isVisited(x, y))) {
 			Renderer.getInstance().renderOnTile(HighlightAbleComponent.getCursorTopLeft(), x, y,
-					HighlightAbleComponent.cursorTopLeftOffsetX - highlight.getCursorAnimationOffset(),
-					HighlightAbleComponent.cursorTopLeftOffsetY + highlight.getCursorAnimationOffset());
+					HighlightAbleComponent.cursorTopLeftOffsetX - highlight.getCursorAnimationOffset()
+							+ offsetX,
+					HighlightAbleComponent.cursorTopLeftOffsetY + highlight.getCursorAnimationOffset()
+							+ offsetY);
 			Renderer.getInstance().renderOnTile(HighlightAbleComponent.getCursorTopRight(), x, y,
-					HighlightAbleComponent.cursorTopRightOffsetX + highlight.getCursorAnimationOffset(),
-					+HighlightAbleComponent.cursorTopRightOffsetY + highlight.getCursorAnimationOffset());
+					HighlightAbleComponent.cursorTopRightOffsetX + highlight.getCursorAnimationOffset()
+							+ offsetX,
+					+HighlightAbleComponent.cursorTopRightOffsetY + highlight.getCursorAnimationOffset()
+							+ offsetY);
 			Renderer.getInstance().renderOnTile(HighlightAbleComponent.getCursorBottomLeft(), x, y,
-					HighlightAbleComponent.cursorBottomLeftOffsetX - highlight.getCursorAnimationOffset(),
-					HighlightAbleComponent.cursorBottomLeftOffsetY - highlight.getCursorAnimationOffset());
+					HighlightAbleComponent.cursorBottomLeftOffsetX - highlight.getCursorAnimationOffset()
+							+ offsetX,
+					HighlightAbleComponent.cursorBottomLeftOffsetY - highlight.getCursorAnimationOffset()
+							+ offsetY);
 			Renderer.getInstance().renderOnTile(HighlightAbleComponent.getCursorBottomRight(), x, y,
-					HighlightAbleComponent.cursorBottomRightOffsetX + highlight.getCursorAnimationOffset(),
-					HighlightAbleComponent.cursorBottomRightOffsetY - highlight.getCursorAnimationOffset());
+					HighlightAbleComponent.cursorBottomRightOffsetX + highlight.getCursorAnimationOffset()
+							+ offsetX,
+					HighlightAbleComponent.cursorBottomRightOffsetY - highlight.getCursorAnimationOffset()
+							+ offsetY);
 		}
 	}
 }
