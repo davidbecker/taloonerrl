@@ -20,6 +20,7 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.math.Vector3;
 
+import de.brainstormsoftworks.taloonerrl.components.CursorComponent;
 import de.brainstormsoftworks.taloonerrl.components.HighlightAbleComponent;
 import de.brainstormsoftworks.taloonerrl.components.PlayerComponent;
 import de.brainstormsoftworks.taloonerrl.components.PositionComponent;
@@ -89,20 +90,24 @@ public final class InputSystem extends InputAdapter {
 
 	@Override
 	public boolean touchDown(final int _screenX, final int _screenY, final int _pointer, final int _button) {
+		boolean processed = false;
 		if (_button == Buttons.LEFT) {
+
 			// TODO check if UI has been clicked
 
 			// do things if the cursor is in the visible area
 			if (FovWrapper.getInstance().isLit(mouseOverX, mouseOverY)) {
-				toggleHighlightedActors();
+				processed = toggleHighlightedActors();
 			}
-			addPlayerWalkPath();
-			return true;
+			if (!processed) {
+				processed = addPlayerWalkPath();
+			}
+			return processed;
 		}
-		return false;
+		return processed;
 	}
 
-	private void addPlayerWalkPath() {
+	private boolean addPlayerWalkPath() {
 		if (MapManager.getInstance().getMap().isInMapBounds(mouseOverX, mouseOverY)
 				&& MapManager.getInstance().getMap().isVisited(mouseOverX, mouseOverY)) {
 			final EntitySubscription entitySubscription = GameEngine.getInstance()
@@ -115,11 +120,7 @@ public final class InputSystem extends InputAdapter {
 			Coord start = Coord.get(positionComponent.getX(), positionComponent.getY());
 			final DijkstraMap dijkstraMap = MapManager.getInstance().getMap().getDijkstraMap();
 			dijkstraMap.setGoal(mouseOverX, mouseOverY);
-			final int distance = (int) Math.sqrt(MapManager.getInstance().getMap().getTilesHorizontal()
-					* MapManager.getInstance().getMap().getTilesHorizontal()
-					+ MapManager.getInstance().getMap().getTilesVertical()
-							* MapManager.getInstance().getMap().getTilesVertical());
-			final ArrayList<Coord> path = dijkstraMap.findPath(distance, null, null, start);
+			final ArrayList<Coord> path = dijkstraMap.findPath(Integer.MAX_VALUE, null, null, start);
 			final int size = path.size();
 			final int[] directions = new int[size];
 			int index = 0;
@@ -130,16 +131,21 @@ public final class InputSystem extends InputAdapter {
 			}
 			TurnScheduler.getInstance().addTurnsToQueue(directions);
 			// }
+			return true;
 		}
+		return false;
 	}
 
 	/**
 	 * toggles highlighted state of actor that is on the same tile as the mouse is
 	 * over
 	 */
-	private void toggleHighlightedActors() {
+	private boolean toggleHighlightedActors() {
+		boolean toggled = false;
+		@SuppressWarnings("unchecked")
 		final EntitySubscription entitySubscription = GameEngine.getInstance().getAspectSubscriptionManager()
-				.get(Aspect.all(PositionComponent.class, HighlightAbleComponent.class));
+				.get(Aspect.all(PositionComponent.class, HighlightAbleComponent.class)
+						.exclude(CursorComponent.class));
 		final IntBag entities = entitySubscription.getEntities();
 		PositionComponent positionComponent;
 		HighlightAbleComponent highlight;
@@ -148,8 +154,10 @@ public final class InputSystem extends InputAdapter {
 			if (positionComponent.getX() == mouseOverX && positionComponent.getY() == mouseOverY) {
 				highlight = ComponentMappers.getInstance().highlight.get(i);
 				highlight.toggleHighlighted();
+				toggled = true;
 			}
 		}
+		return toggled;
 	}
 
 	@Override
