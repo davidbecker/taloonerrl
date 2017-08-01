@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2015, 2017 David Becker.
+ * Copyright (c)  2017 David Becker.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the GNU Public License v2.0
  * which accompanies this distribution, and is available at
@@ -8,14 +8,14 @@
  * Contributors:
  *     David Becker - initial API and implementation
  ******************************************************************************/
-package de.brainstormsoftworks.taloonerrl.system;
+package de.brainstormsoftworks.taloonerrl.internal.render;
 
 import com.artemis.Aspect;
-import com.artemis.systems.IteratingSystem;
 
 import de.brainstormsoftworks.taloonerrl.components.PositionComponent;
 import de.brainstormsoftworks.taloonerrl.components.SpriteComponent;
 import de.brainstormsoftworks.taloonerrl.core.engine.ComponentMappers;
+import de.brainstormsoftworks.taloonerrl.core.engine.GameEngine;
 import de.brainstormsoftworks.taloonerrl.render.Renderer;
 
 /**
@@ -24,10 +24,11 @@ import de.brainstormsoftworks.taloonerrl.render.Renderer;
  * @author David Becker
  *
  */
-public class SpriteRenderSystem extends IteratingSystem {
+public class SpriteRenderSystem extends AbstractRender {
 
 	public SpriteRenderSystem() {
-		super(Aspect.all(PositionComponent.class, SpriteComponent.class));
+		super(GameEngine.getInstance().getAspectSubscriptionManager()
+				.get(Aspect.all(PositionComponent.class, SpriteComponent.class)));
 	}
 
 	@Override

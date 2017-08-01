@@ -12,19 +12,14 @@ package de.brainstormsoftworks.taloonerrl.core.engine;
 
 import com.artemis.WorldConfiguration;
 
-import de.brainstormsoftworks.taloonerrl.system.AnimationRenderSystem;
 import de.brainstormsoftworks.taloonerrl.system.BlockingTileCheckSystem;
 import de.brainstormsoftworks.taloonerrl.system.CameraSystem;
 import de.brainstormsoftworks.taloonerrl.system.ControllerSystem;
-import de.brainstormsoftworks.taloonerrl.system.FacingAnimationRenderSystem;
 import de.brainstormsoftworks.taloonerrl.system.FovUpdaterSystem;
-import de.brainstormsoftworks.taloonerrl.system.HealthBarRenderSystem;
-import de.brainstormsoftworks.taloonerrl.system.HighlightRenderSystem;
-import de.brainstormsoftworks.taloonerrl.system.TurnProcessSystem;
 import de.brainstormsoftworks.taloonerrl.system.MapOverlayPreparerSystem;
 import de.brainstormsoftworks.taloonerrl.system.MouseCursorUpdateSystem;
 import de.brainstormsoftworks.taloonerrl.system.OffsetSystem;
-import de.brainstormsoftworks.taloonerrl.system.SpriteRenderSystem;
+import de.brainstormsoftworks.taloonerrl.system.TurnProcessSystem;
 
 /**
  * utility class to add all systems to a given {@link WorldConfiguration}
@@ -33,12 +28,7 @@ import de.brainstormsoftworks.taloonerrl.system.SpriteRenderSystem;
  *
  */
 public final class Systems {
-	private static final AnimationRenderSystem ANIMATION_RENDER_SYSTEM = new AnimationRenderSystem();
-	private static final FacingAnimationRenderSystem FACING_ANIMATION_RENDER_SYSTEM = new FacingAnimationRenderSystem();
-	private static final SpriteRenderSystem SPRITE_RENDER_SYSTEM = new SpriteRenderSystem();
-	private static final HealthBarRenderSystem RENDER_BAR_SYSTEM = new HealthBarRenderSystem();
 	private static final MouseCursorUpdateSystem HIGHLIGHT_UPDATE_SYSTEM = new MouseCursorUpdateSystem();
-	private static final HighlightRenderSystem HIGHLIGHT_SYSTEM = new HighlightRenderSystem();
 	private static final CameraSystem CAMERA_SYSTEM = new CameraSystem();
 	private static final TurnProcessSystem INPUT_PROCESS_SYSTEM = new TurnProcessSystem();
 	private static final ControllerSystem CONTROLLER_SYSTEM = new ControllerSystem();
@@ -65,11 +55,6 @@ public final class Systems {
 		config.setSystem(CAMERA_SYSTEM);
 		config.setSystem(FOV_UPDATER_SYSTEM);
 		config.setSystem(HIGHLIGHT_UPDATE_SYSTEM);
-		config.setSystem(HIGHLIGHT_SYSTEM);
-		config.setSystem(SPRITE_RENDER_SYSTEM);
-		config.setSystem(ANIMATION_RENDER_SYSTEM);
-		config.setSystem(FACING_ANIMATION_RENDER_SYSTEM);
-		config.setSystem(RENDER_BAR_SYSTEM);
 		config.setSystem(MAP_OVERLAY_PREPARER_SYSTEM);
 	}
 }

@@ -19,6 +19,11 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
+import de.brainstormsoftworks.taloonerrl.internal.render.EntityAnimationsRenderer;
+import de.brainstormsoftworks.taloonerrl.internal.render.EntityFacingAnimationsRenderer;
+import de.brainstormsoftworks.taloonerrl.internal.render.EntityHealthBarsRenderer;
+import de.brainstormsoftworks.taloonerrl.internal.render.EntityHighlightRenderer;
+import de.brainstormsoftworks.taloonerrl.internal.render.SpriteRenderSystem;
 import de.brainstormsoftworks.taloonerrl.math.IntVector2;
 
 /**
@@ -49,6 +54,12 @@ public final class Renderer implements IDisposableInstance {
 	// if the screen is big enough to display the full map this should be true
 	private boolean fullMapVisible;
 
+	private final IRender entityHighlightRenderer = new EntityHighlightRenderer();
+	private final IRender spriteRenderSystem = new SpriteRenderSystem();
+	private final IRender entityAnimationsRenderer = new EntityAnimationsRenderer();
+	private final IRender facingAnimationsRenderer = new EntityFacingAnimationsRenderer();
+	private final IRender entityHealthBarsRenderer = new EntityHealthBarsRenderer();
+
 	private Renderer() {
 		spriteBatchWorld = new SpriteBatch();
 		spriteBatchWorld.enableBlending();
@@ -67,6 +78,17 @@ public final class Renderer implements IDisposableInstance {
 	 */
 	public static Renderer getInstance() {
 		return instance;
+	}
+
+	/**
+	 * renders the next frame
+	 */
+	public void render() {
+		entityHighlightRenderer.render();
+		spriteRenderSystem.render();
+		entityAnimationsRenderer.render();
+		facingAnimationsRenderer.render();
+		entityHealthBarsRenderer.render();
 	}
 
 	/**

@@ -50,12 +50,16 @@ public class TaloonerRl implements ApplicationListener {
 
 	@Override
 	public void render() {
+		// update game systems
+		GameEngine.getInstance().update();
+
+		// begin rendering of the game world
 		Renderer.getInstance().beginWorldRendering();
 		DungeonRenderer.getInstance().render(map);
-
-		GameEngine.getInstance().update();
+		Renderer.getInstance().render();
 		Renderer.getInstance().endWorldRendering();
 
+		// render user interface on top
 		Renderer.getInstance().beginScreenRendering();
 		Renderer.getInstance().setScreenBlendingAlpha();
 		MapOverlayRenderer.getInstance().render();

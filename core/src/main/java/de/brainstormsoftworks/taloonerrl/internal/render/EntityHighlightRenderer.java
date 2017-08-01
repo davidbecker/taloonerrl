@@ -8,10 +8,9 @@
  * Contributors:
  *     David Becker - initial API and implementation
  ******************************************************************************/
-package de.brainstormsoftworks.taloonerrl.system;
+package de.brainstormsoftworks.taloonerrl.internal.render;
 
 import com.artemis.Aspect;
-import com.artemis.systems.IteratingSystem;
 
 import de.brainstormsoftworks.taloonerrl.components.HighlightAbleComponent;
 import de.brainstormsoftworks.taloonerrl.components.PositionComponent;
@@ -27,15 +26,16 @@ import de.brainstormsoftworks.taloonerrl.render.Renderer;
  * @author David Becker
  *
  */
-public class HighlightRenderSystem extends IteratingSystem {
+public class EntityHighlightRenderer extends AbstractRender {
 
 	private int x, y;
 	private int cursorAnimationOffset;
 	private PositionComponent positionComponent;
 	private HighlightAbleComponent highlight;
 
-	public HighlightRenderSystem() {
-		super(Aspect.all(PositionComponent.class, HighlightAbleComponent.class));
+	public EntityHighlightRenderer() {
+		super(GameEngine.getInstance().getAspectSubscriptionManager()
+				.get(Aspect.all(PositionComponent.class, HighlightAbleComponent.class)));
 	}
 
 	@Override
