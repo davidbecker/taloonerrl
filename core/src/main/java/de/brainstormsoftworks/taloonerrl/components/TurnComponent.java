@@ -30,10 +30,13 @@ public class TurnComponent extends PooledComponent implements ISetAbleComponent<
 	private int currentTurn = Direction.NOTHING;
 	private int nextTurn = Direction.NOTHING;
 
+	boolean processed = false;
+
 	@Override
 	protected void reset() {
 		currentTurn = Direction.NOTHING;
 		nextTurn = Direction.NOTHING;
+		processed = false;
 	}
 
 	/** {@inheritDoc} */
@@ -41,6 +44,7 @@ public class TurnComponent extends PooledComponent implements ISetAbleComponent<
 	public void overrideComponent(final TurnComponent _component) {
 		currentTurn = _component.getCurrentTurn();
 		nextTurn = _component.getNextTurn();
+		processed = _component.isProcessed();
 	}
 
 	public int nextTurn() {

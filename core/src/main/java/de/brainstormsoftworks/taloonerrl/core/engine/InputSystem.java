@@ -110,25 +110,26 @@ public final class InputSystem extends InputAdapter {
 					.get(Aspect.all(PositionComponent.class, PlayerComponent.class));
 			final PositionComponent positionComponent = ComponentMappers.getInstance().position
 					.get(entitySubscription.getEntities().get(0));
-			if (!positionComponent.isProcessingTurn()) {
-				Coord start = Coord.get(positionComponent.getX(), positionComponent.getY());
-				final DijkstraMap dijkstraMap = MapManager.getInstance().getMap().getDijkstraMap();
-				dijkstraMap.setGoal(mouseOverX, mouseOverY);
-				final int distance = (int) Math.sqrt(MapManager.getInstance().getMap().getTilesHorizontal()
-						* MapManager.getInstance().getMap().getTilesHorizontal()
-						+ MapManager.getInstance().getMap().getTilesVertical()
-								* MapManager.getInstance().getMap().getTilesVertical());
-				final ArrayList<Coord> path = dijkstraMap.findPath(distance, null, null, start);
-				final int size = path.size();
-				final int[] directions = new int[size];
-				int index = 0;
-				for (final Coord coord : path) {
-					directions[index] = Direction.from(squidpony.squidgrid.Direction.toGoTo(start, coord));
-					start = coord;
-					index = index + 1;
-				}
-				TurnScheduler.getInstance().addTurnsToQueue(directions);
+			// skip current path and override it with new on click for now
+			// if (!positionComponent.isProcessingTurn()) {
+			Coord start = Coord.get(positionComponent.getX(), positionComponent.getY());
+			final DijkstraMap dijkstraMap = MapManager.getInstance().getMap().getDijkstraMap();
+			dijkstraMap.setGoal(mouseOverX, mouseOverY);
+			final int distance = (int) Math.sqrt(MapManager.getInstance().getMap().getTilesHorizontal()
+					* MapManager.getInstance().getMap().getTilesHorizontal()
+					+ MapManager.getInstance().getMap().getTilesVertical()
+							* MapManager.getInstance().getMap().getTilesVertical());
+			final ArrayList<Coord> path = dijkstraMap.findPath(distance, null, null, start);
+			final int size = path.size();
+			final int[] directions = new int[size];
+			int index = 0;
+			for (final Coord coord : path) {
+				directions[index] = Direction.from(squidpony.squidgrid.Direction.toGoTo(start, coord));
+				start = coord;
+				index = index + 1;
 			}
+			TurnScheduler.getInstance().addTurnsToQueue(directions);
+			// }
 		}
 	}
 

@@ -47,37 +47,37 @@ public class TurnProcessSystem extends EntityProcessingSystem {
 		if (!positionComponent.isProcessingTurn()) {
 			isPlayer = ComponentMappers.getInstance().player.getSafe(e) != null;
 			turnComponent = ComponentMappers.getInstance().turn.get(e);
-
-			// for now only the player can have turns...
-			if (isPlayer) {
-				nextTurn = turnComponent.nextTurn(TurnScheduler.getInstance().getNextTurn());
-			} else {
-				nextTurn = turnComponent.nextTurn();
-			}
-
-			if (nextTurn != Direction.NOTHING) {
-				if (nextTurn == Direction.DOWN) {
-					positionComponent.setOffsetY(0);
-					positionComponent.setTotalY(-1 * Renderer.tileSize);
-				} else if (nextTurn == Direction.UP) {
-					positionComponent.setOffsetY(1);
-					positionComponent.setTotalY(Renderer.tileSize);
-				} else if (nextTurn == Direction.LEFT) {
-					positionComponent.setOffsetX(0);
-					positionComponent.setTotalX(-1 * Renderer.tileSize);
-				} else if (nextTurn == Direction.RIGHT) {
-					positionComponent.setOffsetX(0);
-					positionComponent.setTotalX(Renderer.tileSize);
-				}
-				positionComponent.setProcessingTurn(true);
+			if (!turnComponent.isProcessed()) {
+				// for now only the player can have turns...
 				if (isPlayer) {
-					facingComponent = ComponentMappers.getInstance().facing.getSafe(e);
-					if (facingComponent != null) {
-						facingComponent.setDirection(nextTurn);
+					nextTurn = turnComponent.nextTurn(TurnScheduler.getInstance().getNextTurn());
+				} else {
+					nextTurn = turnComponent.nextTurn();
+				}
+
+				if (nextTurn != Direction.NOTHING) {
+					if (nextTurn == Direction.DOWN) {
+						positionComponent.setOffsetY(0);
+						positionComponent.setTotalY(-1 * Renderer.tileSize);
+					} else if (nextTurn == Direction.UP) {
+						positionComponent.setOffsetY(1);
+						positionComponent.setTotalY(Renderer.tileSize);
+					} else if (nextTurn == Direction.LEFT) {
+						positionComponent.setOffsetX(0);
+						positionComponent.setTotalX(-1 * Renderer.tileSize);
+					} else if (nextTurn == Direction.RIGHT) {
+						positionComponent.setOffsetX(0);
+						positionComponent.setTotalX(Renderer.tileSize);
+					}
+					if (isPlayer) {
+						facingComponent = ComponentMappers.getInstance().facing.getSafe(e);
+						if (facingComponent != null) {
+							facingComponent.setDirection(nextTurn);
+						}
 					}
 				}
+				// TODO implement here turnComponent.setProcessed(true)
 			}
-
 		}
 	}
 
