@@ -29,6 +29,8 @@ public class FovUpdaterSystem extends EntityProcessingSystem {
 	private PositionComponent positionComponent;
 	private int oldX = -1;
 	private int oldY = -1;
+	private int x;
+	private int y;
 
 	public FovUpdaterSystem() {
 		super(Aspect.all(PositionComponent.class, PlayerComponent.class));
@@ -37,8 +39,8 @@ public class FovUpdaterSystem extends EntityProcessingSystem {
 	@Override
 	protected void process(final Entity e) {
 		positionComponent = ComponentMappers.getInstance().position.get(e);
-		final int x = positionComponent.getX();
-		final int y = positionComponent.getY();
+		x = positionComponent.getX();
+		y = positionComponent.getY();
 		// only compute fov if position has changed
 		if (!(oldX == x && oldY == y)) {
 			// TODO move into different thread

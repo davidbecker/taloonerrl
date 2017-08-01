@@ -14,7 +14,7 @@ import de.brainstormsoftworks.taloonerrl.components.PositionComponent;
 import de.brainstormsoftworks.taloonerrl.render.Renderer;
 
 /**
- * collection of utility methods related to positons
+ * collection of utility methods related to positions
  *
  * @author David Becker
  *

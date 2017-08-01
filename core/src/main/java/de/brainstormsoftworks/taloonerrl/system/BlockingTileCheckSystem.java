@@ -31,6 +31,8 @@ public class BlockingTileCheckSystem extends EntityProcessingSystem implements I
 
 	private PositionComponent position;
 	private IMap map;
+	private int deltaX;
+	private int deltaY;
 
 	public BlockingTileCheckSystem() {
 		super(Aspect.all(PositionComponent.class));
@@ -41,8 +43,8 @@ public class BlockingTileCheckSystem extends EntityProcessingSystem implements I
 	protected void process(final Entity e) {
 		position = ComponentMappers.getInstance().position.get(e);
 		if (map != null) {
-			final int deltaX = PositionUtil.getDeltaX(position);
-			final int deltaY = PositionUtil.getDeltaY(position);
+			deltaX = PositionUtil.getDeltaX(position);
+			deltaY = PositionUtil.getDeltaY(position);
 			if (PositionUtil.isMovingWholeTile(deltaX, deltaY)) {
 				if (!map.isWalkable(position.getX() + deltaX, position.getY() + deltaY)) {
 					// not walkable -> reset movement
