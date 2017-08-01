@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2015 David Becker.
+ * Copyright (c) 2015, 2017 David Becker.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the GNU Public License v2.0
  * which accompanies this distribution, and is available at
@@ -11,8 +11,7 @@
 package de.brainstormsoftworks.taloonerrl.system;
 
 import com.artemis.Aspect;
-import com.artemis.Entity;
-import com.artemis.systems.EntityProcessingSystem;
+import com.artemis.systems.IteratingSystem;
 
 import de.brainstormsoftworks.taloonerrl.components.PlayerComponent;
 import de.brainstormsoftworks.taloonerrl.components.PositionComponent;
@@ -25,7 +24,7 @@ import de.brainstormsoftworks.taloonerrl.render.FovWrapper;
  * @author David Becker
  *
  */
-public class FovUpdaterSystem extends EntityProcessingSystem {
+public class FovUpdaterSystem extends IteratingSystem {
 	private PositionComponent positionComponent;
 	private int oldX = -1;
 	private int oldY = -1;
@@ -37,8 +36,8 @@ public class FovUpdaterSystem extends EntityProcessingSystem {
 	}
 
 	@Override
-	protected void process(final Entity e) {
-		positionComponent = ComponentMappers.getInstance().position.get(e);
+	protected void process(final int _entityId) {
+		positionComponent = ComponentMappers.getInstance().position.get(_entityId);
 		x = positionComponent.getX();
 		y = positionComponent.getY();
 		// only compute fov if position has changed

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2015 David Becker.
+ * Copyright (c) 2015, 2017 David Becker.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the GNU Public License v2.0
  * which accompanies this distribution, and is available at
@@ -11,8 +11,7 @@
 package de.brainstormsoftworks.taloonerrl.system;
 
 import com.artemis.Aspect;
-import com.artemis.Entity;
-import com.artemis.systems.EntityProcessingSystem;
+import com.artemis.systems.IteratingSystem;
 
 import de.brainstormsoftworks.taloonerrl.components.PositionComponent;
 import de.brainstormsoftworks.taloonerrl.core.engine.ComponentMappers;
@@ -27,7 +26,7 @@ import de.brainstormsoftworks.taloonerrl.system.util.PositionUtil;
  * @author David Becker
  *
  */
-public class BlockingTileCheckSystem extends EntityProcessingSystem implements IMapChangeListener {
+public class BlockingTileCheckSystem extends IteratingSystem implements IMapChangeListener {
 
 	private PositionComponent position;
 	private IMap map;
@@ -40,8 +39,8 @@ public class BlockingTileCheckSystem extends EntityProcessingSystem implements I
 	}
 
 	@Override
-	protected void process(final Entity e) {
-		position = ComponentMappers.getInstance().position.get(e);
+	protected void process(final int _entityId) {
+		position = ComponentMappers.getInstance().position.get(_entityId);
 		if (map != null) {
 			deltaX = PositionUtil.getDeltaX(position);
 			deltaY = PositionUtil.getDeltaY(position);

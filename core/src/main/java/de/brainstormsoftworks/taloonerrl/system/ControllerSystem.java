@@ -11,8 +11,7 @@
 package de.brainstormsoftworks.taloonerrl.system;
 
 import com.artemis.Aspect;
-import com.artemis.Entity;
-import com.artemis.systems.EntityProcessingSystem;
+import com.artemis.systems.IteratingSystem;
 
 import de.brainstormsoftworks.taloonerrl.components.PositionComponent;
 import de.brainstormsoftworks.taloonerrl.core.engine.ComponentMappers;
@@ -23,7 +22,7 @@ import de.brainstormsoftworks.taloonerrl.core.engine.ComponentMappers;
  * @author David Becker
  *
  */
-public class ControllerSystem extends EntityProcessingSystem {
+public class ControllerSystem extends IteratingSystem {
 
 	private int totalX = 0;
 	private int totalY = 0;
@@ -44,10 +43,9 @@ public class ControllerSystem extends EntityProcessingSystem {
 		super(Aspect.all(PositionComponent.class));
 	}
 
-	/** {@inheritDoc} */
 	@Override
-	protected void process(final Entity entity) {
-		final PositionComponent position = ComponentMappers.getInstance().position.get(entity);
+	protected void process(final int _entityId) {
+		final PositionComponent position = ComponentMappers.getInstance().position.get(_entityId);
 		totalX = position.getTotalX();
 		totalY = position.getTotalY();
 		offsetX = position.getOffsetX();

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2015 David Becker.
+ * Copyright (c) 2015, 2017 David Becker.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the GNU Public License v2.0
  * which accompanies this distribution, and is available at
@@ -11,8 +11,7 @@
 package de.brainstormsoftworks.taloonerrl.system;
 
 import com.artemis.Aspect;
-import com.artemis.Entity;
-import com.artemis.systems.EntityProcessingSystem;
+import com.artemis.systems.IteratingSystem;
 
 import de.brainstormsoftworks.taloonerrl.components.CollectibleComponent;
 import de.brainstormsoftworks.taloonerrl.components.HealthComponent;
@@ -28,7 +27,7 @@ import de.brainstormsoftworks.taloonerrl.render.MapOverlayRenderer.Visible;
  * @author David Becker
  *
  */
-public class MapOverlayPreparerSystem extends EntityProcessingSystem {
+public class MapOverlayPreparerSystem extends IteratingSystem {
 	private HealthComponent healthComponent;
 	private PositionComponent positionComponent;
 	private CollectibleComponent collectibleComponent;
@@ -41,15 +40,15 @@ public class MapOverlayPreparerSystem extends EntityProcessingSystem {
 	}
 
 	@Override
-	protected void process(final Entity e) {
-		positionComponent = ComponentMappers.getInstance().position.get(e);
-		healthComponent = ComponentMappers.getInstance().health.get(e);
-		collectibleComponent = ComponentMappers.getInstance().collectible.get(e);
+	protected void process(final int _entityId) {
+		positionComponent = ComponentMappers.getInstance().position.get(_entityId);
+		healthComponent = ComponentMappers.getInstance().health.get(_entityId);
+		collectibleComponent = ComponentMappers.getInstance().collectible.get(_entityId);
 		x = positionComponent.getX();
 		y = positionComponent.getY();
 		if (healthComponent != null && healthComponent.isAlive() && FovWrapper.getInstance().isLit(x, y)) {
 			// check if the entity is the player
-			if (ComponentMappers.getInstance().player.get(e) != null) {
+			if (ComponentMappers.getInstance().player.get(_entityId) != null) {
 				MapOverlayRenderer.getInstance().setOverlay(x, y, Visible.PLAYER);
 			} else {
 				MapOverlayRenderer.getInstance().setOverlay(x, y, Visible.MONSTER);
@@ -58,6 +57,6 @@ public class MapOverlayPreparerSystem extends EntityProcessingSystem {
 		if (collectibleComponent != null) {
 			MapOverlayRenderer.getInstance().setOverlay(x, y, Visible.COLLECTIBLE);
 		}
-
 	}
+
 }

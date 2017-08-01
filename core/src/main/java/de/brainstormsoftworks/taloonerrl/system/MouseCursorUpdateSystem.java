@@ -11,8 +11,7 @@
 package de.brainstormsoftworks.taloonerrl.system;
 
 import com.artemis.Aspect;
-import com.artemis.Entity;
-import com.artemis.systems.EntityProcessingSystem;
+import com.artemis.systems.IteratingSystem;
 
 import de.brainstormsoftworks.taloonerrl.components.CursorComponent;
 import de.brainstormsoftworks.taloonerrl.components.PositionComponent;
@@ -26,7 +25,7 @@ import de.brainstormsoftworks.taloonerrl.core.engine.InputSystem;
  * @author David Becker
  *
  */
-public class MouseCursorUpdateSystem extends EntityProcessingSystem {
+public class MouseCursorUpdateSystem extends IteratingSystem {
 
 	private PositionComponent positionComponent;
 
@@ -35,8 +34,8 @@ public class MouseCursorUpdateSystem extends EntityProcessingSystem {
 	}
 
 	@Override
-	protected void process(final Entity e) {
-		positionComponent = ComponentMappers.getInstance().position.get(e);
+	protected void process(final int _entityId) {
+		positionComponent = ComponentMappers.getInstance().position.get(_entityId);
 		positionComponent.setX(InputSystem.getInstance().getMouseOverX());
 		positionComponent.setY(InputSystem.getInstance().getMouseOverY());
 	}

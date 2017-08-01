@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2015 David Becker.
+ * Copyright (c) 2015, 2017 David Becker.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the GNU Public License v2.0
  * which accompanies this distribution, and is available at
@@ -11,8 +11,7 @@
 package de.brainstormsoftworks.taloonerrl.system;
 
 import com.artemis.Aspect;
-import com.artemis.Entity;
-import com.artemis.systems.EntityProcessingSystem;
+import com.artemis.systems.IteratingSystem;
 
 import de.brainstormsoftworks.taloonerrl.components.HealthComponent;
 import de.brainstormsoftworks.taloonerrl.components.PositionComponent;
@@ -27,7 +26,7 @@ import de.brainstormsoftworks.taloonerrl.render.Renderer;
  * @author David Becker
  *
  */
-public class HealthBarRenderSystem extends EntityProcessingSystem {
+public class HealthBarRenderSystem extends IteratingSystem {
 	private static final int totalSize = Renderer.tileSize - 2;
 	private HealthComponent healthComponent;
 	private int sizeGreen = 0;
@@ -43,10 +42,10 @@ public class HealthBarRenderSystem extends EntityProcessingSystem {
 	}
 
 	@Override
-	protected void process(final Entity e) {
-		healthComponent = ComponentMappers.getInstance().health.get(e);
+	protected void process(final int _entityId) {
+		healthComponent = ComponentMappers.getInstance().health.get(_entityId);
 		if (healthComponent.isAlive()) {
-			positionComponent = ComponentMappers.getInstance().position.get(e);
+			positionComponent = ComponentMappers.getInstance().position.get(_entityId);
 			x = positionComponent.getX();
 			y = positionComponent.getY();
 			offsetX = positionComponent.getOffsetX();
@@ -66,6 +65,5 @@ public class HealthBarRenderSystem extends EntityProcessingSystem {
 				}
 			}
 		}
-
 	}
 }

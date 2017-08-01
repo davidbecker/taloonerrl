@@ -11,8 +11,7 @@
 package de.brainstormsoftworks.taloonerrl.system;
 
 import com.artemis.Aspect;
-import com.artemis.Entity;
-import com.artemis.systems.EntityProcessingSystem;
+import com.artemis.systems.IteratingSystem;
 
 import de.brainstormsoftworks.taloonerrl.components.HighlightAbleComponent;
 import de.brainstormsoftworks.taloonerrl.components.PositionComponent;
@@ -28,7 +27,7 @@ import de.brainstormsoftworks.taloonerrl.render.Renderer;
  * @author David Becker
  *
  */
-public class HighlightRenderSystem extends EntityProcessingSystem {
+public class HighlightRenderSystem extends IteratingSystem {
 
 	private int x, y;
 	private int cursorAnimationOffset;
@@ -40,9 +39,9 @@ public class HighlightRenderSystem extends EntityProcessingSystem {
 	}
 
 	@Override
-	protected void process(final Entity e) {
-		positionComponent = ComponentMappers.getInstance().position.get(e);
-		highlight = ComponentMappers.getInstance().highlight.get(e);
+	protected void process(final int _entityId) {
+		positionComponent = ComponentMappers.getInstance().position.get(_entityId);
+		highlight = ComponentMappers.getInstance().highlight.get(_entityId);
 		if (highlight.isHighlightStyleNone() || !highlight.isHighlightActive()) {
 			return;
 		}

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2015 David Becker.
+ * Copyright (c) 2015, 2017 David Becker.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the GNU Public License v2.0
  * which accompanies this distribution, and is available at
@@ -11,8 +11,7 @@
 package de.brainstormsoftworks.taloonerrl.system;
 
 import com.artemis.Aspect;
-import com.artemis.Entity;
-import com.artemis.systems.EntityProcessingSystem;
+import com.artemis.systems.IteratingSystem;
 
 import de.brainstormsoftworks.taloonerrl.components.FacingComponent;
 import de.brainstormsoftworks.taloonerrl.components.PositionComponent;
@@ -29,7 +28,7 @@ import de.brainstormsoftworks.taloonerrl.render.Renderer;
  * @author David Becker
  *
  */
-public class TurnProcessSystem extends EntityProcessingSystem {
+public class TurnProcessSystem extends IteratingSystem {
 
 	private PositionComponent positionComponent;
 	private FacingComponent facingComponent;
@@ -42,11 +41,11 @@ public class TurnProcessSystem extends EntityProcessingSystem {
 	}
 
 	@Override
-	protected void process(final Entity e) {
-		positionComponent = ComponentMappers.getInstance().position.get(e);
+	protected void process(final int _entityId) {
+		positionComponent = ComponentMappers.getInstance().position.get(_entityId);
 		if (!positionComponent.isProcessingTurn()) {
-			isPlayer = ComponentMappers.getInstance().player.getSafe(e) != null;
-			turnComponent = ComponentMappers.getInstance().turn.get(e);
+			isPlayer = ComponentMappers.getInstance().player.getSafe(_entityId) != null;
+			turnComponent = ComponentMappers.getInstance().turn.get(_entityId);
 			if (!turnComponent.isProcessed()) {
 				// for now only the player can have turns...
 				if (isPlayer) {
@@ -70,7 +69,7 @@ public class TurnProcessSystem extends EntityProcessingSystem {
 						positionComponent.setTotalX(Renderer.tileSize);
 					}
 					if (isPlayer) {
-						facingComponent = ComponentMappers.getInstance().facing.getSafe(e);
+						facingComponent = ComponentMappers.getInstance().facing.getSafe(_entityId);
 						if (facingComponent != null) {
 							facingComponent.setDirection(nextTurn);
 						}
