@@ -13,11 +13,15 @@ package de.brainstormsoftworks.taloonerrl.core.engine;
 import com.artemis.Entity;
 import com.artemis.World;
 
+import de.brainstormsoftworks.taloonerrl.ai.ErraticArtificialIntelligence;
 import de.brainstormsoftworks.taloonerrl.components.AnimationComponent;
+import de.brainstormsoftworks.taloonerrl.components.ArtificialIntelligenceComponent;
 import de.brainstormsoftworks.taloonerrl.components.FacingAnimationComponent;
 import de.brainstormsoftworks.taloonerrl.components.NameComponent;
 import de.brainstormsoftworks.taloonerrl.components.PositionComponent;
 import de.brainstormsoftworks.taloonerrl.components.SpriteComponent;
+import de.brainstormsoftworks.taloonerrl.components.TurnComponent;
+import de.brainstormsoftworks.taloonerrl.core.engine.scheduler.ETurnType;
 
 /**
  * factory to create entities in to the game world
@@ -49,149 +53,78 @@ public final class EntityFactory {
 		case PLAYER:
 			return createPlayer(world);
 		case BLOB:
-			return createActor(type, world, xPosition, yPosition);
 		case SQUIRREL:
-			return createActor(type, world, xPosition, yPosition);
 		case BAT:
-			return createActor(type, world, xPosition, yPosition);
 		case MAGICIAN:
-			return createActor(type, world, xPosition, yPosition);
 		case SLUG:
-			return createActor(type, world, xPosition, yPosition);
 		case GHOST:
-			return createActor(type, world, xPosition, yPosition);
 		case SHADOW:
-			return createActor(type, world, xPosition, yPosition);
 		case EYEBALL:
-			return createActor(type, world, xPosition, yPosition);
 		case GOLEM:
-			return createActor(type, world, xPosition, yPosition);
 		case ARCHER:
-			return createActor(type, world, xPosition, yPosition);
 		case BOMB:
-			return createActor(type, world, xPosition, yPosition);
 		case WARPER:
-			return createActor(type, world, xPosition, yPosition);
 		case STEALER:
-			return createActor(type, world, xPosition, yPosition);
 		case DRAGON:
-			return createActor(type, world, xPosition, yPosition);
 		case ACID:
-			return createActor(type, world, xPosition, yPosition);
 		case MUSHROOM:
-			return createActor(type, world, xPosition, yPosition);
+			return createMonster(type, world, xPosition, yPosition);
 		case POTION_A:
-			return createCollectible(type, world, xPosition, yPosition);
 		case POTION_B:
-			return createCollectible(type, world, xPosition, yPosition);
 		case POTION_C:
-			return createCollectible(type, world, xPosition, yPosition);
 		case POTION_D:
-			return createCollectible(type, world, xPosition, yPosition);
 		case POTION_E:
-			return createCollectible(type, world, xPosition, yPosition);
 		case POTION_F:
-			return createCollectible(type, world, xPosition, yPosition);
 		case POTION_G:
-			return createCollectible(type, world, xPosition, yPosition);
 		case POTION_H:
-			return createCollectible(type, world, xPosition, yPosition);
 		case POTION_I:
-			return createCollectible(type, world, xPosition, yPosition);
 		case POTION_J:
-			return createCollectible(type, world, xPosition, yPosition);
 		case SCROLL_A:
-			return createCollectible(type, world, xPosition, yPosition);
 		case SCROLL_B:
-			return createCollectible(type, world, xPosition, yPosition);
 		case SCROLL_C:
-			return createCollectible(type, world, xPosition, yPosition);
 		case SCROLL_D:
-			return createCollectible(type, world, xPosition, yPosition);
 		case SCROLL_E:
-			return createCollectible(type, world, xPosition, yPosition);
 		case SCROLL_F:
-			return createCollectible(type, world, xPosition, yPosition);
 		case SCROLL_G:
-			return createCollectible(type, world, xPosition, yPosition);
 		case SCROLL_H:
-			return createCollectible(type, world, xPosition, yPosition);
 		case SCROLL_I:
-			return createCollectible(type, world, xPosition, yPosition);
 		case SCROLL_J:
-			return createCollectible(type, world, xPosition, yPosition);
 		case WAND_A:
-			return createCollectible(type, world, xPosition, yPosition);
 		case WAND_B:
-			return createCollectible(type, world, xPosition, yPosition);
 		case WAND_C:
-			return createCollectible(type, world, xPosition, yPosition);
 		case WAND_D:
-			return createCollectible(type, world, xPosition, yPosition);
 		case WAND_E:
-			return createCollectible(type, world, xPosition, yPosition);
 		case WAND_F:
-			return createCollectible(type, world, xPosition, yPosition);
 		case WAND_G:
-			return createCollectible(type, world, xPosition, yPosition);
 		case WAND_H:
-			return createCollectible(type, world, xPosition, yPosition);
 		case WAND_I:
-			return createCollectible(type, world, xPosition, yPosition);
 		case WAND_J:
-			return createCollectible(type, world, xPosition, yPosition);
 		case RING_A:
-			return createCollectible(type, world, xPosition, yPosition);
 		case RING_B:
-			return createCollectible(type, world, xPosition, yPosition);
 		case RING_C:
-			return createCollectible(type, world, xPosition, yPosition);
 		case RING_D:
-			return createCollectible(type, world, xPosition, yPosition);
 		case RING_E:
-			return createCollectible(type, world, xPosition, yPosition);
 		case RING_F:
-			return createCollectible(type, world, xPosition, yPosition);
 		case RING_G:
-			return createCollectible(type, world, xPosition, yPosition);
 		case RING_H:
-			return createCollectible(type, world, xPosition, yPosition);
 		case RING_I:
-			return createCollectible(type, world, xPosition, yPosition);
 		case RING_J:
-			return createCollectible(type, world, xPosition, yPosition);
 		case WEAPON_A:
-			return createCollectible(type, world, xPosition, yPosition);
 		case WEAPON_B:
-			return createCollectible(type, world, xPosition, yPosition);
 		case WEAPON_C:
-			return createCollectible(type, world, xPosition, yPosition);
 		case WEAPON_D:
-			return createCollectible(type, world, xPosition, yPosition);
 		case WEAPON_E:
-			return createCollectible(type, world, xPosition, yPosition);
 		case WEAPON_F:
-			return createCollectible(type, world, xPosition, yPosition);
 		case WEAPON_G:
-			return createCollectible(type, world, xPosition, yPosition);
 		case WEAPON_H:
-			return createCollectible(type, world, xPosition, yPosition);
 		case WEAPON_I:
-			return createCollectible(type, world, xPosition, yPosition);
 		case WEAPON_J:
-			return createCollectible(type, world, xPosition, yPosition);
 		case SHIELD_A:
-			return createCollectible(type, world, xPosition, yPosition);
 		case SHIELD_B:
-			return createCollectible(type, world, xPosition, yPosition);
 		case SHIELD_C:
-			return createCollectible(type, world, xPosition, yPosition);
 		case SHIELD_D:
-			return createCollectible(type, world, xPosition, yPosition);
 		case SHIELD_E:
-			return createCollectible(type, world, xPosition, yPosition);
 		case SHIELD_F:
-			return createCollectible(type, world, xPosition, yPosition);
 		case SHIELD_G:
 			return createCollectible(type, world, xPosition, yPosition);
 		case TORCH:
@@ -206,18 +139,20 @@ public final class EntityFactory {
 	private static Entity createPlayer(final World world) {
 		final Entity newEntity = world.createEntity(Archetypes.getInstance().player);
 		newEntity.getComponent(FacingAnimationComponent.class).mapAnimation(EEntity.PLAYER);
+		newEntity.getComponent(TurnComponent.class).setMovesOnTurn(ETurnType.PLAYER);
 		setName(newEntity, EEntity.PLAYER);
 		return newEntity;
 	}
 
-	private static Entity createActor(final EEntity type, final World world, final int xPosition,
+	private static Entity createMonster(final EEntity type, final World world, final int xPosition,
 			final int yPosition) {
-		final Entity newEntity = world.createEntity(Archetypes.getInstance().actor);
+		final Entity newEntity = world.createEntity(Archetypes.getInstance().monster);
 		newEntity.getComponent(AnimationComponent.class).mapAnimation(type);
 		final PositionComponent posComponent = newEntity.getComponent(PositionComponent.class);
 		posComponent.setX(xPosition);
 		posComponent.setY(yPosition);
 		setName(newEntity, type);
+		setAI(newEntity, type);
 		return newEntity;
 	}
 
@@ -301,5 +236,18 @@ public final class EntityFactory {
 			break;
 		}
 
+	}
+
+	private static void setAI(final Entity entity, final EEntity type) {
+		final ArtificialIntelligenceComponent aiComponent = ComponentMappers.getInstance().ai.getSafe(entity);
+		if (aiComponent != null) {
+			switch (type) {
+			case BAT:
+				aiComponent.setArtificialIntelligence(new ErraticArtificialIntelligence());
+				break;
+			default:
+				break;
+			}
+		}
 	}
 }

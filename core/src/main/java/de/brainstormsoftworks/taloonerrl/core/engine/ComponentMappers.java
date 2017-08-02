@@ -15,6 +15,7 @@ import com.artemis.ComponentMapper;
 import com.artemis.World;
 
 import de.brainstormsoftworks.taloonerrl.components.AnimationComponent;
+import de.brainstormsoftworks.taloonerrl.components.ArtificialIntelligenceComponent;
 import de.brainstormsoftworks.taloonerrl.components.CameraFollowComponent;
 import de.brainstormsoftworks.taloonerrl.components.CollectibleComponent;
 import de.brainstormsoftworks.taloonerrl.components.CursorComponent;
@@ -48,6 +49,7 @@ public final class ComponentMappers {
 	public final ComponentMapper<PlayerComponent> player;
 	public final ComponentMapper<CursorComponent> cursor;
 	public final ComponentMapper<TurnComponent> turn;
+	public final ComponentMapper<ArtificialIntelligenceComponent> ai;
 
 	private static ComponentMappers instance = null;
 
@@ -65,6 +67,7 @@ public final class ComponentMappers {
 		player = ComponentMapper.getFor(PlayerComponent.class, world);
 		cursor = ComponentMapper.getFor(CursorComponent.class, world);
 		turn = ComponentMapper.getFor(TurnComponent.class, world);
+		ai = ComponentMapper.getFor(ArtificialIntelligenceComponent.class, world);
 	}
 
 	/**

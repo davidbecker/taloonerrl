@@ -12,7 +12,8 @@ package de.brainstormsoftworks.taloonerrl.components;
 
 import com.artemis.PooledComponent;
 
-import de.brainstormsoftworks.taloonerrl.core.engine.Direction;
+import de.brainstormsoftworks.taloonerrl.core.engine.Move;
+import de.brainstormsoftworks.taloonerrl.core.engine.scheduler.ETurnType;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -27,16 +28,21 @@ import lombok.Setter;
 public class TurnComponent extends PooledComponent implements ISetAbleComponent<TurnComponent> {
 
 	// TODO refactor into a proper turn queue for each component?
-	private int currentTurn = Direction.NOTHING;
-	private int nextTurn = Direction.NOTHING;
+	private int currentTurn = Move.IDLE;
+	private int nextTurn = Move.IDLE;
 
 	boolean processed = false;
+	boolean turnTaken = false;
+
+	private ETurnType movesOnTurn = ETurnType.MONSTER;
 
 	@Override
 	protected void reset() {
-		currentTurn = Direction.NOTHING;
-		nextTurn = Direction.NOTHING;
+		currentTurn = Move.IDLE;
+		nextTurn = Move.IDLE;
 		processed = false;
+		turnTaken = false;
+		movesOnTurn = ETurnType.MONSTER;
 	}
 
 	/** {@inheritDoc} */
@@ -45,11 +51,13 @@ public class TurnComponent extends PooledComponent implements ISetAbleComponent<
 		currentTurn = _component.getCurrentTurn();
 		nextTurn = _component.getNextTurn();
 		processed = _component.isProcessed();
+		turnTaken = _component.isTurnTaken();
+		movesOnTurn = _component.getMovesOnTurn();
 	}
 
-	public int nextTurn() {
-		return nextTurn(Direction.NOTHING);
-	}
+	// public int nextTurn() {
+	// return nextTurn(Move.IDLE);
+	// }
 
 	/**
 	 * advances the current turn to the next turn. sets following turn in the
@@ -64,4 +72,8 @@ public class TurnComponent extends PooledComponent implements ISetAbleComponent<
 		return currentTurn;
 	}
 
+	
+	public void setProcessed( boolean b) {
+		processed = b;
+	}
 }

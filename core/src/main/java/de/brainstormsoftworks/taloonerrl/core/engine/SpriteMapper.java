@@ -387,10 +387,10 @@ public final class SpriteMapper implements IDisposableInstance {
 				framesUp[i] = loadFrame(tWarrior, i, 3);
 			}
 			final Map<Integer, Animation> animations = new HashMap<Integer, Animation>();
-			animations.put(Direction.UP, new Animation(0.25f, framesUp));
-			animations.put(Direction.DOWN, new Animation(0.25f, framesDown));
-			animations.put(Direction.LEFT, new Animation(0.25f, framesLeft));
-			animations.put(Direction.RIGHT, new Animation(0.25f, framesRight));
+			animations.put(Move.UP, new Animation(0.25f, framesUp));
+			animations.put(Move.DOWN, new Animation(0.25f, framesDown));
+			animations.put(Move.LEFT, new Animation(0.25f, framesLeft));
+			animations.put(Move.RIGHT, new Animation(0.25f, framesRight));
 			mappedDirectionalAnimations.put(type, animations);
 			break;
 		default:

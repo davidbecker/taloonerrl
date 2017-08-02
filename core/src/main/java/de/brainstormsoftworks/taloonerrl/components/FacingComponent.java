@@ -12,7 +12,7 @@ package de.brainstormsoftworks.taloonerrl.components;
 
 import com.artemis.PooledComponent;
 
-import de.brainstormsoftworks.taloonerrl.core.engine.Direction;
+import de.brainstormsoftworks.taloonerrl.core.engine.Move;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -23,11 +23,11 @@ import lombok.Setter;
  *
  */
 public class FacingComponent extends PooledComponent implements ISetAbleComponent<FacingComponent> {
-	private @Getter @Setter int direction = Direction.RIGHT;
+	private @Getter @Setter int direction = Move.RIGHT;
 
 	@Override
 	protected void reset() {
-		direction = Direction.RIGHT;
+		direction = Move.RIGHT;
 	}
 
 	/** {@inheritDoc} */
