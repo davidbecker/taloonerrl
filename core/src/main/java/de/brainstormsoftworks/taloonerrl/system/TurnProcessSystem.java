@@ -13,6 +13,7 @@ package de.brainstormsoftworks.taloonerrl.system;
 import com.artemis.Aspect;
 import com.artemis.systems.IteratingSystem;
 
+import de.brainstormsoftworks.taloonerrl.components.ArtificialIntelligenceComponent;
 import de.brainstormsoftworks.taloonerrl.components.FacingComponent;
 import de.brainstormsoftworks.taloonerrl.components.PositionComponent;
 import de.brainstormsoftworks.taloonerrl.components.TurnComponent;
@@ -34,6 +35,7 @@ public class TurnProcessSystem extends IteratingSystem {
 	private PositionComponent positionComponent;
 	private FacingComponent facingComponent;
 	private TurnComponent turnComponent;
+	private ArtificialIntelligenceComponent artificialIntelligenceComponent;
 	private boolean isPlayer;
 	private int nextTurn;
 
@@ -53,8 +55,10 @@ public class TurnProcessSystem extends IteratingSystem {
 				if (isPlayer) {
 					nextTurn = turnComponent.nextTurn(TurnScheduler.getInstance().getNextTurn());
 				} else {
-					// TODO implement ai
-					nextTurn = turnComponent.nextTurn(Move.WAIT);
+					artificialIntelligenceComponent = ComponentMappers.getInstance().ai.getSafe(_entityId);
+					nextTurn = turnComponent.nextTurn(artificialIntelligenceComponent != null
+							? artificialIntelligenceComponent.getArtificialIntelligence().nextTurn()
+							: Move.WAIT);
 				}
 
 				if (nextTurn != Move.IDLE) {

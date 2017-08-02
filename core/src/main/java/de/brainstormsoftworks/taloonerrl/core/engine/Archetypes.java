@@ -15,6 +15,7 @@ import com.artemis.ArchetypeBuilder;
 import com.artemis.World;
 
 import de.brainstormsoftworks.taloonerrl.components.AnimationComponent;
+import de.brainstormsoftworks.taloonerrl.components.ArtificialIntelligenceComponent;
 import de.brainstormsoftworks.taloonerrl.components.CameraFollowComponent;
 import de.brainstormsoftworks.taloonerrl.components.CollectibleComponent;
 import de.brainstormsoftworks.taloonerrl.components.CursorComponent;
@@ -36,8 +37,10 @@ import de.brainstormsoftworks.taloonerrl.components.TurnComponent;
  *
  */
 public final class Archetypes {
-	/** archetype for monsters & player */
+	/** archetype for general actor */
 	public final Archetype actor;
+	public final Archetype monster;
+	/** archetype for monsters & player */
 	public final Archetype player;
 	public final Archetype collectible;
 	public final Archetype decoration;
@@ -51,6 +54,7 @@ public final class Archetypes {
 				.build(world);
 		actor = new ArchetypeBuilder(highlightAble).add(HealthComponent.class).add(AnimationComponent.class)
 				.add(NameComponent.class).add(TurnComponent.class).build(world);
+		monster = new ArchetypeBuilder(actor).add(ArtificialIntelligenceComponent.class).build(world);
 		player = new ArchetypeBuilder(actor).add(PlayerComponent.class).add(FacingComponent.class)
 				.remove(AnimationComponent.class).add(FacingAnimationComponent.class)
 				.add(CameraFollowComponent.class).build(world);
