@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2015 David Becker.
+ * Copyright (c) 2015, 2017 David Becker.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the GNU Public License v2.0
  * which accompanies this distribution, and is available at
@@ -11,19 +11,28 @@
 package de.brainstormsoftworks.taloonerrl.core.engine;
 
 /**
- * a hack<br/>
- * TODO remove and replace with {@link squidpony.squidgrid.Direction}
+ * a move (or non move) for an entity
  *
  * @author David Becker
  *
  */
-public class Direction {
-	public static final int NOTHING = 1 >> 1;
-	public static final int UP = 1;
-	public static final int DOWN = UP << 1;
-	public static final int LEFT = DOWN << 1;
-	public static final int RIGHT = LEFT << 1;
+public class Move {
+	/** when the entity doesn't have a move for the current turn yet */
+	public static final int IDLE = 0;
+	/** when the entity doesn't want to move anywhere */
+	public static final int WAIT = 1;
+	public static final int UP = 2;
+	public static final int DOWN = 3;
+	public static final int LEFT = 4;
+	public static final int RIGHT = 5;
 
+	/**
+	 * utility method to translate Direction from squid lib to a move
+	 *
+	 * @param _d
+	 *            direction
+	 * @return
+	 */
 	public static final int from(final squidpony.squidgrid.Direction _d) {
 		switch (_d) {
 		// wtf????
@@ -36,7 +45,8 @@ public class Direction {
 		case RIGHT:
 			return RIGHT;
 		default:
-			return NOTHING;
+			// FIXME or IDLE?
+			return WAIT;
 		}
 	}
 }

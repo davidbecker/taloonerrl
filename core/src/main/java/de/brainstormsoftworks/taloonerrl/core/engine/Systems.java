@@ -20,6 +20,7 @@ import de.brainstormsoftworks.taloonerrl.system.MapOverlayPreparerSystem;
 import de.brainstormsoftworks.taloonerrl.system.MouseCursorUpdateSystem;
 import de.brainstormsoftworks.taloonerrl.system.OffsetSystem;
 import de.brainstormsoftworks.taloonerrl.system.TurnProcessSystem;
+import de.brainstormsoftworks.taloonerrl.system.TurnTakenSystem;
 
 /**
  * utility class to add all systems to a given {@link WorldConfiguration}
@@ -28,14 +29,15 @@ import de.brainstormsoftworks.taloonerrl.system.TurnProcessSystem;
  *
  */
 public final class Systems {
-	private static final MouseCursorUpdateSystem HIGHLIGHT_UPDATE_SYSTEM = new MouseCursorUpdateSystem();
-	private static final CameraSystem CAMERA_SYSTEM = new CameraSystem();
-	private static final TurnProcessSystem INPUT_PROCESS_SYSTEM = new TurnProcessSystem();
-	private static final ControllerSystem CONTROLLER_SYSTEM = new ControllerSystem();
-	private static final MapOverlayPreparerSystem MAP_OVERLAY_PREPARER_SYSTEM = new MapOverlayPreparerSystem();
-	private static final FovUpdaterSystem FOV_UPDATER_SYSTEM = new FovUpdaterSystem();
-	private static final OffsetSystem OFFSET_SYSTEM = new OffsetSystem();
+	private static final TurnProcessSystem TURN_PROCESS_SYSTEM = new TurnProcessSystem();
 	private static final BlockingTileCheckSystem BLOCKING_TILE_CHECK_SYSTEM = new BlockingTileCheckSystem();
+	private static final ControllerSystem CONTROLLER_SYSTEM = new ControllerSystem();
+	private static final OffsetSystem OFFSET_SYSTEM = new OffsetSystem();
+	private static final TurnTakenSystem TURN_TAKEN_SYSTEM = new TurnTakenSystem();
+	private static final CameraSystem CAMERA_SYSTEM = new CameraSystem();
+	private static final FovUpdaterSystem FOV_UPDATER_SYSTEM = new FovUpdaterSystem();
+	private static final MouseCursorUpdateSystem HIGHLIGHT_UPDATE_SYSTEM = new MouseCursorUpdateSystem();
+	private static final MapOverlayPreparerSystem MAP_OVERLAY_PREPARER_SYSTEM = new MapOverlayPreparerSystem();
 
 	private Systems() {
 	}
@@ -48,10 +50,11 @@ public final class Systems {
 	 */
 	public static void setSystems(final WorldConfiguration config) {
 		// order is important! systems are processed in given order
-		config.setSystem(INPUT_PROCESS_SYSTEM);
+		config.setSystem(TURN_PROCESS_SYSTEM);
 		config.setSystem(BLOCKING_TILE_CHECK_SYSTEM);
 		config.setSystem(CONTROLLER_SYSTEM);
 		config.setSystem(OFFSET_SYSTEM);
+		config.setSystem(TURN_TAKEN_SYSTEM);
 		config.setSystem(CAMERA_SYSTEM);
 		config.setSystem(FOV_UPDATER_SYSTEM);
 		config.setSystem(HIGHLIGHT_UPDATE_SYSTEM);

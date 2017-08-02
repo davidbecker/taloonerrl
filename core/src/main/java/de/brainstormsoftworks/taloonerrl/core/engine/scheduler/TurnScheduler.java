@@ -8,15 +8,14 @@
  * Contributors:
  *     David Becker - initial API and implementation
  ******************************************************************************/
-
 package de.brainstormsoftworks.taloonerrl.core.engine.scheduler;
 
 import java.util.Deque;
 
-import de.brainstormsoftworks.taloonerrl.core.engine.Direction;
+import de.brainstormsoftworks.taloonerrl.core.engine.Move;
 
 /**
- * class to shedule turns for the player
+ * class to schedule turns for the player
  *
  * @author David Becker
  *
@@ -49,10 +48,10 @@ public final class TurnScheduler {
 	 * @return
 	 */
 	public int getNextTurn() {
-		int result = Direction.NOTHING;
+		int result = Move.IDLE;
 		if (pointer < QUEUE_LENGTH) {
 			result = queue[pointer];
-			if (result != Direction.NOTHING) {
+			if (result != Move.IDLE) {
 				// only update update pointer on "real" turn
 				pointer++;
 			}
@@ -75,7 +74,7 @@ public final class TurnScheduler {
 	 * @return <code>true</code> if queue is empty, false otherwise
 	 */
 	public boolean isQueueEmpty() {
-		return pointer == 0 || queue[pointer] == Direction.NOTHING;
+		return pointer == 0 || queue[pointer] == Move.IDLE;
 	}
 
 	/**
@@ -86,7 +85,7 @@ public final class TurnScheduler {
 	public void addTurnToQueue(final int turnToAdd) {
 		clearQueue();
 		queue[pointer] = turnToAdd;
-		queue[pointer + 1] = Direction.NOTHING;
+		queue[pointer + 1] = Move.IDLE;
 	}
 
 	/**
@@ -104,7 +103,7 @@ public final class TurnScheduler {
 		}
 		System.arraycopy(turnsToAdd, 0, queue, 0, length);
 		if (!overLimit) {
-			queue[length] = Direction.NOTHING;
+			queue[length] = Move.IDLE;
 		}
 	}
 

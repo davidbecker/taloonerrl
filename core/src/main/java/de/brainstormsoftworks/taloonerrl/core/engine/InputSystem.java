@@ -67,16 +67,16 @@ public final class InputSystem extends InputAdapter {
 	public boolean keyDown(final int keycode) {
 		switch (keycode) {
 		case Keys.UP:
-			TurnScheduler.getInstance().addTurnToQueue(Direction.UP);
+			TurnScheduler.getInstance().addTurnToQueue(Move.UP);
 			return true;
 		case Keys.DOWN:
-			TurnScheduler.getInstance().addTurnToQueue(Direction.DOWN);
+			TurnScheduler.getInstance().addTurnToQueue(Move.DOWN);
 			return true;
 		case Keys.LEFT:
-			TurnScheduler.getInstance().addTurnToQueue(Direction.LEFT);
+			TurnScheduler.getInstance().addTurnToQueue(Move.LEFT);
 			return true;
 		case Keys.RIGHT:
-			TurnScheduler.getInstance().addTurnToQueue(Direction.RIGHT);
+			TurnScheduler.getInstance().addTurnToQueue(Move.RIGHT);
 			return true;
 		default:
 			return false;
@@ -125,7 +125,7 @@ public final class InputSystem extends InputAdapter {
 			final int[] directions = new int[size];
 			int index = 0;
 			for (final Coord coord : path) {
-				directions[index] = Direction.from(squidpony.squidgrid.Direction.toGoTo(start, coord));
+				directions[index] = Move.from(squidpony.squidgrid.Direction.toGoTo(start, coord));
 				start = coord;
 				index = index + 1;
 			}

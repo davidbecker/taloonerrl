@@ -17,7 +17,8 @@ import de.brainstormsoftworks.taloonerrl.components.FacingComponent;
 import de.brainstormsoftworks.taloonerrl.components.PositionComponent;
 import de.brainstormsoftworks.taloonerrl.components.TurnComponent;
 import de.brainstormsoftworks.taloonerrl.core.engine.ComponentMappers;
-import de.brainstormsoftworks.taloonerrl.core.engine.Direction;
+import de.brainstormsoftworks.taloonerrl.core.engine.GameEngine;
+import de.brainstormsoftworks.taloonerrl.core.engine.Move;
 import de.brainstormsoftworks.taloonerrl.core.engine.scheduler.TurnScheduler;
 import de.brainstormsoftworks.taloonerrl.render.Renderer;
 
@@ -46,36 +47,41 @@ public class TurnProcessSystem extends IteratingSystem {
 		if (!positionComponent.isProcessingTurn()) {
 			isPlayer = ComponentMappers.getInstance().player.getSafe(_entityId) != null;
 			turnComponent = ComponentMappers.getInstance().turn.get(_entityId);
-			if (!turnComponent.isProcessed()) {
+			if (!turnComponent.isProcessed()
+					&& turnComponent.getMovesOnTurn() == GameEngine.getInstance().getCurrentTurnSide()) {
 				// for now only the player can have turns...
 				if (isPlayer) {
 					nextTurn = turnComponent.nextTurn(TurnScheduler.getInstance().getNextTurn());
 				} else {
-					nextTurn = turnComponent.nextTurn();
+					// TODO implement ai
+					nextTurn = turnComponent.nextTurn(Move.WAIT);
 				}
 
-				if (nextTurn != Direction.NOTHING) {
-					if (nextTurn == Direction.DOWN) {
+				if (nextTurn != Move.IDLE) {
+					if (nextTurn == Move.DOWN) {
 						positionComponent.setOffsetY(0);
 						positionComponent.setTotalY(-1 * Renderer.tileSize);
-					} else if (nextTurn == Direction.UP) {
+					} else if (nextTurn == Move.UP) {
 						positionComponent.setOffsetY(1);
 						positionComponent.setTotalY(Renderer.tileSize);
-					} else if (nextTurn == Direction.LEFT) {
+					} else if (nextTurn == Move.LEFT) {
 						positionComponent.setOffsetX(0);
 						positionComponent.setTotalX(-1 * Renderer.tileSize);
-					} else if (nextTurn == Direction.RIGHT) {
+					} else if (nextTurn == Move.RIGHT) {
 						positionComponent.setOffsetX(0);
 						positionComponent.setTotalX(Renderer.tileSize);
 					}
-					if (isPlayer) {
+					if (nextTurn != Move.WAIT) {
+						turnComponent.setTurnTaken(true);
+					}
+					if (isPlayer && nextTurn != Move.WAIT) {
 						facingComponent = ComponentMappers.getInstance().facing.getSafe(_entityId);
 						if (facingComponent != null) {
 							facingComponent.setDirection(nextTurn);
 						}
 					}
+					turnComponent.setProcessed(true);
 				}
-				// TODO implement here turnComponent.setProcessed(true)
 			}
 		}
 	}

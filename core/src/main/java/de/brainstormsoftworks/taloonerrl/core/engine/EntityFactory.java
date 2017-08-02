@@ -18,6 +18,8 @@ import de.brainstormsoftworks.taloonerrl.components.FacingAnimationComponent;
 import de.brainstormsoftworks.taloonerrl.components.NameComponent;
 import de.brainstormsoftworks.taloonerrl.components.PositionComponent;
 import de.brainstormsoftworks.taloonerrl.components.SpriteComponent;
+import de.brainstormsoftworks.taloonerrl.components.TurnComponent;
+import de.brainstormsoftworks.taloonerrl.core.engine.scheduler.ETurnType;
 
 /**
  * factory to create entities in to the game world
@@ -206,6 +208,7 @@ public final class EntityFactory {
 	private static Entity createPlayer(final World world) {
 		final Entity newEntity = world.createEntity(Archetypes.getInstance().player);
 		newEntity.getComponent(FacingAnimationComponent.class).mapAnimation(EEntity.PLAYER);
+		newEntity.getComponent(TurnComponent.class).setMovesOnTurn(ETurnType.PLAYER);
 		setName(newEntity, EEntity.PLAYER);
 		return newEntity;
 	}

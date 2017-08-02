@@ -17,7 +17,7 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import de.brainstormsoftworks.taloonerrl.core.engine.Direction;
+import de.brainstormsoftworks.taloonerrl.core.engine.Move;
 
 /**
  * @author David Becker
@@ -30,38 +30,38 @@ public class TurnSchedulerTest {
 	@Test
 	public void testNormalTurns() {
 		final int[] turns = new int[4];
-		turns[0] = Direction.DOWN;
-		turns[1] = Direction.LEFT;
-		turns[2] = Direction.RIGHT;
-		turns[3] = Direction.UP;
+		turns[0] = Move.DOWN;
+		turns[1] = Move.LEFT;
+		turns[2] = Move.RIGHT;
+		turns[3] = Move.UP;
 		scheduler.addTurnsToQueue(turns);
-		assertEquals(Direction.DOWN, scheduler.getNextTurn());
-		assertEquals(Direction.LEFT, scheduler.getNextTurn());
-		assertEquals(Direction.RIGHT, scheduler.getNextTurn());
-		assertEquals(Direction.UP, scheduler.getNextTurn());
-		assertEquals(Direction.NOTHING, scheduler.getNextTurn());
+		assertEquals(Move.DOWN, scheduler.getNextTurn());
+		assertEquals(Move.LEFT, scheduler.getNextTurn());
+		assertEquals(Move.RIGHT, scheduler.getNextTurn());
+		assertEquals(Move.UP, scheduler.getNextTurn());
+		assertEquals(Move.IDLE, scheduler.getNextTurn());
 
 		// test that "reset" works as expected
 		final int[] turns2 = new int[2];
-		turns2[0] = Direction.DOWN;
-		turns2[1] = Direction.LEFT;
+		turns2[0] = Move.DOWN;
+		turns2[1] = Move.LEFT;
 		assertTrue(scheduler.isQueueEmpty());
 		scheduler.addTurnsToQueue(turns2);
-		assertEquals(Direction.DOWN, scheduler.getNextTurn());
+		assertEquals(Move.DOWN, scheduler.getNextTurn());
 		assertFalse(scheduler.isQueueEmpty());
-		assertEquals(Direction.LEFT, scheduler.getNextTurn());
+		assertEquals(Move.LEFT, scheduler.getNextTurn());
 		assertTrue(scheduler.isQueueEmpty());
-		assertEquals(Direction.NOTHING, scheduler.getNextTurn());
+		assertEquals(Move.IDLE, scheduler.getNextTurn());
 
 		// test single turn
-		scheduler.addTurnToQueue(Direction.LEFT);
-		assertEquals(Direction.LEFT, scheduler.getNextTurn());
-		assertEquals(Direction.NOTHING, scheduler.getNextTurn());
-		assertEquals(Direction.NOTHING, scheduler.getNextTurn());
-		assertEquals(Direction.NOTHING, scheduler.getNextTurn());
-		assertEquals(Direction.NOTHING, scheduler.getNextTurn());
-		assertEquals(Direction.NOTHING, scheduler.getNextTurn());
-		assertEquals(Direction.NOTHING, scheduler.getNextTurn());
+		scheduler.addTurnToQueue(Move.LEFT);
+		assertEquals(Move.LEFT, scheduler.getNextTurn());
+		assertEquals(Move.IDLE, scheduler.getNextTurn());
+		assertEquals(Move.IDLE, scheduler.getNextTurn());
+		assertEquals(Move.IDLE, scheduler.getNextTurn());
+		assertEquals(Move.IDLE, scheduler.getNextTurn());
+		assertEquals(Move.IDLE, scheduler.getNextTurn());
+		assertEquals(Move.IDLE, scheduler.getNextTurn());
 	}
 
 	@Test
@@ -69,13 +69,13 @@ public class TurnSchedulerTest {
 		final int length = TurnScheduler.QUEUE_LENGTH + 1;
 		final int[] turns = new int[length];
 		for (int i = 0; i < length; i++) {
-			turns[i] = Direction.DOWN;
+			turns[i] = Move.DOWN;
 		}
 		scheduler.addTurnsToQueue(turns);
 		for (int i = 0; i < length - 1; i++) {
-			assertEquals(Direction.DOWN, scheduler.getNextTurn());
+			assertEquals(Move.DOWN, scheduler.getNextTurn());
 		}
-		assertEquals(Direction.NOTHING, scheduler.getNextTurn());
+		assertEquals(Move.IDLE, scheduler.getNextTurn());
 	}
 
 }

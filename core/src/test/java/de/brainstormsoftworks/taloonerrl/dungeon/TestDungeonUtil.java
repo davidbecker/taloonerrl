@@ -15,7 +15,7 @@ import static org.junit.Assert.assertNotNull;
 
 import org.junit.Test;
 
-import de.brainstormsoftworks.taloonerrl.core.engine.Direction;
+import de.brainstormsoftworks.taloonerrl.core.engine.Move;
 import de.brainstormsoftworks.taloonerrl.internal.dungeon.DungeonUtil;
 import squidpony.squidmath.Coord;
 
@@ -68,10 +68,10 @@ public class TestDungeonUtil {
 		final Coord left = Coord.get(0, 1);
 		final Coord right = Coord.get(2, 1);
 		final Coord center = Coord.get(1, 1);
-		assertEquals(Direction.DOWN, DungeonUtil.calculateDirection(up, center));
-		assertEquals(Direction.UP, DungeonUtil.calculateDirection(down, center));
-		assertEquals(Direction.LEFT, DungeonUtil.calculateDirection(right, center));
-		assertEquals(Direction.RIGHT, DungeonUtil.calculateDirection(left, center));
-		assertEquals(Direction.NOTHING, DungeonUtil.calculateDirection(center, center));
+		assertEquals(Move.DOWN, DungeonUtil.calculateDirection(up, center));
+		assertEquals(Move.UP, DungeonUtil.calculateDirection(down, center));
+		assertEquals(Move.LEFT, DungeonUtil.calculateDirection(right, center));
+		assertEquals(Move.RIGHT, DungeonUtil.calculateDirection(left, center));
+		assertEquals(Move.IDLE, DungeonUtil.calculateDirection(center, center));
 	}
 }
