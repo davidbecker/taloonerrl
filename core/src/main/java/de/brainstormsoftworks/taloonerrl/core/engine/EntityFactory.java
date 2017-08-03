@@ -12,8 +12,11 @@ package de.brainstormsoftworks.taloonerrl.core.engine;
 
 import com.artemis.Entity;
 import com.artemis.World;
+import com.badlogic.gdx.ai.fsm.DefaultStateMachine;
+import com.badlogic.gdx.ai.fsm.State;
 
-import de.brainstormsoftworks.taloonerrl.ai.ErraticArtificialIntelligence;
+import de.brainstormsoftworks.taloonerrl.ai.BasicIntelligence;
+import de.brainstormsoftworks.taloonerrl.ai.states.BatState;
 import de.brainstormsoftworks.taloonerrl.components.AnimationComponent;
 import de.brainstormsoftworks.taloonerrl.components.ArtificialIntelligenceComponent;
 import de.brainstormsoftworks.taloonerrl.components.FacingAnimationComponent;
@@ -243,7 +246,8 @@ public final class EntityFactory {
 		if (aiComponent != null) {
 			switch (type) {
 			case BAT:
-				aiComponent.setArtificialIntelligence(new ErraticArtificialIntelligence());
+				aiComponent.setArtificialIntelligence(new BasicIntelligence(
+						new DefaultStateMachine<Entity, State<Entity>>(entity, BatState.FLYING_ERRATICALLY)));
 				break;
 			default:
 				break;

@@ -18,6 +18,7 @@ import com.artemis.WorldConfiguration;
 import com.artemis.utils.IntBag;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.ai.GdxAI;
 
 import de.brainstormsoftworks.taloonerrl.components.PositionComponent;
 import de.brainstormsoftworks.taloonerrl.components.TurnComponent;
@@ -70,6 +71,8 @@ public final class GameEngine {
 	public void update() {
 		deltaTime = Gdx.graphics.getDeltaTime();
 		stateTime += deltaTime;
+		GdxAI.getTimepiece().update(deltaTime);
+		// MessageManager.getInstance().update();
 		world.setDelta(deltaTime);
 		world.process();
 		processTurnTaken();
