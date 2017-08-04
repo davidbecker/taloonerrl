@@ -25,7 +25,7 @@ import lombok.Setter;
  *
  */
 @Getter
-public class AnimationComponent extends PooledComponent implements ISetAbleComponent<AnimationComponent> {
+public class AnimationComponent extends PooledComponent {
 	private EEntity entityType = EEntity.NOTHING;
 	private @Setter Animation animation = null;
 
@@ -44,13 +44,6 @@ public class AnimationComponent extends PooledComponent implements ISetAbleCompo
 	public final void mapAnimation(final EEntity _entity) {
 		entityType = _entity;
 		SpriteMapper.getInstance().mapAnimation(this);
-	}
-
-	/** {@inheritDoc} */
-	@Override
-	public void overrideComponent(final AnimationComponent _component) {
-		entityType = _component.getEntityType();
-		animation = _component.getAnimation();
 	}
 
 }

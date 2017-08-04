@@ -22,18 +22,12 @@ import lombok.Setter;
  * @author David Becker
  *
  */
-public class FacingComponent extends PooledComponent implements ISetAbleComponent<FacingComponent> {
+public class FacingComponent extends PooledComponent {
 	private @Getter @Setter int direction = Move.RIGHT;
 
 	@Override
 	protected void reset() {
 		direction = Move.RIGHT;
-	}
-
-	/** {@inheritDoc} */
-	@Override
-	public void overrideComponent(final FacingComponent _component) {
-		direction = _component.getDirection();
 	}
 
 }

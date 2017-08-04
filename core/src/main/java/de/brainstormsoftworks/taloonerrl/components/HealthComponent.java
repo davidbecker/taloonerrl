@@ -23,7 +23,7 @@ import lombok.Setter;
  *
  */
 @Getter
-public class HealthComponent extends PooledComponent implements ISetAbleComponent<HealthComponent> {
+public class HealthComponent extends PooledComponent {
 
 	private @Setter int healthMax = 1;
 	private float healthPercent = 1.0f;
@@ -51,13 +51,4 @@ public class HealthComponent extends PooledComponent implements ISetAbleComponen
 			healthPercent = 1;
 		}
 	}
-
-	/** {@inheritDoc} */
-	@Override
-	public void overrideComponent(final HealthComponent _component) {
-		healthMax = _component.getHealthMax();
-		healthPercent = _component.getHealthPercent();
-		alive = _component.isAlive();
-	}
-
 }

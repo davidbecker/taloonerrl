@@ -24,7 +24,7 @@ import lombok.Setter;
  * @author David Becker
  *
  */
-public class SpriteComponent extends PooledComponent implements ISetAbleComponent<SpriteComponent> {
+public class SpriteComponent extends PooledComponent {
 	private @Getter EEntity entityType = EEntity.NOTHING;
 	private @Getter @Setter TextureRegion sprite = null;
 
@@ -45,10 +45,4 @@ public class SpriteComponent extends PooledComponent implements ISetAbleComponen
 		SpriteMapper.getInstance().mapSprite(this);
 	}
 
-	/** {@inheritDoc} */
-	@Override
-	public void overrideComponent(final SpriteComponent _component) {
-		entityType = _component.getEntityType();
-		sprite = _component.getSprite();
-	}
 }
