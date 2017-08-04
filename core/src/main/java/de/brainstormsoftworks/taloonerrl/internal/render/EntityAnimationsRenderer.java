@@ -47,6 +47,9 @@ public class EntityAnimationsRenderer extends AbstractRender {
 		x = positionComponent.getX();
 		y = positionComponent.getY();
 		if (animation != null && FovWrapper.getInstance().isLit(x, y)) {
+			if (ComponentMappers.getInstance().stateDecoration.getSafe(_entityId) != null) {
+				y += 1;
+			}
 			Renderer.getInstance().renderOnTile(RenderUtil.getKeyFrame(animation), x, y,
 					positionComponent.getOffsetX(), positionComponent.getOffsetY());
 

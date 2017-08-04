@@ -16,6 +16,7 @@ import java.util.Map;
 import java.util.Set;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.Texture.TextureWrap;
@@ -30,7 +31,8 @@ import de.brainstormsoftworks.taloonerrl.render.RenderUtil;
 import de.brainstormsoftworks.taloonerrl.render.Renderer;
 
 /**
- * utility class that maps the animation for a sprite into components
+ * utility class that maps the animation for a sprite into components<br>
+ * TODO refactor to use {@link AssetManager}
  *
  * @author David Becker
  *
@@ -39,6 +41,7 @@ public final class SpriteMapper implements IDisposableInstance {
 	private static final String PATH_DUNGEON = "textures/dungeon/";
 	private static final String PATH_MOBS = "textures/mobs/";
 	private static final String PATH_ITEMS = "textures/items/";
+	private static final String PATH_GUI = "textures/gui/";
 	private static final String PATH_CHARACTER = "character/";
 
 	private static final String FILE_AVIAN0 = "Avian0.png";
@@ -70,13 +73,15 @@ public final class SpriteMapper implements IDisposableInstance {
 	private static final String FILE_WAND = "Wand.png";
 	private static final String FILE_WARRIOR = "Warrior.png";
 	private static final String FILE_WEAPON = "ShortWep.png";
+	private static final String FILE_GUI0 = "GUI0.png";
+	private static final String FILE_GUI1 = "GUI1.png";
 
 	private static final SpriteMapper instance = new SpriteMapper();
 
-	private final Map<EEntity, Animation> mappedAnimations = new HashMap<EEntity, Animation>();
-	private final Map<EEntity, Map<Integer, Animation>> mappedDirectionalAnimations = new HashMap<EEntity, Map<Integer, Animation>>();
-	private final Map<EEntity, TextureRegion> mappedSprites = new HashMap<EEntity, TextureRegion>();
-	private final Set<Texture> toDispose = new HashSet<Texture>();
+	private final Map<EEntity, Animation> mappedAnimations = new HashMap<>();
+	private final Map<EEntity, Map<Integer, Animation>> mappedDirectionalAnimations = new HashMap<>();
+	private final Map<EEntity, TextureRegion> mappedSprites = new HashMap<>();
+	private final Set<Texture> toDispose = new HashSet<>();
 
 	private Texture tAvian0 = null;
 	private Texture tAvian1 = null;
@@ -107,6 +112,8 @@ public final class SpriteMapper implements IDisposableInstance {
 	private Texture tWand = null;
 	private Texture tWarrior = null;
 	private Texture tWeapon = null;
+	private Texture tStateSleep0 = null;
+	private Texture tStateSleep1 = null;
 
 	private SpriteMapper() {
 		RenderUtil.addToDisposeList(this);
@@ -359,6 +366,17 @@ public final class SpriteMapper implements IDisposableInstance {
 			frames[1] = loadFrame(tDecor1, 0, 8);
 			mappedAnimations.put(type, new Animation(0.15f, frames));
 			break;
+		case STATUS_DECORATOR_SLEEPING:
+			if (tStateSleep0 == null) {
+				tStateSleep0 = loadTexture(PATH_GUI + FILE_GUI0);
+			}
+			if (tStateSleep1 == null) {
+				tStateSleep1 = loadTexture(PATH_GUI + FILE_GUI1);
+			}
+			frames[0] = loadFrame(tStateSleep0, 10, 4);
+			frames[1] = loadFrame(tStateSleep1, 10, 4);
+			mappedAnimations.put(type, new Animation(0.15f, frames));
+			break;
 		default:
 			break;
 		}
@@ -386,7 +404,7 @@ public final class SpriteMapper implements IDisposableInstance {
 				framesRight[i] = loadFrame(tWarrior, i, 2);
 				framesUp[i] = loadFrame(tWarrior, i, 3);
 			}
-			final Map<Integer, Animation> animations = new HashMap<Integer, Animation>();
+			final Map<Integer, Animation> animations = new HashMap<>();
 			animations.put(Move.UP, new Animation(0.25f, framesUp));
 			animations.put(Move.DOWN, new Animation(0.25f, framesDown));
 			animations.put(Move.LEFT, new Animation(0.25f, framesLeft));

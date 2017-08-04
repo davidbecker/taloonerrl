@@ -10,8 +10,10 @@
  ******************************************************************************/
 package de.brainstormsoftworks.taloonerrl.core.engine;
 
+import com.artemis.Aspect;
 import com.artemis.Entity;
 import com.artemis.World;
+import com.artemis.utils.IntBag;
 import com.badlogic.gdx.ai.fsm.DefaultStateMachine;
 import com.badlogic.gdx.ai.fsm.State;
 
@@ -24,6 +26,7 @@ import de.brainstormsoftworks.taloonerrl.components.FacingAnimationComponent;
 import de.brainstormsoftworks.taloonerrl.components.NameComponent;
 import de.brainstormsoftworks.taloonerrl.components.PositionComponent;
 import de.brainstormsoftworks.taloonerrl.components.SpriteComponent;
+import de.brainstormsoftworks.taloonerrl.components.StateDecorationComponent;
 import de.brainstormsoftworks.taloonerrl.components.StatusComponent;
 import de.brainstormsoftworks.taloonerrl.components.TurnComponent;
 import de.brainstormsoftworks.taloonerrl.core.engine.scheduler.ETurnType;
@@ -136,9 +139,40 @@ public final class EntityFactory {
 			return createDecoration(type, world, xPosition, yPosition);
 		case CURSOR:
 			return world.createEntity(Archetypes.getInstance().cursor);
+		case STATUS_DECORATOR_SLEEPING:
+			return createStatusDecorator(world, xPosition, yPosition);
 		default:
 			return null;
 		}
+	}
+
+	private static Entity createStatusDecorator(final World _world, final int _xPosition,
+			final int _yPosition) {
+		long ttl = 0L;
+		// look if there are already decorators on the given position -> if this is the
+		// case, we need to get the biggest time to live to add to the new entity's TTL
+		final IntBag entities = _world.getAspectSubscriptionManager()
+				.get(Aspect.all(PositionComponent.class, StateDecorationComponent.class)).getEntities();
+		int entityId;
+		StateDecorationComponent decorationComponent;
+		PositionComponent positionComponent;
+		for (int i = 0; i < entities.size(); i++) {
+			entityId = entities.get(i);
+			decorationComponent = ComponentMappers.getInstance().stateDecoration.get(entityId);
+			if (decorationComponent.isActive()) {
+				positionComponent = ComponentMappers.getInstance().position.get(entityId);
+				if (positionComponent.getX() == _xPosition && positionComponent.getY() == _yPosition) {
+					if (decorationComponent.getTimeToLive() > ttl) {
+						ttl = decorationComponent.getTimeToLive();
+					}
+				}
+			}
+		}
+		final Entity entity = _world.createEntity(Archetypes.getInstance().stateDecorator);
+		decorationComponent = ComponentMappers.getInstance().stateDecoration.get(entity.getId());
+		decorationComponent.setTimeToLive(ttl + StateDecorationComponent.TTL_BASE);
+		decorationComponent.setActive(true);
+		return entity;
 	}
 
 	private static Entity createPlayer(final World world) {
@@ -262,15 +296,18 @@ public final class EntityFactory {
 
 	private static void setInitialStates(final Entity entity, final EEntity type) {
 		final StatusComponent component = ComponentMappers.getInstance().states.getSafe(entity);
+		component.setEntityId(entity.getId());
 		if (component != null) {
 			switch (type) {
 			case BAT:
 				// leave the bats alone for now
 				break;
 			default:
-				component.activateState(EEntityState.SLEEPING, Integer.MAX_VALUE);
+				component.activateState(EEntityState.SLEEPING, 10);
+				// component.activateState(EEntityState.SLEEPING, Integer.MAX_VALUE);
 				break;
 			}
+			component.setEntityId(entity.getId());
 		}
 	}
 }

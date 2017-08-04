@@ -1,9 +1,14 @@
 package de.brainstormsoftworks.taloonerrl.components;
 
+import com.artemis.Entity;
 import com.artemis.PooledComponent;
 import com.badlogic.gdx.Gdx;
 
+import de.brainstormsoftworks.taloonerrl.core.engine.ComponentMappers;
+import de.brainstormsoftworks.taloonerrl.core.engine.EEntity;
+import de.brainstormsoftworks.taloonerrl.core.engine.GameEngine;
 import lombok.Getter;
+import lombok.Setter;
 
 /**
  * component to hold active states for an entity
@@ -11,11 +16,14 @@ import lombok.Getter;
  * @author David Becker
  *
  */
-public class StatusComponent extends PooledComponent {
+@Getter
+public class StatusComponent extends PooledComponent implements IGetEntityId {
 
-	@Getter
 	private final EntityStatus sleepingStatus = new EntityStatus(EEntityState.SLEEPING);
 	// TODO add more states
+
+	@Setter
+	private int entityId = -1;
 
 	/**
 	 * tests if a given state is active for the entity
@@ -52,6 +60,25 @@ public class StatusComponent extends PooledComponent {
 			break;
 		}
 		if (state != null) {
+			if (!state.isActive() && entityId != -1) {
+				// find position component for entity that this component belongs too
+				final PositionComponent positionComponentThis = ComponentMappers.getInstance().position
+						.get(entityId);
+				// spawn new decorator entity for given state
+				final Entity newEntity = GameEngine.getInstance().createNewEntity(
+						EEntity.STATUS_DECORATOR_SLEEPING, positionComponentThis.getX(),
+						positionComponentThis.getY());
+				final StateDecorationComponent stateDecorationComponent = ComponentMappers
+						.getInstance().stateDecoration.get(newEntity);
+				// now we set the state into the decorator component
+				stateDecorationComponent.setState(_state);
+				// and clone the position from the parent entity for the new entity
+				ComponentMappers.getInstance().position.get(newEntity)
+						.overrideComponent(positionComponentThis);
+				// and set the correct sprite
+				newEntity.getComponent(AnimationComponent.class)
+						.mapAnimation(EEntity.STATUS_DECORATOR_SLEEPING);
+			}
 			state.reset();
 			state.setActive(true);
 			if (0 < _duration && _duration < Integer.MAX_VALUE) {
@@ -66,5 +93,6 @@ public class StatusComponent extends PooledComponent {
 	@Override
 	protected void reset() {
 		sleepingStatus.reset();
+		entityId = -1;
 	}
 }

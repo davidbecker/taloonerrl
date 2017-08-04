@@ -27,6 +27,7 @@ import de.brainstormsoftworks.taloonerrl.components.NameComponent;
 import de.brainstormsoftworks.taloonerrl.components.PlayerComponent;
 import de.brainstormsoftworks.taloonerrl.components.PositionComponent;
 import de.brainstormsoftworks.taloonerrl.components.SpriteComponent;
+import de.brainstormsoftworks.taloonerrl.components.StateDecorationComponent;
 import de.brainstormsoftworks.taloonerrl.components.StatusComponent;
 import de.brainstormsoftworks.taloonerrl.components.TurnComponent;
 
@@ -52,6 +53,7 @@ public final class ComponentMappers {
 	public final ComponentMapper<TurnComponent> turn;
 	public final ComponentMapper<ArtificialIntelligenceComponent> ai;
 	public final ComponentMapper<StatusComponent> states;
+	public final ComponentMapper<StateDecorationComponent> stateDecoration;
 
 	private static ComponentMappers instance = null;
 
@@ -71,6 +73,7 @@ public final class ComponentMappers {
 		turn = ComponentMapper.getFor(TurnComponent.class, world);
 		ai = ComponentMapper.getFor(ArtificialIntelligenceComponent.class, world);
 		states = ComponentMapper.getFor(StatusComponent.class, world);
+		stateDecoration = ComponentMapper.getFor(StateDecorationComponent.class, world);
 	}
 
 	/**
