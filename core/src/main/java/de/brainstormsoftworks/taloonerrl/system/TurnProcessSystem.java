@@ -57,7 +57,7 @@ public class TurnProcessSystem extends IteratingSystem {
 				} else {
 					artificialIntelligenceComponent = ComponentMappers.getInstance().ai.getSafe(_entityId);
 					if (artificialIntelligenceComponent != null) {
-						artificialIntelligenceComponent.getArtificialIntelligence().update();
+						artificialIntelligenceComponent.update();
 					}
 					nextTurn = turnComponent.getCurrentTurn();
 					// nextTurn = turnComponent.nextTurn(artificialIntelligenceComponent != null

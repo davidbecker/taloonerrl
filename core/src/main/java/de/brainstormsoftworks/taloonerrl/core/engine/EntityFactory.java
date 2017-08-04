@@ -250,6 +250,8 @@ public final class EntityFactory {
 						new DefaultStateMachine<Entity, State<Entity>>(entity, BatState.FLYING_ERRATICALLY)));
 				break;
 			default:
+				aiComponent.setArtificialIntelligence(new BasicIntelligence(
+						new DefaultStateMachine<Entity, State<Entity>>(entity, BatState.WAITING)));
 				break;
 			}
 		}

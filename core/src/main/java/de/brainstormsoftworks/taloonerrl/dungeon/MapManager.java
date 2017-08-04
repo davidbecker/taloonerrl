@@ -16,6 +16,7 @@ import de.brainstormsoftworks.taloonerrl.components.HighlightAbleComponent;
 import de.brainstormsoftworks.taloonerrl.components.PositionComponent;
 import de.brainstormsoftworks.taloonerrl.core.engine.EEntity;
 import de.brainstormsoftworks.taloonerrl.core.engine.GameEngine;
+import de.brainstormsoftworks.taloonerrl.system.util.PositionUtil;
 import lombok.Getter;
 import squidpony.squidmath.RNG;
 
@@ -73,17 +74,70 @@ public final class MapManager implements IMapChangeListener {
 		playerPositionComponent.setX(playerStartX);
 		playerPositionComponent.setY(playerStartY);
 
-		// TODO refactor
-		// simple method to create 10 monster, it is possible to create monster
-		// on top of each other!
-		for (int i = 0; i < 10; i++) {
+		// create of on each monster at a random position
+		// more bats to work with...
+		EEntity type;
+		for (int i = 0; i < 20; i++) {
 			int monsterX = -1;
 			int monsterY = -1;
-			while (!map.isWalkable(monsterX, monsterY)) {
+			while (!map.isWalkable(monsterX, monsterY) || PositionUtil.isPositionTaken(monsterX, monsterY)) {
 				monsterX = rng.nextInt(tilesHorizontal);
 				monsterY = rng.nextInt(tilesVertical);
 			}
-			GameEngine.getInstance().createNewEntity(EEntity.BAT, monsterX, monsterY);
+			switch (i) {
+			case 0:
+				type = EEntity.BLOB;
+				break;
+			case 1:
+				type = EEntity.SQUIRREL;
+				break;
+			case 2:
+				type = EEntity.BAT;
+				break;
+			case 3:
+				type = EEntity.MAGICIAN;
+				break;
+			case 4:
+				type = EEntity.SLUG;
+				break;
+			case 5:
+				type = EEntity.GHOST;
+				break;
+			case 6:
+				type = EEntity.SHADOW;
+				break;
+			case 7:
+				type = EEntity.EYEBALL;
+				break;
+			case 8:
+				type = EEntity.GOLEM;
+				break;
+			case 9:
+				type = EEntity.ARCHER;
+				break;
+			case 10:
+				type = EEntity.BOMB;
+				break;
+			case 11:
+				type = EEntity.WARPER;
+				break;
+			case 12:
+				type = EEntity.STEALER;
+				break;
+			case 13:
+				type = EEntity.DRAGON;
+				break;
+			case 14:
+				type = EEntity.ACID;
+				break;
+			case 15:
+				type = EEntity.MUSHROOM;
+				break;
+			default:
+				type = EEntity.BAT;
+				break;
+			}
+			GameEngine.getInstance().createNewEntity(type, monsterX, monsterY);
 		}
 
 		// create an entity for tile highlighting

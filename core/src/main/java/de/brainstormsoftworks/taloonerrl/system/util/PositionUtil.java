@@ -10,7 +10,13 @@
  ******************************************************************************/
 package de.brainstormsoftworks.taloonerrl.system.util;
 
+import com.artemis.Aspect;
+import com.artemis.utils.IntBag;
+
+import de.brainstormsoftworks.taloonerrl.components.HealthComponent;
 import de.brainstormsoftworks.taloonerrl.components.PositionComponent;
+import de.brainstormsoftworks.taloonerrl.core.engine.ComponentMappers;
+import de.brainstormsoftworks.taloonerrl.core.engine.GameEngine;
 import de.brainstormsoftworks.taloonerrl.render.Renderer;
 
 /**
@@ -52,5 +58,29 @@ public final class PositionUtil {
 
 	public static final boolean isMovingWholeTile(final int deltaX, final int deltaY) {
 		return deltaX != 0 || deltaY != 0;
+	}
+
+	/**
+	 * checks if there is an alive entity on the given position
+	 *
+	 * @return if there isn't no entity on the given position
+	 */
+	public static final boolean isPositionTaken(final int x, final int y) {
+		final IntBag entities = GameEngine.getInstance().getAspectSubscriptionManager()
+				.get(Aspect.all(PositionComponent.class, HealthComponent.class)).getEntities();
+		int entityID;
+		PositionComponent positionComponent;
+		HealthComponent healthComponent;
+		for (int i = 0; i < entities.size(); i++) {
+			entityID = entities.get(i);
+			healthComponent = ComponentMappers.getInstance().health.get(entityID);
+			if (healthComponent.isAlive()) {
+				positionComponent = ComponentMappers.getInstance().position.get(entityID);
+				if (positionComponent.getX() == x && positionComponent.getY() == y) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 }

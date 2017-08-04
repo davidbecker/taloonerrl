@@ -20,4 +20,10 @@ public class ArtificialIntelligenceComponent extends Component {
 
 	BasicIntelligence artificialIntelligence = null;
 
+	public void update() {
+		if (artificialIntelligence != null) {
+			artificialIntelligence.update();
+		}
+	}
+
 }

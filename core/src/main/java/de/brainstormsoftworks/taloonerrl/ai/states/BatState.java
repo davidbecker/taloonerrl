@@ -45,6 +45,20 @@ public enum BatState implements State<Entity> {
 			}
 		}
 
+	},
+	WAITING() {
+
+		private TurnComponent turnComponent;
+
+		@Override
+		public void update(final Entity _entity) {
+			debug("updating state WAITING");
+			turnComponent = ComponentMappers.getInstance().turn.getSafe(_entity);
+			if (turnComponent != null) {
+				turnComponent.nextTurn(Move.WAIT);
+			}
+		}
+
 	};
 	@Override
 	public void enter(final Entity _entity) {
