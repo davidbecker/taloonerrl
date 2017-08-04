@@ -19,10 +19,12 @@ import de.brainstormsoftworks.taloonerrl.ai.BasicIntelligence;
 import de.brainstormsoftworks.taloonerrl.ai.states.BatState;
 import de.brainstormsoftworks.taloonerrl.components.AnimationComponent;
 import de.brainstormsoftworks.taloonerrl.components.ArtificialIntelligenceComponent;
+import de.brainstormsoftworks.taloonerrl.components.EEntityState;
 import de.brainstormsoftworks.taloonerrl.components.FacingAnimationComponent;
 import de.brainstormsoftworks.taloonerrl.components.NameComponent;
 import de.brainstormsoftworks.taloonerrl.components.PositionComponent;
 import de.brainstormsoftworks.taloonerrl.components.SpriteComponent;
+import de.brainstormsoftworks.taloonerrl.components.StatusComponent;
 import de.brainstormsoftworks.taloonerrl.components.TurnComponent;
 import de.brainstormsoftworks.taloonerrl.core.engine.scheduler.ETurnType;
 
@@ -156,6 +158,7 @@ public final class EntityFactory {
 		posComponent.setY(yPosition);
 		setName(newEntity, type);
 		setAI(newEntity, type);
+		setInitialStates(newEntity, type);
 		return newEntity;
 	}
 
@@ -252,6 +255,20 @@ public final class EntityFactory {
 			default:
 				aiComponent.setArtificialIntelligence(new BasicIntelligence(
 						new DefaultStateMachine<Entity, State<Entity>>(entity, BatState.WAITING)));
+				break;
+			}
+		}
+	}
+
+	private static void setInitialStates(final Entity entity, final EEntity type) {
+		final StatusComponent component = ComponentMappers.getInstance().states.getSafe(entity);
+		if (component != null) {
+			switch (type) {
+			case BAT:
+				// leave the bats alone for now
+				break;
+			default:
+				component.activateState(EEntityState.SLEEPING, Integer.MAX_VALUE);
 				break;
 			}
 		}
