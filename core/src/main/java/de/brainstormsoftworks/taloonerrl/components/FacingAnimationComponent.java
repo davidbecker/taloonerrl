@@ -26,10 +26,11 @@ import lombok.Getter;
  * @author David Becker
  *
  */
-public class FacingAnimationComponent extends PooledComponent {
+public class FacingAnimationComponent extends PooledComponent
+		implements ISetAbleComponent<FacingAnimationComponent> {
 
 	private @Getter EEntity entityType = EEntity.NOTHING;
-	private final Map<Integer, Animation> animationMap = new HashMap<>();
+	private final Map<Integer, Animation> animationMap = new HashMap<Integer, Animation>();
 
 	@Override
 	protected void reset() {
@@ -54,6 +55,15 @@ public class FacingAnimationComponent extends PooledComponent {
 
 	public Animation getAnimation(final Integer direction) {
 		return animationMap.get(direction);
+	}
+
+	/** {@inheritDoc} */
+	@Override
+	public void overrideComponent(final FacingAnimationComponent _component) {
+		entityType = _component.getEntityType();
+		animationMap.clear();
+		animationMap.putAll(_component.animationMap);
+
 	}
 
 }

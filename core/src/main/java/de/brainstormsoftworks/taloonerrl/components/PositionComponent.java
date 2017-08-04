@@ -25,7 +25,7 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-public class PositionComponent extends PooledComponent {
+public class PositionComponent extends PooledComponent implements ISetAbleComponent<PositionComponent> {
 
 	private static final int VELOCITY_DEFAULT = 2;
 	private int velocity = VELOCITY_DEFAULT;
@@ -79,5 +79,17 @@ public class PositionComponent extends PooledComponent {
 	 */
 	public int getYEffective() {
 		return Math.round(y + (float) offsetY / Renderer.tileSize);
+	}
+
+	/** {@inheritDoc} */
+	@Override
+	public void overrideComponent(final PositionComponent _component) {
+		x = _component.getX();
+		y = _component.getY();
+		offsetX = _component.getOffsetX();
+		offsetY = _component.getOffsetY();
+		totalX = _component.getTotalX();
+		totalY = _component.getTotalY();
+		velocity = _component.getVelocity();
 	}
 }

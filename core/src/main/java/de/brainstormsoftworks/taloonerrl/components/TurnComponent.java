@@ -25,7 +25,7 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-public class TurnComponent extends PooledComponent {
+public class TurnComponent extends PooledComponent implements ISetAbleComponent<TurnComponent> {
 
 	// TODO refactor into a proper turn queue for each component?
 
@@ -45,6 +45,20 @@ public class TurnComponent extends PooledComponent {
 		turnTaken = false;
 		movesOnTurn = ETurnType.MONSTER;
 	}
+
+	/** {@inheritDoc} */
+	@Override
+	public void overrideComponent(final TurnComponent _component) {
+		currentTurn = _component.getCurrentTurn();
+		nextTurn = _component.getNextTurn();
+		processed = _component.isProcessed();
+		turnTaken = _component.isTurnTaken();
+		movesOnTurn = _component.getMovesOnTurn();
+	}
+
+	// public int nextTurn() {
+	// return nextTurn(Move.IDLE);
+	// }
 
 	/**
 	 * advances the current turn to the next turn. sets following turn in the
