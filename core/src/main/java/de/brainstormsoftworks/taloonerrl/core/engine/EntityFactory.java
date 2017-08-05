@@ -10,11 +10,9 @@
  ******************************************************************************/
 package de.brainstormsoftworks.taloonerrl.core.engine;
 
-import com.artemis.Aspect;
 import com.artemis.Entity;
 import com.artemis.World;
 import com.artemis.managers.TagManager;
-import com.artemis.utils.IntBag;
 import com.badlogic.gdx.ai.fsm.DefaultStateMachine;
 import com.badlogic.gdx.ai.fsm.State;
 
@@ -24,7 +22,6 @@ import de.brainstormsoftworks.taloonerrl.components.ArtificialIntelligenceCompon
 import de.brainstormsoftworks.taloonerrl.components.EEntityState;
 import de.brainstormsoftworks.taloonerrl.components.NameComponent;
 import de.brainstormsoftworks.taloonerrl.components.PositionComponent;
-import de.brainstormsoftworks.taloonerrl.components.StateDecorationComponent;
 import de.brainstormsoftworks.taloonerrl.components.StatusComponent;
 import de.brainstormsoftworks.taloonerrl.core.engine.scheduler.ETurnType;
 
@@ -136,6 +133,9 @@ public final class EntityFactory {
 			return createDecoration(type, world, xPosition, yPosition);
 		case CURSOR:
 			return world.createEntity(Archetypes.getInstance().cursor);
+		case STATUS_DECORATOR_ALERTED:
+		case STATUS_DECORATOR_CONFUSED:
+		case STATUS_DECORATOR_DEAD:
 		case STATUS_DECORATOR_NONE:
 		case STATUS_DECORATOR_SLEEPING:
 			return createStatusDecorator(world, xPosition, yPosition);
@@ -146,32 +146,16 @@ public final class EntityFactory {
 
 	private static Entity createStatusDecorator(final World _world, final int _xPosition,
 			final int _yPosition) {
-		float ttl = 0f;
-		// look if there are already decorators on the given position -> if this is the
-		// case, we need to get the biggest time to live to add to the new entity's TTL
-		final IntBag entities = _world.getAspectSubscriptionManager()
-				.get(Aspect.all(PositionComponent.class, StateDecorationComponent.class)).getEntities();
-		int entityId;
-		StateDecorationComponent decorationComponent;
-		PositionComponent positionComponent;
-		for (int i = 0; i < entities.size(); i++) {
-			entityId = entities.get(i);
-			decorationComponent = ComponentMappers.getInstance().stateDecoration.get(entityId);
-			if (decorationComponent.isActive()) {
-				positionComponent = ComponentMappers.getInstance().position.get(entityId);
-				if (positionComponent.getX() == _xPosition && positionComponent.getY() == _yPosition) {
-					if (decorationComponent.getTimeToLive() > ttl) {
-						ttl = decorationComponent.getTimeToLive();
-					}
-				}
-			}
-		}
-		final Entity entity = _world.createEntity(Archetypes.getInstance().stateDecorator);
-		decorationComponent = ComponentMappers.getInstance().stateDecoration.get(entity.getId());
-		decorationComponent.setTimeToLive(
-				GameEngine.getInstance().getStateTime() + ttl + StateDecorationComponent.TTL_BASE);
-		decorationComponent.setActive(true);
-		return entity;
+		return _world.createEntity(Archetypes.getInstance().stateDecorator);
+		// final Entity entity =
+		// _world.createEntity(Archetypes.getInstance().stateDecorator);
+		// final StateDecorationComponent decorationComponent =
+		// ComponentMappers.getInstance().stateDecoration
+		// .get(entity.getId());
+		// decorationComponent
+		// .setTimeToLive(GameEngine.getInstance().getStateTime() +
+		// StateDecorationComponent.TTL_BASE);
+		// return entity;
 	}
 
 	private static Entity createPlayer(final World world) {

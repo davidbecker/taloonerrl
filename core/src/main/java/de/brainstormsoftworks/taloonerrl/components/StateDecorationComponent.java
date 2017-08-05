@@ -28,10 +28,8 @@ import lombok.Setter;
 @Setter
 public class StateDecorationComponent extends Component {
 
-	/** defaut time to live should be 1 seconds for now */
-	public static final float TTL_BASE = 1.0f;
-
 	private boolean active = false;
+	private float timeToLiveStart = 0f;
 	private float timeToLive = 0f;
 	private EEntityState state = null;
 

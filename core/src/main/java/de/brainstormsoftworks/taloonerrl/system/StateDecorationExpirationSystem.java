@@ -39,11 +39,16 @@ public class StateDecorationExpirationSystem extends IteratingSystem {
 	@Override
 	protected void process(final int _entityId) {
 		component = ComponentMappers.getInstance().stateDecoration.get(_entityId);
+		float stateTime = GameEngine.getInstance().getStateTime();
 		if (component.isActive()) {
-			if (component.getTimeToLive() < GameEngine.getInstance().getStateTime()) {
+			if (component.getTimeToLive() < stateTime) {
 				Gdx.app.debug(getClass().getSimpleName(), "kill entity " + _entityId);
 				GameEngine.getInstance().deleteEntity(_entityId);
 			}
+		} else {
+			// check if component should get activated
+			component.setActive(component.getTimeToLiveStart() <= stateTime
+					&& component.getTimeToLive() >= stateTime);
 		}
 	}
 

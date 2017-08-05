@@ -27,5 +27,11 @@ public enum EEntity {
 	/** decorator for an entity that has no particular state */
 	STATUS_DECORATOR_NONE,
 	/** decorator for an entity that is sleeping */
-	STATUS_DECORATOR_SLEEPING
+	STATUS_DECORATOR_SLEEPING,
+	/** decorator for an entity that just died */
+	STATUS_DECORATOR_DEAD,
+	/** decorator for an entity that became confused */
+	STATUS_DECORATOR_CONFUSED,
+	/** decorator for an entity that became alerted */
+	STATUS_DECORATOR_ALERTED
 }

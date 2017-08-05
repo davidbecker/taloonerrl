@@ -10,14 +10,11 @@
  ******************************************************************************/
 package de.brainstormsoftworks.taloonerrl.components;
 
-import com.artemis.Entity;
 import com.artemis.PooledComponent;
 import com.artemis.annotations.EntityId;
 import com.badlogic.gdx.Gdx;
 
-import de.brainstormsoftworks.taloonerrl.core.engine.ComponentMappers;
-import de.brainstormsoftworks.taloonerrl.core.engine.EEntity;
-import de.brainstormsoftworks.taloonerrl.core.engine.GameEngine;
+import de.brainstormsoftworks.taloonerrl.system.util.StateDecorationUtil;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -30,12 +27,65 @@ import lombok.Setter;
 @Getter
 public class StatusComponent extends PooledComponent implements IGetEntityId {
 
-	private final EntityStatus sleepingStatus = new EntityStatus(EEntityState.SLEEPING);
-	// TODO add more states
-
 	@Setter
 	@EntityId
 	private int entityId = -1;
+
+	/*
+	 * when adding new states the following methods must be modified: reset(),
+	 * isBlockingStatusActive() or isAnyStatusActive(), processCooldowns() and
+	 * getState()
+	 */
+	private final EntityStatus sleepStatus = new EntityStatus(EEntityState.SLEEPING);
+	private final EntityStatus alertStatus = new EntityStatus(EEntityState.ALERT);
+	private final EntityStatus confusedStatus = new EntityStatus(EEntityState.CONFUSED);
+	private final EntityStatus deadStatus = new EntityStatus(EEntityState.DEAD) {
+		@Override
+		boolean processCooldown() {
+			// for kind of obvious reasons...
+			return false;
+		};
+	};
+
+	@Override
+	protected void reset() {
+		entityId = -1;
+		sleepStatus.reset();
+		alertStatus.reset();
+		confusedStatus.reset();
+		deadStatus.reset();
+		// add new states here
+	}
+
+	/**
+	 * checks if any state is active that prevents the entity from taking their turn
+	 *
+	 * @return true if entity is blocked by state
+	 */
+	public boolean isBlockingStatusActive() {
+		// add additional blocking states here
+		return sleepStatus.isActive() || deadStatus.isActive() || sleepStatus.isActive()
+				|| confusedStatus.isActive();
+	}
+
+	public boolean isAnyStatusActive() {
+		// add additional non-blocking states here
+		return isBlockingStatusActive() || alertStatus.isActive();
+	}
+
+	/**
+	 * cool down all states by one turn<br>
+	 * will deactivate state that expired
+	 */
+	public void processCooldowns() {
+		// add new states here
+		final boolean processed = sleepStatus.processCooldown() || alertStatus.processCooldown()
+				|| confusedStatus.processCooldown();
+		// last active state has cooled down
+		if (processed && !isAnyStatusActive()) {
+			StateDecorationUtil.getInsance().spawnStatusDecoration(entityId, EEntityState.NONE, 0f, 0f);
+		}
+	}
 
 	/**
 	 * tests if a given state is active for the entity
@@ -59,10 +109,25 @@ public class StatusComponent extends PooledComponent implements IGetEntityId {
 	 *            {@link Integer#MAX_VALUE} or 0
 	 */
 	public void activateState(final EEntityState _state, final int _duration) {
+		activateState(_state, _duration, 0f, 0f);
+	}
+
+	/**
+	 * activates a given state
+	 *
+	 * @param _state
+	 *            state to activate
+	 * @param _duration
+	 *            amount of turns that this state should be active. cool down will
+	 *            be infinite if negative values are provided or duration is set to
+	 *            {@link Integer#MAX_VALUE} or 0
+	 */
+	public void activateState(final EEntityState _state, final int _duration, final float _ttl,
+			final float _ttlDelay) {
 		final EntityStatus state = getState(_state);
 		if (state != null) {
 			if (!state.isActive()) {
-				spawnStatusDecoration(_state);
+				StateDecorationUtil.getInsance().spawnStatusDecoration(entityId, _state, _ttl, _ttlDelay);
 			}
 			state.reset();
 			state.setActive(true);
@@ -75,74 +140,17 @@ public class StatusComponent extends PooledComponent implements IGetEntityId {
 		}
 	}
 
-	/**
-	 * cool down all states by one turn<br>
-	 * will deactivate state that expired
-	 */
-	public void processCooldowns() {
-		final boolean processed = sleepingStatus.processCooldown();
-		// last active state has cooled down
-		if (processed && !isAnyStatusActive()) {
-			spawnStatusDecoration(EEntityState.NONE);
-		}
-	}
-
-	/**
-	 * creates a new decoration entity at the same position as the parent entity<br>
-	 * will display a speech bubble with the given state for a while to the player
-	 *
-	 * @param _state
-	 *            state to display to the player
-	 */
-	private void spawnStatusDecoration(final EEntityState _state) {
-		if (entityId != -1) {
-			final EEntity decorator = EEntityState.toDecorator(_state);
-			// find position component for entity that this component belongs too
-			final PositionComponent positionComponentThis = ComponentMappers.getInstance().position
-					.get(entityId);
-			// spawn new decorator entity for given state
-			final Entity newEntity = GameEngine.getInstance().createNewEntity(decorator,
-					positionComponentThis.getX(), positionComponentThis.getY());
-			final StateDecorationComponent stateDecorationComponent = ComponentMappers
-					.getInstance().stateDecoration.get(newEntity);
-			// now we set the state into the decorator component
-			stateDecorationComponent.setState(_state);
-			// and clone the position from the parent entity for the new entity
-			ComponentMappers.getInstance().position.get(newEntity).overrideComponent(positionComponentThis);
-			// and set the correct sprite
-			newEntity.getComponent(AnimationComponent.class).mapAnimation(decorator);
-		} else {
-			Gdx.app.error(getClass().getSimpleName(),
-					"no entity to display state " + EEntityState.toString(_state) + " for");
-		}
-
-	}
-
-	/**
-	 * checks if any state is active that prevents the entity from taking their turn
-	 *
-	 * @return true if entity is blocked by state
-	 */
-	public boolean isBlockingStatusActive() {
-		// add additional blocking states here
-		return sleepingStatus.isActive();
-	}
-
-	public boolean isAnyStatusActive() {
-		// add additional non-blocking states here
-		return isBlockingStatusActive();
-	}
-
-	@Override
-	protected void reset() {
-		sleepingStatus.reset();
-		entityId = -1;
-	}
-
 	private EntityStatus getState(final EEntityState _state) {
 		switch (_state) {
+		case ALERT:
+			return alertStatus;
+		case CONFUSED:
+			return confusedStatus;
+		case DEAD:
+			return deadStatus;
 		case SLEEPING:
-			return sleepingStatus;
+			return sleepStatus;
+		// add new states here
 		default:
 			Gdx.app.error(getClass().getSimpleName(), "unknown state " + EEntityState.toString(_state));
 			return null;
