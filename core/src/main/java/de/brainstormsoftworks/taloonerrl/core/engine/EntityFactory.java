@@ -316,8 +316,7 @@ public final class EntityFactory {
 				// leave the bats alone for now
 				break;
 			default:
-				component.activateState(EEntityState.SLEEPING, 10);
-				// component.activateState(EEntityState.SLEEPING, Integer.MAX_VALUE);
+				component.activateState(EEntityState.SLEEPING, Integer.MAX_VALUE);
 				break;
 			}
 			component.setEntityId(entity.getId());

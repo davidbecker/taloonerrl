@@ -16,6 +16,7 @@ import com.artemis.systems.IteratingSystem;
 import de.brainstormsoftworks.taloonerrl.components.ArtificialIntelligenceComponent;
 import de.brainstormsoftworks.taloonerrl.components.FacingComponent;
 import de.brainstormsoftworks.taloonerrl.components.PositionComponent;
+import de.brainstormsoftworks.taloonerrl.components.StatusComponent;
 import de.brainstormsoftworks.taloonerrl.components.TurnComponent;
 import de.brainstormsoftworks.taloonerrl.core.engine.ComponentMappers;
 import de.brainstormsoftworks.taloonerrl.core.engine.GameEngine;
@@ -36,6 +37,7 @@ public class TurnProcessSystem extends IteratingSystem {
 	private FacingComponent facingComponent;
 	private TurnComponent turnComponent;
 	private ArtificialIntelligenceComponent artificialIntelligenceComponent;
+	private StatusComponent statusComponent;
 	private boolean isPlayer;
 	private int nextTurn;
 
@@ -51,18 +53,23 @@ public class TurnProcessSystem extends IteratingSystem {
 			turnComponent = ComponentMappers.getInstance().turn.get(_entityId);
 			if (!turnComponent.isProcessed()
 					&& turnComponent.getMovesOnTurn() == GameEngine.getInstance().getCurrentTurnSide()) {
-				// for now only the player can have turns...
-				if (isPlayer) {
-					nextTurn = turnComponent.nextTurn(TurnScheduler.getInstance().getNextTurn());
+
+				// check if we have an active state that blocks the turn for the entity
+				statusComponent = ComponentMappers.getInstance().states.getSafe(_entityId);
+				if (statusComponent != null && statusComponent.isBlockingStatusActive()) {
+					nextTurn = Move.WAIT;
 				} else {
-					artificialIntelligenceComponent = ComponentMappers.getInstance().ai.getSafe(_entityId);
-					if (artificialIntelligenceComponent != null) {
-						artificialIntelligenceComponent.update();
+					if (isPlayer) {
+						// TODO refactor into "intelligence" for player entity?
+						nextTurn = turnComponent.nextTurn(TurnScheduler.getInstance().getNextTurn());
+					} else {
+						artificialIntelligenceComponent = ComponentMappers.getInstance().ai
+								.getSafe(_entityId);
+						if (artificialIntelligenceComponent != null) {
+							artificialIntelligenceComponent.update();
+						}
+						nextTurn = turnComponent.getCurrentTurn();
 					}
-					nextTurn = turnComponent.getCurrentTurn();
-					// nextTurn = turnComponent.nextTurn(artificialIntelligenceComponent != null
-					// ? artificialIntelligenceComponent.getArtificialIntelligence().nextTurn()
-					// : Move.WAIT);
 				}
 
 				if (nextTurn != Move.IDLE) {
@@ -89,6 +96,10 @@ public class TurnProcessSystem extends IteratingSystem {
 						}
 					}
 					turnComponent.setProcessed(true);
+					// TODO refactor into own system in the future? - should be OK for now though
+					if (statusComponent != null) {
+						statusComponent.processCooldowns();
+					}
 				}
 			}
 		}

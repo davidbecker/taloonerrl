@@ -90,6 +90,23 @@ public class StatusComponent extends PooledComponent implements IGetEntityId {
 		}
 	}
 
+	/**
+	 * cool down all states by one turn<br>
+	 * will deactivate state that expired
+	 */
+	public void processCooldowns() {
+		sleepingStatus.processCooldown();
+	}
+
+	/**
+	 * checks if any state is active that prevents the entity from taking their turn
+	 * 
+	 * @return true if entity is blocked by state
+	 */
+	public boolean isBlockingStatusActive() {
+		return sleepingStatus.isActive();
+	}
+
 	@Override
 	protected void reset() {
 		sleepingStatus.reset();

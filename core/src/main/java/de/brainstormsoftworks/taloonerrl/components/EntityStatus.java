@@ -11,6 +11,8 @@
 
 package de.brainstormsoftworks.taloonerrl.components;
 
+import com.badlogic.gdx.Gdx;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -47,6 +49,16 @@ class EntityStatus {
 		active = false;
 		cooldownActive = false;
 		cooldownDuration = 0;
+	}
+
+	void processCooldown() {
+		if (active && cooldownActive) {
+			cooldownDuration -= 1;
+			if (cooldownDuration <= 0) {
+				active = false;
+				Gdx.app.log(getClass().getSimpleName(), EEntityState.toString(type) + " cooled down");
+			}
+		}
 	}
 
 }
