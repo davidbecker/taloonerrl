@@ -13,6 +13,7 @@ package de.brainstormsoftworks.taloonerrl.core.engine;
 import com.artemis.Aspect;
 import com.artemis.Entity;
 import com.artemis.World;
+import com.artemis.managers.TagManager;
 import com.artemis.utils.IntBag;
 import com.badlogic.gdx.ai.fsm.DefaultStateMachine;
 import com.badlogic.gdx.ai.fsm.State;
@@ -174,6 +175,7 @@ public final class EntityFactory {
 
 	private static Entity createPlayer(final World world) {
 		final Entity newEntity = world.createEntity(Archetypes.getInstance().player);
+		world.getSystem(TagManager.class).register(GameEngine.TAG_PLAYER, newEntity);
 		mapFacingAnimation(newEntity, EEntity.PLAYER);
 		setMovesOnTurn(newEntity, ETurnType.PLAYER);
 		setName(newEntity, EEntity.PLAYER);

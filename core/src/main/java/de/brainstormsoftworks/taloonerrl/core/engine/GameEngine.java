@@ -15,6 +15,7 @@ import com.artemis.AspectSubscriptionManager;
 import com.artemis.Entity;
 import com.artemis.World;
 import com.artemis.WorldConfiguration;
+import com.artemis.managers.TagManager;
 import com.artemis.utils.IntBag;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
@@ -34,6 +35,9 @@ import lombok.Setter;
  *
  */
 public final class GameEngine {
+
+	public static final String TAG_PLAYER = "PLAYER";
+
 	// maybe initialize on first call via getInstance?
 	private static final GameEngine instance = new GameEngine();
 	private final World world;
@@ -57,6 +61,7 @@ public final class GameEngine {
 		inputMultiplexer.addProcessor(InputSystem.getInstance());
 		Gdx.input.setInputProcessor(inputMultiplexer);
 		final WorldConfiguration config = new WorldConfiguration();
+		config.setSystem(TagManager.class);
 		Systems.setSystems(config);
 		world = new World(config);
 		ComponentMappers.mapComponents(world);
@@ -222,5 +227,14 @@ public final class GameEngine {
 	 */
 	public AspectSubscriptionManager getAspectSubscriptionManager() {
 		return world.getAspectSubscriptionManager();
+	}
+
+	/**
+	 * getter for the tag manager of the game world
+	 *
+	 * @return manager
+	 */
+	public TagManager getTagManager() {
+		return world.getSystem(TagManager.class);
 	}
 }

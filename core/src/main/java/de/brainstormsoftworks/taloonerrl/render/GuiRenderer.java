@@ -343,8 +343,7 @@ public final class GuiRenderer implements IDisposableInstance {
 	 *            height of the screen
 	 */
 	public void render(final float width, final float height) {
-		// hack to avoid null pointer on first frame
-		final Entity player = GameEngine.getInstance().getEntity(0);
+		final Entity player = GameEngine.getInstance().getTagManager().getEntity(GameEngine.TAG_PLAYER);
 		if (player != null) {
 			final float playerHeath = player.getComponent(HealthComponent.class).getHealthPercent();
 			renderBar(playerHeath, 3, 1, 2, EBarElementColor.RED);
