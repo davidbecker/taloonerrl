@@ -23,6 +23,7 @@ import de.brainstormsoftworks.taloonerrl.internal.render.EntityAnimationsRendere
 import de.brainstormsoftworks.taloonerrl.internal.render.EntityFacingAnimationsRenderer;
 import de.brainstormsoftworks.taloonerrl.internal.render.EntityHealthBarsRenderer;
 import de.brainstormsoftworks.taloonerrl.internal.render.EntityHighlightRenderer;
+import de.brainstormsoftworks.taloonerrl.internal.render.EntityStateDecorationRenderer;
 import de.brainstormsoftworks.taloonerrl.internal.render.SpriteRenderSystem;
 import de.brainstormsoftworks.taloonerrl.math.IntVector2;
 
@@ -59,6 +60,7 @@ public final class Renderer implements IDisposableInstance {
 	private final IRender entityAnimationsRenderer = new EntityAnimationsRenderer();
 	private final IRender facingAnimationsRenderer = new EntityFacingAnimationsRenderer();
 	private final IRender entityHealthBarsRenderer = new EntityHealthBarsRenderer();
+	private final IRender entityStateDecorationRenderer = new EntityStateDecorationRenderer();
 
 	private Renderer() {
 		spriteBatchWorld = new SpriteBatch();
@@ -89,6 +91,7 @@ public final class Renderer implements IDisposableInstance {
 		entityAnimationsRenderer.render();
 		facingAnimationsRenderer.render();
 		entityHealthBarsRenderer.render();
+		entityStateDecorationRenderer.render();
 	}
 
 	/**

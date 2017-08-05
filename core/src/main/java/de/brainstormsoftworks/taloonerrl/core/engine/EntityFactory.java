@@ -148,7 +148,7 @@ public final class EntityFactory {
 
 	private static Entity createStatusDecorator(final World _world, final int _xPosition,
 			final int _yPosition) {
-		long ttl = 0L;
+		float ttl = 0f;
 		// look if there are already decorators on the given position -> if this is the
 		// case, we need to get the biggest time to live to add to the new entity's TTL
 		final IntBag entities = _world.getAspectSubscriptionManager()
@@ -170,7 +170,8 @@ public final class EntityFactory {
 		}
 		final Entity entity = _world.createEntity(Archetypes.getInstance().stateDecorator);
 		decorationComponent = ComponentMappers.getInstance().stateDecoration.get(entity.getId());
-		decorationComponent.setTimeToLive(ttl + StateDecorationComponent.TTL_BASE);
+		decorationComponent.setTimeToLive(
+				GameEngine.getInstance().getStateTime() + ttl + StateDecorationComponent.TTL_BASE);
 		decorationComponent.setActive(true);
 		return entity;
 	}

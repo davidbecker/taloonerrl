@@ -169,6 +169,16 @@ public final class GameEngine {
 	}
 
 	/**
+	 * deletes the entity with the given id from the world
+	 *
+	 * @param entityIy
+	 *            of the entity
+	 */
+	public void deleteEntity(final int entityIy) {
+		world.delete(entityIy);
+	}
+
+	/**
 	 * creates a new entity.<br/>
 	 * convenience method for {@link #createNewEntity(EEntity, 0, 0)}
 	 *

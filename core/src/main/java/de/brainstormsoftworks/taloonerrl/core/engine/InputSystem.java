@@ -151,7 +151,8 @@ public final class InputSystem extends InputAdapter {
 		HighlightAbleComponent highlight;
 		for (int i = 0; i < entities.size(); i++) {
 			positionComponent = ComponentMappers.getInstance().position.get(i);
-			if (positionComponent.getX() == mouseOverX && positionComponent.getY() == mouseOverY) {
+			if (positionComponent != null && positionComponent.getX() == mouseOverX
+					&& positionComponent.getY() == mouseOverY) {
 				highlight = ComponentMappers.getInstance().highlight.get(i);
 				highlight.toggleHighlighted();
 				toggled = true;

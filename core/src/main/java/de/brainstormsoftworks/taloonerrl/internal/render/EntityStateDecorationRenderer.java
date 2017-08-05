@@ -23,25 +23,25 @@ import de.brainstormsoftworks.taloonerrl.render.RenderUtil;
 import de.brainstormsoftworks.taloonerrl.render.Renderer;
 
 /**
- * renderer that renders the current animation for a component in the visible
- * area<br>
- * excludes {@link StateDecorationComponent} as they are rendered by
- * {@link EntityStateDecorationRenderer}
+ * renderer that renders the current animation for the state decoration of an
+ * entity in the visible area
  *
  * @author David Becker
  *
  */
-public class EntityAnimationsRenderer extends AbstractRender {
+public class EntityStateDecorationRenderer extends AbstractRender {
+	/** increase this to speed the animation cycle up a bit */
+	private static final float ANIMATION_SPEED_MODIFIER = 2.5f;
+
 	private PositionComponent positionComponent;
 	private AnimationComponent spriteComponent;
 	private Animation animation;
 	private int x, y;
+	private float bounceOffset;
 
-	@SuppressWarnings("unchecked")
-	public EntityAnimationsRenderer() {
-		super(GameEngine.getInstance().getAspectSubscriptionManager()
-				.get(Aspect.all(PositionComponent.class, AnimationComponent.class)
-						.exclude(StateDecorationComponent.class)));
+	public EntityStateDecorationRenderer() {
+		super(GameEngine.getInstance().getAspectSubscriptionManager().get(Aspect.all(PositionComponent.class,
+				AnimationComponent.class, StateDecorationComponent.class)));
 	}
 
 	@Override
@@ -51,9 +51,26 @@ public class EntityAnimationsRenderer extends AbstractRender {
 		animation = spriteComponent.getAnimation();
 		x = positionComponent.getX();
 		y = positionComponent.getY();
-		if (animation != null && FovWrapper.getInstance().isLit(x, y)) {
+		if (animation != null && FovWrapper.getInstance().isLit(x, y)
+				&& ComponentMappers.getInstance().stateDecoration.get(_entityId).isActive()) {
+			// we want the image to bounce a little
+			/*
+			 * kind of a hack to switch a float ...
+			 */
+			switch ((int) (GameEngine.getInstance().getStateTime() * ANIMATION_SPEED_MODIFIER) % 4) {
+			case 0:
+				bounceOffset = 0.9f * Renderer.tileSize;
+				break;
+			case 1:
+			case 3:
+				bounceOffset = 0.85f * Renderer.tileSize;
+				break;
+			case 2:
+				bounceOffset = 0.8f * Renderer.tileSize;
+				break;
+			}
 			Renderer.getInstance().renderOnTile(RenderUtil.getKeyFrame(animation), x, y,
-					positionComponent.getOffsetX(), positionComponent.getOffsetY());
+					positionComponent.getOffsetX(), positionComponent.getOffsetY() + bounceOffset);
 
 		}
 	}
