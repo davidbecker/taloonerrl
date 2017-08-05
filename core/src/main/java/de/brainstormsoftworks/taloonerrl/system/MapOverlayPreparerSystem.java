@@ -20,6 +20,7 @@ import de.brainstormsoftworks.taloonerrl.core.engine.ComponentMappers;
 import de.brainstormsoftworks.taloonerrl.render.FovWrapper;
 import de.brainstormsoftworks.taloonerrl.render.MapOverlayRenderer;
 import de.brainstormsoftworks.taloonerrl.render.MapOverlayRenderer.Visible;
+import de.brainstormsoftworks.taloonerrl.render.Renderer;
 
 /**
  * system that prepares the overlay data for the map overlay
@@ -41,21 +42,24 @@ public class MapOverlayPreparerSystem extends IteratingSystem {
 
 	@Override
 	protected void process(final int _entityId) {
-		positionComponent = ComponentMappers.getInstance().position.get(_entityId);
-		healthComponent = ComponentMappers.getInstance().health.getSafe(_entityId);
-		collectibleComponent = ComponentMappers.getInstance().collectible.getSafe(_entityId);
-		x = positionComponent.getX();
-		y = positionComponent.getY();
-		if (healthComponent != null && healthComponent.isAlive() && FovWrapper.getInstance().isLit(x, y)) {
-			// check if the entity is the player
-			if (ComponentMappers.getInstance().player.get(_entityId) != null) {
-				MapOverlayRenderer.getInstance().setOverlay(x, y, Visible.PLAYER);
-			} else {
-				MapOverlayRenderer.getInstance().setOverlay(x, y, Visible.MONSTER);
+		if (!Renderer.getInstance().isFullMapVisible()) {
+			positionComponent = ComponentMappers.getInstance().position.get(_entityId);
+			healthComponent = ComponentMappers.getInstance().health.getSafe(_entityId);
+			collectibleComponent = ComponentMappers.getInstance().collectible.getSafe(_entityId);
+			x = positionComponent.getX();
+			y = positionComponent.getY();
+			if (healthComponent != null && healthComponent.isAlive()
+					&& FovWrapper.getInstance().isLit(x, y)) {
+				// check if the entity is the player
+				if (ComponentMappers.getInstance().player.getSafe(_entityId) != null) {
+					MapOverlayRenderer.getInstance().setOverlay(x, y, Visible.PLAYER);
+				} else {
+					MapOverlayRenderer.getInstance().setOverlay(x, y, Visible.MONSTER);
+				}
 			}
-		}
-		if (collectibleComponent != null) {
-			MapOverlayRenderer.getInstance().setOverlay(x, y, Visible.COLLECTIBLE);
+			if (collectibleComponent != null) {
+				MapOverlayRenderer.getInstance().setOverlay(x, y, Visible.COLLECTIBLE);
+			}
 		}
 	}
 
