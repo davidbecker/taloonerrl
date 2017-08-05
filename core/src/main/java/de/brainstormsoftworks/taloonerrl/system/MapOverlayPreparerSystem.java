@@ -42,8 +42,8 @@ public class MapOverlayPreparerSystem extends IteratingSystem {
 	@Override
 	protected void process(final int _entityId) {
 		positionComponent = ComponentMappers.getInstance().position.get(_entityId);
-		healthComponent = ComponentMappers.getInstance().health.get(_entityId);
-		collectibleComponent = ComponentMappers.getInstance().collectible.get(_entityId);
+		healthComponent = ComponentMappers.getInstance().health.getSafe(_entityId);
+		collectibleComponent = ComponentMappers.getInstance().collectible.getSafe(_entityId);
 		x = positionComponent.getX();
 		y = positionComponent.getY();
 		if (healthComponent != null && healthComponent.isAlive() && FovWrapper.getInstance().isLit(x, y)) {
