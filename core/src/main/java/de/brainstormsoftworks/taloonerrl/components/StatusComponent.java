@@ -12,6 +12,7 @@ package de.brainstormsoftworks.taloonerrl.components;
 
 import com.artemis.Entity;
 import com.artemis.PooledComponent;
+import com.artemis.annotations.EntityId;
 import com.badlogic.gdx.Gdx;
 
 import de.brainstormsoftworks.taloonerrl.core.engine.ComponentMappers;
@@ -33,6 +34,7 @@ public class StatusComponent extends PooledComponent implements IGetEntityId {
 	// TODO add more states
 
 	@Setter
+	@EntityId
 	private int entityId = -1;
 
 	/**
