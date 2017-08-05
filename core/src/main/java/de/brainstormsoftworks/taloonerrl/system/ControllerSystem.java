@@ -17,7 +17,7 @@ import de.brainstormsoftworks.taloonerrl.components.PositionComponent;
 import de.brainstormsoftworks.taloonerrl.core.engine.ComponentMappers;
 
 /**
- * updates {@link ControllerComponent}s
+ * updates {@link PositionComponent}s
  *
  * @author David Becker
  *

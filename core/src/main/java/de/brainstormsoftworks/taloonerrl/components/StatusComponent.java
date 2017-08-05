@@ -1,3 +1,13 @@
+/*******************************************************************************
+ * Copyright (c) 2017 David Becker.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the GNU Public License v2.0
+ * which accompanies this distribution, and is available at
+ * http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+ *
+ * Contributors:
+ *     David Becker - initial API and implementation
+ ******************************************************************************/
 package de.brainstormsoftworks.taloonerrl.components;
 
 import com.artemis.Entity;
@@ -32,12 +42,8 @@ public class StatusComponent extends PooledComponent implements IGetEntityId {
 	 * @return
 	 */
 	public boolean isActive(final EEntityState _state) {
-		switch (_state) {
-		case SLEEPING:
-			return sleepingStatus.isActive();
-		default:
-			return false;
-		}
+		final EntityStatus state = getState(_state);
+		return state != null && state.isActive();
 	}
 
 	/**
@@ -51,14 +57,7 @@ public class StatusComponent extends PooledComponent implements IGetEntityId {
 	 *            {@link Integer#MAX_VALUE} or 0
 	 */
 	public void activateState(final EEntityState _state, final int _duration) {
-		EntityStatus state = null;
-		switch (_state) {
-		case SLEEPING:
-			state = sleepingStatus;
-			break;
-		default:
-			break;
-		}
+		final EntityStatus state = getState(_state);
 		if (state != null) {
 			if (!state.isActive() && entityId != -1) {
 				// find position component for entity that this component belongs too
@@ -86,7 +85,7 @@ public class StatusComponent extends PooledComponent implements IGetEntityId {
 				state.setCooldownDuration(_duration);
 			}
 		} else {
-			Gdx.app.error("StatusComponent", "failed to activate " + EEntityState.toString(_state));
+			Gdx.app.error(getClass().getSimpleName(), "failed to activate " + EEntityState.toString(_state));
 		}
 	}
 
@@ -100,7 +99,7 @@ public class StatusComponent extends PooledComponent implements IGetEntityId {
 
 	/**
 	 * checks if any state is active that prevents the entity from taking their turn
-	 * 
+	 *
 	 * @return true if entity is blocked by state
 	 */
 	public boolean isBlockingStatusActive() {
@@ -111,5 +110,15 @@ public class StatusComponent extends PooledComponent implements IGetEntityId {
 	protected void reset() {
 		sleepingStatus.reset();
 		entityId = -1;
+	}
+
+	private EntityStatus getState(final EEntityState _state) {
+		switch (_state) {
+		case SLEEPING:
+			return sleepingStatus;
+		default:
+			Gdx.app.error(getClass().getSimpleName(), "unknown state " + EEntityState.toString(_state));
+			return null;
+		}
 	}
 }
