@@ -51,14 +51,20 @@ class EntityStatus {
 		cooldownDuration = 0;
 	}
 
-	void processCooldown() {
+	/**
+	 *
+	 * @return true if cool has taken place
+	 */
+	boolean processCooldown() {
 		if (active && cooldownActive) {
 			cooldownDuration -= 1;
 			if (cooldownDuration <= 0) {
 				active = false;
 				Gdx.app.log(getClass().getSimpleName(), EEntityState.toString(type) + " cooled down");
 			}
+			return true;
 		}
+		return false;
 	}
 
 }

@@ -10,6 +10,8 @@
  ******************************************************************************/
 package de.brainstormsoftworks.taloonerrl.components;
 
+import de.brainstormsoftworks.taloonerrl.core.engine.EEntity;
+
 /**
  * type of entity states
  *
@@ -17,14 +19,19 @@ package de.brainstormsoftworks.taloonerrl.components;
  *
  */
 public enum EEntityState {
-	SLEEPING;
+	SLEEPING, NONE;
 
 	public static String toString(final EEntityState _state) {
+		return _state != null ? _state.name() : "";
+	}
+
+	public static EEntity toDecorator(final EEntityState _state) {
 		switch (_state) {
 		case SLEEPING:
-			return "SLEEPING";
+			return EEntity.STATUS_DECORATOR_SLEEPING;
+		case NONE:
 		default:
-			return "unknown state";
+			return EEntity.STATUS_DECORATOR_NONE;
 		}
 	}
 }

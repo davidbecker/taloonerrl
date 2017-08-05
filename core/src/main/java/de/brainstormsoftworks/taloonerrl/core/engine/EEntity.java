@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2015 David Becker.
+ * Copyright (c) 2015, 2017 David Becker.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the GNU Public License v2.0
  * which accompanies this distribution, and is available at
@@ -23,5 +23,9 @@ public enum EEntity {
 	SCROLL_C, SCROLL_D, SCROLL_E, SCROLL_F, SCROLL_G, SCROLL_H, SCROLL_I, SCROLL_J, SHADOW, SHIELD_A,
 	SHIELD_B, SHIELD_C, SHIELD_D, SHIELD_E, SHIELD_F, SHIELD_G, SLUG, SQUIRREL, STEALER, WAND_A, WAND_B,
 	WAND_C, WAND_D, WAND_E, WAND_F, WAND_G, WAND_H, WAND_I, WAND_J, WEAPON_A, WEAPON_B, WEAPON_C, WEAPON_D,
-	WEAPON_E, WEAPON_F, WEAPON_G, WEAPON_H, WEAPON_I, WEAPON_J, WARPER, CURSOR, STATUS_DECORATOR_SLEEPING
+	WEAPON_E, WEAPON_F, WEAPON_G, WEAPON_H, WEAPON_I, WEAPON_J, WARPER, CURSOR,
+	/** decorator for an entity that has no particular state */
+	STATUS_DECORATOR_NONE,
+	/** decorator for an entity that is sleeping */
+	STATUS_DECORATOR_SLEEPING
 }

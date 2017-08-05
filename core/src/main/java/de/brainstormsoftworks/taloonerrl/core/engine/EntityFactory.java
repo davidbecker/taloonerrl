@@ -136,6 +136,7 @@ public final class EntityFactory {
 			return createDecoration(type, world, xPosition, yPosition);
 		case CURSOR:
 			return world.createEntity(Archetypes.getInstance().cursor);
+		case STATUS_DECORATOR_NONE:
 		case STATUS_DECORATOR_SLEEPING:
 			return createStatusDecorator(world, xPosition, yPosition);
 		default:

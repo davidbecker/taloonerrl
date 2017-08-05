@@ -112,8 +112,8 @@ public final class SpriteMapper implements IDisposableInstance {
 	private Texture tWand = null;
 	private Texture tWarrior = null;
 	private Texture tWeapon = null;
-	private Texture tStateSleep0 = null;
-	private Texture tStateSleep1 = null;
+	private Texture tGui0 = null;
+	private Texture tGui1 = null;
 
 	private SpriteMapper() {
 		RenderUtil.addToDisposeList(this);
@@ -366,15 +366,26 @@ public final class SpriteMapper implements IDisposableInstance {
 			frames[1] = loadFrame(tDecor1, 0, 8);
 			mappedAnimations.put(type, new Animation(0.15f, frames));
 			break;
+		case STATUS_DECORATOR_NONE:
+			if (tGui0 == null) {
+				tGui0 = loadTexture(PATH_GUI + FILE_GUI0);
+			}
+			if (tGui1 == null) {
+				tGui1 = loadTexture(PATH_GUI + FILE_GUI1);
+			}
+			frames[0] = loadFrame(tGui0, 10, 1);
+			frames[1] = loadFrame(tGui1, 10, 1);
+			mappedAnimations.put(type, new Animation(0.15f, frames));
+			break;
 		case STATUS_DECORATOR_SLEEPING:
-			if (tStateSleep0 == null) {
-				tStateSleep0 = loadTexture(PATH_GUI + FILE_GUI0);
+			if (tGui0 == null) {
+				tGui0 = loadTexture(PATH_GUI + FILE_GUI0);
 			}
-			if (tStateSleep1 == null) {
-				tStateSleep1 = loadTexture(PATH_GUI + FILE_GUI1);
+			if (tGui1 == null) {
+				tGui1 = loadTexture(PATH_GUI + FILE_GUI1);
 			}
-			frames[0] = loadFrame(tStateSleep0, 10, 4);
-			frames[1] = loadFrame(tStateSleep1, 10, 4);
+			frames[0] = loadFrame(tGui0, 10, 4);
+			frames[1] = loadFrame(tGui1, 10, 4);
 			mappedAnimations.put(type, new Animation(0.15f, frames));
 			break;
 		default:

@@ -61,24 +61,8 @@ public class StatusComponent extends PooledComponent implements IGetEntityId {
 	public void activateState(final EEntityState _state, final int _duration) {
 		final EntityStatus state = getState(_state);
 		if (state != null) {
-			if (!state.isActive() && entityId != -1) {
-				// find position component for entity that this component belongs too
-				final PositionComponent positionComponentThis = ComponentMappers.getInstance().position
-						.get(entityId);
-				// spawn new decorator entity for given state
-				final Entity newEntity = GameEngine.getInstance().createNewEntity(
-						EEntity.STATUS_DECORATOR_SLEEPING, positionComponentThis.getX(),
-						positionComponentThis.getY());
-				final StateDecorationComponent stateDecorationComponent = ComponentMappers
-						.getInstance().stateDecoration.get(newEntity);
-				// now we set the state into the decorator component
-				stateDecorationComponent.setState(_state);
-				// and clone the position from the parent entity for the new entity
-				ComponentMappers.getInstance().position.get(newEntity)
-						.overrideComponent(positionComponentThis);
-				// and set the correct sprite
-				newEntity.getComponent(AnimationComponent.class)
-						.mapAnimation(EEntity.STATUS_DECORATOR_SLEEPING);
+			if (!state.isActive()) {
+				spawnStatusDecoration(_state);
 			}
 			state.reset();
 			state.setActive(true);
@@ -96,7 +80,42 @@ public class StatusComponent extends PooledComponent implements IGetEntityId {
 	 * will deactivate state that expired
 	 */
 	public void processCooldowns() {
-		sleepingStatus.processCooldown();
+		final boolean processed = sleepingStatus.processCooldown();
+		// last active state has cooled down
+		if (processed && !isAnyStatusActive()) {
+			spawnStatusDecoration(EEntityState.NONE);
+		}
+	}
+
+	/**
+	 * creates a new decoration entity at the same position as the parent entity<br>
+	 * will display a speech bubble with the given state for a while to the player
+	 *
+	 * @param _state
+	 *            state to display to the player
+	 */
+	private void spawnStatusDecoration(final EEntityState _state) {
+		if (entityId != -1) {
+			final EEntity decorator = EEntityState.toDecorator(_state);
+			// find position component for entity that this component belongs too
+			final PositionComponent positionComponentThis = ComponentMappers.getInstance().position
+					.get(entityId);
+			// spawn new decorator entity for given state
+			final Entity newEntity = GameEngine.getInstance().createNewEntity(decorator,
+					positionComponentThis.getX(), positionComponentThis.getY());
+			final StateDecorationComponent stateDecorationComponent = ComponentMappers
+					.getInstance().stateDecoration.get(newEntity);
+			// now we set the state into the decorator component
+			stateDecorationComponent.setState(_state);
+			// and clone the position from the parent entity for the new entity
+			ComponentMappers.getInstance().position.get(newEntity).overrideComponent(positionComponentThis);
+			// and set the correct sprite
+			newEntity.getComponent(AnimationComponent.class).mapAnimation(decorator);
+		} else {
+			Gdx.app.error(getClass().getSimpleName(),
+					"no entity to display state " + EEntityState.toString(_state) + " for");
+		}
+
 	}
 
 	/**
@@ -105,7 +124,13 @@ public class StatusComponent extends PooledComponent implements IGetEntityId {
 	 * @return true if entity is blocked by state
 	 */
 	public boolean isBlockingStatusActive() {
+		// add additional blocking states here
 		return sleepingStatus.isActive();
+	}
+
+	public boolean isAnyStatusActive() {
+		// add additional non-blocking states here
+		return isBlockingStatusActive();
 	}
 
 	@Override
