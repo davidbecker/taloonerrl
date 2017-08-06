@@ -62,6 +62,14 @@ public class PositionComponent extends PooledComponent implements ISetAbleCompon
 	}
 
 	/**
+	 * stops the current motion
+	 */
+	public void resetMotion() {
+		totalX = 0;
+		totalY = 0;
+	}
+
+	/**
 	 * gets the x position of this component<br>
 	 * takes the present offset into consideration
 	 *
