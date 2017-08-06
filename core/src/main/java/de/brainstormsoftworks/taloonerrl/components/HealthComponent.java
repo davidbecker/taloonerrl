@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2015 David Becker.
+ * Copyright (c) 2015, 2017 David Becker.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the GNU Public License v2.0
  * which accompanies this distribution, and is available at
@@ -24,16 +24,28 @@ import lombok.Setter;
  */
 @Getter
 public class HealthComponent extends PooledComponent implements ISetAbleComponent<HealthComponent> {
+	@Setter
+	/** unprocessed "queued up" damage for the entity */
+	private int damage = 0;
 
-	private @Setter int healthMax = 1;
+	@Setter
+	private int health = 100;
+	@Setter
+	private int healthMax = 100;
+	@Setter
+	private boolean alive = true;
+
 	private float healthPercent = 1.0f;
-	private @Setter boolean alive = true;
 
 	@Override
 	protected void reset() {
 		healthMax = 1;
 		healthPercent = 1.0f;
 		alive = true;
+	}
+
+	public void addDamage(final int _damage) {
+		damage += _damage;
 	}
 
 	/**

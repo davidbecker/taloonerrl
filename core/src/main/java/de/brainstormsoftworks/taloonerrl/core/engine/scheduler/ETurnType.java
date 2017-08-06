@@ -17,18 +17,26 @@ package de.brainstormsoftworks.taloonerrl.core.engine.scheduler;
  */
 public enum ETurnType {
 	/** entity moves on the player turn */
-	PLAYER,
+	PLAYER, PLAYER_CLEANUP,
 	/** entity moves on the monster turn */
-	MONSTER;
+	MONSTER, MONSTER_CLEANUP;
 
 	public static String toString(final ETurnType _eTurnType) {
+		return _eTurnType != null ? _eTurnType.name() : "";
+	}
+
+	public static ETurnType nextTurn(final ETurnType _eTurnType) {
 		switch (_eTurnType) {
 		case MONSTER:
-			return "MONSTER";
+			return MONSTER_CLEANUP;
+		case MONSTER_CLEANUP:
+			return PLAYER;
 		case PLAYER:
-			return "PLAYER";
+			return PLAYER_CLEANUP;
+		case PLAYER_CLEANUP:
+			return MONSTER;
 		default:
-			return "";
+			return PLAYER;
 		}
 	}
 

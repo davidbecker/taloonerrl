@@ -64,7 +64,7 @@ public class BlockingTileCheckSystem extends IteratingSystem implements IMapChan
 			 * tread the motion as an attack
 			 */
 			if (!reseted) {
-				reseted = PositionUtil.isPositionTaken(moveToX, moveToY);
+				reseted = PositionUtil.attackEntitiesOnPosition(moveToX, moveToY, _entityId);
 				// TODO implement attacks
 			}
 

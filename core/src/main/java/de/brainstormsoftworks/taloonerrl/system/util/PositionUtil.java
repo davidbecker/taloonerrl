@@ -83,4 +83,37 @@ public final class PositionUtil {
 		}
 		return false;
 	}
+
+	/**
+	 * attacks all entities on a given map tile by the given entity with a melee
+	 * attack attack
+	 *
+	 * @param x
+	 * @param y
+	 * @param _attackerEntityId
+	 * @return
+	 */
+	public static boolean attackEntitiesOnPosition(final int x, final int y, final int _attackerEntityId) {
+		boolean attacked = false;
+		final IntBag entities = GameEngine.getInstance().getAspectSubscriptionManager()
+				.get(Aspect.all(PositionComponent.class, HealthComponent.class)).getEntities();
+		int entityID;
+
+		PositionComponent positionComponent;
+		HealthComponent healthComponent;
+		for (int i = 0; i < entities.size(); i++) {
+			entityID = entities.get(i);
+			healthComponent = ComponentMappers.getInstance().health.get(entityID);
+			if (healthComponent.isAlive()) {
+				positionComponent = ComponentMappers.getInstance().position.get(entityID);
+				if (positionComponent.getX() == x && positionComponent.getY() == y) {
+					// TODO get some sort of attacker component for _attackerEntityId?
+					// add half the health as damage for now
+					healthComponent.addDamage(healthComponent.getHealthMax() / 2);
+					attacked = true;
+				}
+			}
+		}
+		return attacked;
+	}
 }
