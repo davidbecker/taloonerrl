@@ -19,7 +19,7 @@ import de.brainstormsoftworks.taloonerrl.core.engine.EEntity;
  *
  */
 public enum EEntityState {
-	NONE, SLEEPING, DEAD, ALERT, CONFUSED;
+	NONE, SLEEPING, DEAD, ALERT, CONFUSED, WAITING;
 
 	public static String toString(final EEntityState _state) {
 		return _state != null ? _state.name() : "";
@@ -35,6 +35,8 @@ public enum EEntityState {
 			return EEntity.STATUS_DECORATOR_DEAD;
 		case SLEEPING:
 			return EEntity.STATUS_DECORATOR_SLEEPING;
+		case WAITING:
+			return EEntity.STATUS_DECORATOR_WAITING;
 		case NONE:
 		default:
 			return EEntity.STATUS_DECORATOR_NONE;

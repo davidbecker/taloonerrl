@@ -45,7 +45,8 @@ public class EntityDeathSystem extends IteratingSystem {
 			}
 			final NameComponent nameComponent = ComponentMappers.getInstance().name.getSafe(_entityId);
 			if (nameComponent != null) {
-				Gdx.app.log(getClass().getSimpleName(), nameComponent.getName() + " dies");
+				Gdx.app.debug(getClass().getSimpleName(),
+						nameComponent.getName() + " (id=" + _entityId + ") dies");
 			}
 			GameEngine.getInstance().deleteEntity(_entityId);
 			// TODO implement loot drop?

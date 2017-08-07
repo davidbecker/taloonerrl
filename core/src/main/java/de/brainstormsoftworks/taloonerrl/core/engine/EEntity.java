@@ -33,5 +33,7 @@ public enum EEntity {
 	/** decorator for an entity that became confused */
 	STATUS_DECORATOR_CONFUSED,
 	/** decorator for an entity that became alerted */
-	STATUS_DECORATOR_ALERTED
+	STATUS_DECORATOR_ALERTED,
+	/** decorator for an entity that is skipping a turn */
+	STATUS_DECORATOR_WAITING
 }

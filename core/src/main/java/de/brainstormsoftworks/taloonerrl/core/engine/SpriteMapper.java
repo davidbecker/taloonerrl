@@ -421,6 +421,17 @@ public final class SpriteMapper implements IDisposableInstance {
 			frames[1] = loadFrame(tGui1, 10, 4);
 			mappedAnimations.put(type, new Animation(0.15f, frames));
 			break;
+		case STATUS_DECORATOR_WAITING:
+			if (tGui0 == null) {
+				tGui0 = loadTexture(PATH_GUI + FILE_GUI0);
+			}
+			if (tGui1 == null) {
+				tGui1 = loadTexture(PATH_GUI + FILE_GUI1);
+			}
+			frames[0] = loadFrame(tGui0, 13, 4);
+			frames[1] = loadFrame(tGui1, 13, 4);
+			mappedAnimations.put(type, new Animation(0.15f, frames));
+			break;
 		default:
 			break;
 		}

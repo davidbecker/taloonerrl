@@ -14,6 +14,7 @@ import com.artemis.Aspect;
 import com.artemis.systems.IteratingSystem;
 
 import de.brainstormsoftworks.taloonerrl.components.ArtificialIntelligenceComponent;
+import de.brainstormsoftworks.taloonerrl.components.EEntityState;
 import de.brainstormsoftworks.taloonerrl.components.FacingComponent;
 import de.brainstormsoftworks.taloonerrl.components.PositionComponent;
 import de.brainstormsoftworks.taloonerrl.components.StatusComponent;
@@ -23,6 +24,7 @@ import de.brainstormsoftworks.taloonerrl.core.engine.GameEngine;
 import de.brainstormsoftworks.taloonerrl.core.engine.Move;
 import de.brainstormsoftworks.taloonerrl.core.engine.scheduler.TurnScheduler;
 import de.brainstormsoftworks.taloonerrl.render.Renderer;
+import de.brainstormsoftworks.taloonerrl.system.util.StateDecorationUtil;
 
 /**
  * this system updates the controller component of the player entity when an
@@ -88,6 +90,9 @@ public class TurnProcessSystem extends IteratingSystem {
 					}
 					if (nextTurn != Move.WAIT) {
 						turnComponent.setTurnTaken(true);
+					} else {
+						StateDecorationUtil.getInsance().spawnStatusDecoration(_entityId,
+								EEntityState.WAITING, -0.5f, 0f);
 					}
 					if (isPlayer && nextTurn != Move.WAIT) {
 						facingComponent = ComponentMappers.getInstance().facing.getSafe(_entityId);

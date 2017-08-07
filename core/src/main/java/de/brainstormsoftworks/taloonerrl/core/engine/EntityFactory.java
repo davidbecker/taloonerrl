@@ -138,6 +138,7 @@ public final class EntityFactory {
 		case STATUS_DECORATOR_DEAD:
 		case STATUS_DECORATOR_NONE:
 		case STATUS_DECORATOR_SLEEPING:
+		case STATUS_DECORATOR_WAITING:
 			return createStatusDecorator(world, xPosition, yPosition);
 		default:
 			return null;
