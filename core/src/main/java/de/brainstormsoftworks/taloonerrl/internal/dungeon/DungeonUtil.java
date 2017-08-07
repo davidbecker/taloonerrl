@@ -34,8 +34,8 @@ public final class DungeonUtil {
 	 *            how many tiles are horizontally on the map
 	 * @param _tilesVertical
 	 *            how many tiles are vertically on the map
-	 * @return array of sprites to display for the given map. has the same
-	 *         dimension as _map
+	 * @return array of sprites to display for the given map. has the same dimension
+	 *         as _map
 	 */
 	public static EDungeonSprites[][] calculateDungeonSprites(final char[][] _map, final int _tilesHorizontal,
 			final int _tilesVertical) {
@@ -55,7 +55,6 @@ public final class DungeonUtil {
 						_tilesVertical);
 				final boolean southEastWalkable = isWalkable(x + 1, y - 1, _map, _tilesHorizontal,
 						_tilesVertical);
-
 				if (selfWalkable) {
 					// floor
 					if (northWalkable && southWalkable && westWalkable && eastWalkable) {
@@ -103,9 +102,7 @@ public final class DungeonUtil {
 							&& !southEastWalkable) {
 						// trapped piece -> set to nothing for the time being
 						sprites[x][y] = EDungeonSprites.NOTHING;
-					} else if (northWalkable && eastWalkable && southWalkable && westWalkable
-							&& northEastWalkable && northWestWalkable && southWestWalkable
-							&& southEastWalkable) {
+					} else if (northWalkable && southWalkable && eastWalkable && westWalkable) {
 						sprites[x][y] = EDungeonSprites.WALL_PILLAR;
 					} else if (!northWalkable && !eastWalkable && !southWalkable && !westWalkable
 							&& (northEastWalkable && southWestWalkable
@@ -131,25 +128,29 @@ public final class DungeonUtil {
 							&& westWalkable
 							|| !northWalkable && northEastWalkable && !eastWalkable && !southEastWalkable
 									&& !southWalkable && !southWestWalkable && !westWalkable
-									&& !northWestWalkable) {
+									&& !northWestWalkable
+							|| !northWalkable && westWalkable && southWalkable && !eastWalkable) {
 						sprites[x][y] = EDungeonSprites.WALL_BOTTOMLEFT_CORNER;
 					} else if (!northWalkable && !westWalkable && eastWalkable && southEastWalkable
 							&& southWalkable
 							|| northWestWalkable && !northWalkable && !northEastWalkable && !eastWalkable
 									&& !southEastWalkable && !southWalkable && !southWestWalkable
-									&& !westWalkable) {
+									&& !westWalkable
+							|| !northWalkable && eastWalkable && southWalkable && !westWalkable) {
 						sprites[x][y] = EDungeonSprites.WALL_BOTTOMRIGHT_CORNER;
 					} else if (!southWalkable && !eastWalkable && westWalkable && northWestWalkable
 							&& northWalkable
 							|| southEastWalkable && !southWalkable && !southWestWalkable && !westWalkable
 									&& !northWestWalkable && !northWalkable && !northEastWalkable
-									&& !eastWalkable) {
+									&& !eastWalkable
+							|| !southWalkable && !eastWalkable && westWalkable && northWalkable) {
 						sprites[x][y] = EDungeonSprites.WALL_TOPLEFT_CORNER;
 					} else if (!southWalkable && !westWalkable && northWalkable && northEastWalkable
 							&& eastWalkable
 							|| southWestWalkable && !westWalkable && !northWestWalkable && !northWalkable
 									&& !northEastWalkable && !eastWalkable && !southEastWalkable
-									&& !southWalkable) {
+									&& !southWalkable
+							|| northWalkable && eastWalkable && !southWalkable && !westWalkable) {
 						sprites[x][y] = EDungeonSprites.WALL_TOPRIGHT_CORNER;
 					} else if (eastWalkable && !westWalkable && northWalkable && southWalkable) {
 						sprites[x][y] = EDungeonSprites.WALL_END_EAST;
