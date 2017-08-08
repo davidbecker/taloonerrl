@@ -83,7 +83,7 @@ public class StatusComponent extends PooledComponent implements IGetEntityId {
 				|| confusedStatus.processCooldown();
 		// last active state has cooled down
 		if (processed && !isAnyStatusActive()) {
-			StateDecorationUtil.getInsance().spawnStatusDecoration(entityId, EEntityState.NONE, 0f, 0f);
+			StateDecorationUtil.getInsance().spawnStatusDecoration(entityId, EEntityState.NONE, 0f, 0f, null);
 		}
 	}
 

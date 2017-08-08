@@ -21,6 +21,7 @@ import de.brainstormsoftworks.taloonerrl.system.HealthUpdateSystem;
 import de.brainstormsoftworks.taloonerrl.system.MapOverlayPreparerSystem;
 import de.brainstormsoftworks.taloonerrl.system.MouseCursorUpdateSystem;
 import de.brainstormsoftworks.taloonerrl.system.OffsetSystem;
+import de.brainstormsoftworks.taloonerrl.system.StateDecorationCleanupSystem;
 import de.brainstormsoftworks.taloonerrl.system.StateDecorationExpirationSystem;
 import de.brainstormsoftworks.taloonerrl.system.TurnProcessSystem;
 import de.brainstormsoftworks.taloonerrl.system.TurnTakenSystem;
@@ -44,6 +45,7 @@ public final class Systems {
 	private static final MouseCursorUpdateSystem HIGHLIGHT_UPDATE_SYSTEM = new MouseCursorUpdateSystem();
 	private static final MapOverlayPreparerSystem MAP_OVERLAY_PREPARER_SYSTEM = new MapOverlayPreparerSystem();
 	private static final StateDecorationExpirationSystem STATE_DECORATION_EXPIRATION_SYSTEM = new StateDecorationExpirationSystem();
+	private static final StateDecorationCleanupSystem STATE_DECORATION_CLEANUP_SYSTEM = new StateDecorationCleanupSystem();
 
 	private Systems() {
 	}
@@ -68,5 +70,6 @@ public final class Systems {
 		config.setSystem(HIGHLIGHT_UPDATE_SYSTEM);
 		config.setSystem(MAP_OVERLAY_PREPARER_SYSTEM);
 		config.setSystem(STATE_DECORATION_EXPIRATION_SYSTEM);
+		config.setSystem(STATE_DECORATION_CLEANUP_SYSTEM);
 	}
 }

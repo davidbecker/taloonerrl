@@ -10,9 +10,6 @@
  ******************************************************************************/
 package de.brainstormsoftworks.taloonerrl.system.util;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import com.artemis.Entity;
 import com.badlogic.gdx.Gdx;
 
@@ -20,9 +17,11 @@ import de.brainstormsoftworks.taloonerrl.components.AnimationComponent;
 import de.brainstormsoftworks.taloonerrl.components.EEntityState;
 import de.brainstormsoftworks.taloonerrl.components.PositionComponent;
 import de.brainstormsoftworks.taloonerrl.components.StateDecorationComponent;
+import de.brainstormsoftworks.taloonerrl.components.TurnComponent;
 import de.brainstormsoftworks.taloonerrl.core.engine.ComponentMappers;
 import de.brainstormsoftworks.taloonerrl.core.engine.EEntity;
 import de.brainstormsoftworks.taloonerrl.core.engine.GameEngine;
+import de.brainstormsoftworks.taloonerrl.core.engine.scheduler.ETurnType;
 import lombok.Getter;
 
 /**
@@ -39,9 +38,6 @@ public final class StateDecorationUtil {
 	@Getter
 	private final static StateDecorationUtil insance = new StateDecorationUtil();
 
-	// TODO refactor into more performant collection ?
-	private final Map<Integer, Float> baseDelay = new HashMap<>();
-
 	private StateDecorationUtil() {
 	}
 
@@ -49,12 +45,40 @@ public final class StateDecorationUtil {
 	 * creates a new decoration entity at the same position as the parent entity<br>
 	 * will display a speech bubble with the given state for a while to the player
 	 *
+	 * @param _entityId
+	 *            id of the entity to decorate
 	 * @param _state
 	 *            state to display to the player
+	 * @param _duration
+	 *            how long the decoration should be displayed (maximum). 1.0f = 1
+	 *            second
 	 * @param _delay
+	 *            delay until the decoration is displayed
 	 */
 	public void spawnStatusDecoration(final int _entityId, final EEntityState _state, final float _duration,
 			final float _delay) {
+		spawnStatusDecoration(_entityId, _state, _duration, _delay, getCleanupPhaseForEntity(_entityId));
+	}
+
+	/**
+	 * creates a new decoration entity at the same position as the parent entity<br>
+	 * will display a speech bubble with the given state for a while to the player
+	 *
+	 * @param _entityId
+	 *            id of the entity to decorate
+	 * @param _state
+	 *            state to display to the player
+	 * @param _duration
+	 *            how long the decoration should be displayed (maximum). 1.0f = 1
+	 *            second
+	 * @param _delay
+	 *            delay until the decoration is displayed
+	 * @param _killTurn
+	 *            turn on which the decoration shall be killed. set to null to not
+	 *            kill decoration in a specific turn
+	 */
+	public void spawnStatusDecoration(final int _entityId, final EEntityState _state, final float _duration,
+			final float _delay, final ETurnType _killTurn) {
 		// sanity checks
 		if (_entityId == -1) {
 			Gdx.app.error(getClass().getSimpleName(),
@@ -64,6 +88,7 @@ public final class StateDecorationUtil {
 		float end = TTL_BASE + _duration;
 		if (end <= 0f) {
 			Gdx.app.log(getClass().getSimpleName(), "no time to display anything -> aborting");
+			return;
 		}
 
 		// find position component for entity that this component belongs too
@@ -75,14 +100,7 @@ public final class StateDecorationUtil {
 		}
 
 		// get the start time for our new decoration
-		final Integer entityId = Integer.valueOf(_entityId);
-		final Float baseDelayStart = baseDelay.get(entityId);
-		final float stateTime = GameEngine.getInstance().getStateTime();
-		float start = baseDelayStart != null ? baseDelayStart.floatValue() : stateTime;
-		start += _delay;
-		if (start < stateTime) {
-			start = stateTime;
-		}
+		final float start = GameEngine.getInstance().getStateTime();
 
 		end += start;
 
@@ -96,6 +114,7 @@ public final class StateDecorationUtil {
 		stateDecorationComponent.setState(_state);
 		stateDecorationComponent.setTimeToLiveStart(start);
 		stateDecorationComponent.setTimeToLive(end);
+		stateDecorationComponent.setKillOnTurn(_killTurn);
 		// and clone the position from the parent entity for the new entity
 		ComponentMappers.getInstance().position.get(newEntity).overrideComponent(positionComponentParent);
 		// and set the correct sprite
@@ -104,7 +123,26 @@ public final class StateDecorationUtil {
 		Gdx.app.debug(getClass().getSimpleName(),
 				"created decoration for state " + EEntityState.toString(_state) + " for entity " + _entityId
 						+ " start:" + start + " end:" + end);
-		// store our end time as our new start time for the given entity
-		baseDelay.put(entityId, Float.valueOf(end));
+	}
+
+	/**
+	 * helper method to get the clean up turn for a given entity
+	 *
+	 * @param _entityId
+	 * @return
+	 */
+	public static ETurnType getCleanupPhaseForEntity(final int _entityId) {
+		final TurnComponent component = ComponentMappers.getInstance().turn.getSafe(_entityId);
+		if (component != null) {
+			switch (component.getMovesOnTurn()) {
+			case MONSTER:
+			case MONSTER_CLEANUP:
+				return ETurnType.PLAYER_CLEANUP;
+			case PLAYER:
+			case PLAYER_CLEANUP:
+				return ETurnType.MONSTER_CLEANUP;
+			}
+		}
+		return null;
 	}
 }

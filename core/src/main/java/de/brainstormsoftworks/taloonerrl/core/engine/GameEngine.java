@@ -89,6 +89,10 @@ public final class GameEngine {
 	 * @param _currentTurnSide
 	 */
 	private void processTurnTaken() {
+		// if we are in a cleanup turn we skip the whole checking & resetting that we
+		// would normally do
+		boolean turnTaken = currentTurnSide == ETurnType.MONSTER_CLEANUP
+				|| currentTurnSide == ETurnType.PLAYER_CLEANUP;
 		if (checkReadyToSwitchTurns()) {
 			// reset turn components
 			final IntBag entities = getAspectSubscriptionManager().get(Aspect.all(TurnComponent.class))
@@ -101,8 +105,11 @@ public final class GameEngine {
 					turnComponent.setProcessed(false);
 				}
 			}
+			turnTaken = true;
+		}
+		if (turnTaken) {
 			// switch sides
-			currentTurnSide = currentTurnSide == ETurnType.PLAYER ? ETurnType.MONSTER : ETurnType.PLAYER;
+			currentTurnSide = ETurnType.nextTurn(currentTurnSide);
 			Gdx.app.debug("GameEngine", "switching turn sides to " + ETurnType.toString(currentTurnSide));
 		}
 	}

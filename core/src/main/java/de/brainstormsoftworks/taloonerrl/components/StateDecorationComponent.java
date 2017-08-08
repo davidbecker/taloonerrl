@@ -13,6 +13,7 @@ package de.brainstormsoftworks.taloonerrl.components;
 import com.artemis.Component;
 import com.artemis.annotations.PooledWeaver;
 
+import de.brainstormsoftworks.taloonerrl.core.engine.scheduler.ETurnType;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -32,5 +33,6 @@ public class StateDecorationComponent extends Component {
 	private float timeToLiveStart = 0f;
 	private float timeToLive = 0f;
 	private EEntityState state = null;
+	private ETurnType killOnTurn = null;
 
 }

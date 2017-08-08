@@ -12,48 +12,45 @@ package de.brainstormsoftworks.taloonerrl.system;
 
 import com.artemis.Aspect;
 import com.artemis.systems.IteratingSystem;
-import com.badlogic.gdx.Gdx;
 
 import de.brainstormsoftworks.taloonerrl.components.StateDecorationComponent;
 import de.brainstormsoftworks.taloonerrl.core.engine.ComponentMappers;
 import de.brainstormsoftworks.taloonerrl.core.engine.GameEngine;
+import de.brainstormsoftworks.taloonerrl.core.engine.scheduler.ETurnType;
 
 /**
  *
- * system to control the expiration of a state decoration entity
+ * we don't need "dangling" decorations from the last turn so we kill them all
+ * in our clean up phases
  *
  * @author David Becker
  *
  */
-public class StateDecorationExpirationSystem extends IteratingSystem {
+public class StateDecorationCleanupSystem extends IteratingSystem {
 
 	private StateDecorationComponent component;
+	private ETurnType killOnTurn;
 
 	/**
 	 * Constructor.
 	 */
-	public StateDecorationExpirationSystem() {
+	public StateDecorationCleanupSystem() {
 		super(Aspect.all(StateDecorationComponent.class));
 	}
 
 	@Override
 	protected void process(final int _entityId) {
 		component = ComponentMappers.getInstance().stateDecoration.get(_entityId);
-		final float stateTime = GameEngine.getInstance().getStateTime();
-		if (component.isActive()) {
-			if (component.getTimeToLive() < stateTime) {
-				Gdx.app.debug(getClass().getSimpleName(), "kill entity " + _entityId);
-				GameEngine.getInstance().deleteEntity(_entityId);
-			}
-		} else {
-			// check if component should get activated
-			component.setActive(
-					component.getTimeToLiveStart() <= stateTime && component.getTimeToLive() >= stateTime);
+		killOnTurn = component.getKillOnTurn();
+		final ETurnType currentTurnSide = GameEngine.getInstance().getCurrentTurnSide();
+		// if the current turn side is the side we should kill the decoration we kill it
 
-			Gdx.app.debug(getClass().getSimpleName(),
-					"TTL (start): " + component.getTimeToLiveStart() + " - stateTime: " + stateTime
-							+ " - TTL: " + component.getTimeToLive() + " - active="
-							+ Boolean.valueOf(component.isActive()));
+		// if there is no killing side set for the component we kill it on any cleanup
+		// turn
+		if (currentTurnSide == killOnTurn
+				|| killOnTurn == null && (currentTurnSide == ETurnType.MONSTER_CLEANUP
+						|| currentTurnSide == ETurnType.PLAYER_CLEANUP)) {
+			GameEngine.getInstance().deleteEntity(_entityId);
 		}
 	}
 
