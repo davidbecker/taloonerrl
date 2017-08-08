@@ -92,7 +92,7 @@ public class TurnProcessSystem extends IteratingSystem {
 						turnComponent.setTurnTaken(true);
 					} else {
 						StateDecorationUtil.getInsance().spawnStatusDecoration(_entityId,
-								EEntityState.WAITING, -0.5f, 0f);
+								EEntityState.WAITING, -0.5f);
 					}
 					if (isPlayer && nextTurn != Move.WAIT) {
 						facingComponent = ComponentMappers.getInstance().facing.getSafe(_entityId);

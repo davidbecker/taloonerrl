@@ -83,7 +83,7 @@ public class StatusComponent extends PooledComponent implements IGetEntityId {
 				|| confusedStatus.processCooldown();
 		// last active state has cooled down
 		if (processed && !isAnyStatusActive()) {
-			StateDecorationUtil.getInsance().spawnStatusDecoration(entityId, EEntityState.NONE, 0f, 0f, null);
+			StateDecorationUtil.getInsance().spawnStatusDecoration(entityId, EEntityState.NONE);
 		}
 	}
 
@@ -109,25 +109,10 @@ public class StatusComponent extends PooledComponent implements IGetEntityId {
 	 *            {@link Integer#MAX_VALUE} or 0
 	 */
 	public void activateState(final EEntityState _state, final int _duration) {
-		activateState(_state, _duration, 0f, 0f);
-	}
-
-	/**
-	 * activates a given state
-	 *
-	 * @param _state
-	 *            state to activate
-	 * @param _duration
-	 *            amount of turns that this state should be active. cool down will
-	 *            be infinite if negative values are provided or duration is set to
-	 *            {@link Integer#MAX_VALUE} or 0
-	 */
-	public void activateState(final EEntityState _state, final int _duration, final float _ttl,
-			final float _ttlDelay) {
 		final EntityStatus state = getState(_state);
 		if (state != null) {
 			if (!state.isActive()) {
-				StateDecorationUtil.getInsance().spawnStatusDecoration(entityId, _state, _ttl, _ttlDelay);
+				StateDecorationUtil.getInsance().spawnStatusDecoration(entityId, _state);
 			}
 			state.reset();
 			state.setActive(true);

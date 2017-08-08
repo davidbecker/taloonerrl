@@ -52,6 +52,38 @@ public final class StateDecorationUtil {
 	 * @param _duration
 	 *            how long the decoration should be displayed (maximum). 1.0f = 1
 	 *            second
+	 */
+	public void spawnStatusDecoration(final int _entityId, final EEntityState _state) {
+		spawnStatusDecoration(_entityId, _state, 0f, 0f);
+	}
+
+	/**
+	 * creates a new decoration entity at the same position as the parent entity<br>
+	 * will display a speech bubble with the given state for a while to the player
+	 *
+	 * @param _entityId
+	 *            id of the entity to decorate
+	 * @param _state
+	 *            state to display to the player
+	 * @param _duration
+	 *            how long the decoration should be displayed (maximum). 1.0f = 1
+	 *            second
+	 */
+	public void spawnStatusDecoration(final int _entityId, final EEntityState _state, final float _duration) {
+		spawnStatusDecoration(_entityId, _state, _duration, 0f);
+	}
+
+	/**
+	 * creates a new decoration entity at the same position as the parent entity<br>
+	 * will display a speech bubble with the given state for a while to the player
+	 *
+	 * @param _entityId
+	 *            id of the entity to decorate
+	 * @param _state
+	 *            state to display to the player
+	 * @param _duration
+	 *            how long the decoration should be displayed (maximum). 1.0f = 1
+	 *            second
 	 * @param _delay
 	 *            delay until the decoration is displayed
 	 */
