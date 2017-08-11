@@ -13,8 +13,10 @@ package de.brainstormsoftworks.taloonerrl.system.util;
 import com.artemis.Aspect;
 import com.artemis.utils.IntBag;
 
+import de.brainstormsoftworks.taloonerrl.components.EEntityState;
 import de.brainstormsoftworks.taloonerrl.components.HealthComponent;
 import de.brainstormsoftworks.taloonerrl.components.PositionComponent;
+import de.brainstormsoftworks.taloonerrl.components.StatusComponent;
 import de.brainstormsoftworks.taloonerrl.core.engine.ComponentMappers;
 import de.brainstormsoftworks.taloonerrl.core.engine.GameEngine;
 import de.brainstormsoftworks.taloonerrl.render.Renderer;
@@ -101,6 +103,7 @@ public final class PositionUtil {
 
 		PositionComponent positionComponent;
 		HealthComponent healthComponent;
+		StatusComponent statusComponent;
 		for (int i = 0; i < entities.size(); i++) {
 			entityID = entities.get(i);
 			healthComponent = ComponentMappers.getInstance().health.get(entityID);
@@ -111,6 +114,11 @@ public final class PositionUtil {
 					// add half the health as damage for now
 					healthComponent.addDamage(healthComponent.getHealthMax() / 2);
 					attacked = true;
+					// check if entity is sleeping -> wake it up then
+					statusComponent = ComponentMappers.getInstance().states.getSafe(entityID);
+					if (statusComponent != null && statusComponent.isActive(EEntityState.SLEEPING)) {
+						statusComponent.getSleepStatus().setActive(false);
+					}
 				}
 			}
 		}

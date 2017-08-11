@@ -23,7 +23,7 @@ import lombok.Setter;
  *
  */
 @Getter
-class EntityStatus {
+public class EntityStatus {
 
 	@Setter
 	private boolean active = false;
