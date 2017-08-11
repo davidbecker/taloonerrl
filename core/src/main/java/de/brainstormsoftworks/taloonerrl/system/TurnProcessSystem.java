@@ -42,6 +42,7 @@ public class TurnProcessSystem extends IteratingSystem {
 	private StatusComponent statusComponent;
 	private boolean isPlayer;
 	private int nextTurn;
+	private boolean turnForcefullySkipped;
 
 	public TurnProcessSystem() {
 		super(Aspect.all(PositionComponent.class, TurnComponent.class));
@@ -50,6 +51,7 @@ public class TurnProcessSystem extends IteratingSystem {
 	@Override
 	protected void process(final int _entityId) {
 		nextTurn = Move.IDLE;
+		turnForcefullySkipped = false;
 		positionComponent = ComponentMappers.getInstance().position.get(_entityId);
 		if (!positionComponent.isProcessingTurn()) {
 			isPlayer = ComponentMappers.getInstance().player.getSafe(_entityId) != null;
@@ -61,6 +63,7 @@ public class TurnProcessSystem extends IteratingSystem {
 				statusComponent = ComponentMappers.getInstance().states.getSafe(_entityId);
 				if (statusComponent != null && statusComponent.isBlockingStatusActive()) {
 					nextTurn = Move.WAIT;
+					turnForcefullySkipped = true;
 				} else {
 					if (isPlayer) {
 						// TODO refactor into "intelligence" for player entity?
@@ -92,8 +95,10 @@ public class TurnProcessSystem extends IteratingSystem {
 					if (nextTurn != Move.WAIT) {
 						turnComponent.setTurnTaken(true);
 					} else {
-						StateDecorationUtil.getInsance().spawnStatusDecoration(_entityId,
-								EEntityState.WAITING, -0.5f);
+						if (!turnForcefullySkipped) {
+							StateDecorationUtil.getInsance().spawnStatusDecoration(_entityId,
+									EEntityState.WAITING, -0.5f);
+						}
 					}
 					if (isPlayer && nextTurn != Move.WAIT) {
 						facingComponent = ComponentMappers.getInstance().facing.getSafe(_entityId);
