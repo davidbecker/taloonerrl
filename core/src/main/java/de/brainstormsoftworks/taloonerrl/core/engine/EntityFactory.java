@@ -17,6 +17,8 @@ import com.badlogic.gdx.ai.fsm.DefaultStateMachine;
 import com.badlogic.gdx.ai.fsm.State;
 
 import de.brainstormsoftworks.taloonerrl.ai.BasicIntelligence;
+import de.brainstormsoftworks.taloonerrl.ai.BehaviorTreeFactory;
+import de.brainstormsoftworks.taloonerrl.ai.BehaviorTreeIntelligence;
 import de.brainstormsoftworks.taloonerrl.ai.states.BatState;
 import de.brainstormsoftworks.taloonerrl.components.ArtificialIntelligenceComponent;
 import de.brainstormsoftworks.taloonerrl.components.EEntityState;
@@ -286,6 +288,10 @@ public final class EntityFactory {
 			case BAT:
 				aiComponent.setArtificialIntelligence(new BasicIntelligence(
 						new DefaultStateMachine<Entity, State<Entity>>(entity, BatState.FLYING_ERRATICALLY)));
+				break;
+			case ARCHER:
+				aiComponent.setArtificialIntelligence(
+						new BehaviorTreeIntelligence(BehaviorTreeFactory.createBehaviorTree(entity, type)));
 				break;
 			default:
 				aiComponent.setArtificialIntelligence(new BasicIntelligence(

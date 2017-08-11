@@ -1,0 +1,5 @@
+import waiting:"de.brainstormsoftworks.taloonerrl.ai.tasks.WaitTask"
+
+root
+	selector
+		waiting

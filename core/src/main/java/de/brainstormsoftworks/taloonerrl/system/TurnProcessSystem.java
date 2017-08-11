@@ -49,6 +49,7 @@ public class TurnProcessSystem extends IteratingSystem {
 
 	@Override
 	protected void process(final int _entityId) {
+		nextTurn = Move.IDLE;
 		positionComponent = ComponentMappers.getInstance().position.get(_entityId);
 		if (!positionComponent.isProcessingTurn()) {
 			isPlayer = ComponentMappers.getInstance().player.getSafe(_entityId) != null;

@@ -10,7 +10,7 @@ import com.badlogic.gdx.ai.fsm.StateMachine;
  * @author David Becker
  *
  */
-public class BasicIntelligence {
+public class BasicIntelligence implements IAI {
 
 	protected StateMachine<Entity, State<Entity>> stateMachine;
 
@@ -18,6 +18,7 @@ public class BasicIntelligence {
 		stateMachine = _stateMachine;
 	}
 
+	@Override
 	public void update() {
 		if (stateMachine != null) {
 			stateMachine.update();
