@@ -10,6 +10,7 @@ import de.brainstormsoftworks.taloonerrl.core.engine.ComponentMappers;
 import de.brainstormsoftworks.taloonerrl.core.engine.Move;
 import squidpony.squidmath.RNG;
 
+@Deprecated
 public enum BatState implements State<Entity> {
 
 	FLYING_ERRATICALLY() {

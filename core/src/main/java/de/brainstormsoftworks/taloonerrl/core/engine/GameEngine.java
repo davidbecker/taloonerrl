@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2015, 2017 David Becker.
+c * Copyright (c) 2015, 2017 David Becker.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the GNU Public License v2.0
  * which accompanies this distribution, and is available at
@@ -26,6 +26,7 @@ import de.brainstormsoftworks.taloonerrl.components.TurnComponent;
 import de.brainstormsoftworks.taloonerrl.core.engine.scheduler.ETurnType;
 import lombok.Getter;
 import lombok.Setter;
+import squidpony.squidmath.RNG;
 
 /**
  * central part of the game<br/>
@@ -38,13 +39,16 @@ public final class GameEngine {
 
 	public static final String TAG_PLAYER = "PLAYER";
 
-	// maybe initialize on first call via getInstance?
-	private static final GameEngine instance = new GameEngine();
+	// initialized on first call via getInstance
+	// done this way to not trigger the constructor on static access
+	private static GameEngine instance;
 	private final World world;
 	/** holds which entities should move at any given time */
 	@Getter
 	@Setter
 	private ETurnType currentTurnSide = ETurnType.PLAYER;
+	@Getter
+	private static final RNG rng = new RNG();
 
 	/**
 	 * total time in milliseconds that the application has been run
@@ -223,6 +227,9 @@ public final class GameEngine {
 	 * @return the instance
 	 */
 	public static GameEngine getInstance() {
+		if (instance == null) {
+			instance = new GameEngine();
+		}
 		return instance;
 	}
 

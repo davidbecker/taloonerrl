@@ -30,13 +30,23 @@ import de.brainstormsoftworks.taloonerrl.core.engine.EEntity;
  */
 public final class BehaviorTreeFactory {
 
+	private static final String BEHAVIOR_TREE_BAT = "data/bat.tree";
+
 	private BehaviorTreeFactory() {
 	}
 
 	public static BehaviorTree<Entity> createBehaviorTree(final Entity entity, final EEntity type) {
 		Reader reader = null;
 		try {
-			reader = Gdx.files.internal("data/test.tree").reader();
+			switch (type) {
+			case BAT:
+				reader = Gdx.files.internal(BEHAVIOR_TREE_BAT).reader();
+				break;
+			// TODO add other trees for other entities
+			default:
+				reader = Gdx.files.internal(BEHAVIOR_TREE_BAT).reader();
+				break;
+			}
 			final BehaviorTreeParser<Entity> parser = new BehaviorTreeParser<>(BehaviorTreeParser.DEBUG_HIGH);
 			final BehaviorTree<Entity> tree = parser.parse(reader, entity);
 			return tree;

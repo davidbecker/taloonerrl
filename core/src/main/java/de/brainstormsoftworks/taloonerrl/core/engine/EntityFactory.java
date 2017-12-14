@@ -13,13 +13,9 @@ package de.brainstormsoftworks.taloonerrl.core.engine;
 import com.artemis.Entity;
 import com.artemis.World;
 import com.artemis.managers.TagManager;
-import com.badlogic.gdx.ai.fsm.DefaultStateMachine;
-import com.badlogic.gdx.ai.fsm.State;
 
-import de.brainstormsoftworks.taloonerrl.ai.BasicIntelligence;
 import de.brainstormsoftworks.taloonerrl.ai.BehaviorTreeFactory;
 import de.brainstormsoftworks.taloonerrl.ai.BehaviorTreeIntelligence;
-import de.brainstormsoftworks.taloonerrl.ai.states.BatState;
 import de.brainstormsoftworks.taloonerrl.components.ArtificialIntelligenceComponent;
 import de.brainstormsoftworks.taloonerrl.components.EEntityState;
 import de.brainstormsoftworks.taloonerrl.components.NameComponent;
@@ -284,20 +280,8 @@ public final class EntityFactory {
 	private static void setAI(final Entity entity, final EEntity type) {
 		final ArtificialIntelligenceComponent aiComponent = ComponentMappers.getInstance().ai.getSafe(entity);
 		if (aiComponent != null) {
-			switch (type) {
-			case BAT:
-				aiComponent.setArtificialIntelligence(new BasicIntelligence(
-						new DefaultStateMachine<Entity, State<Entity>>(entity, BatState.FLYING_ERRATICALLY)));
-				break;
-			case ARCHER:
-				aiComponent.setArtificialIntelligence(
-						new BehaviorTreeIntelligence(BehaviorTreeFactory.createBehaviorTree(entity, type)));
-				break;
-			default:
-				aiComponent.setArtificialIntelligence(new BasicIntelligence(
-						new DefaultStateMachine<Entity, State<Entity>>(entity, BatState.WAITING)));
-				break;
-			}
+			aiComponent.setArtificialIntelligence(
+					new BehaviorTreeIntelligence(BehaviorTreeFactory.createBehaviorTree(entity, type)));
 		}
 	}
 

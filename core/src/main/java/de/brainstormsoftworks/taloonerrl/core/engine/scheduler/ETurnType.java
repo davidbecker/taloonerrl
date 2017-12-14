@@ -11,6 +11,8 @@
 package de.brainstormsoftworks.taloonerrl.core.engine.scheduler;
 
 /**
+ * types of turns. each turn type corresponds to a specific phase of a given
+ * game turn
  *
  * @author David Becker
  *

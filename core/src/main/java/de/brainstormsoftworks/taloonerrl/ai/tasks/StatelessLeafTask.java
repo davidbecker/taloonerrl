@@ -10,27 +10,22 @@
  ******************************************************************************/
 package de.brainstormsoftworks.taloonerrl.ai.tasks;
 
-import de.brainstormsoftworks.taloonerrl.components.TurnComponent;
-import de.brainstormsoftworks.taloonerrl.core.engine.ComponentMappers;
-import de.brainstormsoftworks.taloonerrl.core.engine.Move;
+import com.artemis.Entity;
+import com.badlogic.gdx.ai.btree.LeafTask;
+import com.badlogic.gdx.ai.btree.Task;
 
 /**
- * simple task to let the entity wait a turn
+ * abstract parent class for tasks that have no internal state and therefore
+ * don't need the copy method
  *
  * @author David Becker
  *
  */
-public class WaitTask extends StatelessLeafTask {
+public abstract class StatelessLeafTask extends LeafTask<Entity> {
 
 	@Override
-	public Status execute() {
-		final TurnComponent turnComponent = ComponentMappers.getInstance().turn.getSafe(getObject());
-		if (turnComponent != null) {
-			// Gdx.app.log("WaitTask", "waited");
-			turnComponent.setCurrentTurn(Move.WAIT);
-			return Status.SUCCEEDED;
-		}
-		return Status.FAILED;
+	protected Task<Entity> copyTo(final Task<Entity> _task) {
+		return _task;
 	}
 
 }

@@ -11,7 +11,7 @@
 package de.brainstormsoftworks.taloonerrl.core.engine;
 
 /**
- * types of entities that are createable by {@link EntityFactory}
+ * types of entities that are create able by {@link EntityFactory}
  *
  * @author David Becker
  *

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2016 David Becker.
+ * Copyright (c) 2016, 2017 David Becker.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the GNU Public License v2.0
  * which accompanies this distribution, and is available at
@@ -19,7 +19,9 @@ import de.brainstormsoftworks.taloonerrl.components.PositionComponent;
 import de.brainstormsoftworks.taloonerrl.components.StatusComponent;
 import de.brainstormsoftworks.taloonerrl.core.engine.ComponentMappers;
 import de.brainstormsoftworks.taloonerrl.core.engine.GameEngine;
+import de.brainstormsoftworks.taloonerrl.core.engine.Move;
 import de.brainstormsoftworks.taloonerrl.render.Renderer;
+import squidpony.squidmath.Coord;
 
 /**
  * collection of utility methods related to positions
@@ -123,5 +125,35 @@ public final class PositionUtil {
 			}
 		}
 		return attacked;
+	}
+
+	/**
+	 * convenience/wrapper method to check if two positions are adjacent to each
+	 * other.<br>
+	 * see {@link Coord#isAdjacent(Coord)}
+	 *
+	 * @param x1
+	 * @param y1
+	 * @param x2
+	 * @param y2
+	 * @return
+	 */
+	public static boolean arePositionsAdjacent(final int x1, final int y1, final int x2, final int y2) {
+		return Coord.get(x1, y1).isAdjacent(Coord.get(x2, y2));
+	}
+
+	public static Coord apply(final Coord coord, final int direction) {
+		switch (direction) {
+		case Move.UP:
+			return coord.translate(0, 1);
+		case Move.DOWN:
+			return coord.translate(0, -1);
+		case Move.LEFT:
+			return coord.translate(-1, 0);
+		case Move.RIGHT:
+			return coord.translate(1, 0);
+		default:
+			return coord;
+		}
 	}
 }

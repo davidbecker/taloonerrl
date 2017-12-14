@@ -1,0 +1,7 @@
+import waiting:"de.brainstormsoftworks.taloonerrl.ai.tasks.WaitTask"
+import wandering:"de.brainstormsoftworks.taloonerrl.ai.tasks.WanderingTask"
+
+root
+	randomSelector
+		wandering
+		waiting
