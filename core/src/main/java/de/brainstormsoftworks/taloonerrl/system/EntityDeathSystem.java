@@ -48,6 +48,7 @@ public class EntityDeathSystem extends IteratingSystem {
 				Gdx.app.debug(getClass().getSimpleName(),
 						nameComponent.getName() + " (id=" + _entityId + ") dies");
 			}
+			GameEngine.getInstance().removeTargetReferences(_entityId);
 			GameEngine.getInstance().deleteEntity(_entityId);
 			// TODO implement loot drop?
 		}

@@ -22,6 +22,7 @@ import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.ai.GdxAI;
 
 import de.brainstormsoftworks.taloonerrl.components.PositionComponent;
+import de.brainstormsoftworks.taloonerrl.components.TargetComponent;
 import de.brainstormsoftworks.taloonerrl.components.TurnComponent;
 import de.brainstormsoftworks.taloonerrl.core.engine.scheduler.ETurnType;
 import lombok.Getter;
@@ -187,11 +188,29 @@ public final class GameEngine {
 	/**
 	 * deletes the entity with the given id from the world
 	 *
-	 * @param entityIy
+	 * @param entityId
 	 *            of the entity
 	 */
-	public void deleteEntity(final int entityIy) {
-		world.delete(entityIy);
+	public void deleteEntity(final int entityId) {
+		world.delete(entityId);
+	}
+
+	/**
+	 * clears all references to the given ID from {@link TargetComponent}s
+	 *
+	 * @param entityId
+	 *            of the entity
+	 */
+	public void removeTargetReferences(final int entityId) {
+		final IntBag entities = getAspectSubscriptionManager().get(Aspect.one(TargetComponent.class))
+				.getEntities();
+		TargetComponent targetComponent;
+		for (int i = 0; i < entities.size(); i++) {
+			targetComponent = ComponentMappers.getInstance().target.get(entities.get(i));
+			if (targetComponent.getTargetId() == entityId) {
+				targetComponent.reset();
+			}
+		}
 	}
 
 	/**
