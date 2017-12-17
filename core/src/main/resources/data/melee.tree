@@ -1,0 +1,7 @@
+import moveintorange:"de.brainstormsoftworks.taloonerrl.ai.tasks.MoveIntoMeleeRange"
+import attack:"de.brainstormsoftworks.taloonerrl.ai.tasks.MeleeAttackTask"
+
+root
+	sequence
+		moveintorange
+		attack

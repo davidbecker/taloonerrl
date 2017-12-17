@@ -31,6 +31,7 @@ import de.brainstormsoftworks.taloonerrl.core.engine.EEntity;
 public final class BehaviorTreeFactory {
 
 	private static final String BEHAVIOR_TREE_BAT = "data/bat.tree";
+	private static final String BEHAVIOR_TREE_MELEE = "data/melee.tree";
 
 	private BehaviorTreeFactory() {
 	}
@@ -44,7 +45,7 @@ public final class BehaviorTreeFactory {
 				break;
 			// TODO add other trees for other entities
 			default:
-				reader = Gdx.files.internal(BEHAVIOR_TREE_BAT).reader();
+				reader = Gdx.files.internal(BEHAVIOR_TREE_MELEE).reader();
 				break;
 			}
 			final BehaviorTreeParser<Entity> parser = new BehaviorTreeParser<>(BehaviorTreeParser.DEBUG_HIGH);

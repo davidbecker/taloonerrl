@@ -10,6 +10,8 @@
  ******************************************************************************/
 package de.brainstormsoftworks.taloonerrl.ai.tasks;
 
+import com.artemis.Entity;
+
 import de.brainstormsoftworks.taloonerrl.components.PositionComponent;
 import de.brainstormsoftworks.taloonerrl.components.TurnComponent;
 import de.brainstormsoftworks.taloonerrl.core.engine.ComponentMappers;
@@ -29,9 +31,9 @@ public class WanderingTask extends StatelessLeafTask {
 
 	@Override
 	public Status execute() {
-		final PositionComponent positionComponent = ComponentMappers.getInstance().position
-				.getSafe(getObject());
-		final TurnComponent turnComponent = ComponentMappers.getInstance().turn.getSafe(getObject());
+		final Entity entity = getObject();
+		final PositionComponent positionComponent = ComponentMappers.getInstance().position.getSafe(entity);
+		final TurnComponent turnComponent = ComponentMappers.getInstance().turn.getSafe(entity);
 		if (positionComponent != null && turnComponent != null) {
 			int timeTried = 0;
 			int direction;
@@ -41,7 +43,7 @@ public class WanderingTask extends StatelessLeafTask {
 				direction = Move.randomDirection();
 				newPosition = PositionUtil.apply(current, direction);
 				if (MapManager.getInstance().getMap().isWalkable(newPosition.x, newPosition.y)
-						&& !PositionUtil.isPositionTaken(newPosition.x, newPosition.y)) {
+						&& !PositionUtil.isPositionTaken(newPosition.x, newPosition.y, entity.getId())) {
 					turnComponent.setCurrentTurn(direction);
 					// Gdx.app.log("WanderingTask", "direction: " + Move.toString(direction));
 					return Status.SUCCEEDED;

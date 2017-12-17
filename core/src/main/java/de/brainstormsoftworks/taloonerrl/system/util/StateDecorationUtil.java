@@ -141,20 +141,22 @@ public final class StateDecorationUtil {
 		final Entity newEntity = GameEngine.getInstance().createNewEntity(decorator,
 				positionComponentParent.getX(), positionComponentParent.getY());
 		final StateDecorationComponent stateDecorationComponent = ComponentMappers
-				.getInstance().stateDecoration.get(newEntity);
-		// now we set the state into the decorator component
-		stateDecorationComponent.setState(_state);
-		stateDecorationComponent.setTimeToLiveStart(start);
-		stateDecorationComponent.setTimeToLive(end);
-		stateDecorationComponent.setKillOnTurn(_killTurn);
-		// and clone the position from the parent entity for the new entity
-		ComponentMappers.getInstance().position.get(newEntity).overrideComponent(positionComponentParent);
-		// and set the correct sprite
-		newEntity.getComponent(AnimationComponent.class).mapAnimation(decorator);
+				.getInstance().stateDecoration.getSafe(newEntity);
+		if (stateDecorationComponent != null) {
+			// now we set the state into the decorator component
+			stateDecorationComponent.setState(_state);
+			stateDecorationComponent.setTimeToLiveStart(start);
+			stateDecorationComponent.setTimeToLive(end);
+			stateDecorationComponent.setKillOnTurn(_killTurn);
+			// and clone the position from the parent entity for the new entity
+			ComponentMappers.getInstance().position.get(newEntity).overrideComponent(positionComponentParent);
+			// and set the correct sprite
+			newEntity.getComponent(AnimationComponent.class).mapAnimation(decorator);
 
-		Gdx.app.debug(getClass().getSimpleName(),
-				"created decoration for state " + EEntityState.toString(_state) + " for entity " + _entityId
-						+ " start:" + start + " end:" + end);
+			Gdx.app.debug(getClass().getSimpleName(),
+					"created decoration for state " + EEntityState.toString(_state) + " for entity "
+							+ _entityId + " start:" + start + " end:" + end);
+		}
 	}
 
 	/**
