@@ -100,4 +100,22 @@ public class PositionComponent extends PooledComponent implements ISetAbleCompon
 		totalY = _component.getTotalY();
 		velocity = _component.getVelocity();
 	}
+
+	/**
+	 * x at the end of a turn (assumes full movement of one tile each turn)
+	 *
+	 * @return
+	 */
+	public int getTargetX() {
+		return totalX == 0 ? x : totalX > 0 ? x + 1 : x - 1;
+	}
+
+	/**
+	 * x at the end of a turn (assumes full movement of one tile each turn)
+	 *
+	 * @return
+	 */
+	public int getTargetY() {
+		return totalY == 0 ? y : totalY > 0 ? y + 1 : y - 1;
+	}
 }

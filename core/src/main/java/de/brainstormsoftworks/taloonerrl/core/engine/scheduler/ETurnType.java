@@ -42,4 +42,8 @@ public enum ETurnType {
 		}
 	}
 
+	public static ETurnType getInverseType(final ETurnType _eTurnType) {
+		return _eTurnType == MONSTER || _eTurnType == MONSTER_CLEANUP ? PLAYER : MONSTER;
+	}
+
 }
