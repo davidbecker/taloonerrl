@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2017 David Becker.
+ * Copyright (c) 2017-2018 David Becker.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the GNU Public License v2.0
  * which accompanies this distribution, and is available at
@@ -28,17 +28,29 @@ import squidpony.squidgrid.Direction;
  */
 public class MeleeAttackTask extends StatelessLeafTask {
 
+	/*
+	 * extracted variables into fields to avoid GC
+	 */
+
+	private static Entity attackerEntity;
+	private static TargetComponent attackerTarget;
+	private static int targetId;
+
+	private static PositionComponent targetPosition;
+	private static PositionComponent ownPosition;
+	private static TurnComponent turnComponent;
+
 	@Override
 	public Status execute() {
-		final Entity attackerEntity = getObject();
-		final TargetComponent attackerTarget = ComponentMappers.getInstance().target.getSafe(attackerEntity);
-		final int targetId = attackerTarget != null ? attackerTarget.getTargetId() : -1;
+		attackerEntity = getObject();
+		attackerTarget = ComponentMappers.getInstance().target.getSafe(attackerEntity);
+		targetId = attackerTarget != null ? attackerTarget.getTargetId() : -1;
 		if (targetId == -1) {
 			return Status.FAILED;
 		}
-		final PositionComponent targetPosition = ComponentMappers.getInstance().position.getSafe(targetId);
-		final PositionComponent ownPosition = ComponentMappers.getInstance().position.getSafe(attackerEntity);
-		final TurnComponent turnComponent = ComponentMappers.getInstance().turn.getSafe(attackerEntity);
+		targetPosition = ComponentMappers.getInstance().position.getSafe(targetId);
+		ownPosition = ComponentMappers.getInstance().position.getSafe(attackerEntity);
+		turnComponent = ComponentMappers.getInstance().turn.getSafe(attackerEntity);
 		if (targetPosition != null && ownPosition != null && turnComponent != null
 				&& PositionUtil.arePositionsAdjacent(targetPosition, ownPosition)) {
 			turnComponent

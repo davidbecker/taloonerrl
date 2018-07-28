@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2017 David Becker.
+ * Copyright (c) 2017-2018 David Becker.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the GNU Public License v2.0
  * which accompanies this distribution, and is available at
@@ -41,23 +41,51 @@ import squidpony.squidmath.Coord;
  */
 public class FleeTask extends StatelessLeafTask {
 
+	/*
+	 * extracted variables into fields to avoid GC
+	 */
+
+	private static Entity entity;
+	private static int entityId;
+	private static PositionComponent ownPosition;
+	private static TurnComponent turnComponent;
+
+	private static double[][] fovMap;
+	private static Set<Coord> visible;
+	private static int width;
+	private static int height;
+
+	private static Set<Coord> allies = new HashSet<>();
+	private static Set<Coord> enemies = new HashSet<>();
+	private static ETurnType movesOnTurn;
+	private static ETurnType enemyTurnType;
+
+	private static IntBag entities;
+	private static PositionComponent position;
+	private static TurnComponent turn;
+
+	private static int otherId;
+	private static ETurnType tmpTurnType;
+
+	private static DijkstraMap dijkstraMap;
+	private static ArrayList<Coord> fleePath;
+
 	@Override
 	public Status execute() {
-		final Entity entity = getObject();
-		final int entityId = entity.getId();
-		final PositionComponent ownPosition = ComponentMappers.getInstance().position.getSafe(entityId);
-		final TurnComponent turnComponent = ComponentMappers.getInstance().turn.getSafe(entityId);
+		entity = getObject();
+		entityId = entity.getId();
+		ownPosition = ComponentMappers.getInstance().position.getSafe(entityId);
+		turnComponent = ComponentMappers.getInstance().turn.getSafe(entityId);
 		if (ownPosition == null || turnComponent == null) {
 			return Status.FAILED;
 		}
 
 		// get field of view for current entity
-		final double[][] fovMap = FovWrapper.getInstance().getFovForPosition(ownPosition.getX(),
-				ownPosition.getY());
+		fovMap = FovWrapper.getInstance().getFovForPosition(ownPosition.getX(), ownPosition.getY());
 
-		final Set<Coord> visible = new HashSet<>();
-		final int width = fovMap.length;
-		int height = 0;
+		visible = new HashSet<>();
+		width = fovMap.length;
+		height = 0;
 		if (width > 0) {
 			height = fovMap[0].length;
 		}
@@ -71,26 +99,23 @@ public class FleeTask extends StatelessLeafTask {
 
 		// get all visible entities and distribute them to two lists, one for allies,
 		// one for enemies
-		final Set<Coord> allies = new HashSet<>();
-		final Set<Coord> enemies = new HashSet<>();
-		final ETurnType movesOnTurn = turnComponent.getMovesOnTurn();
-		final ETurnType enemyTurnType = ETurnType.getInverseType(movesOnTurn);
-		final IntBag entities = GameEngine.getInstance().getAspectSubscriptionManager()
+		allies.clear();
+		enemies.clear();
+		movesOnTurn = turnComponent.getMovesOnTurn();
+		enemyTurnType = ETurnType.getInverseType(movesOnTurn);
+		entities = GameEngine.getInstance().getAspectSubscriptionManager()
 				.get(Aspect.all(PositionComponent.class, TurnComponent.class)).getEntities();
-		PositionComponent position;
-		TurnComponent turn;
-		int otherId;
-		ETurnType ett = null;
+		tmpTurnType = null;
 		for (int i = 0; i < entities.size(); i++) {
 			otherId = entities.get(i);
 			if (otherId != entityId) {
 				position = ComponentMappers.getInstance().position.getSafe(otherId);
 				turn = ComponentMappers.getInstance().turn.getSafe(otherId);
-				ett = turn.getMovesOnTurn();
-				if (ett == movesOnTurn) {
+				tmpTurnType = turn.getMovesOnTurn();
+				if (tmpTurnType == movesOnTurn) {
 					allies.add(Coord.get(position.getX(), position.getY()));
 					allies.add(Coord.get(position.getTargetX(), position.getTargetY()));
-				} else if (ett == enemyTurnType) {
+				} else if (tmpTurnType == enemyTurnType) {
 					enemies.add(Coord.get(position.getX(), position.getY()));
 				}
 			}
@@ -100,8 +125,8 @@ public class FleeTask extends StatelessLeafTask {
 			return Status.SUCCEEDED;
 		}
 
-		final DijkstraMap dijkstraMap = MapManager.getInstance().getMap().getDijkstraMap();
-		final ArrayList<Coord> fleePath = dijkstraMap.findFleePath(5, 1.2, null, allies,
+		dijkstraMap = MapManager.getInstance().getMap().getDijkstraMap();
+		fleePath = dijkstraMap.findFleePath(5, 1.2, null, allies,
 				Coord.get(ownPosition.getX(), ownPosition.getY()), enemies.toArray(new Coord[] {}));
 		if (fleePath.size() == 0) {
 			return Status.FAILED;

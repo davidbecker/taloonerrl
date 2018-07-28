@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2017 David Becker.
+ * Copyright (c) 2017-2018 David Becker.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the GNU Public License v2.0
  * which accompanies this distribution, and is available at
@@ -52,6 +52,8 @@ public class MoveIntoMeleeRange extends StatelessLeafTask {
 	private static int dY;
 
 	private static boolean preferX;
+	private static Status returnStatus;
+	private static int direction;
 
 	@Override
 	public Status execute() {
@@ -84,7 +86,7 @@ public class MoveIntoMeleeRange extends StatelessLeafTask {
 			// if both directions are the same distance away, we choose one randomly
 			preferX = deltaX > deltaY || deltaX == deltaY && GameEngine.getRng().nextBoolean();
 
-			Status returnStatus = preferX ? moveHorizontal() : moveVertically();
+			returnStatus = preferX ? moveHorizontal() : moveVertically();
 			// if we couldn't find a direction to move to and both directions are the same
 			// distance away we try the other one
 			if (returnStatus == null && deltaX == deltaY) {
@@ -101,7 +103,7 @@ public class MoveIntoMeleeRange extends StatelessLeafTask {
 			turnComponent.setCurrentTurn(dX > 0 ? Move.RIGHT : Move.LEFT);
 			return getReturnStatus(ownX, dX, targetX, ownY, 0, targetY);
 		}
-		int direction = GameEngine.getRng().nextBoolean() ? 1 : -1;
+		direction = GameEngine.getRng().nextBoolean() ? 1 : -1;
 		Status returnStatus = verticalStep(direction);
 		if (returnStatus == null) {
 			direction *= -1;
@@ -116,7 +118,7 @@ public class MoveIntoMeleeRange extends StatelessLeafTask {
 			turnComponent.setCurrentTurn(dY > 0 ? Move.UP : Move.DOWN);
 			return getReturnStatus(ownX, 0, targetX, ownY, dY, targetY);
 		}
-		int direction = GameEngine.getRng().nextBoolean() ? 1 : -1;
+		direction = GameEngine.getRng().nextBoolean() ? 1 : -1;
 		Status returnStatus = horizontalStep(direction);
 		if (returnStatus == null) {
 			direction *= -1;

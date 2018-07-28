@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2017 David Becker.
+ * Copyright (c) 2017-2018 David Becker.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the GNU Public License v2.0
  * which accompanies this distribution, and is available at
@@ -22,9 +22,11 @@ import de.brainstormsoftworks.taloonerrl.core.engine.Move;
  */
 public class WaitTask extends StatelessLeafTask {
 
+	private static TurnComponent turnComponent;
+
 	@Override
 	public Status execute() {
-		final TurnComponent turnComponent = ComponentMappers.getInstance().turn.getSafe(getObject());
+		turnComponent = ComponentMappers.getInstance().turn.getSafe(getObject());
 		if (turnComponent != null) {
 			// Gdx.app.log("WaitTask", "waited");
 			turnComponent.setCurrentTurn(Move.WAIT);
