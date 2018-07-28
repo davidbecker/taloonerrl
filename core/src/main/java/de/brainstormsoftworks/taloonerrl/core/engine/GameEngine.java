@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2015, 2017 David Becker.
+c * Copyright (c) 2015, 2017 David Becker.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the GNU Public License v2.0
  * which accompanies this distribution, and is available at
@@ -15,15 +15,19 @@ import com.artemis.AspectSubscriptionManager;
 import com.artemis.Entity;
 import com.artemis.World;
 import com.artemis.WorldConfiguration;
+import com.artemis.managers.TagManager;
 import com.artemis.utils.IntBag;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.ai.GdxAI;
 
 import de.brainstormsoftworks.taloonerrl.components.PositionComponent;
+import de.brainstormsoftworks.taloonerrl.components.TargetComponent;
 import de.brainstormsoftworks.taloonerrl.components.TurnComponent;
 import de.brainstormsoftworks.taloonerrl.core.engine.scheduler.ETurnType;
 import lombok.Getter;
 import lombok.Setter;
+import squidpony.squidmath.RNG;
 
 /**
  * central part of the game<br/>
@@ -33,13 +37,19 @@ import lombok.Setter;
  *
  */
 public final class GameEngine {
-	// maybe initialize on first call via getInstance?
-	private static final GameEngine instance = new GameEngine();
+
+	public static final String TAG_PLAYER = "PLAYER";
+
+	// initialized on first call via getInstance
+	// done this way to not trigger the constructor on static access
+	private static GameEngine instance;
 	private final World world;
 	/** holds which entities should move at any given time */
 	@Getter
 	@Setter
 	private ETurnType currentTurnSide = ETurnType.PLAYER;
+	@Getter
+	private static final RNG rng = new RNG();
 
 	/**
 	 * total time in milliseconds that the application has been run
@@ -56,6 +66,7 @@ public final class GameEngine {
 		inputMultiplexer.addProcessor(InputSystem.getInstance());
 		Gdx.input.setInputProcessor(inputMultiplexer);
 		final WorldConfiguration config = new WorldConfiguration();
+		config.setSystem(TagManager.class);
 		Systems.setSystems(config);
 		world = new World(config);
 		ComponentMappers.mapComponents(world);
@@ -70,6 +81,8 @@ public final class GameEngine {
 	public void update() {
 		deltaTime = Gdx.graphics.getDeltaTime();
 		stateTime += deltaTime;
+		GdxAI.getTimepiece().update(deltaTime);
+		// MessageManager.getInstance().update();
 		world.setDelta(deltaTime);
 		world.process();
 		processTurnTaken();
@@ -81,6 +94,10 @@ public final class GameEngine {
 	 * @param _currentTurnSide
 	 */
 	private void processTurnTaken() {
+		// if we are in a cleanup turn we skip the whole checking & resetting that we
+		// would normally do
+		boolean turnTaken = currentTurnSide == ETurnType.MONSTER_CLEANUP
+				|| currentTurnSide == ETurnType.PLAYER_CLEANUP;
 		if (checkReadyToSwitchTurns()) {
 			// reset turn components
 			final IntBag entities = getAspectSubscriptionManager().get(Aspect.all(TurnComponent.class))
@@ -93,8 +110,11 @@ public final class GameEngine {
 					turnComponent.setProcessed(false);
 				}
 			}
+			turnTaken = true;
+		}
+		if (turnTaken) {
 			// switch sides
-			currentTurnSide = currentTurnSide == ETurnType.PLAYER ? ETurnType.MONSTER : ETurnType.PLAYER;
+			currentTurnSide = ETurnType.nextTurn(currentTurnSide);
 			Gdx.app.debug("GameEngine", "switching turn sides to " + ETurnType.toString(currentTurnSide));
 		}
 	}
@@ -166,6 +186,34 @@ public final class GameEngine {
 	}
 
 	/**
+	 * deletes the entity with the given id from the world
+	 *
+	 * @param entityId
+	 *            of the entity
+	 */
+	public void deleteEntity(final int entityId) {
+		world.delete(entityId);
+	}
+
+	/**
+	 * clears all references to the given ID from {@link TargetComponent}s
+	 *
+	 * @param entityId
+	 *            of the entity
+	 */
+	public void removeTargetReferences(final int entityId) {
+		final IntBag entities = getAspectSubscriptionManager().get(Aspect.one(TargetComponent.class))
+				.getEntities();
+		TargetComponent targetComponent;
+		for (int i = 0; i < entities.size(); i++) {
+			targetComponent = ComponentMappers.getInstance().target.get(entities.get(i));
+			if (targetComponent.getTargetId() == entityId) {
+				targetComponent.reset();
+			}
+		}
+	}
+
+	/**
 	 * creates a new entity.<br/>
 	 * convenience method for {@link #createNewEntity(EEntity, 0, 0)}
 	 *
@@ -198,6 +246,9 @@ public final class GameEngine {
 	 * @return the instance
 	 */
 	public static GameEngine getInstance() {
+		if (instance == null) {
+			instance = new GameEngine();
+		}
 		return instance;
 	}
 
@@ -209,5 +260,14 @@ public final class GameEngine {
 	 */
 	public AspectSubscriptionManager getAspectSubscriptionManager() {
 		return world.getAspectSubscriptionManager();
+	}
+
+	/**
+	 * getter for the tag manager of the game world
+	 *
+	 * @return manager
+	 */
+	public TagManager getTagManager() {
+		return world.getSystem(TagManager.class);
 	}
 }

@@ -49,4 +49,28 @@ public class Move {
 			return WAIT;
 		}
 	}
+
+	public static int randomDirection() {
+		// range from UP to RIGHT
+		return GameEngine.getRng().nextInt(3) + 2;
+	}
+
+	public static String toString(final int direction) {
+		switch (direction) {
+		case IDLE:
+			return "IDLE";
+		case WAIT:
+			return "WAIT";
+		case UP:
+			return "UP";
+		case DOWN:
+			return "UP";
+		case LEFT:
+			return "LEFT";
+		case RIGHT:
+			return "RIGHT";
+		default:
+			return "unknown";
+		}
+	}
 }

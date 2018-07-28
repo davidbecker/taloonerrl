@@ -62,6 +62,14 @@ public class PositionComponent extends PooledComponent implements ISetAbleCompon
 	}
 
 	/**
+	 * stops the current motion
+	 */
+	public void resetMotion() {
+		totalX = 0;
+		totalY = 0;
+	}
+
+	/**
 	 * gets the x position of this component<br>
 	 * takes the present offset into consideration
 	 *
@@ -91,5 +99,23 @@ public class PositionComponent extends PooledComponent implements ISetAbleCompon
 		totalX = _component.getTotalX();
 		totalY = _component.getTotalY();
 		velocity = _component.getVelocity();
+	}
+
+	/**
+	 * x at the end of a turn (assumes full movement of one tile each turn)
+	 *
+	 * @return
+	 */
+	public int getTargetX() {
+		return totalX == 0 ? x : totalX > 0 ? x + 1 : x - 1;
+	}
+
+	/**
+	 * x at the end of a turn (assumes full movement of one tile each turn)
+	 *
+	 * @return
+	 */
+	public int getTargetY() {
+		return totalY == 0 ? y : totalY > 0 ? y + 1 : y - 1;
 	}
 }

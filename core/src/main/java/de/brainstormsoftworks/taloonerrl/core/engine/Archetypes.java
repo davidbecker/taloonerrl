@@ -27,6 +27,9 @@ import de.brainstormsoftworks.taloonerrl.components.NameComponent;
 import de.brainstormsoftworks.taloonerrl.components.PlayerComponent;
 import de.brainstormsoftworks.taloonerrl.components.PositionComponent;
 import de.brainstormsoftworks.taloonerrl.components.SpriteComponent;
+import de.brainstormsoftworks.taloonerrl.components.StateDecorationComponent;
+import de.brainstormsoftworks.taloonerrl.components.StatusComponent;
+import de.brainstormsoftworks.taloonerrl.components.TargetComponent;
 import de.brainstormsoftworks.taloonerrl.components.TurnComponent;
 
 /**
@@ -37,6 +40,8 @@ import de.brainstormsoftworks.taloonerrl.components.TurnComponent;
  *
  */
 public final class Archetypes {
+	/** decorator for an entity */
+	public final Archetype stateDecorator;
 	/** archetype for general actor */
 	public final Archetype actor;
 	public final Archetype monster;
@@ -50,10 +55,13 @@ public final class Archetypes {
 	private static Archetypes instance;
 
 	private Archetypes(final World world) {
+		stateDecorator = new ArchetypeBuilder().add(PositionComponent.class)
+				.add(StateDecorationComponent.class).add(AnimationComponent.class).build(world);
 		highlightAble = new ArchetypeBuilder().add(PositionComponent.class).add(HighlightAbleComponent.class)
 				.build(world);
 		actor = new ArchetypeBuilder(highlightAble).add(HealthComponent.class).add(AnimationComponent.class)
-				.add(NameComponent.class).add(TurnComponent.class).build(world);
+				.add(NameComponent.class).add(TurnComponent.class).add(StatusComponent.class)
+				.add(TargetComponent.class).build(world);
 		monster = new ArchetypeBuilder(actor).add(ArtificialIntelligenceComponent.class).build(world);
 		player = new ArchetypeBuilder(actor).add(PlayerComponent.class).add(FacingComponent.class)
 				.remove(AnimationComponent.class).add(FacingAnimationComponent.class)

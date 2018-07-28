@@ -11,6 +11,7 @@
 package de.brainstormsoftworks.taloonerrl.internal.render;
 
 import com.artemis.Aspect;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import de.brainstormsoftworks.taloonerrl.components.PositionComponent;
 import de.brainstormsoftworks.taloonerrl.components.SpriteComponent;
@@ -35,7 +36,7 @@ public class SpriteRenderSystem extends AbstractRender {
 	protected void process(final int _entityId) {
 		final PositionComponent positionComponent = ComponentMappers.getInstance().position.get(_entityId);
 		final SpriteComponent spriteComponent = ComponentMappers.getInstance().sprite.get(_entityId);
-		Renderer.getInstance().renderOnTile(spriteComponent.getSprite(), positionComponent.getX(),
-				positionComponent.getY());
+		final TextureRegion sprite = spriteComponent.getSprite();
+		Renderer.getInstance().renderOnTile(sprite, positionComponent.getX(), positionComponent.getY());
 	}
 }

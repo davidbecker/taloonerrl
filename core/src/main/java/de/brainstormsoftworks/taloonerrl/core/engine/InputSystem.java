@@ -78,6 +78,9 @@ public final class InputSystem extends InputAdapter {
 		case Keys.RIGHT:
 			TurnScheduler.getInstance().addTurnToQueue(Move.RIGHT);
 			return true;
+		case Keys.SPACE:
+			TurnScheduler.getInstance().addTurnToQueue(Move.WAIT);
+			return true;
 		default:
 			return false;
 		}
@@ -151,7 +154,8 @@ public final class InputSystem extends InputAdapter {
 		HighlightAbleComponent highlight;
 		for (int i = 0; i < entities.size(); i++) {
 			positionComponent = ComponentMappers.getInstance().position.get(i);
-			if (positionComponent.getX() == mouseOverX && positionComponent.getY() == mouseOverY) {
+			if (positionComponent != null && positionComponent.getX() == mouseOverX
+					&& positionComponent.getY() == mouseOverY) {
 				highlight = ComponentMappers.getInstance().highlight.get(i);
 				highlight.toggleHighlighted();
 				toggled = true;

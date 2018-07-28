@@ -8,17 +8,10 @@
  * Contributors:
  *     David Becker - initial API and implementation
  ******************************************************************************/
-package de.brainstormsoftworks.taloonerrl.ai;
-
-import de.brainstormsoftworks.taloonerrl.core.engine.Move;
-
-public interface IArtificialIntelligence {
-
-	/**
-	 * calculate the next turn
-	 * 
-	 * @return constants from {@link Move}
-	 */
-	int nextTurn();
-
-}
+/**
+ * tasks for behavior trees to build out of
+ * 
+ * @author David Becker
+ *
+ */
+package de.brainstormsoftworks.taloonerrl.ai.tasks;

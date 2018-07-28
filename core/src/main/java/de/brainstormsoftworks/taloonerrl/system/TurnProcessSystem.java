@@ -14,14 +14,17 @@ import com.artemis.Aspect;
 import com.artemis.systems.IteratingSystem;
 
 import de.brainstormsoftworks.taloonerrl.components.ArtificialIntelligenceComponent;
+import de.brainstormsoftworks.taloonerrl.components.EEntityState;
 import de.brainstormsoftworks.taloonerrl.components.FacingComponent;
 import de.brainstormsoftworks.taloonerrl.components.PositionComponent;
+import de.brainstormsoftworks.taloonerrl.components.StatusComponent;
 import de.brainstormsoftworks.taloonerrl.components.TurnComponent;
 import de.brainstormsoftworks.taloonerrl.core.engine.ComponentMappers;
 import de.brainstormsoftworks.taloonerrl.core.engine.GameEngine;
 import de.brainstormsoftworks.taloonerrl.core.engine.Move;
 import de.brainstormsoftworks.taloonerrl.core.engine.scheduler.TurnScheduler;
 import de.brainstormsoftworks.taloonerrl.render.Renderer;
+import de.brainstormsoftworks.taloonerrl.system.util.StateDecorationUtil;
 
 /**
  * this system updates the controller component of the player entity when an
@@ -36,8 +39,10 @@ public class TurnProcessSystem extends IteratingSystem {
 	private FacingComponent facingComponent;
 	private TurnComponent turnComponent;
 	private ArtificialIntelligenceComponent artificialIntelligenceComponent;
+	private StatusComponent statusComponent;
 	private boolean isPlayer;
 	private int nextTurn;
+	private boolean turnForcefullySkipped;
 
 	public TurnProcessSystem() {
 		super(Aspect.all(PositionComponent.class, TurnComponent.class));
@@ -45,20 +50,32 @@ public class TurnProcessSystem extends IteratingSystem {
 
 	@Override
 	protected void process(final int _entityId) {
+		nextTurn = Move.IDLE;
+		turnForcefullySkipped = false;
 		positionComponent = ComponentMappers.getInstance().position.get(_entityId);
 		if (!positionComponent.isProcessingTurn()) {
 			isPlayer = ComponentMappers.getInstance().player.getSafe(_entityId) != null;
 			turnComponent = ComponentMappers.getInstance().turn.get(_entityId);
 			if (!turnComponent.isProcessed()
 					&& turnComponent.getMovesOnTurn() == GameEngine.getInstance().getCurrentTurnSide()) {
-				// for now only the player can have turns...
-				if (isPlayer) {
-					nextTurn = turnComponent.nextTurn(TurnScheduler.getInstance().getNextTurn());
+
+				// check if we have an active state that blocks the turn for the entity
+				statusComponent = ComponentMappers.getInstance().states.getSafe(_entityId);
+				if (statusComponent != null && statusComponent.isBlockingStatusActive()) {
+					nextTurn = Move.WAIT;
+					turnForcefullySkipped = true;
 				} else {
-					artificialIntelligenceComponent = ComponentMappers.getInstance().ai.getSafe(_entityId);
-					nextTurn = turnComponent.nextTurn(artificialIntelligenceComponent != null
-							? artificialIntelligenceComponent.getArtificialIntelligence().nextTurn()
-							: Move.WAIT);
+					if (isPlayer) {
+						// TODO refactor into "intelligence" for player entity?
+						nextTurn = turnComponent.nextTurn(TurnScheduler.getInstance().getNextTurn());
+					} else {
+						artificialIntelligenceComponent = ComponentMappers.getInstance().ai
+								.getSafe(_entityId);
+						if (artificialIntelligenceComponent != null) {
+							artificialIntelligenceComponent.update();
+						}
+						nextTurn = turnComponent.getCurrentTurn();
+					}
 				}
 
 				if (nextTurn != Move.IDLE) {
@@ -77,6 +94,11 @@ public class TurnProcessSystem extends IteratingSystem {
 					}
 					if (nextTurn != Move.WAIT) {
 						turnComponent.setTurnTaken(true);
+					} else {
+						if (!turnForcefullySkipped) {
+							StateDecorationUtil.getInsance().spawnStatusDecoration(_entityId,
+									EEntityState.WAITING, -0.5f);
+						}
 					}
 					if (isPlayer && nextTurn != Move.WAIT) {
 						facingComponent = ComponentMappers.getInstance().facing.getSafe(_entityId);
@@ -85,6 +107,10 @@ public class TurnProcessSystem extends IteratingSystem {
 						}
 					}
 					turnComponent.setProcessed(true);
+					// TODO refactor into own system in the future? - should be OK for now though
+					if (statusComponent != null) {
+						statusComponent.processCooldowns();
+					}
 				}
 			}
 		}

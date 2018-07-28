@@ -8,36 +8,31 @@
  * Contributors:
  *     David Becker - initial API and implementation
  ******************************************************************************/
-package de.brainstormsoftworks.taloonerrl.ai;
+package de.brainstormsoftworks.taloonerrl.components;
 
-import de.brainstormsoftworks.taloonerrl.core.engine.Move;
-import squidpony.squidmath.RNG;
+import com.artemis.PooledComponent;
+import com.artemis.annotations.EntityId;
+
+import lombok.Getter;
+import lombok.Setter;
 
 /**
- * basic erratic intelligence for monster. will move to random tile
+ * component for entities that can target an other entity. holds the reference
+ * to the ID of the target entity
  *
  * @author David Becker
  *
  */
-public class ErraticArtificialIntelligence implements IArtificialIntelligence {
-	private static final RNG rng = new RNG();
+@Getter
+@Setter
+public class TargetComponent extends PooledComponent {
+
+	@EntityId
+	private int targetId = -1;
 
 	@Override
-	public int nextTurn() {
-		switch (rng.nextInt() % 5) {
-		case 0:
-			return Move.UP;
-		case 1:
-			return Move.DOWN;
-		case 2:
-			return Move.LEFT;
-		case 3:
-			return Move.RIGHT;
-		case 4:
-			return Move.WAIT;
-		default:
-			return Move.IDLE;
-		}
+	public void reset() {
+		targetId = -1;
 	}
 
 }

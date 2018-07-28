@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2015 David Becker.
+ * Copyright (c) 2015, 2017 David Becker.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the GNU Public License v2.0
  * which accompanies this distribution, and is available at
@@ -12,15 +12,15 @@ package de.brainstormsoftworks.taloonerrl.core.engine;
 
 import com.artemis.Entity;
 import com.artemis.World;
+import com.artemis.managers.TagManager;
 
-import de.brainstormsoftworks.taloonerrl.ai.ErraticArtificialIntelligence;
-import de.brainstormsoftworks.taloonerrl.components.AnimationComponent;
+import de.brainstormsoftworks.taloonerrl.ai.BehaviorTreeFactory;
+import de.brainstormsoftworks.taloonerrl.ai.BehaviorTreeIntelligence;
 import de.brainstormsoftworks.taloonerrl.components.ArtificialIntelligenceComponent;
-import de.brainstormsoftworks.taloonerrl.components.FacingAnimationComponent;
+import de.brainstormsoftworks.taloonerrl.components.EEntityState;
 import de.brainstormsoftworks.taloonerrl.components.NameComponent;
 import de.brainstormsoftworks.taloonerrl.components.PositionComponent;
-import de.brainstormsoftworks.taloonerrl.components.SpriteComponent;
-import de.brainstormsoftworks.taloonerrl.components.TurnComponent;
+import de.brainstormsoftworks.taloonerrl.components.StatusComponent;
 import de.brainstormsoftworks.taloonerrl.core.engine.scheduler.ETurnType;
 
 /**
@@ -131,15 +131,37 @@ public final class EntityFactory {
 			return createDecoration(type, world, xPosition, yPosition);
 		case CURSOR:
 			return world.createEntity(Archetypes.getInstance().cursor);
+		case STATUS_DECORATOR_ALERTED:
+		case STATUS_DECORATOR_CONFUSED:
+		case STATUS_DECORATOR_DEAD:
+		case STATUS_DECORATOR_NONE:
+		case STATUS_DECORATOR_SLEEPING:
+		case STATUS_DECORATOR_WAITING:
+			return createStatusDecorator(world, xPosition, yPosition);
 		default:
 			return null;
 		}
 	}
 
+	private static Entity createStatusDecorator(final World _world, final int _xPosition,
+			final int _yPosition) {
+		return _world.createEntity(Archetypes.getInstance().stateDecorator);
+		// final Entity entity =
+		// _world.createEntity(Archetypes.getInstance().stateDecorator);
+		// final StateDecorationComponent decorationComponent =
+		// ComponentMappers.getInstance().stateDecoration
+		// .get(entity.getId());
+		// decorationComponent
+		// .setTimeToLive(GameEngine.getInstance().getStateTime() +
+		// StateDecorationComponent.TTL_BASE);
+		// return entity;
+	}
+
 	private static Entity createPlayer(final World world) {
 		final Entity newEntity = world.createEntity(Archetypes.getInstance().player);
-		newEntity.getComponent(FacingAnimationComponent.class).mapAnimation(EEntity.PLAYER);
-		newEntity.getComponent(TurnComponent.class).setMovesOnTurn(ETurnType.PLAYER);
+		world.getSystem(TagManager.class).register(GameEngine.TAG_PLAYER, newEntity);
+		mapFacingAnimation(newEntity, EEntity.PLAYER);
+		setMovesOnTurn(newEntity, ETurnType.PLAYER);
 		setName(newEntity, EEntity.PLAYER);
 		return newEntity;
 	}
@@ -147,38 +169,55 @@ public final class EntityFactory {
 	private static Entity createMonster(final EEntity type, final World world, final int xPosition,
 			final int yPosition) {
 		final Entity newEntity = world.createEntity(Archetypes.getInstance().monster);
-		newEntity.getComponent(AnimationComponent.class).mapAnimation(type);
-		final PositionComponent posComponent = newEntity.getComponent(PositionComponent.class);
-		posComponent.setX(xPosition);
-		posComponent.setY(yPosition);
+		setMovesOnTurn(newEntity, ETurnType.MONSTER);
+		mapAnimation(newEntity, type);
+		setPosition(newEntity, xPosition, yPosition);
 		setName(newEntity, type);
 		setAI(newEntity, type);
+		setInitialStates(newEntity, type);
 		return newEntity;
 	}
 
 	private static Entity createCollectible(final EEntity type, final World world, final int xPosition,
 			final int yPosition) {
 		final Entity newEntity = world.createEntity(Archetypes.getInstance().collectible);
-		newEntity.getComponent(SpriteComponent.class).mapSprite(type);
-		final PositionComponent posComponent = newEntity.getComponent(PositionComponent.class);
-		posComponent.setX(xPosition);
-		posComponent.setY(yPosition);
+		mapSprite(newEntity, type);
+		setPosition(newEntity, xPosition, yPosition);
 		return newEntity;
 	}
 
 	private static Entity createDecoration(final EEntity type, final World world, final int xPosition,
 			final int yPosition) {
 		final Entity newEntity = world.createEntity(Archetypes.getInstance().decoration);
-		newEntity.getComponent(AnimationComponent.class).mapAnimation(type);
-		final PositionComponent posComponent = newEntity.getComponent(PositionComponent.class);
-		posComponent.setX(xPosition);
-		posComponent.setY(yPosition);
+		mapAnimation(newEntity, type);
+		setPosition(newEntity, xPosition, yPosition);
 		return newEntity;
 	}
 
+	private static void mapFacingAnimation(final Entity newEntity, final EEntity type) {
+		ComponentMappers.getInstance().facingAnimation.get(newEntity).mapAnimation(type);
+	}
+
+	private static void mapAnimation(final Entity newEntity, final EEntity type) {
+		ComponentMappers.getInstance().animation.get(newEntity).mapAnimation(type);
+	}
+
+	private static void mapSprite(final Entity newEntity, final EEntity type) {
+		ComponentMappers.getInstance().sprite.get(newEntity).mapSprite(type);
+	}
+
+	private static void setMovesOnTurn(final Entity newEntity, final ETurnType turnType) {
+		ComponentMappers.getInstance().turn.get(newEntity).setMovesOnTurn(turnType);
+	}
+
+	private static void setPosition(final Entity entity, final int xPosition, final int yPosition) {
+		final PositionComponent posComponent = ComponentMappers.getInstance().position.get(entity);
+		posComponent.setX(xPosition);
+		posComponent.setY(yPosition);
+	}
+
 	private static void setName(final Entity entity, final EEntity type) {
-		// TODO refactor
-		final NameComponent component = entity.getComponent(NameComponent.class);
+		final NameComponent component = ComponentMappers.getInstance().name.get(entity);
 		switch (type) {
 		case BLOB:
 			component.setName("Blob");
@@ -241,13 +280,24 @@ public final class EntityFactory {
 	private static void setAI(final Entity entity, final EEntity type) {
 		final ArtificialIntelligenceComponent aiComponent = ComponentMappers.getInstance().ai.getSafe(entity);
 		if (aiComponent != null) {
+			aiComponent.setArtificialIntelligence(
+					new BehaviorTreeIntelligence(BehaviorTreeFactory.createBehaviorTree(entity, type)));
+		}
+	}
+
+	private static void setInitialStates(final Entity entity, final EEntity type) {
+		final StatusComponent component = ComponentMappers.getInstance().states.getSafe(entity);
+		component.setEntityId(entity.getId());
+		if (component != null) {
 			switch (type) {
 			case BAT:
-				aiComponent.setArtificialIntelligence(new ErraticArtificialIntelligence());
+				// leave the bats alone for now
 				break;
 			default:
+				component.activateState(EEntityState.SLEEPING, Integer.MAX_VALUE);
 				break;
 			}
+			component.setEntityId(entity.getId());
 		}
 	}
 }

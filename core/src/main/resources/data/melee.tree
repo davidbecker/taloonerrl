@@ -1,0 +1,13 @@
+import isHurt?:"de.brainstormsoftworks.taloonerrl.ai.tasks.HealthCheckTask"
+import flee:"de.brainstormsoftworks.taloonerrl.ai.tasks.FleeTask"
+import moveintorange:"de.brainstormsoftworks.taloonerrl.ai.tasks.MoveIntoMeleeRangeTask"
+import attack:"de.brainstormsoftworks.taloonerrl.ai.tasks.MeleeAttackTask"
+
+root
+	selector
+		sequence
+			isHurt? healthThreshold:0.5
+			flee
+		sequence
+			moveintorange
+			attack

@@ -28,6 +28,7 @@ import lombok.Setter;
 public class TurnComponent extends PooledComponent implements ISetAbleComponent<TurnComponent> {
 
 	// TODO refactor into a proper turn queue for each component?
+
 	private int currentTurn = Move.IDLE;
 	private int nextTurn = Move.IDLE;
 
@@ -72,8 +73,7 @@ public class TurnComponent extends PooledComponent implements ISetAbleComponent<
 		return currentTurn;
 	}
 
-	
-	public void setProcessed( boolean b) {
+	public void setProcessed(final boolean b) {
 		processed = b;
 	}
 }

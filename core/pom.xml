@@ -32,6 +32,11 @@
 			<version>${gdx.version}</version>
 		</dependency>
 		<dependency>
+			<groupId>com.badlogicgames.gdx</groupId>
+			<artifactId>gdx-ai</artifactId>
+			<version>${gdx-ai.version}</version>
+		</dependency>
+		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>${junit.version}</version>

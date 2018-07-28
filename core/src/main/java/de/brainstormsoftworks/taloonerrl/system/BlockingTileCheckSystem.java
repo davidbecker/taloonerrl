@@ -30,8 +30,11 @@ public class BlockingTileCheckSystem extends IteratingSystem implements IMapChan
 
 	private PositionComponent position;
 	private IMap map;
+	private int moveToX;
+	private int moveToY;
 	private int deltaX;
 	private int deltaY;
+	boolean reseted;
 
 	public BlockingTileCheckSystem() {
 		super(Aspect.all(PositionComponent.class));
@@ -40,16 +43,33 @@ public class BlockingTileCheckSystem extends IteratingSystem implements IMapChan
 
 	@Override
 	protected void process(final int _entityId) {
+		reseted = false;
 		position = ComponentMappers.getInstance().position.get(_entityId);
-		if (map != null) {
-			deltaX = PositionUtil.getDeltaX(position);
-			deltaY = PositionUtil.getDeltaY(position);
-			if (PositionUtil.isMovingWholeTile(deltaX, deltaY)) {
-				if (!map.isWalkable(position.getX() + deltaX, position.getY() + deltaY)) {
+		deltaX = PositionUtil.getDeltaX(position);
+		deltaY = PositionUtil.getDeltaY(position);
+		// make sure to check only at the start of a motion
+		if (PositionUtil.isMovingWholeTile(deltaX, deltaY)) {
+			moveToX = position.getX() + deltaX;
+			moveToY = position.getY() + deltaY;
+			if (map != null) {
+				if (!map.isWalkable(moveToX, moveToY)) {
 					// not walkable -> reset movement
-					position.setTotalX(0);
-					position.setTotalY(0);
+					reseted = true;
 				}
+			}
+
+			/*
+			 * tile is not blocked by environment, we need to check if an other entity
+			 * occupies that space.if this is the case we reset the movement as well and
+			 * tread the motion as an attack
+			 */
+			if (!reseted) {
+				reseted = PositionUtil.attackEntitiesOnPosition(moveToX, moveToY, _entityId);
+				// TODO implement attacks
+			}
+
+			if (reseted) {
+				position.resetMotion();
 			}
 		}
 	}
