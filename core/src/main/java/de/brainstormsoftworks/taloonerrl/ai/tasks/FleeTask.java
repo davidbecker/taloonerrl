@@ -51,12 +51,12 @@ public class FleeTask extends StatelessLeafTask {
 	private static TurnComponent turnComponent;
 
 	private static double[][] fovMap;
-	private static Set<Coord> visible;
+	private final static Set<Coord> visible = new HashSet<>();
 	private static int width;
 	private static int height;
 
-	private static Set<Coord> allies = new HashSet<>();
-	private static Set<Coord> enemies = new HashSet<>();
+	private final static Set<Coord> allies = new HashSet<>();
+	private final static Set<Coord> enemies = new HashSet<>();
 	private static ETurnType movesOnTurn;
 	private static ETurnType enemyTurnType;
 
@@ -83,7 +83,7 @@ public class FleeTask extends StatelessLeafTask {
 		// get field of view for current entity
 		fovMap = FovWrapper.getInstance().getFovForPosition(ownPosition.getX(), ownPosition.getY());
 
-		visible = new HashSet<>();
+		visible.clear();
 		width = fovMap.length;
 		height = 0;
 		if (width > 0) {

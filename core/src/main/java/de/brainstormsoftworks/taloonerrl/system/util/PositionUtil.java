@@ -148,7 +148,7 @@ public final class PositionUtil {
 				if (positionComponent.getX() == x && positionComponent.getY() == y) {
 					// TODO get some sort of attacker component for _attackerEntityId?
 					// add half the health as damage for now
-					healthComponent.addDamage(healthComponent.getHealthMax() / 2);
+					healthComponent.addDamage(healthComponent.getHealthMax() / 3);
 					attacked = true;
 					// check if entity is sleeping -> wake it up then
 					statusComponent = ComponentMappers.getInstance().states.getSafe(entityID);
