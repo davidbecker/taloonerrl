@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2015, 2017 David Becker.
+ * Copyright (c) 2015-2018 David Becker.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the GNU Public License v2.0
  * which accompanies this distribution, and is available at
@@ -18,6 +18,7 @@ import de.brainstormsoftworks.taloonerrl.core.engine.EEntity;
 import de.brainstormsoftworks.taloonerrl.core.engine.GameEngine;
 import de.brainstormsoftworks.taloonerrl.system.util.PositionUtil;
 import lombok.Getter;
+import squidpony.squidmath.Coord;
 import squidpony.squidmath.RNG;
 
 /**
@@ -28,6 +29,7 @@ import squidpony.squidmath.RNG;
  */
 public final class MapManager implements IMapChangeListener {
 	private static final RNG rng = new RNG();
+	private static final int MAX_RNG_TRIES = 100;
 	private static int playerStartX = -1;
 	private static int playerStartY = -1;
 
@@ -77,67 +79,65 @@ public final class MapManager implements IMapChangeListener {
 		// create of on each monster at a random position
 		// more bats to work with...
 		EEntity type;
+		Coord position;
 		for (int i = 0; i < 20; i++) {
-			int monsterX = -1;
-			int monsterY = -1;
-			while (!map.isWalkable(monsterX, monsterY) || PositionUtil.isPositionTaken(monsterX, monsterY)) {
-				monsterX = rng.nextInt(tilesHorizontal);
-				monsterY = rng.nextInt(tilesVertical);
+			position = getRandomFreePosition(map);
+			if (position != null) {
+				switch (i) {
+				case 0:
+					type = EEntity.BLOB;
+					break;
+				case 1:
+					type = EEntity.SQUIRREL;
+					break;
+				case 2:
+					type = EEntity.BAT;
+					break;
+				case 3:
+					type = EEntity.MAGICIAN;
+					break;
+				case 4:
+					type = EEntity.SLUG;
+					break;
+				case 5:
+					type = EEntity.GHOST;
+					break;
+				case 6:
+					type = EEntity.SHADOW;
+					break;
+				case 7:
+					type = EEntity.EYEBALL;
+					break;
+				case 8:
+					type = EEntity.GOLEM;
+					break;
+				case 9:
+					type = EEntity.ARCHER;
+					break;
+				case 10:
+					type = EEntity.BOMB;
+					break;
+				case 11:
+					type = EEntity.WARPER;
+					break;
+				case 12:
+					type = EEntity.STEALER;
+					break;
+				case 13:
+					type = EEntity.DRAGON;
+					break;
+				case 14:
+					type = EEntity.ACID;
+					break;
+				case 15:
+					type = EEntity.MUSHROOM;
+					break;
+				default:
+					type = EEntity.BAT;
+					break;
+				}
+				GameEngine.getInstance().createNewEntity(type, position);
 			}
-			switch (i) {
-			case 0:
-				type = EEntity.BLOB;
-				break;
-			case 1:
-				type = EEntity.SQUIRREL;
-				break;
-			case 2:
-				type = EEntity.BAT;
-				break;
-			case 3:
-				type = EEntity.MAGICIAN;
-				break;
-			case 4:
-				type = EEntity.SLUG;
-				break;
-			case 5:
-				type = EEntity.GHOST;
-				break;
-			case 6:
-				type = EEntity.SHADOW;
-				break;
-			case 7:
-				type = EEntity.EYEBALL;
-				break;
-			case 8:
-				type = EEntity.GOLEM;
-				break;
-			case 9:
-				type = EEntity.ARCHER;
-				break;
-			case 10:
-				type = EEntity.BOMB;
-				break;
-			case 11:
-				type = EEntity.WARPER;
-				break;
-			case 12:
-				type = EEntity.STEALER;
-				break;
-			case 13:
-				type = EEntity.DRAGON;
-				break;
-			case 14:
-				type = EEntity.ACID;
-				break;
-			case 15:
-				type = EEntity.MUSHROOM;
-				break;
-			default:
-				type = EEntity.BAT;
-				break;
-			}
-			GameEngine.getInstance().createNewEntity(type, monsterX, monsterY);
 		}
 
 		// create an entity for tile highlighting
@@ -148,6 +148,26 @@ public final class MapManager implements IMapChangeListener {
 		highlightComponent.setHighlightActive(true);
 		highlightComponent.setHighlightToggleAble(false);
 		highlightComponent.setHighlightOutsideFOV(true);
+	}
+
+	/**
+	 * randomly selects an unoccupied position
+	 *
+	 * @return null when no position could be found
+	 */
+	private static Coord getRandomFreePosition(final IMap map) {
+		int tries = 0;
+		final int tilesHorizontal = map.getTilesHorizontal();
+		final int tilesVertical = map.getTilesVertical();
+		Coord result = null;
+		boolean validPositionFound = false;
+		while (tries < MAX_RNG_TRIES && !validPositionFound) {
+			result = Coord.get(rng.nextInt(tilesHorizontal), rng.nextInt(tilesVertical));
+			validPositionFound = map.isWalkable(result.x, result.y)
+					&& !PositionUtil.isPositionTaken(result.x, result.y);
+			tries += 1;
+		}
+		return validPositionFound ? result : null;
 	}
 
 	/** {@inheritDoc} */

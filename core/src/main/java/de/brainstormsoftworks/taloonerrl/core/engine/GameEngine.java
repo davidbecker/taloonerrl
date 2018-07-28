@@ -1,5 +1,5 @@
 /*******************************************************************************
-c * Copyright (c) 2015, 2017 David Becker.
+c * Copyright (c) 2015-2018 David Becker.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the GNU Public License v2.0
  * which accompanies this distribution, and is available at
@@ -27,6 +27,7 @@ import de.brainstormsoftworks.taloonerrl.components.TurnComponent;
 import de.brainstormsoftworks.taloonerrl.core.engine.scheduler.ETurnType;
 import lombok.Getter;
 import lombok.Setter;
+import squidpony.squidmath.Coord;
 import squidpony.squidmath.RNG;
 
 /**
@@ -238,6 +239,20 @@ public final class GameEngine {
 	 */
 	public Entity createNewEntity(final EEntity type, final int xPosition, final int yPosition) {
 		return EntityFactory.createEntity(type, world, xPosition, yPosition);
+	}
+
+	/**
+	 * creates a new entity.
+	 *
+	 * @param type
+	 *            of entity to create
+	 * @param position
+	 *            position in squidpony format
+	 *
+	 * @return new entity
+	 */
+	public Entity createNewEntity(final EEntity type, final Coord position) {
+		return EntityFactory.createEntity(type, world, position.x, position.y);
 	}
 
 	/**

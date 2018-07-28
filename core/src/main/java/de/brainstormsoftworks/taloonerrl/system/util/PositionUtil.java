@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2016, 2017 David Becker.
+ * Copyright (c) 2016-2018 David Becker.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the GNU Public License v2.0
  * which accompanies this distribution, and is available at
@@ -96,21 +96,28 @@ public final class PositionUtil {
 		int entityID;
 		PositionComponent positionComponent;
 		HealthComponent healthComponent;
-		int posX, posY, deltaX, deltaY;
 		for (int i = 0; i < entities.size(); i++) {
 			entityID = entities.get(i);
 			if (entityID != skipEntityId) {
 				healthComponent = ComponentMappers.getInstance().health.get(entityID);
 				if (healthComponent.isAlive()) {
 					positionComponent = ComponentMappers.getInstance().position.get(entityID);
-					posX = positionComponent.getX();
-					posY = positionComponent.getY();
-					deltaX = nominalDirection(positionComponent.getTotalX());
-					deltaY = nominalDirection(positionComponent.getTotalY());
-					if (posX == x && posY == y || posX + deltaX == x && posY + deltaY == y) {
+					if (isPositionTakenByComponent(x, y, positionComponent)) {
 						return true;
 					}
 				}
+			}
+		}
+		return false;
+	}
+
+	private static final boolean isPositionTakenByComponent(final int x, final int y,
+			final PositionComponent positionComponent) {
+		if (positionComponent != null) {
+			if (positionComponent.getX() == x && positionComponent.getY() == y || positionComponent.getX()
+					+ nominalDirection(positionComponent.getTotalX()) == x
+					&& positionComponent.getY() + nominalDirection(positionComponent.getTotalY()) == y) {
+				return true;
 			}
 		}
 		return false;
