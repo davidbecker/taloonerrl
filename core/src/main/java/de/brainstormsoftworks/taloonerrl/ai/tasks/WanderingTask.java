@@ -10,8 +10,6 @@
  ******************************************************************************/
 package de.brainstormsoftworks.taloonerrl.ai.tasks;
 
-import com.artemis.Entity;
-
 import de.brainstormsoftworks.taloonerrl.components.PositionComponent;
 import de.brainstormsoftworks.taloonerrl.components.TurnComponent;
 import de.brainstormsoftworks.taloonerrl.core.engine.ComponentMappers;
@@ -33,7 +31,6 @@ public class WanderingTask extends StatelessLeafTask {
 	 * extracted variables into fields to avoid GC
 	 */
 
-	private static Entity entity;
 	private static PositionComponent positionComponent;
 	private static TurnComponent turnComponent;
 
@@ -43,9 +40,8 @@ public class WanderingTask extends StatelessLeafTask {
 	private static Coord currentCoord;
 
 	@Override
-	public Status execute() {
-		entity = getObject();
-		positionComponent = ComponentMappers.getInstance().position.getSafe(entity);
+	public Status doExecute() {
+		positionComponent = ComponentMappers.getInstance().position.getSafe(entityId);
 		turnComponent = ComponentMappers.getInstance().turn.getSafe(entity);
 		if (positionComponent != null && turnComponent != null) {
 			timeTried = 0;

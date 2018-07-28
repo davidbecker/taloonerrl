@@ -15,7 +15,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import com.artemis.Aspect;
-import com.artemis.Entity;
 import com.artemis.utils.IntBag;
 
 import de.brainstormsoftworks.taloonerrl.components.PositionComponent;
@@ -45,8 +44,6 @@ public class FleeTask extends StatelessLeafTask {
 	 * extracted variables into fields to avoid GC
 	 */
 
-	private static Entity entity;
-	private static int entityId;
 	private static PositionComponent ownPosition;
 	private static TurnComponent turnComponent;
 
@@ -71,9 +68,7 @@ public class FleeTask extends StatelessLeafTask {
 	private static ArrayList<Coord> fleePath;
 
 	@Override
-	public Status execute() {
-		entity = getObject();
-		entityId = entity.getId();
+	protected Status doExecute() {
 		ownPosition = ComponentMappers.getInstance().position.getSafe(entityId);
 		turnComponent = ComponentMappers.getInstance().turn.getSafe(entityId);
 		if (ownPosition == null || turnComponent == null) {

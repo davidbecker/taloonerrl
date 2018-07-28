@@ -10,8 +10,6 @@
  ******************************************************************************/
 package de.brainstormsoftworks.taloonerrl.ai.tasks;
 
-import com.artemis.Entity;
-
 import de.brainstormsoftworks.taloonerrl.components.PositionComponent;
 import de.brainstormsoftworks.taloonerrl.components.TargetComponent;
 import de.brainstormsoftworks.taloonerrl.components.TurnComponent;
@@ -31,8 +29,6 @@ public class MeleeAttackTask extends StatelessLeafTask {
 	/*
 	 * extracted variables into fields to avoid GC
 	 */
-
-	private static Entity attackerEntity;
 	private static TargetComponent attackerTarget;
 	private static int targetId;
 
@@ -41,16 +37,15 @@ public class MeleeAttackTask extends StatelessLeafTask {
 	private static TurnComponent turnComponent;
 
 	@Override
-	public Status execute() {
-		attackerEntity = getObject();
-		attackerTarget = ComponentMappers.getInstance().target.getSafe(attackerEntity);
+	public Status doExecute() {
+		attackerTarget = ComponentMappers.getInstance().target.getSafe(entityId);
 		targetId = attackerTarget != null ? attackerTarget.getTargetId() : -1;
 		if (targetId == -1) {
 			return Status.FAILED;
 		}
 		targetPosition = ComponentMappers.getInstance().position.getSafe(targetId);
-		ownPosition = ComponentMappers.getInstance().position.getSafe(attackerEntity);
-		turnComponent = ComponentMappers.getInstance().turn.getSafe(attackerEntity);
+		ownPosition = ComponentMappers.getInstance().position.getSafe(entity);
+		turnComponent = ComponentMappers.getInstance().turn.getSafe(entity);
 		if (targetPosition != null && ownPosition != null && turnComponent != null
 				&& PositionUtil.arePositionsAdjacent(targetPosition, ownPosition)) {
 			turnComponent

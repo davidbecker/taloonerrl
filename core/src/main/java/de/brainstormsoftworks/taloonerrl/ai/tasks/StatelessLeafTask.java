@@ -11,7 +11,6 @@
 package de.brainstormsoftworks.taloonerrl.ai.tasks;
 
 import com.artemis.Entity;
-import com.badlogic.gdx.ai.btree.LeafTask;
 import com.badlogic.gdx.ai.btree.Task;
 
 /**
@@ -21,7 +20,7 @@ import com.badlogic.gdx.ai.btree.Task;
  * @author David Becker
  *
  */
-public abstract class StatelessLeafTask extends LeafTask<Entity> {
+public abstract class StatelessLeafTask extends AbstractEntityLeafTask {
 
 	@Override
 	protected Task<Entity> copyTo(final Task<Entity> _task) {

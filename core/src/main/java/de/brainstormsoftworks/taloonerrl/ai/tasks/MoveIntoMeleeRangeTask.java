@@ -10,8 +10,6 @@
  ******************************************************************************/
 package de.brainstormsoftworks.taloonerrl.ai.tasks;
 
-import com.artemis.Entity;
-
 import de.brainstormsoftworks.taloonerrl.components.PositionComponent;
 import de.brainstormsoftworks.taloonerrl.components.TargetComponent;
 import de.brainstormsoftworks.taloonerrl.components.TurnComponent;
@@ -32,9 +30,6 @@ public class MoveIntoMeleeRangeTask extends StatelessLeafTask {
 	/*
 	 * extracted variables into fields to avoid GC
 	 */
-
-	private static Entity attackerEntity;
-	private static int attackerId;
 	private static int targetId;
 
 	private static TargetComponent attackerTarget;
@@ -56,17 +51,15 @@ public class MoveIntoMeleeRangeTask extends StatelessLeafTask {
 	private static int direction;
 
 	@Override
-	public Status execute() {
-		attackerEntity = getObject();
-		attackerId = attackerEntity.getId();
-		attackerTarget = ComponentMappers.getInstance().target.getSafe(attackerEntity);
+	public Status doExecute() {
+		attackerTarget = ComponentMappers.getInstance().target.getSafe(entityId);
 		targetId = attackerTarget != null ? attackerTarget.getTargetId() : -1;
 		if (targetId == -1) {
 			return Status.FAILED;
 		}
 		targetPosition = ComponentMappers.getInstance().position.getSafe(targetId);
-		ownPosition = ComponentMappers.getInstance().position.getSafe(attackerEntity);
-		turnComponent = ComponentMappers.getInstance().turn.getSafe(attackerEntity);
+		ownPosition = ComponentMappers.getInstance().position.getSafe(entity);
+		turnComponent = ComponentMappers.getInstance().turn.getSafe(entity);
 		if (targetPosition != null && ownPosition != null && turnComponent != null) {
 			if (PositionUtil.arePositionsAdjacent(targetPosition, ownPosition)) {
 				return Status.SUCCEEDED;
@@ -99,7 +92,7 @@ public class MoveIntoMeleeRangeTask extends StatelessLeafTask {
 
 	private static Status moveHorizontal() {
 		if (dX != 0 && MapManager.getInstance().getMap().isWalkable(ownX + dX, ownY)
-				&& !PositionUtil.isPositionTaken(ownX + dX, ownY, attackerId)) {
+				&& !PositionUtil.isPositionTaken(ownX + dX, ownY, entityId)) {
 			turnComponent.setCurrentTurn(dX > 0 ? Move.RIGHT : Move.LEFT);
 			return getReturnStatus(ownX, dX, targetX, ownY, 0, targetY);
 		}
@@ -114,7 +107,7 @@ public class MoveIntoMeleeRangeTask extends StatelessLeafTask {
 
 	private static Status moveVertically() {
 		if (dY != 0 && MapManager.getInstance().getMap().isWalkable(ownX, ownY + dY)
-				&& !PositionUtil.isPositionTaken(ownX, ownY + dY, attackerId)) {
+				&& !PositionUtil.isPositionTaken(ownX, ownY + dY, entityId)) {
 			turnComponent.setCurrentTurn(dY > 0 ? Move.UP : Move.DOWN);
 			return getReturnStatus(ownX, 0, targetX, ownY, dY, targetY);
 		}
@@ -129,7 +122,7 @@ public class MoveIntoMeleeRangeTask extends StatelessLeafTask {
 
 	private static Status horizontalStep(final int _dX) {
 		if (MapManager.getInstance().getMap().isWalkable(ownX + _dX, ownY)
-				&& !PositionUtil.isPositionTaken(ownX + _dX, ownY, attackerId)) {
+				&& !PositionUtil.isPositionTaken(ownX + _dX, ownY, entityId)) {
 			turnComponent.setCurrentTurn(_dX == 1 ? Move.RIGHT : Move.LEFT);
 			return getReturnStatus(ownX, _dX, targetX, ownY, 0, targetY);
 		}
@@ -138,7 +131,7 @@ public class MoveIntoMeleeRangeTask extends StatelessLeafTask {
 
 	private static Status verticalStep(final int _dY) {
 		if (MapManager.getInstance().getMap().isWalkable(ownX, ownY + _dY)
-				&& !PositionUtil.isPositionTaken(ownX, ownY + _dY, attackerId)) {
+				&& !PositionUtil.isPositionTaken(ownX, ownY + _dY, entityId)) {
 			turnComponent.setCurrentTurn(_dY == 1 ? Move.UP : Move.DOWN);
 			return getReturnStatus(ownX, 0, targetX, ownY, _dY, targetY);
 		}

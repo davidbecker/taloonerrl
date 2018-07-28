@@ -10,7 +10,6 @@
  ******************************************************************************/
 package de.brainstormsoftworks.taloonerrl.ai.tasks;
 
-import com.artemis.Entity;
 import com.badlogic.gdx.ai.btree.annotation.TaskAttribute;
 
 import de.brainstormsoftworks.taloonerrl.components.HealthComponent;
@@ -25,18 +24,13 @@ import de.brainstormsoftworks.taloonerrl.core.engine.ComponentMappers;
  */
 public class HealthCheckTask extends StatelessLeafTask {
 
-	private static Entity entity;
-	private static int entityId;
-
 	private static HealthComponent healthComponent;
 
 	@TaskAttribute(required = true)
 	public float healthThreshold = 0.5f;
 
 	@Override
-	public Status execute() {
-		entity = getObject();
-		entityId = entity.getId();
+	public Status doExecute() {
 		healthComponent = ComponentMappers.getInstance().health.getSafe(entityId);
 		if (healthComponent != null && healthComponent.getHealthPercent() <= healthThreshold) {
 			return Status.SUCCEEDED;

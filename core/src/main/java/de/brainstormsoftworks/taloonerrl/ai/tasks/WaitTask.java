@@ -25,8 +25,8 @@ public class WaitTask extends StatelessLeafTask {
 	private static TurnComponent turnComponent;
 
 	@Override
-	public Status execute() {
-		turnComponent = ComponentMappers.getInstance().turn.getSafe(getObject());
+	public Status doExecute() {
+		turnComponent = ComponentMappers.getInstance().turn.getSafe(entityId);
 		if (turnComponent != null) {
 			// Gdx.app.log("WaitTask", "waited");
 			turnComponent.setCurrentTurn(Move.WAIT);
