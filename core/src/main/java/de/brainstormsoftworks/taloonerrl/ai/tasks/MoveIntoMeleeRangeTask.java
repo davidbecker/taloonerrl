@@ -27,7 +27,7 @@ import de.brainstormsoftworks.taloonerrl.system.util.PositionUtil;
  * @author David Becker
  *
  */
-public class MoveIntoMeleeRange extends StatelessLeafTask {
+public class MoveIntoMeleeRangeTask extends StatelessLeafTask {
 
 	/*
 	 * extracted variables into fields to avoid GC
