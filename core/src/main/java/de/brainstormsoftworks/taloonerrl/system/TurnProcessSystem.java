@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2015, 2017 David Becker.
+ * Copyright (c) 2015-2018 David Becker.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the GNU Public License v2.0
  * which accompanies this distribution, and is available at
@@ -24,6 +24,7 @@ import de.brainstormsoftworks.taloonerrl.core.engine.GameEngine;
 import de.brainstormsoftworks.taloonerrl.core.engine.Move;
 import de.brainstormsoftworks.taloonerrl.core.engine.scheduler.TurnScheduler;
 import de.brainstormsoftworks.taloonerrl.render.Renderer;
+import de.brainstormsoftworks.taloonerrl.system.util.PositionUtil;
 import de.brainstormsoftworks.taloonerrl.system.util.StateDecorationUtil;
 
 /**
@@ -53,7 +54,7 @@ public class TurnProcessSystem extends IteratingSystem {
 		nextTurn = Move.IDLE;
 		turnForcefullySkipped = false;
 		positionComponent = ComponentMappers.getInstance().position.get(_entityId);
-		if (!positionComponent.isProcessingTurn()) {
+		if (PositionUtil.isValidPosition(positionComponent) && !positionComponent.isProcessingTurn()) {
 			isPlayer = ComponentMappers.getInstance().player.getSafe(_entityId) != null;
 			turnComponent = ComponentMappers.getInstance().turn.get(_entityId);
 			if (!turnComponent.isProcessed()

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2015 David Becker.
+ * Copyright (c) 2015-2018 David Becker.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the GNU Public License v2.0
  * which accompanies this distribution, and is available at
@@ -29,6 +29,7 @@ import de.brainstormsoftworks.taloonerrl.dungeon.MapManager;
 import de.brainstormsoftworks.taloonerrl.math.IntVector2;
 import de.brainstormsoftworks.taloonerrl.render.FovWrapper;
 import de.brainstormsoftworks.taloonerrl.render.Renderer;
+import de.brainstormsoftworks.taloonerrl.system.util.PositionUtil;
 import lombok.Getter;
 import squidpony.squidai.DijkstraMap;
 import squidpony.squidmath.Coord;
@@ -153,8 +154,8 @@ public final class InputSystem extends InputAdapter {
 		PositionComponent positionComponent;
 		HighlightAbleComponent highlight;
 		for (int i = 0; i < entities.size(); i++) {
-			positionComponent = ComponentMappers.getInstance().position.get(i);
-			if (positionComponent != null && positionComponent.getX() == mouseOverX
+			positionComponent = ComponentMappers.getInstance().position.getSafe(i);
+			if (PositionUtil.isValidPosition(positionComponent) && positionComponent.getX() == mouseOverX
 					&& positionComponent.getY() == mouseOverY) {
 				highlight = ComponentMappers.getInstance().highlight.get(i);
 				highlight.toggleHighlighted();

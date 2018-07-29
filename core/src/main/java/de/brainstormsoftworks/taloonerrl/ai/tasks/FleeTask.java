@@ -105,13 +105,15 @@ public class FleeTask extends StatelessLeafTask {
 			otherId = entities.get(i);
 			if (otherId != entityId) {
 				position = ComponentMappers.getInstance().position.getSafe(otherId);
-				turn = ComponentMappers.getInstance().turn.getSafe(otherId);
-				tmpTurnType = turn.getMovesOnTurn();
-				if (tmpTurnType == movesOnTurn) {
-					allies.add(Coord.get(position.getX(), position.getY()));
-					allies.add(Coord.get(position.getTargetX(), position.getTargetY()));
-				} else if (tmpTurnType == enemyTurnType) {
-					enemies.add(Coord.get(position.getX(), position.getY()));
+				if (PositionUtil.isValidPosition(position)) {
+					turn = ComponentMappers.getInstance().turn.getSafe(otherId);
+					tmpTurnType = turn.getMovesOnTurn();
+					if (tmpTurnType == movesOnTurn) {
+						allies.add(Coord.get(position.getX(), position.getY()));
+						allies.add(Coord.get(position.getTargetX(), position.getTargetY()));
+					} else if (tmpTurnType == enemyTurnType) {
+						enemies.add(Coord.get(position.getX(), position.getY()));
+					}
 				}
 			}
 		}

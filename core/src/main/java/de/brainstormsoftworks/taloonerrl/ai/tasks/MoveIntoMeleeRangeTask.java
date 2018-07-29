@@ -60,7 +60,8 @@ public class MoveIntoMeleeRangeTask extends StatelessLeafTask {
 		targetPosition = ComponentMappers.getInstance().position.getSafe(targetId);
 		ownPosition = ComponentMappers.getInstance().position.getSafe(entity);
 		turnComponent = ComponentMappers.getInstance().turn.getSafe(entity);
-		if (targetPosition != null && ownPosition != null && turnComponent != null) {
+		if (PositionUtil.isValidPosition(targetPosition)
+				&& PositionUtil.isValidPosition(ownPosition) && turnComponent != null) {
 			if (PositionUtil.arePositionsAdjacent(targetPosition, ownPosition)) {
 				return Status.SUCCEEDED;
 			}

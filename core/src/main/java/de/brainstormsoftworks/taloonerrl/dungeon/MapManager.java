@@ -140,6 +140,166 @@ public final class MapManager implements IMapChangeListener {
 			}
 		}
 
+		for (int i = 0; i < 9; i++) {
+			position = getRandomFreePosition(map);
+			type = null;
+			if (position != null) {
+				switch (i) {
+				case 0:
+					type = EEntity.POTION_A;
+					break;
+				case 1:
+					type = EEntity.POTION_B;
+					break;
+				case 2:
+					type = EEntity.POTION_C;
+					break;
+				case 3:
+					type = EEntity.POTION_D;
+					break;
+				case 4:
+					type = EEntity.POTION_E;
+					break;
+				case 5:
+					type = EEntity.POTION_F;
+					break;
+				case 6:
+					type = EEntity.POTION_G;
+					break;
+				case 7:
+					type = EEntity.POTION_H;
+					break;
+				case 8:
+					type = EEntity.POTION_I;
+					break;
+				case 9:
+					type = EEntity.POTION_J;
+					break;
+				}
+				GameEngine.getInstance().createNewEntity(type, position);
+			}
+		}
+
+		for (int i = 0; i < 9; i++) {
+			position = getRandomFreePosition(map);
+			type = null;
+			if (position != null) {
+				switch (i) {
+				case 0:
+					type = EEntity.SCROLL_A;
+					break;
+				case 1:
+					type = EEntity.SCROLL_B;
+					break;
+				case 2:
+					type = EEntity.SCROLL_C;
+					break;
+				case 3:
+					type = EEntity.SCROLL_D;
+					break;
+				case 4:
+					type = EEntity.SCROLL_E;
+					break;
+				case 5:
+					type = EEntity.SCROLL_F;
+					break;
+				case 6:
+					type = EEntity.SCROLL_G;
+					break;
+				case 7:
+					type = EEntity.SCROLL_H;
+					break;
+				case 8:
+					type = EEntity.SCROLL_I;
+					break;
+				case 9:
+					type = EEntity.SCROLL_J;
+					break;
+				}
+				GameEngine.getInstance().createNewEntity(type, position);
+			}
+		}
+
+		for (int i = 0; i < 9; i++) {
+			position = getRandomFreePosition(map);
+			type = null;
+			if (position != null) {
+				switch (i) {
+				case 0:
+					type = EEntity.WAND_A;
+					break;
+				case 1:
+					type = EEntity.WAND_B;
+					break;
+				case 2:
+					type = EEntity.WAND_C;
+					break;
+				case 3:
+					type = EEntity.WAND_D;
+					break;
+				case 4:
+					type = EEntity.WAND_E;
+					break;
+				case 5:
+					type = EEntity.WAND_F;
+					break;
+				case 6:
+					type = EEntity.WAND_G;
+					break;
+				case 7:
+					type = EEntity.WAND_H;
+					break;
+				case 8:
+					type = EEntity.WAND_I;
+					break;
+				case 9:
+					type = EEntity.WAND_J;
+					break;
+				}
+				GameEngine.getInstance().createNewEntity(type, position);
+			}
+		}
+
+		for (int i = 0; i < 9; i++) {
+			position = getRandomFreePosition(map);
+			type = null;
+			if (position != null) {
+				switch (i) {
+				case 0:
+					type = EEntity.RING_A;
+					break;
+				case 1:
+					type = EEntity.RING_B;
+					break;
+				case 2:
+					type = EEntity.RING_C;
+					break;
+				case 3:
+					type = EEntity.RING_D;
+					break;
+				case 4:
+					type = EEntity.RING_E;
+					break;
+				case 5:
+					type = EEntity.RING_F;
+					break;
+				case 6:
+					type = EEntity.RING_G;
+					break;
+				case 7:
+					type = EEntity.RING_H;
+					break;
+				case 8:
+					type = EEntity.RING_I;
+					break;
+				case 9:
+					type = EEntity.RING_J;
+					break;
+				}
+				GameEngine.getInstance().createNewEntity(type, position);
+			}
+		}
+
 		// create an entity for tile highlighting
 		final Entity cursorEntity = GameEngine.getInstance().createNewEntity(EEntity.CURSOR, 0, 0);
 		final HighlightAbleComponent highlightComponent = cursorEntity

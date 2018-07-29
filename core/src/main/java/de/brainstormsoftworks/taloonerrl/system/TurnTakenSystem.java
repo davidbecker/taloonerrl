@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2017 David Becker.
+ * Copyright (c) 2017-2018 David Becker.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the GNU Public License v2.0
  * which accompanies this distribution, and is available at
@@ -17,6 +17,7 @@ import de.brainstormsoftworks.taloonerrl.components.PositionComponent;
 import de.brainstormsoftworks.taloonerrl.components.TurnComponent;
 import de.brainstormsoftworks.taloonerrl.core.engine.ComponentMappers;
 import de.brainstormsoftworks.taloonerrl.core.engine.GameEngine;
+import de.brainstormsoftworks.taloonerrl.system.util.PositionUtil;
 
 /**
  * system to check if an entity has its turn taken. set
@@ -39,10 +40,13 @@ public class TurnTakenSystem extends IteratingSystem {
 		turnComponent = ComponentMappers.getInstance().turn.get(_entityId);
 		if (!turnComponent.isTurnTaken()
 				&& turnComponent.getMovesOnTurn() == GameEngine.getInstance().getCurrentTurnSide()) {
-			if(turnComponent.isProcessed()) {
-			positionComponent = ComponentMappers.getInstance().position.get(_entityId);
-			turnComponent
-					.setTurnTaken(positionComponent.getOffsetX() == 0 && positionComponent.getOffsetY() == 0);}
+			if (turnComponent.isProcessed()) {
+				positionComponent = ComponentMappers.getInstance().position.get(_entityId);
+				if (PositionUtil.isValidPosition(positionComponent)) {
+					turnComponent.setTurnTaken(
+							positionComponent.getOffsetX() == 0 && positionComponent.getOffsetY() == 0);
+				}
+			}
 		}
 	}
 

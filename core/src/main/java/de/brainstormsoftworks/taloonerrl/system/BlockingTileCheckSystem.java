@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2015, 2017 David Becker.
+ * Copyright (c) 2015-2018 David Becker.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the GNU Public License v2.0
  * which accompanies this distribution, and is available at
@@ -45,6 +45,9 @@ public class BlockingTileCheckSystem extends IteratingSystem implements IMapChan
 	protected void process(final int _entityId) {
 		reseted = false;
 		position = ComponentMappers.getInstance().position.get(_entityId);
+		if (!PositionUtil.isValidPosition(position)) {
+			return;
+		}
 		deltaX = PositionUtil.getDeltaX(position);
 		deltaY = PositionUtil.getDeltaY(position);
 		// make sure to check only at the start of a motion

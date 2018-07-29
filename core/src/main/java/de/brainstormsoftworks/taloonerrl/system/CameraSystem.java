@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2015, 2017 David Becker.
+ * Copyright (c) 2015-2018 David Becker.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the GNU Public License v2.0
  * which accompanies this distribution, and is available at
@@ -17,6 +17,7 @@ import de.brainstormsoftworks.taloonerrl.components.CameraFollowComponent;
 import de.brainstormsoftworks.taloonerrl.components.PositionComponent;
 import de.brainstormsoftworks.taloonerrl.core.engine.ComponentMappers;
 import de.brainstormsoftworks.taloonerrl.render.Renderer;
+import de.brainstormsoftworks.taloonerrl.system.util.PositionUtil;
 
 /**
  * this system set the world camera to follow an entity.<br>
@@ -40,6 +41,9 @@ public class CameraSystem extends IteratingSystem {
 		// if the screen isn't big enough to display the whole map, we follow the player
 		if (!Renderer.getInstance().isFullMapVisible()) {
 			positionComponent = ComponentMappers.getInstance().position.get(_entityId);
+			if (!PositionUtil.isValidPosition(positionComponent)) {
+				return;
+			}
 			Renderer.getInstance().setWorldCamera(positionComponent.getX(), positionComponent.getY(),
 					positionComponent.getOffsetX(), positionComponent.getOffsetY());
 		}

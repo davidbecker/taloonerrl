@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2017 David Becker.
+ * Copyright (c) 2017-2018 David Becker.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the GNU Public License v2.0
  * which accompanies this distribution, and is available at
@@ -19,6 +19,7 @@ import de.brainstormsoftworks.taloonerrl.core.engine.GameEngine;
 import de.brainstormsoftworks.taloonerrl.render.FovWrapper;
 import de.brainstormsoftworks.taloonerrl.render.PaletteUtil;
 import de.brainstormsoftworks.taloonerrl.render.Renderer;
+import de.brainstormsoftworks.taloonerrl.system.util.PositionUtil;
 
 /**
  * renders health bars for applicable entities
@@ -44,6 +45,9 @@ public class EntityHealthBarsRenderer extends AbstractRender {
 		healthComponent = ComponentMappers.getInstance().health.get(_entityId);
 		if (healthComponent.isAlive() /* && healthComponent.getHealthPercent() < 1f */) {
 			positionComponent = ComponentMappers.getInstance().position.get(_entityId);
+			if (!PositionUtil.isValidPosition(positionComponent)) {
+				return;
+			}
 			x = positionComponent.getX();
 			y = positionComponent.getY();
 			offsetX = positionComponent.getOffsetX();

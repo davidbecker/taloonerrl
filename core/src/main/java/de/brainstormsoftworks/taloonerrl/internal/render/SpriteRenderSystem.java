@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c)  2017 David Becker.
+ * Copyright (c) 2017-2018 David Becker.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the GNU Public License v2.0
  * which accompanies this distribution, and is available at
@@ -20,6 +20,7 @@ import de.brainstormsoftworks.taloonerrl.core.engine.ComponentMappers;
 import de.brainstormsoftworks.taloonerrl.core.engine.GameEngine;
 import de.brainstormsoftworks.taloonerrl.render.FovWrapper;
 import de.brainstormsoftworks.taloonerrl.render.Renderer;
+import de.brainstormsoftworks.taloonerrl.system.util.PositionUtil;
 
 /**
  * simple rendering system for a sprite
@@ -42,6 +43,9 @@ public class SpriteRenderSystem extends AbstractRender {
 	@Override
 	protected void process(final int _entityId) {
 		positionComponent = ComponentMappers.getInstance().position.get(_entityId);
+		if (!PositionUtil.isValidPosition(positionComponent)) {
+			return;
+		}
 		spriteComponent = ComponentMappers.getInstance().sprite.get(_entityId);
 		sprite = spriteComponent.getSprite();
 		exploredComponent = ComponentMappers.getInstance().explored.getSafe(_entityId);

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2015, 2017 David Becker.
+ * Copyright (c) 2015-2018 David Becker.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the GNU Public License v2.0
  * which accompanies this distribution, and is available at
@@ -21,6 +21,7 @@ import de.brainstormsoftworks.taloonerrl.render.FovWrapper;
 import de.brainstormsoftworks.taloonerrl.render.MapOverlayRenderer;
 import de.brainstormsoftworks.taloonerrl.render.MapOverlayRenderer.Visible;
 import de.brainstormsoftworks.taloonerrl.render.Renderer;
+import de.brainstormsoftworks.taloonerrl.system.util.PositionUtil;
 
 /**
  * system that prepares the overlay data for the map overlay
@@ -44,6 +45,9 @@ public class MapOverlayPreparerSystem extends IteratingSystem {
 	protected void process(final int _entityId) {
 		if (!Renderer.getInstance().isFullMapVisible()) {
 			positionComponent = ComponentMappers.getInstance().position.get(_entityId);
+			if (!PositionUtil.isValidPosition(positionComponent)) {
+				return;
+			}
 			healthComponent = ComponentMappers.getInstance().health.getSafe(_entityId);
 			collectibleComponent = ComponentMappers.getInstance().collectible.getSafe(_entityId);
 			x = positionComponent.getX();

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2017 David Becker.
+ * Copyright (c) 2017-2018 David Becker.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the GNU Public License v2.0
  * which accompanies this distribution, and is available at
@@ -21,6 +21,7 @@ import de.brainstormsoftworks.taloonerrl.core.engine.GameEngine;
 import de.brainstormsoftworks.taloonerrl.render.FovWrapper;
 import de.brainstormsoftworks.taloonerrl.render.RenderUtil;
 import de.brainstormsoftworks.taloonerrl.render.Renderer;
+import de.brainstormsoftworks.taloonerrl.system.util.PositionUtil;
 
 /**
  * renderer that renders the current animation for the state decoration of an
@@ -47,6 +48,9 @@ public class EntityStateDecorationRenderer extends AbstractRender {
 	@Override
 	protected void process(final int _entityId) {
 		positionComponent = ComponentMappers.getInstance().position.get(_entityId);
+		if (!PositionUtil.isValidPosition(positionComponent)) {
+			return;
+		}
 		spriteComponent = ComponentMappers.getInstance().animation.get(_entityId);
 		animation = spriteComponent.getAnimation();
 		x = positionComponent.getX();

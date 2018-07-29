@@ -20,6 +20,7 @@ import de.brainstormsoftworks.taloonerrl.components.PositionComponent;
 import de.brainstormsoftworks.taloonerrl.core.engine.ComponentMappers;
 import de.brainstormsoftworks.taloonerrl.core.engine.GameEngine;
 import de.brainstormsoftworks.taloonerrl.render.FovWrapper;
+import de.brainstormsoftworks.taloonerrl.system.util.PositionUtil;
 
 /**
  * this system forces the update for the field of view for the given entity
@@ -41,6 +42,9 @@ public class FovUpdaterSystem extends IteratingSystem {
 	@Override
 	protected void process(final int _entityId) {
 		positionComponent = ComponentMappers.getInstance().position.get(_entityId);
+		if (!PositionUtil.isValidPosition(positionComponent)) {
+			return;
+		}
 		// TODO move into different thread
 		FovWrapper.getInstance().calculateFovForPosition(positionComponent.getXEffective(),
 				positionComponent.getYEffective());
@@ -54,9 +58,10 @@ public class FovUpdaterSystem extends IteratingSystem {
 			exploredComponent = ComponentMappers.getInstance().explored.get(entityID);
 			if (!exploredComponent.isExplored()) {
 				otherPosition = ComponentMappers.getInstance().position.get(entityID);
-				exploredComponent.setExplored(
-						FovWrapper.getInstance().isLit(otherPosition.getX(), otherPosition.getY()));
-				;
+				if (PositionUtil.isValidPosition(otherPosition)) {
+					exploredComponent.setExplored(
+							FovWrapper.getInstance().isLit(otherPosition.getX(), otherPosition.getY()));
+				}
 			}
 		}
 

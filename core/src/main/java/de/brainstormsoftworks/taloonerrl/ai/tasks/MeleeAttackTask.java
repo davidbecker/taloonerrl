@@ -46,7 +46,8 @@ public class MeleeAttackTask extends StatelessLeafTask {
 		targetPosition = ComponentMappers.getInstance().position.getSafe(targetId);
 		ownPosition = ComponentMappers.getInstance().position.getSafe(entity);
 		turnComponent = ComponentMappers.getInstance().turn.getSafe(entity);
-		if (targetPosition != null && ownPosition != null && turnComponent != null
+		if (PositionUtil.isValidPosition(targetPosition)
+				&& PositionUtil.isValidPosition(ownPosition) && turnComponent != null
 				&& PositionUtil.arePositionsAdjacent(targetPosition, ownPosition)) {
 			turnComponent
 					.setCurrentTurn(Move.from(Direction.toGoTo(PositionUtil.convertToSquidCoord(ownPosition),

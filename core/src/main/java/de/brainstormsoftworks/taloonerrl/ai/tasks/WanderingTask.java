@@ -43,7 +43,7 @@ public class WanderingTask extends StatelessLeafTask {
 	public Status doExecute() {
 		positionComponent = ComponentMappers.getInstance().position.getSafe(entityId);
 		turnComponent = ComponentMappers.getInstance().turn.getSafe(entity);
-		if (positionComponent != null && turnComponent != null) {
+		if (PositionUtil.isValidPosition(positionComponent) && turnComponent != null) {
 			timeTried = 0;
 			currentCoord = Coord.get(positionComponent.getX(), positionComponent.getY());
 			while (timeTried < THRESHOLD) {

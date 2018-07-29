@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2017 David Becker.
+ * Copyright (c) 2017-2018 David Becker.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the GNU Public License v2.0
  * which accompanies this distribution, and is available at
@@ -126,7 +126,7 @@ public final class StateDecorationUtil {
 		// find position component for entity that this component belongs too
 		final PositionComponent positionComponentParent = ComponentMappers.getInstance().position
 				.getSafe(_entityId);
-		if (positionComponentParent == null) {
+		if (!PositionUtil.isValidPosition(positionComponentParent)) {
 			Gdx.app.error(getClass().getSimpleName(), "parent position component not found -> aborting");
 			return;
 		}

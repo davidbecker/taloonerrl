@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2015, 2017 David Becker.
+ * Copyright (c) 2015-2018 David Becker.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the GNU Public License v2.0
  * which accompanies this distribution, and is available at
@@ -16,6 +16,7 @@ import com.artemis.systems.IteratingSystem;
 import de.brainstormsoftworks.taloonerrl.components.PositionComponent;
 import de.brainstormsoftworks.taloonerrl.core.engine.ComponentMappers;
 import de.brainstormsoftworks.taloonerrl.render.Renderer;
+import de.brainstormsoftworks.taloonerrl.system.util.PositionUtil;
 
 /**
  *
@@ -47,6 +48,9 @@ public class OffsetSystem extends IteratingSystem {
 	@Override
 	protected void process(final int _entityId) {
 		position = ComponentMappers.getInstance().position.get(_entityId);
+		if (!PositionUtil.isValidPosition(position)) {
+			return;
+		}
 		offsetX = position.getOffsetX();
 		offsetY = position.getOffsetY();
 		// shortcut

@@ -113,7 +113,7 @@ public final class PositionUtil {
 
 	private static final boolean isPositionTakenByComponent(final int x, final int y,
 			final PositionComponent positionComponent) {
-		if (positionComponent != null) {
+		if (isValidPosition(positionComponent)) {
 			if (positionComponent.getX() == x && positionComponent.getY() == y || positionComponent.getX()
 					+ nominalDirection(positionComponent.getTotalX()) == x
 					&& positionComponent.getY() + nominalDirection(positionComponent.getTotalY()) == y) {
@@ -152,7 +152,8 @@ public final class PositionUtil {
 			healthComponent = ComponentMappers.getInstance().health.get(entityID);
 			if (healthComponent.isAlive()) {
 				positionComponent = ComponentMappers.getInstance().position.get(entityID);
-				if (positionComponent.getX() == x && positionComponent.getY() == y) {
+				if (isValidPosition(positionComponent) && positionComponent.getX() == x
+						&& positionComponent.getY() == y) {
 					// TODO get some sort of attacker component for _attackerEntityId?
 					// add half the health as damage for now
 					healthComponent.addDamage(healthComponent.getHealthMax() / 3);
@@ -191,7 +192,8 @@ public final class PositionUtil {
 	 * @return
 	 */
 	public static boolean arePositionsAdjacent(final PositionComponent pos1, final PositionComponent pos2) {
-		return arePositionsAdjacent(pos1.getX(), pos1.getY(), pos2.getX(), pos2.getY());
+		return isValidPosition(pos1) && isValidPosition(pos2)
+				&& arePositionsAdjacent(pos1.getX(), pos1.getY(), pos2.getX(), pos2.getY());
 	}
 
 	/**
@@ -226,5 +228,12 @@ public final class PositionUtil {
 		default:
 			return coord;
 		}
+	}
+
+	/**
+	 * checks whether the given component should be processed
+	 */
+	public static boolean isValidPosition(final PositionComponent component) {
+		return component != null && (component.x >= 0 || component.y >= 0);
 	}
 }
