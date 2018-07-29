@@ -19,6 +19,7 @@ import de.brainstormsoftworks.taloonerrl.components.ArtificialIntelligenceCompon
 import de.brainstormsoftworks.taloonerrl.components.CameraFollowComponent;
 import de.brainstormsoftworks.taloonerrl.components.CollectibleComponent;
 import de.brainstormsoftworks.taloonerrl.components.CursorComponent;
+import de.brainstormsoftworks.taloonerrl.components.ExploredComponent;
 import de.brainstormsoftworks.taloonerrl.components.FacingAnimationComponent;
 import de.brainstormsoftworks.taloonerrl.components.FacingComponent;
 import de.brainstormsoftworks.taloonerrl.components.HealthComponent;
@@ -56,6 +57,7 @@ public final class ComponentMappers {
 	public final ComponentMapper<StatusComponent> states;
 	public final ComponentMapper<StateDecorationComponent> stateDecoration;
 	public final ComponentMapper<TargetComponent> target;
+	public final ComponentMapper<ExploredComponent> explored;
 
 	private static ComponentMappers instance = null;
 
@@ -77,6 +79,7 @@ public final class ComponentMappers {
 		states = ComponentMapper.getFor(StatusComponent.class, world);
 		stateDecoration = ComponentMapper.getFor(StateDecorationComponent.class, world);
 		target = ComponentMapper.getFor(TargetComponent.class, world);
+		explored = ComponentMapper.getFor(ExploredComponent.class, world);
 	}
 
 	/**

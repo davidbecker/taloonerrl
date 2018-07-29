@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2015, 2017 David Becker.
+ * Copyright (c) 2015-2018 David Becker.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the GNU Public License v2.0
  * which accompanies this distribution, and is available at
@@ -12,10 +12,13 @@ package de.brainstormsoftworks.taloonerrl.system;
 
 import com.artemis.Aspect;
 import com.artemis.systems.IteratingSystem;
+import com.artemis.utils.IntBag;
 
+import de.brainstormsoftworks.taloonerrl.components.ExploredComponent;
 import de.brainstormsoftworks.taloonerrl.components.PlayerComponent;
 import de.brainstormsoftworks.taloonerrl.components.PositionComponent;
 import de.brainstormsoftworks.taloonerrl.core.engine.ComponentMappers;
+import de.brainstormsoftworks.taloonerrl.core.engine.GameEngine;
 import de.brainstormsoftworks.taloonerrl.render.FovWrapper;
 
 /**
@@ -25,7 +28,11 @@ import de.brainstormsoftworks.taloonerrl.render.FovWrapper;
  *
  */
 public class FovUpdaterSystem extends IteratingSystem {
-	private PositionComponent positionComponent;
+
+	private static PositionComponent positionComponent;
+	private static PositionComponent otherPosition;
+	private static ExploredComponent exploredComponent;
+	private static int entityID;
 
 	public FovUpdaterSystem() {
 		super(Aspect.all(PositionComponent.class, PlayerComponent.class));
@@ -37,6 +44,22 @@ public class FovUpdaterSystem extends IteratingSystem {
 		// TODO move into different thread
 		FovWrapper.getInstance().calculateFovForPosition(positionComponent.getXEffective(),
 				positionComponent.getYEffective());
+
+		// find newly visible collectibles and update their explored state
+		final IntBag entities = GameEngine.getInstance().getAspectSubscriptionManager()
+				.get(Aspect.all(PositionComponent.class, ExploredComponent.class)).getEntities();
+
+		for (int i = 0; i < entities.size(); i++) {
+			entityID = entities.get(i);
+			exploredComponent = ComponentMappers.getInstance().explored.get(entityID);
+			if (!exploredComponent.isExplored()) {
+				otherPosition = ComponentMappers.getInstance().position.get(entityID);
+				exploredComponent.setExplored(
+						FovWrapper.getInstance().isLit(otherPosition.getX(), otherPosition.getY()));
+				;
+			}
+		}
+
 	}
 
 }
