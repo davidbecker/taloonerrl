@@ -27,7 +27,6 @@ import de.brainstormsoftworks.taloonerrl.components.PositionComponent;
 import de.brainstormsoftworks.taloonerrl.core.engine.scheduler.TurnScheduler;
 import de.brainstormsoftworks.taloonerrl.dungeon.MapManager;
 import de.brainstormsoftworks.taloonerrl.math.IntVector2;
-import de.brainstormsoftworks.taloonerrl.render.FovWrapper;
 import de.brainstormsoftworks.taloonerrl.render.Renderer;
 import de.brainstormsoftworks.taloonerrl.system.util.PositionUtil;
 import lombok.Getter;
@@ -100,9 +99,9 @@ public final class InputSystem extends InputAdapter {
 			// TODO check if UI has been clicked
 
 			// do things if the cursor is in the visible area
-			if (FovWrapper.getInstance().isLit(mouseOverX, mouseOverY)) {
-				processed = toggleHighlightedActors();
-			}
+			// if (FovWrapper.getInstance().isLit(mouseOverX, mouseOverY)) {
+			// processed = toggleHighlightedActors();
+			// }
 			if (!processed) {
 				processed = addPlayerWalkPath();
 			}
@@ -125,7 +124,12 @@ public final class InputSystem extends InputAdapter {
 			final DijkstraMap dijkstraMap = MapManager.getInstance().getMap().getDijkstraMap();
 			dijkstraMap.setGoal(mouseOverX, mouseOverY);
 			final ArrayList<Coord> path = dijkstraMap.findPath(Integer.MAX_VALUE, null, null, start);
-			final int size = path.size();
+			int size = path.size();
+			// if no path could be found, wait a turn
+			if (size == 0) {
+				size = 1;
+				path.add(start);
+			}
 			final int[] directions = new int[size];
 			int index = 0;
 			for (final Coord coord : path) {
