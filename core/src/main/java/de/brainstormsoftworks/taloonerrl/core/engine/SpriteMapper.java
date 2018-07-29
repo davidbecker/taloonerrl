@@ -29,6 +29,8 @@ import de.brainstormsoftworks.taloonerrl.components.SpriteComponent;
 import de.brainstormsoftworks.taloonerrl.render.IDisposableInstance;
 import de.brainstormsoftworks.taloonerrl.render.RenderUtil;
 import de.brainstormsoftworks.taloonerrl.render.Renderer;
+import squidpony.squidmath.Coord;
+import squidpony.squidmath.RNG;
 
 /**
  * utility class that maps the animation for a sprite into components<br>
@@ -124,6 +126,23 @@ public final class SpriteMapper implements IDisposableInstance {
 	private final Map<EEntity, TextureRegion> mappedSprites = new HashMap<>();
 	private final Set<Texture> toDispose = new HashSet<>();
 	private final Map<String, Texture> textures = new HashMap<>();
+
+	/*
+	 * pool for random sprite selection for items
+	 */
+	private final Coord[] spriteSheetPositionPotions = { Coord.get(0, 0), Coord.get(0, 1), Coord.get(0, 2),
+			Coord.get(0, 3), Coord.get(0, 4), Coord.get(1, 0), Coord.get(1, 1), Coord.get(1, 2),
+			Coord.get(1, 3), Coord.get(1, 4) };
+	private final Coord[] spriteSheetPositionScrolls = { Coord.get(0, 0), Coord.get(0, 1), Coord.get(0, 2),
+			Coord.get(0, 3), Coord.get(1, 0), Coord.get(1, 1), Coord.get(1, 2), Coord.get(1, 3),
+			Coord.get(2, 0), Coord.get(2, 1) };
+	private final Coord[] spriteSheetPositionWands = spriteSheetPositionScrolls;
+	private final Coord[] spriteSheetPositionRings = spriteSheetPositionScrolls;
+
+	private final Map<EEntity, Coord> spriteSheetSelectionPotions = new HashMap<>();
+	private final Map<EEntity, Coord> spriteSheetSelectionScrolls = new HashMap<>();
+	private final Map<EEntity, Coord> spriteSheetSelectionWands = new HashMap<>();
+	private final Map<EEntity, Coord> spriteSheetSelectionRings = new HashMap<>();
 
 	private SpriteMapper() {
 		RenderUtil.addToDisposeList(this);
@@ -351,127 +370,54 @@ public final class SpriteMapper implements IDisposableInstance {
 	}
 
 	private void loadSprite(final EEntity type) {
-		// TODO refactor (random potions, scrolls, wands)
 		switch (type) {
 		case POTION_A:
-			mapSpritePotion(type, 0, 0);
-			break;
 		case POTION_B:
-			mapSpritePotion(type, 0, 1);
-			break;
 		case POTION_C:
-			mapSpritePotion(type, 0, 2);
-			break;
 		case POTION_D:
-			mapSpritePotion(type, 0, 3);
-			break;
 		case POTION_E:
-			mapSpritePotion(type, 0, 4);
-			break;
 		case POTION_F:
-			mapSpritePotion(type, 1, 0);
-			break;
 		case POTION_G:
-			mapSpritePotion(type, 1, 1);
-			break;
 		case POTION_H:
-			mapSpritePotion(type, 1, 2);
-			break;
 		case POTION_I:
-			mapSpritePotion(type, 1, 3);
-			break;
 		case POTION_J:
-			mapSpritePotion(type, 1, 4);
+			mapSpritePotion(type);
 			break;
 		case SCROLL_A:
-			mapSpriteScroll(type, 0, 0);
-			break;
 		case SCROLL_B:
-			mapSpriteScroll(type, 0, 1);
-			break;
 		case SCROLL_C:
-			mapSpriteScroll(type, 0, 2);
-			break;
 		case SCROLL_D:
-			mapSpriteScroll(type, 0, 3);
-			break;
 		case SCROLL_E:
-			mapSpriteScroll(type, 1, 0);
-			break;
 		case SCROLL_F:
-			mapSpriteScroll(type, 1, 1);
-			break;
 		case SCROLL_G:
-			mapSpriteScroll(type, 1, 2);
-			break;
 		case SCROLL_H:
-			mapSpriteScroll(type, 1, 3);
-			break;
 		case SCROLL_I:
-			mapSpriteScroll(type, 2, 0);
-			break;
 		case SCROLL_J:
-			mapSpriteScroll(type, 2, 1);
+			mapSpriteScroll(type);
 			break;
 		case WAND_A:
-			mapSpriteWand(type, 0, 0);
-			break;
 		case WAND_B:
-			mapSpriteWand(type, 0, 1);
-			break;
 		case WAND_C:
-			mapSpriteWand(type, 0, 2);
-			break;
 		case WAND_D:
-			mapSpriteWand(type, 0, 3);
-			break;
 		case WAND_E:
-			mapSpriteWand(type, 1, 0);
-			break;
 		case WAND_F:
-			mapSpriteWand(type, 1, 1);
-			break;
 		case WAND_G:
-			mapSpriteWand(type, 1, 2);
-			break;
 		case WAND_H:
-			mapSpriteWand(type, 1, 3);
-			break;
 		case WAND_I:
-			mapSpriteWand(type, 2, 0);
-			break;
 		case WAND_J:
-			mapSpriteWand(type, 2, 1);
+			mapSpriteWand(type);
 			break;
 		case RING_A:
-			mapSpriteRing(type, 0, 0);
-			break;
 		case RING_B:
-			mapSpriteRing(type, 0, 1);
-			break;
 		case RING_C:
-			mapSpriteRing(type, 0, 2);
-			break;
 		case RING_D:
-			mapSpriteRing(type, 0, 3);
-			break;
 		case RING_E:
-			mapSpriteRing(type, 1, 0);
-			break;
 		case RING_F:
-			mapSpriteRing(type, 1, 1);
-			break;
 		case RING_G:
-			mapSpriteRing(type, 1, 2);
-			break;
 		case RING_H:
-			mapSpriteRing(type, 1, 3);
-			break;
 		case RING_I:
-			mapSpriteRing(type, 2, 0);
-			break;
 		case RING_J:
-			mapSpriteRing(type, 2, 1);
+			mapSpriteRing(type);
 			break;
 		case WEAPON_A:
 			mapSpriteWeapon(type, 0, 0);
@@ -529,20 +475,66 @@ public final class SpriteMapper implements IDisposableInstance {
 		}
 	}
 
-	private void mapSpritePotion(final EEntity type, final int x, final int y) {
-		mapSprite(FF_POTION, type, x, y);
+	/**
+	 * tries to select a random sprite out of a pool of available sprite sheet
+	 * positions
+	 *
+	 * @param type
+	 * @param cache
+	 * @param spriteSheetPositions
+	 * @return null when no free sprite position could be found
+	 */
+	private Coord itemRandomSpriteSelection(final EEntity type, final Coord[] spriteSheetPositions,
+			final Map<EEntity, Coord> cache) {
+		Coord coord = cache.get(type);
+		if (coord == null) {
+			Coord tempCoord = null;
+			final RNG rng = GameEngine.getRng();
+
+			// try to find a random free position
+			int tries = 0;
+			final int maxTries = spriteSheetPositions.length;
+			boolean found = false;
+			while (!found && tries < maxTries) {
+				tempCoord = spriteSheetPositions[rng.nextInt(spriteSheetPositions.length)];
+				found = !cache.containsValue(tempCoord);
+				tries += 1;
+			}
+
+			// get the next best free position
+			tries = 0;
+			while (!found && tries < maxTries) {
+				tempCoord = spriteSheetPositions[tries];
+				found = !cache.containsValue(tempCoord);
+				tries += 1;
+			}
+
+			if (found) {
+				coord = tempCoord;
+				cache.put(type, coord);
+			}
+		}
+		return coord;
 	}
 
-	private void mapSpriteScroll(final EEntity type, final int x, final int y) {
-		mapSprite(FF_SCROLL, type, x, y);
+	private void mapSpritePotion(final EEntity type) {
+		mapSprite(FF_POTION, type,
+				itemRandomSpriteSelection(type, spriteSheetPositionPotions, spriteSheetSelectionPotions));
 	}
 
-	private void mapSpriteWand(final EEntity type, final int x, final int y) {
-		mapSprite(FF_WAND, type, x, y);
+	private void mapSpriteScroll(final EEntity type) {
+		mapSprite(FF_SCROLL, type,
+				itemRandomSpriteSelection(type, spriteSheetPositionScrolls, spriteSheetSelectionScrolls));
 	}
 
-	private void mapSpriteRing(final EEntity type, final int x, final int y) {
-		mapSprite(FF_RING, type, x, y);
+	private void mapSpriteWand(final EEntity type) {
+		mapSprite(FF_WAND, type,
+				itemRandomSpriteSelection(type, spriteSheetPositionWands, spriteSheetSelectionWands));
+	}
+
+	private void mapSpriteRing(final EEntity type) {
+		mapSprite(FF_RING, type,
+				itemRandomSpriteSelection(type, spriteSheetPositionRings, spriteSheetSelectionRings));
 	}
 
 	private void mapSpriteWeapon(final EEntity type, final int x, final int y) {
@@ -551,6 +543,15 @@ public final class SpriteMapper implements IDisposableInstance {
 
 	private void mapSpriteShield(final EEntity type, final int x, final int y) {
 		mapSprite(FF_SHIELD, type, x, y);
+	}
+
+	private void mapSprite(final String fileName, final EEntity type, final Coord c) {
+		if (c != null) {
+			mapSprite(fileName, type, c.x, c.y);
+		} else {
+			Gdx.app.error("SpriteMapper.mapSprite",
+					"couldn't find sprite position for entity " + type.toString());
+		}
 	}
 
 	private void mapSprite(final String fileName, final EEntity type, final int x, final int y) {
