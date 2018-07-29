@@ -12,10 +12,13 @@ package de.brainstormsoftworks.taloonerrl.system;
 
 import com.artemis.Aspect;
 import com.artemis.systems.IteratingSystem;
+import com.artemis.utils.IntBag;
 
 import de.brainstormsoftworks.taloonerrl.components.ArtificialIntelligenceComponent;
+import de.brainstormsoftworks.taloonerrl.components.CollectibleComponent;
 import de.brainstormsoftworks.taloonerrl.components.EEntityState;
 import de.brainstormsoftworks.taloonerrl.components.FacingComponent;
+import de.brainstormsoftworks.taloonerrl.components.InventoryComponent;
 import de.brainstormsoftworks.taloonerrl.components.PositionComponent;
 import de.brainstormsoftworks.taloonerrl.components.StatusComponent;
 import de.brainstormsoftworks.taloonerrl.components.TurnComponent;
@@ -41,6 +44,7 @@ public class TurnProcessSystem extends IteratingSystem {
 	private TurnComponent turnComponent;
 	private ArtificialIntelligenceComponent artificialIntelligenceComponent;
 	private StatusComponent statusComponent;
+	private InventoryComponent inventoryComponent;
 	private boolean isPlayer;
 	private int nextTurn;
 	private boolean turnForcefullySkipped;
@@ -107,6 +111,29 @@ public class TurnProcessSystem extends IteratingSystem {
 							facingComponent.setDirection(nextTurn);
 						}
 					}
+
+					// pickup any items on waiting turns
+					if (nextTurn == Move.WAIT) {
+						inventoryComponent = ComponentMappers.getInstance().inventory.getSafe(_entityId);
+						if (inventoryComponent != null && inventoryComponent.hasCapacity()) {
+							final IntBag entities = GameEngine.getInstance().getAspectSubscriptionManager()
+									.get(Aspect.all(PositionComponent.class, CollectibleComponent.class))
+									.getEntities();
+							PositionComponent otherPosition;
+							int otherId = -1;
+							for (int i = 0; i < entities.size(); i++) {
+								otherId = entities.get(i);
+								otherPosition = ComponentMappers.getInstance().position.getSafe(otherId);
+								if (PositionUtil.isValidPosition(otherPosition)) {
+									if (otherPosition.getX() == positionComponent.getX()
+											&& otherPosition.getY() == positionComponent.getY()) {
+										inventoryComponent.addEntity(otherId);
+									}
+								}
+							}
+						}
+					}
+
 					turnComponent.setProcessed(true);
 					// TODO refactor into own system in the future? - should be OK for now though
 					if (statusComponent != null) {

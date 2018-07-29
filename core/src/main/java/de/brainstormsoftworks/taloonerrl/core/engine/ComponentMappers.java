@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2015, 2017 David Becker.
+ * Copyright (c) 2015-2018 David Becker.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the GNU Public License v2.0
  * which accompanies this distribution, and is available at
@@ -24,6 +24,7 @@ import de.brainstormsoftworks.taloonerrl.components.FacingAnimationComponent;
 import de.brainstormsoftworks.taloonerrl.components.FacingComponent;
 import de.brainstormsoftworks.taloonerrl.components.HealthComponent;
 import de.brainstormsoftworks.taloonerrl.components.HighlightAbleComponent;
+import de.brainstormsoftworks.taloonerrl.components.InventoryComponent;
 import de.brainstormsoftworks.taloonerrl.components.NameComponent;
 import de.brainstormsoftworks.taloonerrl.components.PlayerComponent;
 import de.brainstormsoftworks.taloonerrl.components.PositionComponent;
@@ -58,6 +59,7 @@ public final class ComponentMappers {
 	public final ComponentMapper<StateDecorationComponent> stateDecoration;
 	public final ComponentMapper<TargetComponent> target;
 	public final ComponentMapper<ExploredComponent> explored;
+	public final ComponentMapper<InventoryComponent> inventory;
 
 	private static ComponentMappers instance = null;
 
@@ -80,6 +82,7 @@ public final class ComponentMappers {
 		stateDecoration = ComponentMapper.getFor(StateDecorationComponent.class, world);
 		target = ComponentMapper.getFor(TargetComponent.class, world);
 		explored = ComponentMapper.getFor(ExploredComponent.class, world);
+		inventory = ComponentMapper.getFor(InventoryComponent.class, world);
 	}
 
 	/**
